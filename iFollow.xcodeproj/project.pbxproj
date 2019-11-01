@@ -3,26 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0A3F3D9CBF999C8D04FFA0B4 /* Pods_iFollow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */; };
 		1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839088C236C70D6009A28E6 /* AppDelegate.swift */; };
-		1839088F236C70D6009A28E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839088E236C70D6009A28E6 /* ViewController.swift */; };
 		18390892236C70D6009A28E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390890236C70D6009A28E6 /* Main.storyboard */; };
 		18390894236C70DA009A28E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18390893236C70DA009A28E6 /* Assets.xcassets */; };
 		18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390895236C70DA009A28E6 /* LaunchScreen.storyboard */; };
+		183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839089F236C7A99009A28E6 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		18390889236C70D6009A28E6 /* iFollow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iFollow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1839088C236C70D6009A28E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1839088E236C70D6009A28E6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		18390891236C70D6009A28E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		18390893236C70DA009A28E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18390896236C70DA009A28E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18390898236C70DA009A28E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1839089F236C7A99009A28E6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.release.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.release.xcconfig"; sourceTree = "<group>"; };
 		2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.debug.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.debug.xcconfig"; sourceTree = "<group>"; };
 		5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iFollow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,7 +46,6 @@
 				2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */,
 				262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -71,14 +70,22 @@
 		1839088B236C70D6009A28E6 /* iFollow */ = {
 			isa = PBXGroup;
 			children = (
+				1839089E236C7865009A28E6 /* Controllers */,
 				1839088C236C70D6009A28E6 /* AppDelegate.swift */,
-				1839088E236C70D6009A28E6 /* ViewController.swift */,
 				18390890236C70D6009A28E6 /* Main.storyboard */,
 				18390893236C70DA009A28E6 /* Assets.xcassets */,
 				18390895236C70DA009A28E6 /* LaunchScreen.storyboard */,
 				18390898236C70DA009A28E6 /* Info.plist */,
 			);
 			path = iFollow;
+			sourceTree = "<group>";
+		};
+		1839089E236C7865009A28E6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1839089F236C7A99009A28E6 /* MainViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		321A3F2ED6C77D47B34797F9 /* Frameworks */ = {
@@ -204,7 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1839088F236C70D6009A28E6 /* ViewController.swift in Sources */,
+				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
