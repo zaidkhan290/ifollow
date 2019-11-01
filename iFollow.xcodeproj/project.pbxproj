@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A3F3D9CBF999C8D04FFA0B4 /* Pods_iFollow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */; };
 		1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839088C236C70D6009A28E6 /* AppDelegate.swift */; };
 		1839088F236C70D6009A28E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839088E236C70D6009A28E6 /* ViewController.swift */; };
 		18390892236C70D6009A28E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390890236C70D6009A28E6 /* Main.storyboard */; };
@@ -22,6 +23,9 @@
 		18390893236C70DA009A28E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18390896236C70DA009A28E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18390898236C70DA009A28E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.release.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.release.xcconfig"; sourceTree = "<group>"; };
+		2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.debug.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.debug.xcconfig"; sourceTree = "<group>"; };
+		5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iFollow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +33,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A3F3D9CBF999C8D04FFA0B4 /* Pods_iFollow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A5C7F3D279C0C564AEDF2C9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */,
+				262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		18390880236C70D6009A28E6 = {
 			isa = PBXGroup;
 			children = (
 				1839088B236C70D6009A28E6 /* iFollow */,
 				1839088A236C70D6009A28E6 /* Products */,
+				0A5C7F3D279C0C564AEDF2C9 /* Pods */,
+				321A3F2ED6C77D47B34797F9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +81,14 @@
 			path = iFollow;
 			sourceTree = "<group>";
 		};
+		321A3F2ED6C77D47B34797F9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,9 +96,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1839089B236C70DA009A28E6 /* Build configuration list for PBXNativeTarget "iFollow" */;
 			buildPhases = (
+				7D6035C27FFE834BCB5E51BD /* [CP] Check Pods Manifest.lock */,
 				18390885236C70D6009A28E6 /* Sources */,
 				18390886236C70D6009A28E6 /* Frameworks */,
 				18390887236C70D6009A28E6 /* Resources */,
+				4419ABF9884D6E678407C9D3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -129,6 +156,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4419ABF9884D6E678407C9D3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iFollow/Pods-iFollow-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iFollow/Pods-iFollow-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iFollow/Pods-iFollow-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D6035C27FFE834BCB5E51BD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iFollow-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		18390885236C70D6009A28E6 /* Sources */ = {
@@ -280,6 +349,7 @@
 		};
 		1839089C236C70DA009A28E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -298,6 +368,7 @@
 		};
 		1839089D236C70DA009A28E6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
