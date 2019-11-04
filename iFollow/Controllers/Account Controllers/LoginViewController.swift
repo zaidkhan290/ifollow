@@ -28,6 +28,10 @@ class LoginViewController: UIViewController {
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: signupText.nsRange(from: range1!))
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: signupText.nsRange(from: range2!))
         btnSignup.setAttributedTitle(attributedString, for: .normal)
+        
+        Utility.setTextFieldPlaceholder(textField: txtFieldUsername, placeholder: "Username", color: Theme.textFieldColor)
+        Utility.setTextFieldPlaceholder(textField: txtFieldPassword, placeholder: "Password", color: Theme.textFieldColor)
+
     }
     
     //MARK:- Actions
@@ -39,7 +43,12 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func btnSignupTapped(_ sender: UIButton) {
+        let vc = Utility.getSignupViewController()
+        self.pushToVC(vc: vc)
     }
     
+    @IBAction func btnBackTapped(_ sender: UIButton) {
+        self.goBack()
+    }
     
 }

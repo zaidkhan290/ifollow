@@ -15,6 +15,13 @@
 		18390894236C70DA009A28E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18390893236C70DA009A28E6 /* Assets.xcassets */; };
 		18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390895236C70DA009A28E6 /* LaunchScreen.storyboard */; };
 		183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839089F236C7A99009A28E6 /* MainViewController.swift */; };
+		189329BA237014E90067077F /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329B9237014E90067077F /* Utility.swift */; };
+		189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BB237015D80067077F /* ViewControllerExtension.swift */; };
+		189329BF23701EE50067077F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BE23701EE50067077F /* SignupViewController.swift */; };
+		189329C3237020910067077F /* Lato-Bold_0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 189329C0237020900067077F /* Lato-Bold_0.ttf */; };
+		189329C4237020910067077F /* Lato-Semibold_0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 189329C1237020900067077F /* Lato-Semibold_0.ttf */; };
+		189329C5237020910067077F /* Lato-Regular_0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 189329C2237020910067077F /* Lato-Regular_0.ttf */; };
+		189329C7237023860067077F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329C6237023860067077F /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +34,13 @@
 		18390896236C70DA009A28E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18390898236C70DA009A28E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1839089F236C7A99009A28E6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		189329B9237014E90067077F /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		189329BB237015D80067077F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
+		189329BE23701EE50067077F /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		189329C0237020900067077F /* Lato-Bold_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold_0.ttf"; sourceTree = "<group>"; };
+		189329C1237020900067077F /* Lato-Semibold_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Semibold_0.ttf"; sourceTree = "<group>"; };
+		189329C2237020910067077F /* Lato-Regular_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular_0.ttf"; sourceTree = "<group>"; };
+		189329C6237023860067077F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.release.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.release.xcconfig"; sourceTree = "<group>"; };
 		2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.debug.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.debug.xcconfig"; sourceTree = "<group>"; };
 		5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iFollow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +72,7 @@
 			children = (
 				1839089F236C7A99009A28E6 /* MainViewController.swift */,
 				18307AB1236C86CE00A0A7C6 /* LoginViewController.swift */,
+				189329BE23701EE50067077F /* SignupViewController.swift */,
 			);
 			path = "Account Controllers";
 			sourceTree = "<group>";
@@ -66,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				18307AB4236C97CB00A0A7C6 /* StringExtension.swift */,
+				189329BB237015D80067077F /* ViewControllerExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -91,6 +107,8 @@
 		1839088B236C70D6009A28E6 /* iFollow */ = {
 			isa = PBXGroup;
 			children = (
+				189329BD23701E520067077F /* Fonts */,
+				189329B8237014D50067077F /* Utilities */,
 				18307AB3236C97B900A0A7C6 /* Extensions */,
 				1839089E236C7865009A28E6 /* Controllers */,
 				1839088C236C70D6009A28E6 /* AppDelegate.swift */,
@@ -108,6 +126,25 @@
 				18307AB0236C86AF00A0A7C6 /* Account Controllers */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		189329B8237014D50067077F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				189329B9237014E90067077F /* Utility.swift */,
+				189329C6237023860067077F /* Theme.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		189329BD23701E520067077F /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				189329C0237020900067077F /* Lato-Bold_0.ttf */,
+				189329C2237020910067077F /* Lato-Regular_0.ttf */,
+				189329C1237020900067077F /* Lato-Semibold_0.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		321A3F2ED6C77D47B34797F9 /* Frameworks */ = {
@@ -178,7 +215,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				189329C3237020910067077F /* Lato-Bold_0.ttf in Resources */,
 				18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */,
+				189329C5237020910067077F /* Lato-Regular_0.ttf in Resources */,
+				189329C4237020910067077F /* Lato-Semibold_0.ttf in Resources */,
 				18390894236C70DA009A28E6 /* Assets.xcassets in Resources */,
 				18390892236C70D6009A28E6 /* Main.storyboard in Resources */,
 			);
@@ -233,7 +273,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				189329BA237014E90067077F /* Utility.swift in Sources */,
+				189329C7237023860067077F /* Theme.swift in Sources */,
+				189329BF23701EE50067077F /* SignupViewController.swift in Sources */,
 				18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */,
+				189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,

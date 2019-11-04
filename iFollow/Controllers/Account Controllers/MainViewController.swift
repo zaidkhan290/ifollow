@@ -20,9 +20,13 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func btnLoginTapped(_ sender: UIButton) {
+        let vc = Utility.getLoginViewController()
+        self.pushToVC(vc: vc)
     }
     
     @IBAction func btnSignupTapped(_ sender: UIButton) {
+        let vc = Utility.getSignupViewController()
+        self.pushToVC(vc: vc)
     }
     
     
