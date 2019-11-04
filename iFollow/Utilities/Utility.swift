@@ -33,6 +33,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "SetPasswordViewController") as! SetPasswordViewController
     }
     
+    static func getHomeViewController() -> HomeViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+    }
+    
     
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
