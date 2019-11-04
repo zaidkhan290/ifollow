@@ -100,7 +100,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mask Group 6" translatesAutoresizingMaskIntoConstraints="NO" id="as3-gi-04H">
-                                <rect key="frame" x="0.0" y="0.0" width="248" height="220"/>
+                                <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
                             </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0ab-W2-kYa">
                                 <rect key="frame" x="0.0" y="40" width="414" height="180"/>
@@ -127,7 +127,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="372.66666666666669" height="465.33333333333331"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Layer 6 copy" translatesAutoresizingMaskIntoConstraints="NO" id="Kf6-MU-QAX">
-                                                <rect key="frame" x="20" y="20.000000000000028" width="50" height="50.000000000000014"/>
+                                                <rect key="frame" x="20" y="20.000000000000028" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="bAN-7v-dkF"/>
                                                     <constraint firstAttribute="width" constant="50" id="fnT-4f-D74"/>
@@ -139,7 +139,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Markin Lake, Canada" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AQZ-VU-oSR">
-                                                <rect key="frame" x="90" y="42.000000000000028" width="109.66666666666669" height="14"/>
+                                                <rect key="frame" x="90" y="42.000000000000028" width="114.33333333333331" height="14"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                                 <color key="textColor" red="0.34509803919999998" green="0.35294117650000001" blue="0.35686274509999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -163,13 +163,13 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1k 4 Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbr-41-BWe">
-                                                <rect key="frame" x="40.999999999999993" y="397" width="83.333333333333314" height="14"/>
+                                                <rect key="frame" x="40.999999999999993" y="397" width="85.333333333333314" height="14"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                                 <color key="textColor" red="0.2784313725" green="0.32549019610000002" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 min Ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7A-kW-TMJ">
-                                                <rect key="frame" x="299.33333333333331" y="395.33333333333337" width="53.333333333333314" height="14"/>
+                                                <rect key="frame" x="298" y="395.33333333333337" width="54.666666666666686" height="14"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                                 <color key="textColor" red="0.2784313725" green="0.32549019610000002" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -217,7 +217,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feedback" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IMf-zc-5Ns">
-                                                        <rect key="frame" x="43.999999999999972" y="18" width="50.333333333333343" height="14"/>
+                                                        <rect key="frame" x="43.999999999999972" y="18" width="53.333333333333343" height="14"/>
                                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                                         <color key="textColor" red="0.2784313725" green="0.32549019610000002" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -332,19 +332,19 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="footprint_login" translatesAutoresizingMaskIntoConstraints="NO" id="AFd-cV-rwN">
-                                <rect key="frame" x="125.66666666666669" y="131.66666666666663" width="163" height="178.33333333333337"/>
+                                <rect key="frame" x="199" y="212.66666666666666" width="16" height="16"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iFollow-white-logo" translatesAutoresizingMaskIntoConstraints="NO" id="2Gq-BV-ZHT">
-                                <rect key="frame" x="75.666666666666686" y="175.66666666666666" width="263" height="89.999999999999972"/>
+                                <rect key="frame" x="199" y="212.66666666666666" width="16" height="16"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rhw-Ht-lB3">
                                 <rect key="frame" x="41.333333333333343" y="354.66666666666669" width="331.33333333333326" height="100"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="username" translatesAutoresizingMaskIntoConstraints="NO" id="UvV-Nv-b1v">
-                                        <rect key="frame" x="10" y="5" width="17" height="17"/>
+                                        <rect key="frame" x="10" y="5" width="16" height="16"/>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fgp-Q2-j5g">
-                                        <rect key="frame" x="37" y="2" width="289.33333333333331" height="25"/>
+                                        <rect key="frame" x="36" y="2" width="290.33333333333331" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="eAU-94-WJ7"/>
                                         </constraints>
@@ -360,10 +360,10 @@
                                         </constraints>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password" translatesAutoresizingMaskIntoConstraints="NO" id="0dm-dA-UvP">
-                                        <rect key="frame" x="10" y="63.000000000000007" width="17" height="19.666666666666679"/>
+                                        <rect key="frame" x="10" y="63" width="16" height="16"/>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ak7-9O-twF">
-                                        <rect key="frame" x="37" y="63" width="289.33333333333331" height="25"/>
+                                        <rect key="frame" x="36" y="63" width="290.33333333333331" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="y98-Po-Sjw"/>
                                         </constraints>
@@ -402,7 +402,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Oh-jy-EXb">
-                                <rect key="frame" x="253.66666666666663" y="456.66666666666669" width="109" height="29"/>
+                                <rect key="frame" x="247.66666666666663" y="456.66666666666669" width="115" height="29"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                 <state key="normal" title="Forgot Password?">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -426,7 +426,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lP6-84-0b9">
-                                <rect key="frame" x="115.66666666666669" y="629" width="183" height="30"/>
+                                <rect key="frame" x="111.66666666666669" y="629" width="191" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="vKh-yt-ZUt"/>
                                 </constraints>
@@ -516,19 +516,19 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="footprint_login" translatesAutoresizingMaskIntoConstraints="NO" id="m4l-nT-TRZ">
-                                <rect key="frame" x="125.66666666666669" y="131.66666666666663" width="163" height="178.33333333333337"/>
+                                <rect key="frame" x="199" y="212.66666666666666" width="16" height="16"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iFollow-white-logo" translatesAutoresizingMaskIntoConstraints="NO" id="Qvo-tM-hnM">
-                                <rect key="frame" x="75.666666666666686" y="175.66666666666666" width="263" height="89.999999999999972"/>
+                                <rect key="frame" x="199" y="212.66666666666666" width="16" height="16"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wn6-Ve-dJT">
                                 <rect key="frame" x="41.333333333333343" y="329.66666666666669" width="331.33333333333326" height="150"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email" translatesAutoresizingMaskIntoConstraints="NO" id="JQr-gD-E0B">
-                                        <rect key="frame" x="10" y="8" width="17" height="10.333333333333336"/>
+                                        <rect key="frame" x="10" y="8" width="16" height="16"/>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="thM-zF-d3v">
-                                        <rect key="frame" x="37" y="2" width="289.33333333333331" height="25"/>
+                                        <rect key="frame" x="36" y="2" width="290.33333333333331" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="iBQ-qw-8D1"/>
                                         </constraints>
@@ -544,10 +544,10 @@
                                         </constraints>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password" translatesAutoresizingMaskIntoConstraints="NO" id="XCC-On-w3X">
-                                        <rect key="frame" x="10" y="65" width="17" height="19.666666666666671"/>
+                                        <rect key="frame" x="10" y="65" width="16" height="16"/>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dTU-p0-Du6">
-                                        <rect key="frame" x="37" y="63" width="289.33333333333331" height="25"/>
+                                        <rect key="frame" x="36" y="63" width="290.33333333333331" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="58g-Rf-mlC"/>
                                         </constraints>
@@ -563,10 +563,10 @@
                                         </constraints>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password" translatesAutoresizingMaskIntoConstraints="NO" id="NTx-cg-lJ5">
-                                        <rect key="frame" x="10" y="126" width="17" height="19.666666666666686"/>
+                                        <rect key="frame" x="10" y="126" width="16" height="16"/>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sqH-d3-M3X">
-                                        <rect key="frame" x="37" y="124" width="289.33333333333331" height="25"/>
+                                        <rect key="frame" x="36" y="124" width="290.33333333333331" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="HJd-4H-hgO"/>
                                         </constraints>
@@ -627,7 +627,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Hy-c0-n57">
-                                <rect key="frame" x="113.66666666666669" y="629" width="187" height="30"/>
+                                <rect key="frame" x="109.66666666666669" y="629" width="195" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="bOl-mq-N8j"/>
                                 </constraints>
@@ -698,10 +698,10 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iFollow-white-logo-1" translatesAutoresizingMaskIntoConstraints="NO" id="NZR-ik-uTa">
-                                <rect key="frame" x="139" y="194.33333333333334" width="136" height="53"/>
+                                <rect key="frame" x="199" y="212.66666666666666" width="16" height="16"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reset Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Zz-uc-LaP">
-                                <rect key="frame" x="91.333333333333329" y="257.33333333333331" width="231.66666666666669" height="39.666666666666686"/>
+                                <rect key="frame" x="87.000000000000014" y="238.66666666666666" width="240.33333333333337" height="38.666666666666657"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="33"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -710,10 +710,10 @@
                                 <rect key="frame" x="41.333333333333343" y="366.66666666666669" width="331.33333333333326" height="150.00000000000006"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email" translatesAutoresizingMaskIntoConstraints="NO" id="05y-xH-qRc">
-                                        <rect key="frame" x="10" y="8" width="17" height="10.333333333333336"/>
+                                        <rect key="frame" x="10" y="8" width="16" height="16"/>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c0Y-Zq-1jV">
-                                        <rect key="frame" x="37" y="0.0" width="289.33333333333331" height="25"/>
+                                        <rect key="frame" x="36" y="0.0" width="290.33333333333331" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="4ig-dS-ty7"/>
                                         </constraints>
@@ -743,7 +743,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzK-Zr-qhc">
-                                        <rect key="frame" x="72.333333333333343" y="131" width="187.00000000000003" height="30"/>
+                                        <rect key="frame" x="68.333333333333343" y="131" width="195.00000000000003" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="ZhL-Vj-gsM"/>
                                         </constraints>
@@ -827,10 +827,10 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iFollow-white-logo-1" translatesAutoresizingMaskIntoConstraints="NO" id="zM0-aq-z9V">
-                                <rect key="frame" x="139" y="194.33333333333334" width="136" height="53"/>
+                                <rect key="frame" x="199" y="212.66666666666666" width="16" height="16"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBk-pT-vnW">
-                                <rect key="frame" x="98.333333333333329" y="257.33333333333331" width="217.66666666666669" height="39.666666666666686"/>
+                                <rect key="frame" x="96" y="238.66666666666666" width="222" height="38.666666666666657"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="33"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -839,10 +839,10 @@
                                 <rect key="frame" x="41.333333333333343" y="355" width="331.33333333333326" height="210"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password" translatesAutoresizingMaskIntoConstraints="NO" id="XeV-zC-pmy">
-                                        <rect key="frame" x="10" y="2" width="17" height="19.666666666666671"/>
+                                        <rect key="frame" x="10" y="2" width="16" height="16"/>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Eum-EO-7fP">
-                                        <rect key="frame" x="37" y="0.0" width="289.33333333333331" height="25"/>
+                                        <rect key="frame" x="36" y="0.0" width="290.33333333333331" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="cOe-th-hgQ"/>
                                         </constraints>
@@ -858,10 +858,10 @@
                                         </constraints>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password" translatesAutoresizingMaskIntoConstraints="NO" id="9h1-vi-wkc">
-                                        <rect key="frame" x="10" y="61.000000000000007" width="17" height="19.666666666666679"/>
+                                        <rect key="frame" x="10" y="61" width="16" height="16"/>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8p5-24-GYE">
-                                        <rect key="frame" x="37" y="59" width="289.33333333333331" height="25"/>
+                                        <rect key="frame" x="36" y="59" width="290.33333333333331" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="16C-nd-vcb"/>
                                         </constraints>
@@ -891,7 +891,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UgK-Qy-oUs">
-                                        <rect key="frame" x="72.333333333333343" y="190" width="187.00000000000003" height="30"/>
+                                        <rect key="frame" x="68.333333333333343" y="190" width="195.00000000000003" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="3jy-6t-g8G"/>
                                         </constraints>
