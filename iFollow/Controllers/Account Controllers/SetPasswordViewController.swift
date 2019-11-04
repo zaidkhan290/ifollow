@@ -9,11 +9,44 @@
 import UIKit
 
 class SetPasswordViewController: UIViewController {
-
+    
+    @IBOutlet weak var lblNewPassword: UILabel!
+    @IBOutlet weak var txtFieldNewPassword: UITextField!
+    @IBOutlet weak var txtFieldConfirmPassword: UITextField!
+    @IBOutlet weak var btnReset: UIButton!
+    @IBOutlet weak var btnSignUp: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.lblNewPassword.setShadow(color: UIColor.white)
+        Utility.setTextFieldPlaceholder(textField: txtFieldNewPassword, placeholder: "New Password", color: Theme.textFieldColor)
+        Utility.setTextFieldPlaceholder(textField: txtFieldConfirmPassword, placeholder: "Confirm Password", color: Theme.textFieldColor)
+        
+        let signupText = "Still haven't an Account? Sign Up"
+        let range1 = signupText.range(of: "Still haven't an Account?")
+        let range2 = signupText.range(of: "Sign Up")
+        
+        let attributedString = NSMutableAttributedString(string: signupText)
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: signupText.nsRange(from: range1!))
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: signupText.nsRange(from: range2!))
+        btnSignUp.setAttributedTitle(attributedString, for: .normal)
     }
+    
+    //MARK:- Actions
+    
+    @IBAction func btnBackTapped(_ sender: UIButton) {
+        self.goBack()
+    }
+    
+    @IBAction func btnResetTapped(_ sender: UIButton) {
+    }
+    
+    @IBAction func btnSignupTapped(_ sender: UIButton) {
+        let vc = Utility.getSignupViewController()
+        self.pushToVC(vc: vc)
+    }
+    
     
 }
