@@ -22,6 +22,9 @@
 		189329C4237020910067077F /* Lato-Semibold_0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 189329C1237020900067077F /* Lato-Semibold_0.ttf */; };
 		189329C5237020910067077F /* Lato-Regular_0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 189329C2237020910067077F /* Lato-Regular_0.ttf */; };
 		189329C7237023860067077F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329C6237023860067077F /* Theme.swift */; };
+		189329C923702FE90067077F /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329C823702FE90067077F /* ForgotPasswordViewController.swift */; };
+		189329CB237030040067077F /* SetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329CA237030040067077F /* SetPasswordViewController.swift */; };
+		189329CD237035670067077F /* LabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329CC237035670067077F /* LabelExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +44,9 @@
 		189329C1237020900067077F /* Lato-Semibold_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Semibold_0.ttf"; sourceTree = "<group>"; };
 		189329C2237020910067077F /* Lato-Regular_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular_0.ttf"; sourceTree = "<group>"; };
 		189329C6237023860067077F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		189329C823702FE90067077F /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		189329CA237030040067077F /* SetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasswordViewController.swift; sourceTree = "<group>"; };
+		189329CC237035670067077F /* LabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelExtension.swift; sourceTree = "<group>"; };
 		262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.release.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.release.xcconfig"; sourceTree = "<group>"; };
 		2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.debug.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.debug.xcconfig"; sourceTree = "<group>"; };
 		5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iFollow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +79,8 @@
 				1839089F236C7A99009A28E6 /* MainViewController.swift */,
 				18307AB1236C86CE00A0A7C6 /* LoginViewController.swift */,
 				189329BE23701EE50067077F /* SignupViewController.swift */,
+				189329C823702FE90067077F /* ForgotPasswordViewController.swift */,
+				189329CA237030040067077F /* SetPasswordViewController.swift */,
 			);
 			path = "Account Controllers";
 			sourceTree = "<group>";
@@ -82,6 +90,7 @@
 			children = (
 				18307AB4236C97CB00A0A7C6 /* StringExtension.swift */,
 				189329BB237015D80067077F /* ViewControllerExtension.swift */,
+				189329CC237035670067077F /* LabelExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -277,7 +286,10 @@
 				189329C7237023860067077F /* Theme.swift in Sources */,
 				189329BF23701EE50067077F /* SignupViewController.swift in Sources */,
 				18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */,
+				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
 				189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */,
+				189329C923702FE90067077F /* ForgotPasswordViewController.swift in Sources */,
+				189329CD237035670067077F /* LabelExtension.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,

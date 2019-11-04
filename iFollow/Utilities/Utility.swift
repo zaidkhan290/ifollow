@@ -25,6 +25,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
     }
     
+    static func getForgotPasswordViewController() -> ForgotPasswordViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "ForgotPasswordViewController") as! ForgotPasswordViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

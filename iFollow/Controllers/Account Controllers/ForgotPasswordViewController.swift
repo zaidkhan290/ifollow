@@ -1,47 +1,40 @@
 //
-//  LoginViewController.swift
+//  ForgotPasswordViewController.swift
 //  iFollow
 //
-//  Created by Shahzeb siddiqui on 01/11/2019.
+//  Created by Shahzeb siddiqui on 04/11/2019.
 //  Copyright © 2019 Shahzeb siddiqui. All rights reserved.
 //
 
 import UIKit
 
-class LoginViewController: UIViewController {
-
-    @IBOutlet weak var txtFieldUsername: UITextField!
-    @IBOutlet weak var txtFieldPassword: UITextField!
-    @IBOutlet weak var btnForgotPassword: UIButton!
-    @IBOutlet weak var btnSignIn: UIButton!
+class ForgotPasswordViewController: UIViewController {
+    
+    @IBOutlet weak var lblResetPassword: UILabel!
+    @IBOutlet weak var txtFieldEmail: UITextField!
+    @IBOutlet weak var btnSend: UIButton!
     @IBOutlet weak var btnSignup: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let signupText = "Don't have an Account? Sign Up"
-        let range1 = signupText.range(of: "Don't have an Account?")
+        self.lblResetPassword.setShadow(color: UIColor.white)
+        Utility.setTextFieldPlaceholder(textField: txtFieldEmail, placeholder: "Your email address", color: Theme.textFieldColor)
+        
+        let signupText = "Still haven't an Account? Sign Up"
+        let range1 = signupText.range(of: "Still haven't an Account?")
         let range2 = signupText.range(of: "Sign Up")
         
         let attributedString = NSMutableAttributedString(string: signupText)
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: signupText.nsRange(from: range1!))
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: signupText.nsRange(from: range2!))
         btnSignup.setAttributedTitle(attributedString, for: .normal)
-        
-        Utility.setTextFieldPlaceholder(textField: txtFieldUsername, placeholder: "Username", color: Theme.textFieldColor)
-        Utility.setTextFieldPlaceholder(textField: txtFieldPassword, placeholder: "Password", color: Theme.textFieldColor)
-
     }
     
     //MARK:- Actions
     
-    @IBAction func btnForgotPasswordTapped(_ sender: UIButton) {
-        let vc = Utility.getForgotPasswordViewController()
-        self.pushToVC(vc: vc)
-    }
-    
-    @IBAction func btnSignInTapped(_ sender: UIButton) {
+    @IBAction func btnSendTapped(_ sender: UIButton) {
     }
     
     @IBAction func btnSignupTapped(_ sender: UIButton) {
@@ -52,5 +45,4 @@ class LoginViewController: UIViewController {
     @IBAction func btnBackTapped(_ sender: UIButton) {
         self.goBack()
     }
-    
 }
