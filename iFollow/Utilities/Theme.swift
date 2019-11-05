@@ -12,5 +12,6 @@ import UIKit
 struct Theme {
     
     static let textFieldColor = UIColor.init(red: 233.0/255.0, green: 233.0/255.0, blue: 233.0/255.0, alpha: 1.0)
+    static let searchFieldColor = UIColor.init(red: 179.0/255.0, green: 185.0/255.0, blue: 190.0/255.0, alpha: 1.0)
     
 }

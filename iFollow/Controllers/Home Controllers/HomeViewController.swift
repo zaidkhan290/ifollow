@@ -15,8 +15,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var storyCollectionView: UICollectionView!
     var imagePicker = UIImagePickerController()
     
-    var items: [Int] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -37,6 +37,9 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
     }
     
+    static func getExploreViewController() -> ExploreViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "ExploreViewController") as! ExploreViewController
+    }
     
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])

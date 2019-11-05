@@ -42,7 +42,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func btnSignInTapped(_ sender: UIButton) {
-        let vc = Utility.getHomeViewController()
+        //let vc = Utility.getHomeViewController()
+        let vc = Utility.getExploreViewController()
         self.present(vc, animated: true, completion: nil)
     }
     

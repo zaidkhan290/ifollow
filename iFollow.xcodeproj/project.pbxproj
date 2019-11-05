@@ -31,6 +31,9 @@
 		189329D023705E510067077F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329CF23705E510067077F /* HomeViewController.swift */; };
 		189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329D2237061A70067077F /* StoryCollectionViewCell.swift */; };
 		189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189329D3237061A70067077F /* StoryCollectionViewCell.xib */; };
+		18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D81237184E2005C739F /* ExploreViewController.swift */; };
+		18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */; };
+		18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +62,9 @@
 		189329CF23705E510067077F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		189329D2237061A70067077F /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		189329D3237061A70067077F /* StoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoryCollectionViewCell.xib; sourceTree = "<group>"; };
+		18C88D81237184E2005C739F /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
+		18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStoriesCollectionViewCell.swift; sourceTree = "<group>"; };
+		18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllStoriesCollectionViewCell.xib; sourceTree = "<group>"; };
 		262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.release.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.release.xcconfig"; sourceTree = "<group>"; };
 		2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.debug.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.debug.xcconfig"; sourceTree = "<group>"; };
 		5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iFollow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +152,7 @@
 		1839089E236C7865009A28E6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				18C88D80237184BC005C739F /* Search Controller */,
 				189329CE23705E2E0067077F /* Home Controllers */,
 				18307AB0236C86AF00A0A7C6 /* Account Controllers */,
 			);
@@ -186,8 +193,18 @@
 				189329D3237061A70067077F /* StoryCollectionViewCell.xib */,
 				18781C1F23707001001BAF95 /* FeedsView.xib */,
 				18781C2123707019001BAF95 /* FeedsView.swift */,
+				18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */,
+				18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		18C88D80237184BC005C739F /* Search Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18C88D81237184E2005C739F /* ExploreViewController.swift */,
+			);
+			path = "Search Controller";
 			sourceTree = "<group>";
 		};
 		321A3F2ED6C77D47B34797F9 /* Frameworks */ = {
@@ -264,6 +281,7 @@
 				189329C5237020910067077F /* Lato-Regular_0.ttf in Resources */,
 				189329C4237020910067077F /* Lato-Semibold_0.ttf in Resources */,
 				189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */,
+				18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */,
 				18390894236C70DA009A28E6 /* Assets.xcassets in Resources */,
 				18390892236C70D6009A28E6 /* Main.storyboard in Resources */,
 			);
@@ -328,9 +346,11 @@
 				189329C923702FE90067077F /* ForgotPasswordViewController.swift in Sources */,
 				189329CD237035670067077F /* LabelExtension.swift in Sources */,
 				18781C2223707019001BAF95 /* FeedsView.swift in Sources */,
+				18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */,
 				189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
+				18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
 			);

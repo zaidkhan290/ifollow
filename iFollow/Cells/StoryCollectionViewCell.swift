@@ -13,7 +13,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var storyImage: UIImageView!
     @IBOutlet weak var userImage: UIImageView!
     
-    
     override func awakeFromNib() {
         
         super.awakeFromNib()
