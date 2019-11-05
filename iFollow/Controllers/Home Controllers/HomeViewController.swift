@@ -7,22 +7,15 @@
 //
 
 import UIKit
+import iCarousel
 
 class HomeViewController: UIViewController {
 
+    @IBOutlet weak var carouselView: iCarousel!
     @IBOutlet weak var storyCollectionView: UICollectionView!
-    @IBOutlet weak var myView: UIView!
+    var imagePicker = UIImagePickerController()
     
-    @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var lblUsername: UILabel!
-    @IBOutlet weak var lblUserAddress: UILabel!
-    @IBOutlet weak var btnOptions: UIButton!
-    @IBOutlet weak var lblLikeComments: UILabel!
-    @IBOutlet weak var lblTime: UILabel!
-    @IBOutlet weak var feedImage: UIImageView!
-    @IBOutlet weak var likeView: UIView!
-    @IBOutlet weak var feedBackView: UIView!
+    var items: [Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,11 +31,20 @@ class HomeViewController: UIViewController {
         self.storyCollectionView.collectionViewLayout = layout
         self.storyCollectionView.showsHorizontalScrollIndicator = false
         
-        mainView.dropShadow(color: UIColor.white)
-      //  mainView.backgroundColor = UIColor.lightGray
-        mainView.layer.cornerRadius = 10
-        userImage.layer.cornerRadius = 25
+        carouselView.type = .rotary
+        self.carouselView.dataSource = self
+        self.carouselView.delegate = self
         
+    }
+    
+    //MARK:- Methods
+    
+    func openCamera(){
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        imagePicker.mediaTypes = ["public.image", "public.movie"]
+        imagePicker.sourceType = .camera
+        self.present(imagePicker, animated: true, completion: nil)
     }
     
 }
@@ -71,6 +73,50 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         return cell
        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if (indexPath.row == 0){
+            self.openCamera()
+        }
+    }
+    
+}
+
+extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
+    
+    func numberOfItems(in carousel: iCarousel) -> Int {
+        return 10
+    }
+    
+    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
+        
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: carouselView.frame.width, height: carouselView.frame.height))
+        
+        let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
+        itemView.frame = view.frame
+        itemView.userImage.layer.cornerRadius = 25
+        itemView.feedImage.clipsToBounds = true
+        itemView.mainView.dropShadow(color: .white)
+        itemView.mainView.layer.cornerRadius = 10
+        view.backgroundColor = .white
+        view.clipsToBounds = true
+        view.addSubview(itemView)
+        
+        return view
+        
+    }
+    
+}
+
+extension HomeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
 }

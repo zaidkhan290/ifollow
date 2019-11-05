@@ -22,4 +22,23 @@ class FeedsView: UIView {
     @IBOutlet weak var likeView: UIView!
     @IBOutlet weak var feedBackView: UIView!
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    private func commonInit(){
+       
+      //  Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)
+        
+//        mainView.dropShadow(color: UIColor.white)
+//        //  mainView.backgroundColor = UIColor.lightGray
+//        mainView.layer.cornerRadius = 10
+//        userImage.layer.cornerRadius = 25
+    }
+    
 }

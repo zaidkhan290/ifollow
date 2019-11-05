@@ -8,6 +8,6 @@ target 'iFollow' do
   # Pods for iFollow
 
 pod 'IQKeyboardManagerSwift'
-
+pod 'iCarousel'
 
 end
