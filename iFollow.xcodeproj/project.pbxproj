@@ -31,6 +31,7 @@
 		189329D023705E510067077F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329CF23705E510067077F /* HomeViewController.swift */; };
 		189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329D2237061A70067077F /* StoryCollectionViewCell.swift */; };
 		189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189329D3237061A70067077F /* StoryCollectionViewCell.xib */; };
+		18B086432371AA71002D773E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B086422371AA71002D773E /* TabBarViewController.swift */; };
 		18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D81237184E2005C739F /* ExploreViewController.swift */; };
 		18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */; };
 		18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */; };
@@ -62,6 +63,7 @@
 		189329CF23705E510067077F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		189329D2237061A70067077F /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		189329D3237061A70067077F /* StoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoryCollectionViewCell.xib; sourceTree = "<group>"; };
+		18B086422371AA71002D773E /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		18C88D81237184E2005C739F /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStoriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllStoriesCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -152,7 +154,8 @@
 		1839089E236C7865009A28E6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				18C88D80237184BC005C739F /* Search Controller */,
+				18B086412371AA57002D773E /* Tab bar Controller */,
+				18C88D80237184BC005C739F /* Explore Controller */,
 				189329CE23705E2E0067077F /* Home Controllers */,
 				18307AB0236C86AF00A0A7C6 /* Account Controllers */,
 			);
@@ -199,12 +202,20 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		18C88D80237184BC005C739F /* Search Controller */ = {
+		18B086412371AA57002D773E /* Tab bar Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18B086422371AA71002D773E /* TabBarViewController.swift */,
+			);
+			path = "Tab bar Controller";
+			sourceTree = "<group>";
+		};
+		18C88D80237184BC005C739F /* Explore Controller */ = {
 			isa = PBXGroup;
 			children = (
 				18C88D81237184E2005C739F /* ExploreViewController.swift */,
 			);
-			path = "Search Controller";
+			path = "Explore Controller";
 			sourceTree = "<group>";
 		};
 		321A3F2ED6C77D47B34797F9 /* Frameworks */ = {
@@ -340,6 +351,7 @@
 				189329BA237014E90067077F /* Utility.swift in Sources */,
 				189329C7237023860067077F /* Theme.swift in Sources */,
 				189329BF23701EE50067077F /* SignupViewController.swift in Sources */,
+				18B086432371AA71002D773E /* TabBarViewController.swift in Sources */,
 				18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */,
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
 				189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */,

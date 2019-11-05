@@ -36,7 +36,7 @@ class SignupViewController: UIViewController {
     //MARK:- Actions
     
     @IBAction func btnStartTapped(_ sender: UIButton) {
-        let vc = Utility.getHomeViewController()
+        let vc = Utility.getTabBarViewController()
         self.present(vc, animated: true, completion: nil)
     }
     

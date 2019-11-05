@@ -31,20 +31,20 @@
                         <rect key="frame" x="25" y="5" width="200" height="449"/>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ellipse 34" translatesAutoresizingMaskIntoConstraints="NO" id="Q1K-0M-DDl">
-                        <rect key="frame" x="100" y="216" width="50" height="50"/>
+                        <rect key="frame" x="100" y="207" width="50" height="50"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="FaT-Ho-8vL"/>
                             <constraint firstAttribute="width" constant="50" id="b7W-bg-YxK"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mike" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="plF-hX-xep">
-                        <rect key="frame" x="109.5" y="266" width="31.5" height="17"/>
+                        <rect key="frame" x="109.5" y="257" width="31.5" height="17"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simply a dummy text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xti-Ib-Ef8">
-                        <rect key="frame" x="75" y="284" width="100.5" height="14"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dummy text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xti-Ib-Ef8">
+                        <rect key="frame" x="95" y="275" width="60" height="14"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="11"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -53,7 +53,7 @@
             <constraints>
                 <constraint firstItem="Xti-Ib-Ef8" firstAttribute="centerX" secondItem="Tir-Oz-8qP" secondAttribute="centerX" id="0dS-Fh-XVD"/>
                 <constraint firstItem="plF-hX-xep" firstAttribute="top" secondItem="Q1K-0M-DDl" secondAttribute="bottom" id="3o2-gh-dDT"/>
-                <constraint firstItem="Q1K-0M-DDl" firstAttribute="centerY" secondItem="Tir-Oz-8qP" secondAttribute="centerY" multiplier="1.05" id="JRn-pe-Vdj"/>
+                <constraint firstItem="Q1K-0M-DDl" firstAttribute="centerY" secondItem="Tir-Oz-8qP" secondAttribute="centerY" multiplier="1.01" id="JRn-pe-Vdj"/>
                 <constraint firstItem="Tir-Oz-8qP" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="LAO-em-gpV"/>
                 <constraint firstItem="Q1K-0M-DDl" firstAttribute="centerX" secondItem="Tir-Oz-8qP" secondAttribute="centerX" id="Mmj-lD-48x"/>
                 <constraint firstItem="Tir-Oz-8qP" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="ai2-fH-0wb"/>

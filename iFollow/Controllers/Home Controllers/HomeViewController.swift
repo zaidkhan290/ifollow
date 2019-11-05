@@ -59,9 +59,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         
         if (indexPath.row == 0){
             cell.userImage.isHidden = true
+            cell.addIcon.isHidden = false
         }
         else{
             cell.userImage.isHidden = false
+            cell.addIcon.isHidden = true
         }
         if(indexPath.row % 2 == 0){
             cell.storyImage.image = UIImage(named: "Rectangle 10")

@@ -12,6 +12,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var storyImage: UIImageView!
     @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var addIcon: UIImageView!
     
     override func awakeFromNib() {
         

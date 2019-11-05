@@ -38,13 +38,25 @@ class ExploreViewController: UIViewController {
         let allStoryCell = UINib(nibName: "AllStoriesCollectionViewCell", bundle: nil)
         self.allStoriesCollectionView.register(allStoryCell, forCellWithReuseIdentifier: "AllStories")
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        let allStoryCell = UINib(nibName: "AllStoriesCollectionViewCell", bundle: nil)
+        self.allStoriesCollectionView.register(allStoryCell, forCellWithReuseIdentifier: "AllStories")
+        
+        let cellHeight = (allStoriesCollectionView.bounds.height) / 2
+        
         let layout2 = UICollectionViewFlowLayout()
         layout2.scrollDirection = .horizontal
         layout2.minimumInteritemSpacing = 0
-        layout2.itemSize = CGSize(width: 120, height: (self.allStoriesCollectionView.bounds.height / 2) - 35)
+        layout2.itemSize = CGSize(width: 120, height: cellHeight)
         layout2.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         self.allStoriesCollectionView.collectionViewLayout = layout2
         self.allStoriesCollectionView.showsHorizontalScrollIndicator = false
+        self.allStoriesCollectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .right, animated: false)
+
     }
     
     //MARK:- Methods
@@ -73,9 +85,11 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
             
             if (indexPath.row == 0){
                 cell.userImage.isHidden = true
+                cell.addIcon.isHidden = false
             }
             else{
                 cell.userImage.isHidden = false
+                cell.addIcon.isHidden = true
             }
             if(indexPath.row % 2 == 0){
                 cell.storyImage.image = UIImage(named: "Rectangle 10")
