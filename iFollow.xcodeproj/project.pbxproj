@@ -15,6 +15,7 @@
 		18390894236C70DA009A28E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18390893236C70DA009A28E6 /* Assets.xcassets */; };
 		18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390895236C70DA009A28E6 /* LaunchScreen.storyboard */; };
 		183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839089F236C7A99009A28E6 /* MainViewController.swift */; };
+		183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */; };
 		18781C2023707001001BAF95 /* FeedsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18781C1F23707001001BAF95 /* FeedsView.xib */; };
 		18781C2223707019001BAF95 /* FeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C2123707019001BAF95 /* FeedsView.swift */; };
 		18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C23237087D3001BAF95 /* UIViewExtension.swift */; };
@@ -32,6 +33,9 @@
 		189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329D2237061A70067077F /* StoryCollectionViewCell.swift */; };
 		189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189329D3237061A70067077F /* StoryCollectionViewCell.xib */; };
 		18B086432371AA71002D773E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B086422371AA71002D773E /* TabBarViewController.swift */; };
+		18B82A312371CBDB00693F7F /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B82A302371CBDB00693F7F /* NotificationViewController.swift */; };
+		18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */; };
+		18B82A352371D05A00693F7F /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */; };
 		18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D81237184E2005C739F /* ExploreViewController.swift */; };
 		18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */; };
 		18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */; };
@@ -47,6 +51,7 @@
 		18390896236C70DA009A28E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18390898236C70DA009A28E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1839089F236C7A99009A28E6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
 		18781C1F23707001001BAF95 /* FeedsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedsView.xib; sourceTree = "<group>"; };
 		18781C2123707019001BAF95 /* FeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsView.swift; sourceTree = "<group>"; };
 		18781C23237087D3001BAF95 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
@@ -64,6 +69,9 @@
 		189329D2237061A70067077F /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		189329D3237061A70067077F /* StoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoryCollectionViewCell.xib; sourceTree = "<group>"; };
 		18B086422371AA71002D773E /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		18B82A302371CBDB00693F7F /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		18C88D81237184E2005C739F /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStoriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllStoriesCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -154,6 +162,7 @@
 		1839089E236C7865009A28E6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				18B82A2F2371CBBA00693F7F /* Notifications Controller */,
 				18B086412371AA57002D773E /* Tab bar Controller */,
 				18C88D80237184BC005C739F /* Explore Controller */,
 				189329CE23705E2E0067077F /* Home Controllers */,
@@ -177,6 +186,7 @@
 				189329C0237020900067077F /* Lato-Bold_0.ttf */,
 				189329C2237020910067077F /* Lato-Regular_0.ttf */,
 				189329C1237020900067077F /* Lato-Semibold_0.ttf */,
+				183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -198,6 +208,8 @@
 				18781C2123707019001BAF95 /* FeedsView.swift */,
 				18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */,
 				18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */,
+				18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */,
+				18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -208,6 +220,14 @@
 				18B086422371AA71002D773E /* TabBarViewController.swift */,
 			);
 			path = "Tab bar Controller";
+			sourceTree = "<group>";
+		};
+		18B82A2F2371CBBA00693F7F /* Notifications Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18B82A302371CBDB00693F7F /* NotificationViewController.swift */,
+			);
+			path = "Notifications Controller";
 			sourceTree = "<group>";
 		};
 		18C88D80237184BC005C739F /* Explore Controller */ = {
@@ -286,11 +306,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18B82A352371D05A00693F7F /* NotificationTableViewCell.xib in Resources */,
 				18781C2023707001001BAF95 /* FeedsView.xib in Resources */,
 				189329C3237020910067077F /* Lato-Bold_0.ttf in Resources */,
 				18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */,
 				189329C5237020910067077F /* Lato-Regular_0.ttf in Resources */,
 				189329C4237020910067077F /* Lato-Semibold_0.ttf in Resources */,
+				183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */,
 				189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */,
 				18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */,
 				18390894236C70DA009A28E6 /* Assets.xcassets in Resources */,
@@ -359,9 +381,11 @@
 				189329CD237035670067077F /* LabelExtension.swift in Sources */,
 				18781C2223707019001BAF95 /* FeedsView.swift in Sources */,
 				18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */,
+				18B82A312371CBDB00693F7F /* NotificationViewController.swift in Sources */,
 				189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
+				18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */,
 				18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,

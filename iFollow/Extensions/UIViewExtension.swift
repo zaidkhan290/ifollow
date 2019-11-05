@@ -19,4 +19,10 @@ extension UIView{
         self.layer.shadowRadius = 4.0
         self.layer.shadowOpacity = 1.0
     }
+    
+    func roundTopCorners(radius: CGFloat) {
+        self.clipsToBounds = true
+        self.layer.cornerRadius = radius
+        self.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+    }
 }

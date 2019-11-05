@@ -51,6 +51,7 @@ class TabBarViewController: UIViewController {
         
         homeController = Utility.getHomeViewController()
         exploreController = Utility.getExploreViewController()
+        notificationController = Utility.getNotificationViewController()
         
         changeTab()
         
@@ -105,7 +106,7 @@ class TabBarViewController: UIViewController {
             profileImage.image = UIImage(named: "profile")
             profileSelectedView.isHidden = true
             
-            remove(asChildViewController: [exploreController])
+            remove(asChildViewController: [exploreController, notificationController])
             add(asChildViewController: homeController)
             
         }
@@ -121,7 +122,7 @@ class TabBarViewController: UIViewController {
             profileImage.image = UIImage(named: "profile")
             profileSelectedView.isHidden = true
             
-            remove(asChildViewController: [homeController])
+            remove(asChildViewController: [homeController, notificationController])
             add(asChildViewController: exploreController)
             
         }
@@ -139,6 +140,9 @@ class TabBarViewController: UIViewController {
             searchSelectedView.isHidden = true
             profileImage.image = UIImage(named: "profile")
             profileSelectedView.isHidden = true
+            
+            remove(asChildViewController: [homeController, exploreController])
+            add(asChildViewController: notificationController)
             
         }
         else if (selectedIndex == 4){

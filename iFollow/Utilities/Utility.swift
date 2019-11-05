@@ -41,6 +41,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "ExploreViewController") as! ExploreViewController
     }
     
+    static func getNotificationViewController() -> NotificationViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "NotificationViewController") as! NotificationViewController
+    }
+    
     static func getTabBarViewController() -> TabBarViewController{
         return storyBoard.instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
     }
