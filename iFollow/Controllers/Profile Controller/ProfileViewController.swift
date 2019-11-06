@@ -33,6 +33,7 @@ class ProfileViewController: UIViewController {
         privateTalkView.layer.cornerRadius = 5
         privateTalkView.layer.borderWidth = 1
         privateTalkView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+        privateTalkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(privateChatTapped)))
         
         searchView.dropShadow(color: .white)
         searchView.layer.cornerRadius = 25
@@ -46,6 +47,11 @@ class ProfileViewController: UIViewController {
     
     
     //MARk:- Actions
+    
+    @objc func privateChatTapped(){
+        let vc = Utility.getChatBoxContainerViewController()
+        self.present(vc, animated: true, completion: nil)
+    }
     
     @IBAction func btnMenuTapped(_ sender: UIButton) {
     }

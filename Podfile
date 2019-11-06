@@ -9,5 +9,6 @@ target 'iFollow' do
 
 pod 'IQKeyboardManagerSwift'
 pod 'iCarousel'
+pod 'CarbonKit'
 
 end

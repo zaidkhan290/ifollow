@@ -57,6 +57,18 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
     }
     
+    static func getChatBoxContainerViewController() -> ChatBoxContainerViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "ChatBoxContainerViewController") as! ChatBoxContainerViewController
+    }
+    
+    static func getAllChatsListViewController() -> AllChatsListViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "AllChatsListViewController") as! AllChatsListViewController
+    }
+    
+    static func getAllGroupsListViewController() -> AllGroupsListViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "AllGroupsListViewController") as! AllGroupsListViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

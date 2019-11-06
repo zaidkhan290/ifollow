@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0A3F3D9CBF999C8D04FFA0B4 /* Pods_iFollow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */; };
+		182F62582372E94B00A55E52 /* ChatBoxContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F62572372E94B00A55E52 /* ChatBoxContainerViewController.swift */; };
+		182F625A2372E96A00A55E52 /* AllChatsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F62592372E96A00A55E52 /* AllChatsListViewController.swift */; };
+		182F625C2372E97600A55E52 /* AllGroupsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F625B2372E97600A55E52 /* AllGroupsListViewController.swift */; };
+		182F625F2372EB4E00A55E52 /* ChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F625D2372EB4E00A55E52 /* ChatListTableViewCell.swift */; };
+		182F62602372EB4E00A55E52 /* ChatListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182F625E2372EB4E00A55E52 /* ChatListTableViewCell.xib */; };
 		18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18307AB1236C86CE00A0A7C6 /* LoginViewController.swift */; };
 		18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18307AB4236C97CB00A0A7C6 /* StringExtension.swift */; };
 		1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839088C236C70D6009A28E6 /* AppDelegate.swift */; };
@@ -44,6 +49,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		182F62572372E94B00A55E52 /* ChatBoxContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBoxContainerViewController.swift; sourceTree = "<group>"; };
+		182F62592372E96A00A55E52 /* AllChatsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatsListViewController.swift; sourceTree = "<group>"; };
+		182F625B2372E97600A55E52 /* AllGroupsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsListViewController.swift; sourceTree = "<group>"; };
+		182F625D2372EB4E00A55E52 /* ChatListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewCell.swift; sourceTree = "<group>"; };
+		182F625E2372EB4E00A55E52 /* ChatListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatListTableViewCell.xib; sourceTree = "<group>"; };
 		18307AB1236C86CE00A0A7C6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		18307AB4236C97CB00A0A7C6 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		18390889236C70D6009A28E6 /* iFollow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iFollow.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +113,16 @@
 				262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		182F62562372E88900A55E52 /* Chat Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				182F62572372E94B00A55E52 /* ChatBoxContainerViewController.swift */,
+				182F62592372E96A00A55E52 /* AllChatsListViewController.swift */,
+				182F625B2372E97600A55E52 /* AllGroupsListViewController.swift */,
+			);
+			path = "Chat Controllers";
 			sourceTree = "<group>";
 		};
 		18307AB0236C86AF00A0A7C6 /* Account Controllers */ = {
@@ -166,6 +186,7 @@
 		1839089E236C7865009A28E6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				182F62562372E88900A55E52 /* Chat Controllers */,
 				18D0B3BA2372CBAC00C6BD06 /* Profile Controller */,
 				188574492372B8FB00985AC8 /* Camera Controller */,
 				18B82A2F2371CBBA00693F7F /* Notifications Controller */,
@@ -224,6 +245,8 @@
 				18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */,
 				18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */,
 				18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */,
+				182F625D2372EB4E00A55E52 /* ChatListTableViewCell.swift */,
+				182F625E2372EB4E00A55E52 /* ChatListTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -333,6 +356,7 @@
 				189329C3237020910067077F /* Lato-Bold_0.ttf in Resources */,
 				18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */,
 				189329C5237020910067077F /* Lato-Regular_0.ttf in Resources */,
+				182F62602372EB4E00A55E52 /* ChatListTableViewCell.xib in Resources */,
 				189329C4237020910067077F /* Lato-Semibold_0.ttf in Resources */,
 				183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */,
 				189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */,
@@ -400,6 +424,7 @@
 				18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */,
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
 				189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */,
+				182F625C2372E97600A55E52 /* AllGroupsListViewController.swift in Sources */,
 				189329C923702FE90067077F /* ForgotPasswordViewController.swift in Sources */,
 				189329CD237035670067077F /* LabelExtension.swift in Sources */,
 				18781C2223707019001BAF95 /* FeedsView.swift in Sources */,
@@ -407,9 +432,12 @@
 				18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */,
 				18B82A312371CBDB00693F7F /* NotificationViewController.swift in Sources */,
 				189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */,
+				182F62582372E94B00A55E52 /* ChatBoxContainerViewController.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
+				182F625F2372EB4E00A55E52 /* ChatListTableViewCell.swift in Sources */,
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
 				18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */,
+				182F625A2372E96A00A55E52 /* AllChatsListViewController.swift in Sources */,
 				18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
