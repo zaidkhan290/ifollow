@@ -53,6 +53,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "CameraViewController") as! CameraViewController
     }
     
+    static func getProfileViewController() -> ProfileViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

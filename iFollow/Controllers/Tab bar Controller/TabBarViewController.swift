@@ -51,6 +51,7 @@ class TabBarViewController: UIViewController {
         homeController = Utility.getHomeViewController()
         exploreController = Utility.getExploreViewController()
         notificationController = Utility.getNotificationViewController()
+        profileController = Utility.getProfileViewController()
         
         changeTab()
         
@@ -102,7 +103,7 @@ class TabBarViewController: UIViewController {
             profileImage.image = UIImage(named: "profile")
             profileSelectedView.isHidden = true
             
-            remove(asChildViewController: [exploreController, notificationController])
+            remove(asChildViewController: [exploreController, notificationController, profileController])
             add(asChildViewController: homeController)
             
         }
@@ -118,7 +119,7 @@ class TabBarViewController: UIViewController {
             profileImage.image = UIImage(named: "profile")
             profileSelectedView.isHidden = true
             
-            remove(asChildViewController: [homeController, notificationController])
+            remove(asChildViewController: [homeController, notificationController, profileController])
             add(asChildViewController: exploreController)
             
         }
@@ -137,7 +138,7 @@ class TabBarViewController: UIViewController {
             profileImage.image = UIImage(named: "profile")
             profileSelectedView.isHidden = true
             
-            remove(asChildViewController: [homeController, exploreController])
+            remove(asChildViewController: [homeController, exploreController, profileController])
             add(asChildViewController: notificationController)
             
         }
@@ -152,6 +153,9 @@ class TabBarViewController: UIViewController {
             searchSelectedView.isHidden = true
             notificationImage.image = UIImage(named: "notification")
             notificationSelectedView.isHidden = true
+            
+            remove(asChildViewController: [homeController, exploreController, notificationController])
+            add(asChildViewController: profileController)
             
         }
     }
