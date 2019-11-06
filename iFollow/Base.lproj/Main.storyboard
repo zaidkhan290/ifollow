@@ -748,7 +748,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E7w-Dh-cgK">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wbu-yt-hY1">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E7w-Dh-cgK">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
@@ -792,7 +796,11 @@
                             <constraint firstItem="Zcm-Q6-Kfl" firstAttribute="top" secondItem="WSe-4k-XPy" secondAttribute="top" constant="20" id="D5X-Sd-YOP"/>
                             <constraint firstItem="E7w-Dh-cgK" firstAttribute="leading" secondItem="WSe-4k-XPy" secondAttribute="leading" id="K5T-tu-IM2"/>
                             <constraint firstItem="ZdE-8t-qjH" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" multiplier="0.5" id="Kpy-2b-gOs"/>
+                            <constraint firstItem="WSe-4k-XPy" firstAttribute="bottom" secondItem="wbu-yt-hY1" secondAttribute="bottom" id="NFU-A4-mM0"/>
                             <constraint firstItem="E7w-Dh-cgK" firstAttribute="top" secondItem="3tR-l5-VkQ" secondAttribute="top" id="NdG-cL-Ib6"/>
+                            <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="wbu-yt-hY1" secondAttribute="trailing" id="NhD-EX-jtv"/>
+                            <constraint firstItem="wbu-yt-hY1" firstAttribute="top" secondItem="3tR-l5-VkQ" secondAttribute="top" id="VGy-Cd-8a7"/>
+                            <constraint firstItem="wbu-yt-hY1" firstAttribute="leading" secondItem="WSe-4k-XPy" secondAttribute="leading" id="dwl-IP-Jwj"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="E7w-Dh-cgK" secondAttribute="trailing" id="gcx-oz-ZVy"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="bottom" secondItem="E7w-Dh-cgK" secondAttribute="bottom" id="jWe-9H-uml"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="bottom" secondItem="sw2-9r-yua" secondAttribute="bottom" constant="40" id="kz2-zM-m2g"/>
@@ -807,6 +815,7 @@
                         <outlet property="btnFlash" destination="ZdE-8t-qjH" id="0YM-Ne-uQb"/>
                         <outlet property="btnRotate" destination="9hw-sH-gi9" id="0f8-W3-RB1"/>
                         <outlet property="cameraView" destination="E7w-Dh-cgK" id="0sH-8F-RHK"/>
+                        <outlet property="previewView" destination="wbu-yt-hY1" id="IPI-4D-Dnl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2gb-bH-qed" userLabel="First Responder" sceneMemberID="firstResponder"/>
