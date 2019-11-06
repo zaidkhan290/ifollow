@@ -13,7 +13,6 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var carouselView: iCarousel!
     @IBOutlet weak var storyCollectionView: UICollectionView!
-    var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,11 +37,8 @@ class HomeViewController: UIViewController {
     //MARK:- Methods
     
     func openCamera(){
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-        imagePicker.mediaTypes = ["public.image", "public.movie"]
-        imagePicker.sourceType = .camera
-        self.present(imagePicker, animated: true, completion: nil)
+        let vc = Utility.getCameraViewController()
+        self.present(vc, animated: true, completion: nil)
     }
     
 }
@@ -105,18 +101,6 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         
         return view
         
-    }
-    
-}
-
-extension HomeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
     }
     
 }

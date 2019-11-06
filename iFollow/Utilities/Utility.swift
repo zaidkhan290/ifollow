@@ -49,6 +49,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
     }
     
+    static func getCameraViewController() -> CameraViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "CameraViewController") as! CameraViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

@@ -20,6 +20,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires camera permission for sharing your stories</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app requires photo library permission for sharing your stories</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Bold_0.ttf</string>
@@ -38,8 +42,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -48,9 +50,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>This app requires camera permission for sharing your stories</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This app requires photo library permission for sharing your stories</string>
 </dict>
 </plist>

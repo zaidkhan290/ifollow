@@ -19,6 +19,7 @@
 		18781C2023707001001BAF95 /* FeedsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18781C1F23707001001BAF95 /* FeedsView.xib */; };
 		18781C2223707019001BAF95 /* FeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C2123707019001BAF95 /* FeedsView.swift */; };
 		18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C23237087D3001BAF95 /* UIViewExtension.swift */; };
+		1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885744A2372B91900985AC8 /* CameraViewController.swift */; };
 		189329BA237014E90067077F /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329B9237014E90067077F /* Utility.swift */; };
 		189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BB237015D80067077F /* ViewControllerExtension.swift */; };
 		189329BF23701EE50067077F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BE23701EE50067077F /* SignupViewController.swift */; };
@@ -55,6 +56,7 @@
 		18781C1F23707001001BAF95 /* FeedsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedsView.xib; sourceTree = "<group>"; };
 		18781C2123707019001BAF95 /* FeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsView.swift; sourceTree = "<group>"; };
 		18781C23237087D3001BAF95 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		1885744A2372B91900985AC8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		189329B9237014E90067077F /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		189329BB237015D80067077F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		189329BE23701EE50067077F /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		1839089E236C7865009A28E6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				188574492372B8FB00985AC8 /* Camera Controller */,
 				18B82A2F2371CBBA00693F7F /* Notifications Controller */,
 				18B086412371AA57002D773E /* Tab bar Controller */,
 				18C88D80237184BC005C739F /* Explore Controller */,
@@ -169,6 +172,14 @@
 				18307AB0236C86AF00A0A7C6 /* Account Controllers */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		188574492372B8FB00985AC8 /* Camera Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1885744A2372B91900985AC8 /* CameraViewController.swift */,
+			);
+			path = "Camera Controller";
 			sourceTree = "<group>";
 		};
 		189329B8237014D50067077F /* Utilities */ = {
@@ -380,6 +391,7 @@
 				189329C923702FE90067077F /* ForgotPasswordViewController.swift in Sources */,
 				189329CD237035670067077F /* LabelExtension.swift in Sources */,
 				18781C2223707019001BAF95 /* FeedsView.swift in Sources */,
+				1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */,
 				18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */,
 				18B82A312371CBDB00693F7F /* NotificationViewController.swift in Sources */,
 				189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */,
@@ -535,6 +547,7 @@
 			baseConfigurationReference = 2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 945L5FT86U;
 				INFOPLIST_FILE = iFollow/Info.plist;
@@ -544,6 +557,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appshah.iFollow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -554,6 +568,7 @@
 			baseConfigurationReference = 262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 945L5FT86U;
 				INFOPLIST_FILE = iFollow/Info.plist;
@@ -563,6 +578,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appshah.iFollow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

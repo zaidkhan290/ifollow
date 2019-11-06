@@ -516,6 +516,79 @@
             </objects>
             <point key="canvasLocation" x="2379.7101449275365" y="778.53260869565224"/>
         </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="0gv-eP-WcD">
+            <objects>
+                <viewController storyboardIdentifier="CameraViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="S2Q-oF-kr8" customClass="CameraViewController" customModule="iFollow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3tR-l5-VkQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E7w-Dh-cgK">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zcm-Q6-Kfl">
+                                <rect key="frame" x="20" y="40" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="6jE-k7-hY6"/>
+                                    <constraint firstAttribute="height" constant="25" id="rxu-6M-gfp"/>
+                                </constraints>
+                                <state key="normal" image="back"/>
+                                <connections>
+                                    <action selector="btnBackTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="Sij-PY-XqG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sw2-9r-yua">
+                                <rect key="frame" x="199" y="674" width="16" height="22"/>
+                                <state key="normal" image="capture"/>
+                                <connections>
+                                    <action selector="btnCaptureTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="SXF-KF-PHI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZdE-8t-qjH">
+                                <rect key="frame" x="95.666666666666671" y="674" width="16" height="22"/>
+                                <state key="normal" image="flash"/>
+                                <connections>
+                                    <action selector="btnFlashTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="oam-PD-ZL5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hw-sH-gi9">
+                                <rect key="frame" x="302.66666666666669" y="674" width="16" height="22"/>
+                                <state key="normal" image="rotate"/>
+                                <connections>
+                                    <action selector="btnRotateTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="wNd-M3-2Nb"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="sw2-9r-yua" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="56I-q1-l35"/>
+                            <constraint firstItem="ZdE-8t-qjH" firstAttribute="centerY" secondItem="sw2-9r-yua" secondAttribute="centerY" id="9O6-fU-0Td"/>
+                            <constraint firstItem="Zcm-Q6-Kfl" firstAttribute="top" secondItem="WSe-4k-XPy" secondAttribute="top" constant="20" id="D5X-Sd-YOP"/>
+                            <constraint firstItem="E7w-Dh-cgK" firstAttribute="leading" secondItem="WSe-4k-XPy" secondAttribute="leading" id="K5T-tu-IM2"/>
+                            <constraint firstItem="ZdE-8t-qjH" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" multiplier="0.5" id="Kpy-2b-gOs"/>
+                            <constraint firstItem="E7w-Dh-cgK" firstAttribute="top" secondItem="3tR-l5-VkQ" secondAttribute="top" id="NdG-cL-Ib6"/>
+                            <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="E7w-Dh-cgK" secondAttribute="trailing" id="gcx-oz-ZVy"/>
+                            <constraint firstItem="WSe-4k-XPy" firstAttribute="bottom" secondItem="E7w-Dh-cgK" secondAttribute="bottom" id="jWe-9H-uml"/>
+                            <constraint firstItem="WSe-4k-XPy" firstAttribute="bottom" secondItem="sw2-9r-yua" secondAttribute="bottom" constant="40" id="kz2-zM-m2g"/>
+                            <constraint firstItem="9hw-sH-gi9" firstAttribute="centerY" secondItem="sw2-9r-yua" secondAttribute="centerY" id="lbW-Hs-zGc"/>
+                            <constraint firstItem="Zcm-Q6-Kfl" firstAttribute="leading" secondItem="WSe-4k-XPy" secondAttribute="leading" constant="20" id="mOe-kA-cnO"/>
+                            <constraint firstItem="9hw-sH-gi9" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" multiplier="1.5" id="p2k-3E-Pxw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="WSe-4k-XPy"/>
+                    </view>
+                    <connections>
+                        <outlet property="btnCapture" destination="sw2-9r-yua" id="RGZ-Da-2YM"/>
+                        <outlet property="btnFlash" destination="ZdE-8t-qjH" id="0YM-Ne-uQb"/>
+                        <outlet property="btnRotate" destination="9hw-sH-gi9" id="0f8-W3-RB1"/>
+                        <outlet property="cameraView" destination="E7w-Dh-cgK" id="0sH-8F-RHK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2gb-bH-qed" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3060.8695652173915" y="778.53260869565224"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="rVj-H8-KZ1">
             <objects>
@@ -1174,7 +1247,9 @@
         <image name="Mask Group 6" width="248" height="220"/>
         <image name="add" width="64" height="64"/>
         <image name="back" width="18.666666030883789" height="15.333333015441895"/>
+        <image name="capture" width="55" height="55"/>
         <image name="email" width="17" height="10.333333015441895"/>
+        <image name="flash" width="34.333332061767578" height="42.666667938232422"/>
         <image name="footprint" width="244.33332824707031" height="267.33334350585938"/>
         <image name="footprint_login" width="163" height="178.33332824707031"/>
         <image name="homeSelected" width="24" height="21.666666030883789"/>
@@ -1183,6 +1258,7 @@
         <image name="notification" width="12.333333015441895" height="23"/>
         <image name="password" width="17" height="19.666666030883789"/>
         <image name="profile" width="24" height="24"/>
+        <image name="rotate" width="37.333332061767578" height="35.333332061767578"/>
         <image name="search" width="24" height="24"/>
         <image name="searchSelected" width="24" height="24"/>
         <image name="username" width="17" height="17"/>

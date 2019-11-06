@@ -15,8 +15,6 @@ class ExploreViewController: UIViewController {
     @IBOutlet weak var recentStoriesCollectionView: UICollectionView!
     @IBOutlet weak var allStoriesCollectionView: UICollectionView!
     
-    var imagePicker = UIImagePickerController()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,11 +60,8 @@ class ExploreViewController: UIViewController {
     //MARK:- Methods
     
     func openCamera(){
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-        imagePicker.mediaTypes = ["public.image", "public.movie"]
-        imagePicker.sourceType = .camera
-        self.present(imagePicker, animated: true, completion: nil)
+        let vc = Utility.getCameraViewController()
+        self.present(vc, animated: true, completion: nil)
     }
     
 }
@@ -119,18 +114,6 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
         if (indexPath.row == 0 && collectionView == recentStoriesCollectionView){
             self.openCamera()
         }
-    }
-    
-}
-
-extension ExploreViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
     }
     
 }

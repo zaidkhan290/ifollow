@@ -32,7 +32,6 @@ class TabBarViewController: UIViewController {
     @IBOutlet weak var profileSelectedView: UIView!
     
     var selectedIndex = 0
-    var imagePicker = UIImagePickerController()
     
     var homeController = UIViewController()
     var exploreController = UIViewController()
@@ -85,11 +84,8 @@ class TabBarViewController: UIViewController {
     }
     
     func openCamera(){
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-        imagePicker.mediaTypes = ["public.image", "public.movie"]
-        imagePicker.sourceType = .camera
-        self.present(imagePicker, animated: true, completion: nil)
+        let vc = Utility.getCameraViewController()
+        self.present(vc, animated: true, completion: nil)
     }
     
     func changeTab(){
@@ -177,16 +173,4 @@ class TabBarViewController: UIViewController {
         }
         
     }
-}
-
-extension TabBarViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
 }
