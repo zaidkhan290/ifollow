@@ -51,7 +51,9 @@ class ProfileViewController: UIViewController {
     
     @objc func privateChatTapped(){
         let vc = Utility.getChatBoxContainerViewController()
-        self.present(vc, animated: true, completion: nil)
+        let navigationVC = UINavigationController(rootViewController: vc)
+        navigationVC.navigationBar.isHidden = true
+        self.present(navigationVC, animated: true, completion: nil)
     }
     
     @objc func editViewTapped(){

@@ -16,6 +16,9 @@ struct Theme {
     static let editProfileDoneButtonColor = UIColor.init(red: 237.0/255.0, green: 58.0/255.0, blue: 33.0/255.0, alpha: 1.0)
     static let searchFieldColor = UIColor.init(red: 179.0/255.0, green: 185.0/255.0, blue: 190.0/255.0, alpha: 1.0)
     static let profileLabelsYellowColor = UIColor.init(red: 241.0/255.0, green: 173.0/255.0, blue: 26.0/255.0, alpha: 1.0)
+    static let privateChatContainerColor = UIColor.init(red: 33.0/255.0, green: 31.0/255.0, blue: 25.0/255.0, alpha: 1.0)
+    static let privateChatBoxTabsColor = UIColor.init(red: 133.0/255.0, green: 133.0/255.0, blue: 133.0/255.0, alpha: 1.0)
+    static let privateChatBoxSearchBarColor = UIColor.init(red: 43.0/255.0, green: 43.0/255.0, blue: 43.0/255.0, alpha: 1.0)
     
     static func getLatoRegularFontOfSize(size: CGFloat) -> UIFont{
         return UIFont(name: "Lato-Regular", size: size)!

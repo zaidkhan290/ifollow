@@ -10,7 +10,8 @@ import UIKit
 import CarbonKit
 
 class ChatBoxContainerViewController: UIViewController {
-
+    
+    @IBOutlet weak var privateIcon: UIImageView!
     @IBOutlet weak var chatListView: UIView!
     @IBOutlet weak var allView: UIView!
     @IBOutlet weak var allSelectedView: UIView!
@@ -33,6 +34,8 @@ class ChatBoxContainerViewController: UIViewController {
         
         allView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(allTapped)))
         groupView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(groupsTapped)))
+        privateIcon.isUserInteractionEnabled = true
+        privateIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(privateIconTapped)))
         
         changeTab()
         
@@ -55,8 +58,11 @@ class ChatBoxContainerViewController: UIViewController {
     @IBAction func btnAddGroupTapped(_ sender: UIButton) {
     }
     
-    
-    
+    @objc func privateIconTapped(){
+        let vc = Utility.getPrivateChatBoxViewControllers()
+        self.pushToVC(vc: vc)
+    }
+
     @objc func allTapped(){
         selectedIndex = 0
         changeTab()

@@ -77,6 +77,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
     }
     
+    static func getPrivateChatBoxViewControllers() -> PrivateChatBoxViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "PrivateChatBoxViewController") as! PrivateChatBoxViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

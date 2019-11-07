@@ -16,12 +16,22 @@ class AllGroupsListViewController: UIViewController {
     @IBOutlet weak var txtFieldSearch: UITextField!
     @IBOutlet weak var chatListTableView: UITableView!
     
+    var isPrivateChat = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        searchView.dropShadow(color: .white)
-        searchView.layer.cornerRadius = 25
-        Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
+        if (isPrivateChat){
+            searchView.dropShadow(color: Theme.privateChatBoxSearchBarColor)
+            searchView.layer.cornerRadius = 25
+            Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: .white)
+            self.view.backgroundColor = .clear
+        }
+        else{
+            searchView.dropShadow(color: .white)
+            searchView.layer.cornerRadius = 25
+            Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
+        }
         
         let cellNib = UINib(nibName: "ChatListTableViewCell", bundle: nil)
         chatListTableView.register(cellNib, forCellReuseIdentifier: "ChatListCell")
@@ -40,6 +50,7 @@ extension AllGroupsListViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as! ChatListTableViewCell
+        cell.backgroundColor = isPrivateChat ? .clear : .white
         cell.lblUserMessage.text = "Watson, Pollan, Kane..(15 others)"
         return cell
         
