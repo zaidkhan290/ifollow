@@ -27,6 +27,7 @@
 		185640E7237426B600CC2777 /* MenuSeperatorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640E5237426B600CC2777 /* MenuSeperatorTableViewCell.swift */; };
 		185640E8237426B600CC2777 /* MenuSeperatorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185640E6237426B600CC2777 /* MenuSeperatorTableViewCell.xib */; };
 		185640EA2374444D00CC2777 /* PrivateChatBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640E92374444D00CC2777 /* PrivateChatBoxViewController.swift */; };
+		185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */; };
 		18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF52373209D007F8BF2 /* EditProfileViewController.swift */; };
 		18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */; };
 		18706FFA237323DB007F8BF2 /* EditProfileImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */; };
@@ -85,6 +86,7 @@
 		185640E5237426B600CC2777 /* MenuSeperatorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSeperatorTableViewCell.swift; sourceTree = "<group>"; };
 		185640E6237426B600CC2777 /* MenuSeperatorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuSeperatorTableViewCell.xib; sourceTree = "<group>"; };
 		185640E92374444D00CC2777 /* PrivateChatBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateChatBoxViewController.swift; sourceTree = "<group>"; };
+		185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
 		18706FF52373209D007F8BF2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageTableViewCell.swift; sourceTree = "<group>"; };
 		18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileImageTableViewCell.xib; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 			children = (
 				18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */,
 				18706FF52373209D007F8BF2 /* EditProfileViewController.swift */,
+				185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */,
 			);
 			path = "Profile Controller";
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				18706FFD23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
+				185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */,
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,
 				18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */,
 				185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */,

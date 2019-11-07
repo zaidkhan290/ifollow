@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol FeedsViewDelegate: class {
+    func userImageTapped(index: Int)
+}
+
 class FeedsView: UIView {
     
     @IBOutlet weak var mainView: UIView!
@@ -22,6 +26,9 @@ class FeedsView: UIView {
     @IBOutlet weak var likeView: UIView!
     @IBOutlet weak var feedBackView: UIView!
     
+    var index: Int!
+    var delegate: FeedsViewDelegate!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -32,6 +39,9 @@ class FeedsView: UIView {
     }
     
     private func commonInit(){
+        
+        userImage.isUserInteractionEnabled = true
+        userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped)))
        
       //  Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)
         
@@ -41,4 +51,9 @@ class FeedsView: UIView {
 //        userImage.layer.cornerRadius = 25
     }
     
+    @objc func userImageTapped(){
+        if (delegate != nil){
+            self.delegate.userImageTapped(index: index)
+        }
+    }
 }

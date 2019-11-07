@@ -79,7 +79,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
 }
 
-extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
+extension HomeViewController: iCarouselDataSource, iCarouselDelegate, FeedsViewDelegate{
     
     func numberOfItems(in carousel: iCarousel) -> Int {
         return 10
@@ -90,6 +90,10 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         let view = UIView(frame: CGRect(x: 0, y: 0, width: carouselView.frame.width, height: carouselView.frame.height))
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
+        itemView.index = index
+        itemView.delegate = self
+        itemView.userImage.isUserInteractionEnabled = true
+        itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTaped)))
         itemView.frame = view.frame
         itemView.userImage.layer.cornerRadius = 25
         itemView.feedImage.clipsToBounds = true
@@ -103,4 +107,13 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         
     }
     
+    func userImageTapped(index: Int) {
+        let vc = Utility.getOtherUserProfileViewController()
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func userImageTaped(){
+        let vc = Utility.getOtherUserProfileViewController()
+        self.present(vc, animated: true, completion: nil)
+    }
 }
