@@ -1086,6 +1086,81 @@
             </objects>
             <point key="canvasLocation" x="4459" y="779"/>
         </scene>
+        <!--Edit Profile View Controller-->
+        <scene sceneID="RaY-sC-vTM">
+            <objects>
+                <viewController storyboardIdentifier="EditProfileViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AUl-iU-rn1" customClass="EditProfileViewController" customModule="iFollow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hri-o8-Yle">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Bg" translatesAutoresizingMaskIntoConstraints="NO" id="7Ae-VO-L3f">
+                                <rect key="frame" x="-2" y="-3" width="420" height="739"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2j-X1-eIt">
+                                <rect key="frame" x="20" y="40" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="vNr-Qu-1a5"/>
+                                    <constraint firstAttribute="width" constant="25" id="z2L-vr-iPh"/>
+                                </constraints>
+                                <state key="normal" image="back"/>
+                                <connections>
+                                    <action selector="btnBackTapped:" destination="AUl-iU-rn1" eventType="touchUpInside" id="KAS-kl-KuB"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAH-kt-3SO">
+                                <rect key="frame" x="146.66666666666666" y="40" width="120.99999999999997" height="30"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ds2-dN-oNg">
+                                <rect key="frame" x="0.0" y="110" width="414" height="626"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7gi-ya-dQw">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="626"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="AUl-iU-rn1" id="5ye-Xo-oTA"/>
+                                            <outlet property="delegate" destination="AUl-iU-rn1" id="50G-zr-Rka"/>
+                                        </connections>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="7gi-ya-dQw" secondAttribute="trailing" id="PXD-77-Bvx"/>
+                                    <constraint firstItem="7gi-ya-dQw" firstAttribute="top" secondItem="Ds2-dN-oNg" secondAttribute="top" id="W4g-LI-xYE"/>
+                                    <constraint firstAttribute="bottom" secondItem="7gi-ya-dQw" secondAttribute="bottom" id="ZAU-Ms-8tQ"/>
+                                    <constraint firstItem="7gi-ya-dQw" firstAttribute="leading" secondItem="Ds2-dN-oNg" secondAttribute="leading" id="mGs-5m-8jA"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="CAH-kt-3SO" firstAttribute="centerX" secondItem="hri-o8-Yle" secondAttribute="centerX" id="FJ7-bu-uEo"/>
+                            <constraint firstItem="DsM-dd-k9b" firstAttribute="trailing" secondItem="Ds2-dN-oNg" secondAttribute="trailing" id="JZQ-gM-d8Z"/>
+                            <constraint firstItem="DsM-dd-k9b" firstAttribute="trailing" secondItem="7Ae-VO-L3f" secondAttribute="trailing" constant="-4" id="M8z-SF-FI1"/>
+                            <constraint firstItem="w2j-X1-eIt" firstAttribute="top" secondItem="DsM-dd-k9b" secondAttribute="top" constant="20" id="MdP-9I-7Ap"/>
+                            <constraint firstItem="Ds2-dN-oNg" firstAttribute="leading" secondItem="DsM-dd-k9b" secondAttribute="leading" id="NLf-go-JQ6"/>
+                            <constraint firstItem="w2j-X1-eIt" firstAttribute="leading" secondItem="DsM-dd-k9b" secondAttribute="leading" constant="20" id="NUp-Dg-jiv"/>
+                            <constraint firstItem="Ds2-dN-oNg" firstAttribute="top" secondItem="CAH-kt-3SO" secondAttribute="bottom" constant="40" id="YR1-hO-Oop"/>
+                            <constraint firstItem="CAH-kt-3SO" firstAttribute="top" secondItem="DsM-dd-k9b" secondAttribute="top" constant="20" id="YYp-NR-nNZ"/>
+                            <constraint firstAttribute="bottom" secondItem="7Ae-VO-L3f" secondAttribute="bottom" id="m8w-aU-HyH"/>
+                            <constraint firstItem="7Ae-VO-L3f" firstAttribute="top" secondItem="hri-o8-Yle" secondAttribute="top" constant="-3" id="udI-j0-OiL"/>
+                            <constraint firstItem="7Ae-VO-L3f" firstAttribute="leading" secondItem="DsM-dd-k9b" secondAttribute="leading" constant="-2" id="yET-Qd-3Wk"/>
+                            <constraint firstItem="DsM-dd-k9b" firstAttribute="bottom" secondItem="Ds2-dN-oNg" secondAttribute="bottom" id="zO7-uz-XDk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="DsM-dd-k9b"/>
+                    </view>
+                    <connections>
+                        <outlet property="editProfileTableView" destination="7gi-ya-dQw" id="zee-zm-XI3"/>
+                        <outlet property="editView" destination="Ds2-dN-oNg" id="es3-1u-gmS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bKm-th-YPf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5129" y="779"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="rVj-H8-KZ1">
             <objects>

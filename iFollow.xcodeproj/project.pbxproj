@@ -21,6 +21,15 @@
 		18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390895236C70DA009A28E6 /* LaunchScreen.storyboard */; };
 		183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839089F236C7A99009A28E6 /* MainViewController.swift */; };
 		183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */; };
+		18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF52373209D007F8BF2 /* EditProfileViewController.swift */; };
+		18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */; };
+		18706FFA237323DB007F8BF2 /* EditProfileImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */; };
+		18706FFD23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FFB23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift */; };
+		18706FFE23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18706FFC23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.xib */; };
+		1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FFF23732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift */; };
+		1870700223732CF9007F8BF2 /* EditProfileGenderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1870700023732CF9007F8BF2 /* EditProfileGenderTableViewCell.xib */; };
+		1870700523732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1870700323732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.swift */; };
+		1870700623732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1870700423732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.xib */; };
 		18781C2023707001001BAF95 /* FeedsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18781C1F23707001001BAF95 /* FeedsView.xib */; };
 		18781C2223707019001BAF95 /* FeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C2123707019001BAF95 /* FeedsView.swift */; };
 		18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C23237087D3001BAF95 /* UIViewExtension.swift */; };
@@ -64,6 +73,15 @@
 		18390898236C70DA009A28E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1839089F236C7A99009A28E6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		18706FF52373209D007F8BF2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageTableViewCell.swift; sourceTree = "<group>"; };
+		18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileImageTableViewCell.xib; sourceTree = "<group>"; };
+		18706FFB23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTextFieldsTableViewCell.swift; sourceTree = "<group>"; };
+		18706FFC23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileTextFieldsTableViewCell.xib; sourceTree = "<group>"; };
+		18706FFF23732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileGenderTableViewCell.swift; sourceTree = "<group>"; };
+		1870700023732CF9007F8BF2 /* EditProfileGenderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileGenderTableViewCell.xib; sourceTree = "<group>"; };
+		1870700323732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileSaveButtonTableViewCell.swift; sourceTree = "<group>"; };
+		1870700423732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileSaveButtonTableViewCell.xib; sourceTree = "<group>"; };
 		18781C1F23707001001BAF95 /* FeedsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedsView.xib; sourceTree = "<group>"; };
 		18781C2123707019001BAF95 /* FeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsView.swift; sourceTree = "<group>"; };
 		18781C23237087D3001BAF95 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
@@ -247,6 +265,14 @@
 				18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */,
 				182F625D2372EB4E00A55E52 /* ChatListTableViewCell.swift */,
 				182F625E2372EB4E00A55E52 /* ChatListTableViewCell.xib */,
+				18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */,
+				18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */,
+				18706FFB23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift */,
+				18706FFC23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.xib */,
+				18706FFF23732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift */,
+				1870700023732CF9007F8BF2 /* EditProfileGenderTableViewCell.xib */,
+				1870700323732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.swift */,
+				1870700423732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -279,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */,
+				18706FF52373209D007F8BF2 /* EditProfileViewController.swift */,
 			);
 			path = "Profile Controller";
 			sourceTree = "<group>";
@@ -353,13 +380,17 @@
 			files = (
 				18B82A352371D05A00693F7F /* NotificationTableViewCell.xib in Resources */,
 				18781C2023707001001BAF95 /* FeedsView.xib in Resources */,
+				18706FFA237323DB007F8BF2 /* EditProfileImageTableViewCell.xib in Resources */,
 				189329C3237020910067077F /* Lato-Bold_0.ttf in Resources */,
+				1870700223732CF9007F8BF2 /* EditProfileGenderTableViewCell.xib in Resources */,
 				18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */,
 				189329C5237020910067077F /* Lato-Regular_0.ttf in Resources */,
 				182F62602372EB4E00A55E52 /* ChatListTableViewCell.xib in Resources */,
 				189329C4237020910067077F /* Lato-Semibold_0.ttf in Resources */,
 				183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */,
+				18706FFE23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.xib in Resources */,
 				189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */,
+				1870700623732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.xib in Resources */,
 				18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */,
 				18390894236C70DA009A28E6 /* Assets.xcassets in Resources */,
 				18390892236C70D6009A28E6 /* Main.storyboard in Resources */,
@@ -415,6 +446,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1870700523732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.swift in Sources */,
 				18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */,
 				189329BA237014E90067077F /* Utility.swift in Sources */,
 				189329C7237023860067077F /* Theme.swift in Sources */,
@@ -423,6 +455,7 @@
 				18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */,
 				18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */,
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
+				1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */,
 				189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */,
 				182F625C2372E97600A55E52 /* AllGroupsListViewController.swift in Sources */,
 				189329C923702FE90067077F /* ForgotPasswordViewController.swift in Sources */,
@@ -440,7 +473,10 @@
 				182F625A2372E96A00A55E52 /* AllChatsListViewController.swift in Sources */,
 				18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
+				18706FFD23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
+				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,
+				18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

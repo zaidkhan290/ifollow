@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import AVFoundation
 
-class CameraViewController: UIViewController {
+class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
 
     @IBOutlet weak var previewView: UIView!
     @IBOutlet weak var cameraView: UIImageView!
@@ -85,6 +85,8 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func btnCaptureTapped(_ sender: UIButton) {
+        let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
+        stillImageOutput.capturePhoto(with: settings, delegate: self)
     }
     
     @IBAction func btnFlashTapped(_ sender: UIButton) {
@@ -93,5 +95,15 @@ class CameraViewController: UIViewController {
     
     @IBAction func btnRotateTapped(_ sender: UIButton) {
         
+    }
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        
+        guard let imageData = photo.fileDataRepresentation()
+            else { return }
+        
+        let image = UIImage(data: imageData)
+        cameraView.isHidden = false
+        cameraView.image = image
     }
 }

@@ -69,6 +69,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "AllGroupsListViewController") as! AllGroupsListViewController
     }
     
+    static func getEditProfileViewController() -> EditProfileViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "EditProfileViewController") as! EditProfileViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

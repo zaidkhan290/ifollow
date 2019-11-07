@@ -29,6 +29,7 @@ class ProfileViewController: UIViewController {
         editView.layer.cornerRadius = 15
         editView.layer.borderWidth = 1
         editView.layer.borderColor = UIColor.black.cgColor
+        editView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editViewTapped)))
         
         privateTalkView.layer.cornerRadius = 5
         privateTalkView.layer.borderWidth = 1
@@ -50,6 +51,11 @@ class ProfileViewController: UIViewController {
     
     @objc func privateChatTapped(){
         let vc = Utility.getChatBoxContainerViewController()
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func editViewTapped(){
+        let vc = Utility.getEditProfileViewController()
         self.present(vc, animated: true, completion: nil)
     }
     
