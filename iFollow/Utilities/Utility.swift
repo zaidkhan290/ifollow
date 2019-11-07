@@ -73,6 +73,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "EditProfileViewController") as! EditProfileViewController
     }
     
+    static func getMenuViewController() -> MenuViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

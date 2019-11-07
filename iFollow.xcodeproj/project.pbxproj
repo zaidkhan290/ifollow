@@ -21,6 +21,11 @@
 		18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390895236C70DA009A28E6 /* LaunchScreen.storyboard */; };
 		183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839089F236C7A99009A28E6 /* MainViewController.swift */; };
 		183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */; };
+		185640E023741B7800CC2777 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640DF23741B7800CC2777 /* MenuViewController.swift */; };
+		185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640E1237423C100CC2777 /* MenuTableViewCell.swift */; };
+		185640E4237423C100CC2777 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185640E2237423C100CC2777 /* MenuTableViewCell.xib */; };
+		185640E7237426B600CC2777 /* MenuSeperatorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640E5237426B600CC2777 /* MenuSeperatorTableViewCell.swift */; };
+		185640E8237426B600CC2777 /* MenuSeperatorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185640E6237426B600CC2777 /* MenuSeperatorTableViewCell.xib */; };
 		18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF52373209D007F8BF2 /* EditProfileViewController.swift */; };
 		18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */; };
 		18706FFA237323DB007F8BF2 /* EditProfileImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */; };
@@ -73,6 +78,11 @@
 		18390898236C70DA009A28E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1839089F236C7A99009A28E6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		185640DF23741B7800CC2777 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		185640E1237423C100CC2777 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		185640E2237423C100CC2777 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
+		185640E5237426B600CC2777 /* MenuSeperatorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSeperatorTableViewCell.swift; sourceTree = "<group>"; };
+		185640E6237426B600CC2777 /* MenuSeperatorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuSeperatorTableViewCell.xib; sourceTree = "<group>"; };
 		18706FF52373209D007F8BF2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageTableViewCell.swift; sourceTree = "<group>"; };
 		18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileImageTableViewCell.xib; sourceTree = "<group>"; };
@@ -204,6 +214,7 @@
 		1839089E236C7865009A28E6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				185640DE23741B5600CC2777 /* Menu Controller */,
 				182F62562372E88900A55E52 /* Chat Controllers */,
 				18D0B3BA2372CBAC00C6BD06 /* Profile Controller */,
 				188574492372B8FB00985AC8 /* Camera Controller */,
@@ -214,6 +225,14 @@
 				18307AB0236C86AF00A0A7C6 /* Account Controllers */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		185640DE23741B5600CC2777 /* Menu Controller */ = {
+			isa = PBXGroup;
+			children = (
+				185640DF23741B7800CC2777 /* MenuViewController.swift */,
+			);
+			path = "Menu Controller";
 			sourceTree = "<group>";
 		};
 		188574492372B8FB00985AC8 /* Camera Controller */ = {
@@ -273,6 +292,10 @@
 				1870700023732CF9007F8BF2 /* EditProfileGenderTableViewCell.xib */,
 				1870700323732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.swift */,
 				1870700423732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.xib */,
+				185640E1237423C100CC2777 /* MenuTableViewCell.swift */,
+				185640E2237423C100CC2777 /* MenuTableViewCell.xib */,
+				185640E5237426B600CC2777 /* MenuSeperatorTableViewCell.swift */,
+				185640E6237426B600CC2777 /* MenuSeperatorTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -386,12 +409,14 @@
 				18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */,
 				189329C5237020910067077F /* Lato-Regular_0.ttf in Resources */,
 				182F62602372EB4E00A55E52 /* ChatListTableViewCell.xib in Resources */,
+				185640E8237426B600CC2777 /* MenuSeperatorTableViewCell.xib in Resources */,
 				189329C4237020910067077F /* Lato-Semibold_0.ttf in Resources */,
 				183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */,
 				18706FFE23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.xib in Resources */,
 				189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */,
 				1870700623732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.xib in Resources */,
 				18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */,
+				185640E4237423C100CC2777 /* MenuTableViewCell.xib in Resources */,
 				18390894236C70DA009A28E6 /* Assets.xcassets in Resources */,
 				18390892236C70D6009A28E6 /* Main.storyboard in Resources */,
 			);
@@ -453,6 +478,7 @@
 				189329BF23701EE50067077F /* SignupViewController.swift in Sources */,
 				18B086432371AA71002D773E /* TabBarViewController.swift in Sources */,
 				18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */,
+				185640E023741B7800CC2777 /* MenuViewController.swift in Sources */,
 				18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */,
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
 				1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */,
@@ -467,6 +493,7 @@
 				189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */,
 				182F62582372E94B00A55E52 /* ChatBoxContainerViewController.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
+				185640E7237426B600CC2777 /* MenuSeperatorTableViewCell.swift in Sources */,
 				182F625F2372EB4E00A55E52 /* ChatListTableViewCell.swift in Sources */,
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
 				18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */,
@@ -477,6 +504,7 @@
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,
 				18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */,
+				185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

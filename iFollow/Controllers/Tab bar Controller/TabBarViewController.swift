@@ -55,9 +55,15 @@ class TabBarViewController: UIViewController {
         
         changeTab()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(logoutUser), name: NSNotification.Name("logoutUser"), object: nil)
+        
     }
     
     //MARK:- Methods
+    
+    @objc func logoutUser(){
+        self.dismiss(animated: true, completion: nil)
+    }
     
     @objc func homeTabTapped(){
         selectedIndex = 0

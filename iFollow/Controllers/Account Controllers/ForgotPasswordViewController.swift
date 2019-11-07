@@ -35,8 +35,7 @@ class ForgotPasswordViewController: UIViewController {
     //MARK:- Actions
     
     @IBAction func btnSendTapped(_ sender: UIButton) {
-        let vc = Utility.getSetPasswordViewController()
-        self.pushToVC(vc: vc)
+        self.goBack()
     }
     
     @IBAction func btnSignupTapped(_ sender: UIButton) {

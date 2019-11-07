@@ -60,6 +60,10 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func btnMenuTapped(_ sender: UIButton) {
+        let vc = Utility.getMenuViewController()
+        let navigationVC = UINavigationController(rootViewController: vc)
+        navigationVC.navigationBar.isHidden = true
+        self.present(navigationVC, animated: true, completion: nil)
     }
     
 }

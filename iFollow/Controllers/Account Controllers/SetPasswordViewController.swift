@@ -11,6 +11,7 @@ import UIKit
 class SetPasswordViewController: UIViewController {
     
     @IBOutlet weak var lblNewPassword: UILabel!
+    @IBOutlet weak var txtFieldOldPassword: UITextField!
     @IBOutlet weak var txtFieldNewPassword: UITextField!
     @IBOutlet weak var txtFieldConfirmPassword: UITextField!
     @IBOutlet weak var btnReset: UIButton!
@@ -20,7 +21,9 @@ class SetPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationController?.navigationBar.isHidden = true
         self.lblNewPassword.setShadow(color: UIColor.white)
+        Utility.setTextFieldPlaceholder(textField: txtFieldOldPassword, placeholder: "Old Password", color: Theme.textFieldColor)
         Utility.setTextFieldPlaceholder(textField: txtFieldNewPassword, placeholder: "New Password", color: Theme.textFieldColor)
         Utility.setTextFieldPlaceholder(textField: txtFieldConfirmPassword, placeholder: "Confirm Password", color: Theme.textFieldColor)
         
