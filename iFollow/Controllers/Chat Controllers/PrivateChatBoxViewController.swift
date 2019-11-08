@@ -23,6 +23,7 @@ class PrivateChatBoxViewController: UIViewController {
     @IBOutlet weak var groupsView: UIView!
     @IBOutlet weak var lblGroups: UILabel!
     @IBOutlet weak var groupSelectedView: UIView!
+    @IBOutlet weak var btnAddGroup: UIButton!
     
     var selectedIndex = 0
     var allChatsController = UIViewController()
@@ -63,6 +64,11 @@ class PrivateChatBoxViewController: UIViewController {
         changeTab()
     }
     
+    @IBAction func btnAddGroupTapped(_ sender: UIButton) {
+        let vc = Utility.getCreateGroupViewController()
+        self.pushToVC(vc: vc)
+    }
+    
     func changeTab(){
         
         if (selectedIndex == 0){
@@ -74,6 +80,7 @@ class PrivateChatBoxViewController: UIViewController {
             familySelectedView.isHidden = true
             lblGroups.textColor = Theme.privateChatBoxTabsColor
             groupSelectedView.isHidden = true
+            btnAddGroup.isHidden = true
             
             remove(asChildViewController: [groupsChatController])
             add(asChildViewController: allChatsController)
@@ -88,6 +95,7 @@ class PrivateChatBoxViewController: UIViewController {
             allSelectedView.isHidden = true
             lblGroups.textColor = Theme.privateChatBoxTabsColor
             groupSelectedView.isHidden = true
+            btnAddGroup.isHidden = true
             
             remove(asChildViewController: [allChatsController, groupsChatController])
             add(asChildViewController: allChatsController)
@@ -102,6 +110,7 @@ class PrivateChatBoxViewController: UIViewController {
             allSelectedView.isHidden = true
             lblFamily.textColor = Theme.privateChatBoxTabsColor
             familySelectedView.isHidden = true
+            btnAddGroup.isHidden = false
             
             remove(asChildViewController: [allChatsController])
             add(asChildViewController: groupsChatController)

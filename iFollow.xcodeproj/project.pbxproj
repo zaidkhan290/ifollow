@@ -28,6 +28,7 @@
 		185640E8237426B600CC2777 /* MenuSeperatorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185640E6237426B600CC2777 /* MenuSeperatorTableViewCell.xib */; };
 		185640EA2374444D00CC2777 /* PrivateChatBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640E92374444D00CC2777 /* PrivateChatBoxViewController.swift */; };
 		185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */; };
+		185640EF2374796300CC2777 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640EE2374796300CC2777 /* CreateGroupViewController.swift */; };
 		18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF52373209D007F8BF2 /* EditProfileViewController.swift */; };
 		18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */; };
 		18706FFA237323DB007F8BF2 /* EditProfileImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */; };
@@ -87,6 +88,7 @@
 		185640E6237426B600CC2777 /* MenuSeperatorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuSeperatorTableViewCell.xib; sourceTree = "<group>"; };
 		185640E92374444D00CC2777 /* PrivateChatBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateChatBoxViewController.swift; sourceTree = "<group>"; };
 		185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
+		185640EE2374796300CC2777 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		18706FF52373209D007F8BF2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageTableViewCell.swift; sourceTree = "<group>"; };
 		18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileImageTableViewCell.xib; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 		1839089E236C7865009A28E6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				185640ED2374794500CC2777 /* Groups Controller */,
 				185640DE23741B5600CC2777 /* Menu Controller */,
 				182F62562372E88900A55E52 /* Chat Controllers */,
 				18D0B3BA2372CBAC00C6BD06 /* Profile Controller */,
@@ -238,6 +241,14 @@
 				185640DF23741B7800CC2777 /* MenuViewController.swift */,
 			);
 			path = "Menu Controller";
+			sourceTree = "<group>";
+		};
+		185640ED2374794500CC2777 /* Groups Controller */ = {
+			isa = PBXGroup;
+			children = (
+				185640EE2374796300CC2777 /* CreateGroupViewController.swift */,
+			);
+			path = "Groups Controller";
 			sourceTree = "<group>";
 		};
 		188574492372B8FB00985AC8 /* Camera Controller */ = {
@@ -489,6 +500,7 @@
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
 				1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */,
 				189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */,
+				185640EF2374796300CC2777 /* CreateGroupViewController.swift in Sources */,
 				182F625C2372E97600A55E52 /* AllGroupsListViewController.swift in Sources */,
 				189329C923702FE90067077F /* ForgotPasswordViewController.swift in Sources */,
 				189329CD237035670067077F /* LabelExtension.swift in Sources */,

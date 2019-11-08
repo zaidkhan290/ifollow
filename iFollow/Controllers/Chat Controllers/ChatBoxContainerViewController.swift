@@ -56,6 +56,8 @@ class ChatBoxContainerViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func btnAddGroupTapped(_ sender: UIButton) {
+        let vc = Utility.getCreateGroupViewController()
+        self.pushToVC(vc: vc)
     }
     
     @objc func privateIconTapped(){
