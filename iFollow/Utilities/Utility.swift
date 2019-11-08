@@ -89,6 +89,14 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "CreateGroupViewController") as! CreateGroupViewController
     }
     
+    static func getSignupDetail1ViewController() -> SignupDetail1ViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "SignupDetail1ViewController") as! SignupDetail1ViewController
+    }
+    
+    static func getSignupDetail2ViewController() -> SignupDetail2ViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "SignupDetail2ViewController") as! SignupDetail2ViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 
