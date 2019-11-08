@@ -44,7 +44,7 @@ class SignupDetail1ViewController: UIViewController {
     
 }
 
-extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegate{
+extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegate, EditProfileDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 7
@@ -64,6 +64,7 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditProfileSaveButtonTableViewCell", for: indexPath) as! EditProfileSaveButtonTableViewCell
            // cell.btnDone.backgroundColor = .clear
             cell.btnDone.setTitle("Next", for: .normal)
+            cell.delegate = self
          //   cell.btnDone.setImage(UIImage(named: "nextButton"), for: .normal)
             return cell
         }
@@ -89,4 +90,8 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
         return 60
     }
     
+    func btnDoneTapped() {
+        let vc = Utility.getSignupDetail2ViewController()
+        self.pushToVC(vc: vc)
+    }
 }

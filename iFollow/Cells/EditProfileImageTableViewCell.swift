@@ -10,7 +10,9 @@ import UIKit
 
 class EditProfileImageTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var doneIcon: UIImageView!
     @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var btnCamera: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

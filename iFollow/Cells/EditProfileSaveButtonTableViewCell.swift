@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol EditProfileDelegate: class {
+    func btnDoneTapped()
+}
+
 class EditProfileSaveButtonTableViewCell: UITableViewCell {
 
     @IBOutlet weak var btnDone: UIButton!
+    var delegate: EditProfileDelegate!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         btnDone.dropShadow(color: Theme.editProfileDoneButtonColor)
@@ -23,6 +29,9 @@ class EditProfileSaveButtonTableViewCell: UITableViewCell {
     }
     
     @IBAction func btnDoneTapped(_ sender: UIButton) {
+        if (delegate != nil){
+            self.delegate.btnDoneTapped()
+        }
     }
     
 }
