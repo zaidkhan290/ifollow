@@ -36,8 +36,8 @@ class SignupViewController: UIViewController {
     //MARK:- Actions
     
     @IBAction func btnStartTapped(_ sender: UIButton) {
-        let vc = Utility.getTabBarViewController()
-        self.present(vc, animated: true, completion: nil)
+        let vc = Utility.getSignupDetail1ViewController()
+        self.pushToVC(vc: vc)
     }
     
     @IBAction func btnSignInTapped(_ sender: UIButton) {

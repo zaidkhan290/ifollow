@@ -2688,6 +2688,81 @@
             </objects>
             <point key="canvasLocation" x="4457.971014492754" y="1444.5652173913045"/>
         </scene>
+        <!--Signup Detail1 View Controller-->
+        <scene sceneID="dAy-eJ-Kwr">
+            <objects>
+                <viewController storyboardIdentifier="SignupDetail1ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RNP-jd-MJP" customClass="SignupDetail1ViewController" customModule="iFollow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bmE-me-Tt4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Bg" translatesAutoresizingMaskIntoConstraints="NO" id="g7e-MI-fTx">
+                                <rect key="frame" x="-2" y="-3" width="420" height="739"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dN7-E4-8c6">
+                                <rect key="frame" x="20" y="40" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="E5n-0e-MJh"/>
+                                    <constraint firstAttribute="width" constant="25" id="YGd-YX-bo0"/>
+                                </constraints>
+                                <state key="normal" image="back"/>
+                                <connections>
+                                    <action selector="btnBackTapped:" destination="RNP-jd-MJP" eventType="touchUpInside" id="xqj-DA-vgt"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's Meet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MB6-Mn-vhO">
+                                <rect key="frame" x="148" y="40" width="118.33333333333331" height="30"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H5n-Fq-uUc">
+                                <rect key="frame" x="0.0" y="110" width="414" height="626"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7nA-3S-LxR">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="626"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="RNP-jd-MJP" id="flj-83-Da5"/>
+                                            <outlet property="delegate" destination="RNP-jd-MJP" id="bRh-8G-NCX"/>
+                                        </connections>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="7nA-3S-LxR" secondAttribute="bottom" id="Dcr-Rv-GK5"/>
+                                    <constraint firstAttribute="trailing" secondItem="7nA-3S-LxR" secondAttribute="trailing" id="Dnt-C7-r9I"/>
+                                    <constraint firstItem="7nA-3S-LxR" firstAttribute="leading" secondItem="H5n-Fq-uUc" secondAttribute="leading" id="MgB-tn-cm1"/>
+                                    <constraint firstItem="7nA-3S-LxR" firstAttribute="top" secondItem="H5n-Fq-uUc" secondAttribute="top" id="VYv-u9-8ms"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="H5n-Fq-uUc" firstAttribute="top" secondItem="MB6-Mn-vhO" secondAttribute="bottom" constant="40" id="0Mu-cK-LPi"/>
+                            <constraint firstItem="dN7-E4-8c6" firstAttribute="top" secondItem="XO3-3O-jz8" secondAttribute="top" constant="20" id="7Db-Sq-Sdn"/>
+                            <constraint firstItem="g7e-MI-fTx" firstAttribute="leading" secondItem="XO3-3O-jz8" secondAttribute="leading" constant="-2" id="9Rx-Uv-a4p"/>
+                            <constraint firstItem="MB6-Mn-vhO" firstAttribute="centerX" secondItem="bmE-me-Tt4" secondAttribute="centerX" id="MDR-2d-e5a"/>
+                            <constraint firstItem="XO3-3O-jz8" firstAttribute="trailing" secondItem="H5n-Fq-uUc" secondAttribute="trailing" id="Pdl-MV-rEt"/>
+                            <constraint firstItem="g7e-MI-fTx" firstAttribute="top" secondItem="bmE-me-Tt4" secondAttribute="top" constant="-3" id="R0D-tU-WnG"/>
+                            <constraint firstItem="XO3-3O-jz8" firstAttribute="trailing" secondItem="g7e-MI-fTx" secondAttribute="trailing" constant="-4" id="S57-qd-z9G"/>
+                            <constraint firstItem="H5n-Fq-uUc" firstAttribute="leading" secondItem="XO3-3O-jz8" secondAttribute="leading" id="SEZ-x2-cgR"/>
+                            <constraint firstItem="dN7-E4-8c6" firstAttribute="leading" secondItem="XO3-3O-jz8" secondAttribute="leading" constant="20" id="UDk-Jv-L28"/>
+                            <constraint firstAttribute="bottom" secondItem="g7e-MI-fTx" secondAttribute="bottom" id="dkC-lN-0OM"/>
+                            <constraint firstItem="MB6-Mn-vhO" firstAttribute="top" secondItem="XO3-3O-jz8" secondAttribute="top" constant="20" id="gHS-LC-oZ0"/>
+                            <constraint firstAttribute="bottom" secondItem="H5n-Fq-uUc" secondAttribute="bottom" id="ytL-7C-A4C"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="XO3-3O-jz8"/>
+                    </view>
+                    <connections>
+                        <outlet property="detailTableView" destination="7nA-3S-LxR" id="lFD-WU-YaQ"/>
+                        <outlet property="detailView" destination="H5n-Fq-uUc" id="Pkb-VS-lAi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qgJ-XL-MGs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4458" y="115"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Bg" width="380" height="815"/>

@@ -36,7 +36,6 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="dOR-WV-hHG"/>
                         </constraints>
-                        <color key="textColor" red="0.71764705882352942" green="0.71764705882352942" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
