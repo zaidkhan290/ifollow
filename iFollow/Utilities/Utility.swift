@@ -97,6 +97,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "SignupDetail2ViewController") as! SignupDetail2ViewController
     }
     
+    static func getOptionsViewController() -> OptionsViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "OptionsViewController") as! OptionsViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

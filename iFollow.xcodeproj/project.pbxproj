@@ -58,6 +58,8 @@
 		18B086432371AA71002D773E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B086422371AA71002D773E /* TabBarViewController.swift */; };
 		18B14CC123758086005E5CE4 /* SignupDetail1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC023758086005E5CE4 /* SignupDetail1ViewController.swift */; };
 		18B14CC3237580A0005E5CE4 /* SignupDetail2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC2237580A0005E5CE4 /* SignupDetail2ViewController.swift */; };
+		18B14CC52375AB8F005E5CE4 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC42375AB8F005E5CE4 /* OptionsViewController.swift */; };
+		18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC62375ABD6005E5CE4 /* OptionsTableViewCell.swift */; };
 		18B82A312371CBDB00693F7F /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B82A302371CBDB00693F7F /* NotificationViewController.swift */; };
 		18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */; };
 		18B82A352371D05A00693F7F /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */; };
@@ -120,6 +122,8 @@
 		18B086422371AA71002D773E /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		18B14CC023758086005E5CE4 /* SignupDetail1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupDetail1ViewController.swift; sourceTree = "<group>"; };
 		18B14CC2237580A0005E5CE4 /* SignupDetail2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupDetail2ViewController.swift; sourceTree = "<group>"; };
+		18B14CC42375AB8F005E5CE4 /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
+		18B14CC62375ABD6005E5CE4 /* OptionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsTableViewCell.swift; sourceTree = "<group>"; };
 		18B82A302371CBDB00693F7F /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
@@ -318,6 +322,7 @@
 				185640E2237423C100CC2777 /* MenuTableViewCell.xib */,
 				185640E5237426B600CC2777 /* MenuSeperatorTableViewCell.swift */,
 				185640E6237426B600CC2777 /* MenuSeperatorTableViewCell.xib */,
+				18B14CC62375ABD6005E5CE4 /* OptionsTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -352,6 +357,7 @@
 				18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */,
 				18706FF52373209D007F8BF2 /* EditProfileViewController.swift */,
 				185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */,
+				18B14CC42375AB8F005E5CE4 /* OptionsViewController.swift */,
 			);
 			path = "Profile Controller";
 			sourceTree = "<group>";
@@ -503,6 +509,7 @@
 				18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */,
 				185640E023741B7800CC2777 /* MenuViewController.swift in Sources */,
 				18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */,
+				18B14CC52375AB8F005E5CE4 /* OptionsViewController.swift in Sources */,
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
 				1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */,
 				189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */,
@@ -528,6 +535,7 @@
 				18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				18706FFD23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift in Sources */,
+				18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
 				185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */,
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,

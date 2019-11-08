@@ -9,8 +9,10 @@
 import UIKit
 import iCarousel
 
-class OtherUserProfileViewController: UIViewController {
+class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationControllerDelegate, UIPopoverPresentationControllerDelegate {
 
+    @IBOutlet weak var btnOptions: UIButton!
+    @IBOutlet weak var optionsView: UIView!
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var editView: UIView!
@@ -21,8 +23,10 @@ class OtherUserProfileViewController: UIViewController {
     @IBOutlet weak var privateTalkView: UIView!
     @IBOutlet weak var trendView: UIView!
     @IBOutlet weak var carouselView: iCarousel!
+    @IBOutlet weak var optionsPickerView: UIPickerView!
     
     var isTrending = false
+    var options = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,50 +45,30 @@ class OtherUserProfileViewController: UIViewController {
         carouselView.type = .rotary
         self.carouselView.dataSource = self
         self.carouselView.delegate = self
+        
+        options = ["Block", "Report", "Copy User Url", "Private Talk"]
     }
     
     //MARK:- Actions
     
     @IBAction func optionsTapped(_ sender: Any) {
+        showOptionsPopup()
+    }
+    
+    func showOptionsPopup(){
         
-//        let attributedString = NSAttributedString(string: "What to do?", attributes: [
-//            NSAttributedString.Key.font : Theme.getLatoBoldFontOfSize(size: 24), //your font here
-//            NSAttributedString.Key.foregroundColor : Theme.profileLabelsYellowColor
-//            ])
-//        
-//        let alertController = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
-//        alertController.setValue(attributedString, forKey: "attributedTitle")
-//        alertController.view.backgroundColor = .white
-//        alertController.view.roundTopCorners(radius: 10)
-//        
-//        let blockAction = UIAlertAction(title: "Block", style: .default) { (action) in
-//        
-//        }
-//        blockAction.setValue(Theme.profileLabelsYellowColor, forKey: "titleTextColor")
-//        
-//        let reportAction = UIAlertAction(title: "Report", style: .default) { (action) in
-//            
-//        }
-//        reportAction.setValue(Theme.profileLabelsYellowColor, forKey: "titleTextColor")
-//        
-//        let copyAction = UIAlertAction(title: "Copy Users URL", style: .default) { (action) in
-//            
-//        }
-//        copyAction.setValue(Theme.profileLabelsYellowColor, forKey: "titleTextColor")
-//        
-//        let privateAction = UIAlertAction(title: "Private Talk", style: .default) { (action) in
-//            
-//        }
-//        privateAction.setValue(Theme.profileLabelsYellowColor, forKey: "titleTextColor")
-//        
-//        alertController.addAction(blockAction)
-//        alertController.addAction(reportAction)
-//        alertController.addAction(copyAction)
-//        alertController.addAction(privateAction)
-//        
-//        self.present(alertController, animated: true, completion: nil)
+        let vc = Utility.getOptionsViewController()
+        vc.modalPresentationStyle = .popover
+        vc.preferredContentSize = CGSize(width: 150, height: 200)
+        
+        let popup = vc.popoverPresentationController
+        popup?.permittedArrowDirections = UIPopoverArrowDirection.up
+        popup?.sourceView = optionsView
+        popup?.delegate = self
+        self.present(vc, animated: true, completion: nil)
         
     }
+    
     @IBAction func btnBackTapped(_ sender: UIButton){
         self.dismiss(animated: true, completion: nil)
     }
@@ -99,6 +83,16 @@ class OtherUserProfileViewController: UIViewController {
         lblTrend.text = isTrending ? "Trending" : "Trend"
         trendView.backgroundColor = isTrending ? Theme.profileLabelsYellowColor : .white
     }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+    
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+    
 
 }
 
