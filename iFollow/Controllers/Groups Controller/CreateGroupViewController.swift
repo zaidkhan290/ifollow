@@ -12,11 +12,12 @@ class CreateGroupViewController: UIViewController {
 
     @IBOutlet weak var groupImage: UIImageView!
     @IBOutlet weak var bottomView: UIView!
-    @IBOutlet weak var lblGroupName: UILabel!
+    @IBOutlet weak var txtFieldGroupName: UITextField!
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var notificationSwitch: UISwitch!
     
     var imagePicker = UIImagePickerController()
+    var isGroupNameEditable = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,10 @@ class CreateGroupViewController: UIViewController {
         notificationSwitch.tintColor = Theme.profileLabelsYellowColor
         notificationSwitch.onTintColor = Theme.profileLabelsYellowColor
         imagePicker.delegate = self
+        
+        txtFieldGroupName.isUserInteractionEnabled = isGroupNameEditable
+        txtFieldGroupName.delegate = self
+        
     }
     
     //MARK:- Actions
@@ -41,6 +46,12 @@ class CreateGroupViewController: UIViewController {
     }
     
     @IBAction func btnEditTapped(_ sender: UIButton) {
+        
+        isGroupNameEditable = !isGroupNameEditable
+        txtFieldGroupName.isUserInteractionEnabled = isGroupNameEditable
+        if isGroupNameEditable{
+            txtFieldGroupName.becomeFirstResponder()
+        }
         
     }
     
@@ -67,6 +78,22 @@ extension CreateGroupViewController: UIImagePickerControllerDelegate, UINavigati
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension CreateGroupViewController: UITextFieldDelegate{
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        txtFieldGroupName.text = ""
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        isGroupNameEditable = false
+        txtFieldGroupName.isUserInteractionEnabled = isGroupNameEditable
+        txtFieldGroupName.text = txtFieldGroupName.text == "" ? "Name of the Group" : txtFieldGroupName.text!
+        
     }
     
 }

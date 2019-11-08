@@ -788,12 +788,12 @@
                                     <action selector="btnEditTapped:" destination="Btt-hR-L32" eventType="touchUpInside" id="Njt-eF-oU2"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name of the group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5wV-7p-8vb">
-                                <rect key="frame" x="20" y="171.33333333333334" width="134" height="18.666666666666657"/>
-                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Name of the Group" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ltQ-E6-QLu">
+                                <rect key="frame" x="20" y="171" width="141" height="19"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created by Bella Nova 17/6/2019" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bH-n5-Qiz">
                                 <rect key="frame" x="20" y="195" width="178.33333333333334" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
@@ -950,20 +950,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="0bH-n5-Qiz" firstAttribute="leading" secondItem="C4r-zb-IwG" secondAttribute="leading" constant="20" id="3Dc-FK-les"/>
                             <constraint firstItem="osW-jw-KYV" firstAttribute="width" secondItem="C4r-zb-IwG" secondAttribute="width" multiplier="0.9" id="4IA-jb-zVE"/>
+                            <constraint firstItem="ltQ-E6-QLu" firstAttribute="bottom" secondItem="ayE-1G-8Fs" secondAttribute="bottom" constant="-40" id="6Qi-cm-7M1"/>
                             <constraint firstItem="kGX-We-Mgw" firstAttribute="centerX" secondItem="ayE-1G-8Fs" secondAttribute="centerX" id="93O-Zq-ZeW"/>
                             <constraint firstItem="ayE-1G-8Fs" firstAttribute="top" secondItem="chV-SK-1zA" secondAttribute="top" id="9RS-GC-VVk"/>
-                            <constraint firstItem="0bH-n5-Qiz" firstAttribute="top" secondItem="5wV-7p-8vb" secondAttribute="bottom" constant="5" id="BfT-gd-bYT"/>
                             <constraint firstItem="C4r-zb-IwG" firstAttribute="trailing" secondItem="XiL-eR-beM" secondAttribute="trailing" constant="20" id="C26-Xa-Y1R"/>
-                            <constraint firstItem="5wV-7p-8vb" firstAttribute="bottom" secondItem="ayE-1G-8Fs" secondAttribute="bottom" constant="-40" id="Fhk-VV-8db"/>
-                            <constraint firstItem="0bH-n5-Qiz" firstAttribute="leading" secondItem="5wV-7p-8vb" secondAttribute="leading" id="QZs-i8-msE"/>
                             <constraint firstItem="XiL-eR-beM" firstAttribute="bottom" secondItem="ayE-1G-8Fs" secondAttribute="bottom" constant="-20" id="deF-rV-l9S"/>
                             <constraint firstItem="kGX-We-Mgw" firstAttribute="centerY" secondItem="ayE-1G-8Fs" secondAttribute="centerY" id="fBR-kE-KMh"/>
                             <constraint firstItem="osW-jw-KYV" firstAttribute="top" secondItem="ayE-1G-8Fs" secondAttribute="bottom" constant="20" id="kqY-EF-S9u"/>
                             <constraint firstItem="ayE-1G-8Fs" firstAttribute="leading" secondItem="C4r-zb-IwG" secondAttribute="leading" id="m6k-sJ-Dax"/>
+                            <constraint firstItem="ltQ-E6-QLu" firstAttribute="leading" secondItem="C4r-zb-IwG" secondAttribute="leading" constant="20" id="mBc-k3-8qd"/>
                             <constraint firstItem="ndc-A3-Lus" firstAttribute="leading" secondItem="C4r-zb-IwG" secondAttribute="leading" constant="20" id="nlH-vE-0TM"/>
+                            <constraint firstItem="0bH-n5-Qiz" firstAttribute="top" secondItem="ltQ-E6-QLu" secondAttribute="bottom" constant="5" id="qQV-6j-8ty"/>
                             <constraint firstItem="ndc-A3-Lus" firstAttribute="top" secondItem="C4r-zb-IwG" secondAttribute="top" constant="20" id="r8U-ua-VfX"/>
-                            <constraint firstItem="5wV-7p-8vb" firstAttribute="leading" secondItem="C4r-zb-IwG" secondAttribute="leading" constant="20" id="spU-Gy-e4p"/>
                             <constraint firstItem="osW-jw-KYV" firstAttribute="centerX" secondItem="chV-SK-1zA" secondAttribute="centerX" id="tre-KQ-ma2"/>
                             <constraint firstItem="C4r-zb-IwG" firstAttribute="trailing" secondItem="ayE-1G-8Fs" secondAttribute="trailing" id="xas-ER-3P3"/>
                         </constraints>
@@ -973,8 +973,8 @@
                         <outlet property="bottomView" destination="osW-jw-KYV" id="XEj-s6-oXC"/>
                         <outlet property="groupImage" destination="ayE-1G-8Fs" id="onX-CV-uvo"/>
                         <outlet property="lblDate" destination="0bH-n5-Qiz" id="0pc-pY-Bpo"/>
-                        <outlet property="lblGroupName" destination="5wV-7p-8vb" id="NST-Cb-GFA"/>
                         <outlet property="notificationSwitch" destination="250-zX-3mb" id="tmw-bY-VPw"/>
+                        <outlet property="txtFieldGroupName" destination="ltQ-E6-QLu" id="Ex3-UK-VPd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zup-zP-sRs" userLabel="First Responder" sceneMemberID="firstResponder"/>
