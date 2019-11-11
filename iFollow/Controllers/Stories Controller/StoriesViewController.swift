@@ -11,6 +11,7 @@ import ARKit
 
 class StoriesViewController: UIViewController {
 
+    @IBOutlet weak var hiddenView: UIView!
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var btnSend: UIButton!
     @IBOutlet weak var btnEmoji: UIButton!
@@ -31,7 +32,7 @@ class StoriesViewController: UIViewController {
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(tapOnView(recognizer:)))
         longPressGesture.minimumPressDuration = 0.1
-        self.view.addGestureRecognizer(longPressGesture)
+        self.hiddenView.addGestureRecognizer(longPressGesture)
         
         let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissStory))
         swipeDownGesture.direction = .down
@@ -59,11 +60,23 @@ class StoriesViewController: UIViewController {
         playerLayer.frame = self.videoView.frame
         self.videoView.layer.addSublayer(playerLayer)
         videoPlayer.play()
-      //  videoPlayer = AVPlayer(url: videoPath)
+      
  
     }
     
     //MARK:- Actions
+    
+    @IBAction func btnSendTapped(_ sender: UIButton) {
+        
+        let vc = Utility.getSendStoryViewController()
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func btnEmojiTapped(_ sender: UIButton) {
+        
+    }
     
     @IBAction func btnOptionsTapped(_ sender: UIButton) {
     }
@@ -83,8 +96,6 @@ class StoriesViewController: UIViewController {
         }
     }
     
-    
-   
 }
 
 extension StoriesViewController: SegmentedProgressBarDelegate{
@@ -96,6 +107,14 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
     
     func segmentedProgressBarFinished() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension StoriesViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
     }
     
 }

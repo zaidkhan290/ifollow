@@ -24,6 +24,10 @@
 		1855080F23795352008EAC2E /* SegmentProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855080E23795352008EAC2E /* SegmentProgressBar.swift */; };
 		185508122379696E008EAC2E /* sampleVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 185508112379696E008EAC2E /* sampleVideo.mp4 */; };
 		1855081423796E5E008EAC2E /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1855081323796E5E008EAC2E /* video.mp4 */; };
+		1855081623797DA8008EAC2E /* SendStoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855081523797DA8008EAC2E /* SendStoryViewController.swift */; };
+		1855081923798976008EAC2E /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855081723798976008EAC2E /* FriendsTableViewCell.swift */; };
+		1855081A23798976008EAC2E /* FriendsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1855081823798976008EAC2E /* FriendsTableViewCell.xib */; };
+		1855081C23799422008EAC2E /* HalfSizePresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855081B23799422008EAC2E /* HalfSizePresentation.swift */; };
 		185640E023741B7800CC2777 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640DF23741B7800CC2777 /* MenuViewController.swift */; };
 		185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640E1237423C100CC2777 /* MenuTableViewCell.swift */; };
 		185640E4237423C100CC2777 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185640E2237423C100CC2777 /* MenuTableViewCell.xib */; };
@@ -92,6 +96,10 @@
 		1855080E23795352008EAC2E /* SegmentProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentProgressBar.swift; sourceTree = "<group>"; };
 		185508112379696E008EAC2E /* sampleVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampleVideo.mp4; sourceTree = "<group>"; };
 		1855081323796E5E008EAC2E /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
+		1855081523797DA8008EAC2E /* SendStoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStoryViewController.swift; sourceTree = "<group>"; };
+		1855081723798976008EAC2E /* FriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCell.swift; sourceTree = "<group>"; };
+		1855081823798976008EAC2E /* FriendsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendsTableViewCell.xib; sourceTree = "<group>"; };
+		1855081B23799422008EAC2E /* HalfSizePresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentation.swift; sourceTree = "<group>"; };
 		185640DF23741B7800CC2777 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		185640E1237423C100CC2777 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		185640E2237423C100CC2777 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
@@ -302,6 +310,7 @@
 			children = (
 				189329B9237014E90067077F /* Utility.swift */,
 				189329C6237023860067077F /* Theme.swift */,
+				1855081B23799422008EAC2E /* HalfSizePresentation.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -351,6 +360,8 @@
 				185640E5237426B600CC2777 /* MenuSeperatorTableViewCell.swift */,
 				185640E6237426B600CC2777 /* MenuSeperatorTableViewCell.xib */,
 				18B14CC62375ABD6005E5CE4 /* OptionsTableViewCell.swift */,
+				1855081723798976008EAC2E /* FriendsTableViewCell.swift */,
+				1855081823798976008EAC2E /* FriendsTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -367,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				18B14CC92375CA85005E5CE4 /* StoriesViewController.swift */,
+				1855081523797DA8008EAC2E /* SendStoryViewController.swift */,
 			);
 			path = "Stories Controller";
 			sourceTree = "<group>";
@@ -486,6 +498,7 @@
 				185640E4237423C100CC2777 /* MenuTableViewCell.xib in Resources */,
 				18390894236C70DA009A28E6 /* Assets.xcassets in Resources */,
 				18390892236C70D6009A28E6 /* Main.storyboard in Resources */,
+				1855081A23798976008EAC2E /* FriendsTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,6 +569,7 @@
 				189329C923702FE90067077F /* ForgotPasswordViewController.swift in Sources */,
 				189329CD237035670067077F /* LabelExtension.swift in Sources */,
 				18781C2223707019001BAF95 /* FeedsView.swift in Sources */,
+				1855081923798976008EAC2E /* FriendsTableViewCell.swift in Sources */,
 				18B14CCA2375CA85005E5CE4 /* StoriesViewController.swift in Sources */,
 				1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */,
 				185640EA2374444D00CC2777 /* PrivateChatBoxViewController.swift in Sources */,
@@ -564,6 +578,7 @@
 				189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */,
 				182F62582372E94B00A55E52 /* ChatBoxContainerViewController.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
+				1855081623797DA8008EAC2E /* SendStoryViewController.swift in Sources */,
 				185640E7237426B600CC2777 /* MenuSeperatorTableViewCell.swift in Sources */,
 				182F625F2372EB4E00A55E52 /* ChatListTableViewCell.swift in Sources */,
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
@@ -573,6 +588,7 @@
 				18B14CC123758086005E5CE4 /* SignupDetail1ViewController.swift in Sources */,
 				18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
+				1855081C23799422008EAC2E /* HalfSizePresentation.swift in Sources */,
 				18706FFD23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift in Sources */,
 				18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */,
 				1855080F23795352008EAC2E /* SegmentProgressBar.swift in Sources */,
