@@ -111,9 +111,16 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if (indexPath.row == 0 && collectionView == recentStoriesCollectionView){
-            self.openCamera()
+        if (collectionView == recentStoriesCollectionView){
+            if (indexPath.row == 0){
+                self.openCamera()
+            }
+            else{
+                let vc = Utility.getStoriesViewController()
+                self.present(vc, animated: true, completion: nil)
+            }
         }
+        
     }
     
 }

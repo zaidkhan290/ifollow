@@ -32,11 +32,11 @@ class StoriesViewController: UIViewController {
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(tapOnView(recognizer:)))
         longPressGesture.minimumPressDuration = 0.1
-        self.hiddenView.addGestureRecognizer(longPressGesture)
+        self.view.addGestureRecognizer(longPressGesture)
         
         let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissStory))
         swipeDownGesture.direction = .down
-        self.videoView.addGestureRecognizer(swipeDownGesture)
+        self.hiddenView.addGestureRecognizer(swipeDownGesture)
         
     }
     
