@@ -437,6 +437,127 @@
             </objects>
             <point key="canvasLocation" x="354" y="1439"/>
         </scene>
+        <!--Stories View Controller-->
+        <scene sceneID="1bY-Fb-GEu">
+            <objects>
+                <viewController storyboardIdentifier="StoriesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="avW-mP-0gq" customClass="StoriesViewController" customModule="iFollow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jWo-PD-a6d">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fez-QY-f2r">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zSk-hV-Hkt">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uXH-xU-ISL">
+                                <rect key="frame" x="359" y="681" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="TZ2-vo-79p"/>
+                                    <constraint firstAttribute="width" constant="35" id="X99-u5-Kxo"/>
+                                </constraints>
+                                <state key="normal" image="send"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="raR-Wp-Nl4">
+                                <rect key="frame" x="314" y="683.66666666666663" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="O49-sl-kzM"/>
+                                    <constraint firstAttribute="width" constant="30" id="o3U-2w-1IH"/>
+                                </constraints>
+                                <state key="normal" image="emotions"/>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eOX-G4-zPT">
+                                <rect key="frame" x="20" y="676" width="284" height="40"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Send Message" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bpa-PW-w8V">
+                                        <rect key="frame" x="20" y="10" width="244" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="tam-nL-EP3"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" red="0.6470588235294118" green="0.64313725490196072" blue="0.65490196078431373" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Bpa-PW-w8V" firstAttribute="leading" secondItem="eOX-G4-zPT" secondAttribute="leading" constant="20" id="FKs-J2-Id6"/>
+                                    <constraint firstAttribute="height" constant="40" id="P9G-Qw-p6q"/>
+                                    <constraint firstAttribute="trailing" secondItem="Bpa-PW-w8V" secondAttribute="trailing" constant="20" id="QAz-im-9BI"/>
+                                    <constraint firstItem="Bpa-PW-w8V" firstAttribute="centerY" secondItem="eOX-G4-zPT" secondAttribute="centerY" id="WOf-WE-mZb"/>
+                                </constraints>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ellipse 24" translatesAutoresizingMaskIntoConstraints="NO" id="4Xh-vp-2DW">
+                                <rect key="frame" x="20" y="64" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="yZT-qN-a1x"/>
+                                    <constraint firstAttribute="height" constant="60" id="yuX-7F-4N2"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bella Nova" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2E-iQ-Abt">
+                                <rect key="frame" x="95" y="79.333333333333329" width="257" height="20"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRO-dB-E36">
+                                <rect key="frame" x="372" y="78.333333333333329" width="22" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="ITn-mb-edw"/>
+                                    <constraint firstAttribute="width" constant="22" id="xCE-F5-WWu"/>
+                                </constraints>
+                                <state key="normal" image="options"/>
+                                <connections>
+                                    <action selector="btnOptionsTapped:" destination="avW-mP-0gq" eventType="touchUpInside" id="z0n-3h-cIm"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="eOX-G4-zPT" firstAttribute="leading" secondItem="DXr-JL-xqr" secondAttribute="leading" constant="20" id="0nt-g0-FO6"/>
+                            <constraint firstItem="raR-Wp-Nl4" firstAttribute="centerY" secondItem="uXH-xU-ISL" secondAttribute="centerY" id="319-9e-ssp"/>
+                            <constraint firstItem="4Xh-vp-2DW" firstAttribute="top" secondItem="DXr-JL-xqr" secondAttribute="top" constant="44" id="4ee-Iq-UT9"/>
+                            <constraint firstItem="uXH-xU-ISL" firstAttribute="leading" secondItem="raR-Wp-Nl4" secondAttribute="trailing" constant="15" id="5uk-MI-hgv"/>
+                            <constraint firstItem="DXr-JL-xqr" firstAttribute="trailing" secondItem="zSk-hV-Hkt" secondAttribute="trailing" id="Ciw-e3-Sgo"/>
+                            <constraint firstItem="zSk-hV-Hkt" firstAttribute="top" secondItem="jWo-PD-a6d" secondAttribute="top" id="Cvy-6e-Jga"/>
+                            <constraint firstItem="DXr-JL-xqr" firstAttribute="trailing" secondItem="Fez-QY-f2r" secondAttribute="trailing" id="EWO-dX-evb"/>
+                            <constraint firstItem="y2E-iQ-Abt" firstAttribute="leading" secondItem="4Xh-vp-2DW" secondAttribute="trailing" constant="15" id="FUU-9y-pqe"/>
+                            <constraint firstItem="SRO-dB-E36" firstAttribute="leading" secondItem="y2E-iQ-Abt" secondAttribute="trailing" constant="20" id="JbN-nj-HGs"/>
+                            <constraint firstItem="SRO-dB-E36" firstAttribute="centerY" secondItem="y2E-iQ-Abt" secondAttribute="centerY" id="Nja-bq-ZMm"/>
+                            <constraint firstItem="raR-Wp-Nl4" firstAttribute="leading" secondItem="eOX-G4-zPT" secondAttribute="trailing" constant="10" id="QAD-Xo-qz8"/>
+                            <constraint firstAttribute="bottom" secondItem="zSk-hV-Hkt" secondAttribute="bottom" id="T0g-j8-Tqh"/>
+                            <constraint firstAttribute="bottom" secondItem="Fez-QY-f2r" secondAttribute="bottom" id="UgZ-N2-gAf"/>
+                            <constraint firstItem="zSk-hV-Hkt" firstAttribute="leading" secondItem="DXr-JL-xqr" secondAttribute="leading" id="ZJK-IV-uqe"/>
+                            <constraint firstItem="DXr-JL-xqr" firstAttribute="trailing" secondItem="uXH-xU-ISL" secondAttribute="trailing" constant="20" id="ZTv-aG-SXb"/>
+                            <constraint firstItem="DXr-JL-xqr" firstAttribute="bottom" secondItem="uXH-xU-ISL" secondAttribute="bottom" constant="20" id="jZm-Ys-2fU"/>
+                            <constraint firstItem="Fez-QY-f2r" firstAttribute="top" secondItem="jWo-PD-a6d" secondAttribute="top" id="jix-CF-QRY"/>
+                            <constraint firstItem="Fez-QY-f2r" firstAttribute="leading" secondItem="DXr-JL-xqr" secondAttribute="leading" id="kYH-YC-Nuh"/>
+                            <constraint firstItem="y2E-iQ-Abt" firstAttribute="centerY" secondItem="4Xh-vp-2DW" secondAttribute="centerY" multiplier="0.95" id="lZc-ig-Gyn"/>
+                            <constraint firstItem="DXr-JL-xqr" firstAttribute="trailing" secondItem="SRO-dB-E36" secondAttribute="trailing" constant="20" id="xvT-C9-Dji"/>
+                            <constraint firstItem="DXr-JL-xqr" firstAttribute="bottom" secondItem="eOX-G4-zPT" secondAttribute="bottom" constant="20" id="zFN-DQ-6T0"/>
+                            <constraint firstItem="4Xh-vp-2DW" firstAttribute="leading" secondItem="DXr-JL-xqr" secondAttribute="leading" constant="20" id="zgF-B1-QIs"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="DXr-JL-xqr"/>
+                    </view>
+                    <connections>
+                        <outlet property="btnEmoji" destination="raR-Wp-Nl4" id="auF-6i-YTk"/>
+                        <outlet property="btnOptions" destination="SRO-dB-E36" id="gTd-99-chm"/>
+                        <outlet property="btnSend" destination="uXH-xU-ISL" id="ubz-U1-Ioy"/>
+                        <outlet property="lblUsername" destination="y2E-iQ-Abt" id="k6N-mu-1hG"/>
+                        <outlet property="messageInputView" destination="eOX-G4-zPT" id="7Pi-tR-KZt"/>
+                        <outlet property="txtFieldMessage" destination="Bpa-PW-w8V" id="54v-wY-mfE"/>
+                        <outlet property="userImage" destination="4Xh-vp-2DW" id="QQv-bL-doE"/>
+                        <outlet property="videoView" destination="zSk-hV-Hkt" id="ygf-em-h9W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LoM-dB-XSu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="354" y="2121"/>
+        </scene>
         <!--All Chats List View Controller-->
         <scene sceneID="e1m-ui-trg">
             <objects>
@@ -2912,6 +3033,7 @@
     </scenes>
     <resources>
         <image name="Bg" width="380" height="815"/>
+        <image name="Ellipse 24" width="60.333332061767578" height="60.333332061767578"/>
         <image name="Group 7086" width="14.666666984558105" height="14.666666984558105"/>
         <image name="Mask Group 6" width="248" height="220"/>
         <image name="Rectangle 108" width="375" height="232"/>
@@ -2923,6 +3045,7 @@
         <image name="close" width="12.666666984558105" height="12.666666984558105"/>
         <image name="editIcon" width="8.6666669845581055" height="8.6666669845581055"/>
         <image name="email" width="17" height="10.333333015441895"/>
+        <image name="emotions" width="31" height="31"/>
         <image name="fedora" width="18.666666030883789" height="19.333333969116211"/>
         <image name="flash" width="34.333332061767578" height="42.666667938232422"/>
         <image name="footprint" width="244.33332824707031" height="267.33334350585938"/>
@@ -2941,6 +3064,7 @@
         <image name="rotate" width="37.333332061767578" height="35.333332061767578"/>
         <image name="search" width="24" height="24"/>
         <image name="searchSelected" width="24" height="24"/>
+        <image name="send" width="36" height="36"/>
         <image name="upload_photo-1" width="44.666667938232422" height="35.666667938232422"/>
         <image name="username" width="17" height="17"/>
     </resources>

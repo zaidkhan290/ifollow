@@ -101,6 +101,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "OptionsViewController") as! OptionsViewController
     }
     
+    static func getStoriesViewController() -> StoriesViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "StoriesViewController") as! StoriesViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

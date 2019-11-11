@@ -21,6 +21,9 @@
 		18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390895236C70DA009A28E6 /* LaunchScreen.storyboard */; };
 		183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839089F236C7A99009A28E6 /* MainViewController.swift */; };
 		183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */; };
+		1855080F23795352008EAC2E /* SegmentProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855080E23795352008EAC2E /* SegmentProgressBar.swift */; };
+		185508122379696E008EAC2E /* sampleVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 185508112379696E008EAC2E /* sampleVideo.mp4 */; };
+		1855081423796E5E008EAC2E /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1855081323796E5E008EAC2E /* video.mp4 */; };
 		185640E023741B7800CC2777 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640DF23741B7800CC2777 /* MenuViewController.swift */; };
 		185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640E1237423C100CC2777 /* MenuTableViewCell.swift */; };
 		185640E4237423C100CC2777 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185640E2237423C100CC2777 /* MenuTableViewCell.xib */; };
@@ -60,6 +63,7 @@
 		18B14CC3237580A0005E5CE4 /* SignupDetail2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC2237580A0005E5CE4 /* SignupDetail2ViewController.swift */; };
 		18B14CC52375AB8F005E5CE4 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC42375AB8F005E5CE4 /* OptionsViewController.swift */; };
 		18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC62375ABD6005E5CE4 /* OptionsTableViewCell.swift */; };
+		18B14CCA2375CA85005E5CE4 /* StoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC92375CA85005E5CE4 /* StoriesViewController.swift */; };
 		18B82A312371CBDB00693F7F /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B82A302371CBDB00693F7F /* NotificationViewController.swift */; };
 		18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */; };
 		18B82A352371D05A00693F7F /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */; };
@@ -85,6 +89,9 @@
 		18390898236C70DA009A28E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1839089F236C7A99009A28E6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		1855080E23795352008EAC2E /* SegmentProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentProgressBar.swift; sourceTree = "<group>"; };
+		185508112379696E008EAC2E /* sampleVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampleVideo.mp4; sourceTree = "<group>"; };
+		1855081323796E5E008EAC2E /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
 		185640DF23741B7800CC2777 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		185640E1237423C100CC2777 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		185640E2237423C100CC2777 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
@@ -124,6 +131,7 @@
 		18B14CC2237580A0005E5CE4 /* SignupDetail2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupDetail2ViewController.swift; sourceTree = "<group>"; };
 		18B14CC42375AB8F005E5CE4 /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		18B14CC62375ABD6005E5CE4 /* OptionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsTableViewCell.swift; sourceTree = "<group>"; };
+		18B14CC92375CA85005E5CE4 /* StoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesViewController.swift; sourceTree = "<group>"; };
 		18B82A302371CBDB00693F7F /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
@@ -214,6 +222,8 @@
 		1839088B236C70D6009A28E6 /* iFollow */ = {
 			isa = PBXGroup;
 			children = (
+				1855081023796956008EAC2E /* Video */,
+				1855080D23795330008EAC2E /* Segment Progress Bar */,
 				189329D12370618F0067077F /* Cells */,
 				189329BD23701E520067077F /* Fonts */,
 				189329B8237014D50067077F /* Utilities */,
@@ -231,6 +241,7 @@
 		1839089E236C7865009A28E6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				18B14CC82375CA38005E5CE4 /* Stories Controller */,
 				185640ED2374794500CC2777 /* Groups Controller */,
 				185640DE23741B5600CC2777 /* Menu Controller */,
 				182F62562372E88900A55E52 /* Chat Controllers */,
@@ -243,6 +254,23 @@
 				18307AB0236C86AF00A0A7C6 /* Account Controllers */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		1855080D23795330008EAC2E /* Segment Progress Bar */ = {
+			isa = PBXGroup;
+			children = (
+				1855080E23795352008EAC2E /* SegmentProgressBar.swift */,
+			);
+			path = "Segment Progress Bar";
+			sourceTree = "<group>";
+		};
+		1855081023796956008EAC2E /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				185508112379696E008EAC2E /* sampleVideo.mp4 */,
+				1855081323796E5E008EAC2E /* video.mp4 */,
+			);
+			path = Video;
 			sourceTree = "<group>";
 		};
 		185640DE23741B5600CC2777 /* Menu Controller */ = {
@@ -333,6 +361,14 @@
 				18B086422371AA71002D773E /* TabBarViewController.swift */,
 			);
 			path = "Tab bar Controller";
+			sourceTree = "<group>";
+		};
+		18B14CC82375CA38005E5CE4 /* Stories Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18B14CC92375CA85005E5CE4 /* StoriesViewController.swift */,
+			);
+			path = "Stories Controller";
 			sourceTree = "<group>";
 		};
 		18B82A2F2371CBBA00693F7F /* Notifications Controller */ = {
@@ -436,10 +472,12 @@
 				189329C3237020910067077F /* Lato-Bold_0.ttf in Resources */,
 				1870700223732CF9007F8BF2 /* EditProfileGenderTableViewCell.xib in Resources */,
 				18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */,
+				185508122379696E008EAC2E /* sampleVideo.mp4 in Resources */,
 				189329C5237020910067077F /* Lato-Regular_0.ttf in Resources */,
 				182F62602372EB4E00A55E52 /* ChatListTableViewCell.xib in Resources */,
 				185640E8237426B600CC2777 /* MenuSeperatorTableViewCell.xib in Resources */,
 				189329C4237020910067077F /* Lato-Semibold_0.ttf in Resources */,
+				1855081423796E5E008EAC2E /* video.mp4 in Resources */,
 				183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */,
 				18706FFE23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.xib in Resources */,
 				189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */,
@@ -518,6 +556,7 @@
 				189329C923702FE90067077F /* ForgotPasswordViewController.swift in Sources */,
 				189329CD237035670067077F /* LabelExtension.swift in Sources */,
 				18781C2223707019001BAF95 /* FeedsView.swift in Sources */,
+				18B14CCA2375CA85005E5CE4 /* StoriesViewController.swift in Sources */,
 				1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */,
 				185640EA2374444D00CC2777 /* PrivateChatBoxViewController.swift in Sources */,
 				18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */,
@@ -536,6 +575,7 @@
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				18706FFD23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift in Sources */,
 				18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */,
+				1855080F23795352008EAC2E /* SegmentProgressBar.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
 				185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */,
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,

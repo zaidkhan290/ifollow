@@ -75,6 +75,10 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         if (indexPath.row == 0){
             self.openCamera()
         }
+        else{
+            let vc = Utility.getStoriesViewController()
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
 }
