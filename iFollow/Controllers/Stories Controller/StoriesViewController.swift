@@ -68,10 +68,14 @@ class StoriesViewController: UIViewController {
     
     @IBAction func btnSendTapped(_ sender: UIButton) {
         
+        spb.isPaused = true
+        videoPlayer.pause()
         let vc = Utility.getSendStoryViewController()
+        vc.delegate = self
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)
+        
     }
     
     @IBAction func btnEmojiTapped(_ sender: UIButton) {
@@ -117,4 +121,11 @@ extension StoriesViewController: UIViewControllerTransitioningDelegate {
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
     }
     
+}
+
+extension StoriesViewController: SendStoryViewControllerDelegate{
+    func sendStoryPopupDismissed() {
+        videoPlayer.play()
+        spb.isPaused = false
+    }
 }

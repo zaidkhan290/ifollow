@@ -20,7 +20,7 @@ class AllChatsListViewController: UIViewController {
         super.viewDidLoad()
 
         if (isPrivateChat){
-           searchView.dropShadow(color: Theme.privateChatBoxSearchBarColor)
+            searchView.dropShadow(color: Theme.privateChatBoxSearchBarColor)
             searchView.layer.cornerRadius = 25
             Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: .white)
             self.view.backgroundColor = .clear
@@ -51,6 +51,11 @@ extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate
         cell.backgroundColor = isPrivateChat ? .clear : .white
         return cell
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = Utility.getChatContainerViewController()
+        self.pushToVC(vc: vc)
     }
     
 }

@@ -3711,6 +3711,106 @@
             </objects>
             <point key="canvasLocation" x="3764" y="2120"/>
         </scene>
+        <!--Chat Container View Controller-->
+        <scene sceneID="lz4-TM-eo6">
+            <objects>
+                <viewController storyboardIdentifier="ChatContainerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="umN-9q-Xkt" customClass="ChatContainerViewController" customModule="iFollow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pfI-fj-5Uk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mdm-cz-610">
+                                <rect key="frame" x="20" y="37" width="16" height="22"/>
+                                <state key="normal" image="chatBackIcon"/>
+                                <connections>
+                                    <action selector="btnBackTapped:" destination="umN-9q-Xkt" eventType="touchUpInside" id="mUG-dQ-3VP"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chatUserIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HoF-IS-tvd">
+                                <rect key="frame" x="65" y="40" width="16" height="16"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emma Watson" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0C-wQ-VMx">
+                                <rect key="frame" x="91" y="34.333333333333336" width="97" height="18"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onlineIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ouL-rX-3wa">
+                                <rect key="frame" x="91" y="57.333333333333343" width="16" height="16"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Online" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ViJ-fP-v12">
+                                <rect key="frame" x="112" y="59.333333333333343" width="28.666666666666657" height="12"/>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
+                                <color key="textColor" red="0.52156862749999999" green="0.52156862749999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0u-NY-vcG">
+                                <rect key="frame" x="0.0" y="76" width="414" height="40"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages will be deleted if not read in the next 3 hours" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipZ-d1-LMu">
+                                        <rect key="frame" x="82" y="10" width="250" height="20"/>
+                                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="sho-lE-8KQ"/>
+                                            <constraint firstAttribute="width" constant="250" id="snb-r4-r67"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
+                                        <color key="textColor" red="1" green="0.1215686275" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.14760809080000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="ipZ-d1-LMu" firstAttribute="centerX" secondItem="Q0u-NY-vcG" secondAttribute="centerX" id="UZT-Tl-CoW"/>
+                                    <constraint firstAttribute="height" constant="40" id="XHj-3B-RuH"/>
+                                    <constraint firstItem="ipZ-d1-LMu" firstAttribute="centerY" secondItem="Q0u-NY-vcG" secondAttribute="centerY" id="gok-73-5S2"/>
+                                </constraints>
+                            </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M8g-ZK-Ooy">
+                                <rect key="frame" x="0.0" y="116" width="414" height="620"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.14779323630136987" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="HoF-IS-tvd" firstAttribute="top" secondItem="Vz9-Hq-VaC" secondAttribute="top" constant="20" id="1q4-aK-7nB"/>
+                            <constraint firstItem="C0C-wQ-VMx" firstAttribute="leading" secondItem="HoF-IS-tvd" secondAttribute="trailing" constant="10" id="3ge-N4-4r6"/>
+                            <constraint firstItem="Vz9-Hq-VaC" firstAttribute="bottom" secondItem="M8g-ZK-Ooy" secondAttribute="bottom" id="78B-DZ-E56"/>
+                            <constraint firstItem="mdm-cz-610" firstAttribute="centerY" secondItem="HoF-IS-tvd" secondAttribute="centerY" id="FUy-1u-KH0"/>
+                            <constraint firstItem="ViJ-fP-v12" firstAttribute="leading" secondItem="ouL-rX-3wa" secondAttribute="trailing" constant="5" id="GKA-Mg-9YT"/>
+                            <constraint firstItem="M8g-ZK-Ooy" firstAttribute="top" secondItem="Q0u-NY-vcG" secondAttribute="bottom" id="ICN-GX-EnL"/>
+                            <constraint firstItem="C0C-wQ-VMx" firstAttribute="centerY" secondItem="HoF-IS-tvd" secondAttribute="centerY" multiplier="0.9" id="IEX-3M-pPx"/>
+                            <constraint firstItem="HoF-IS-tvd" firstAttribute="leading" secondItem="Vz9-Hq-VaC" secondAttribute="leading" constant="65" id="MXo-T6-hYH"/>
+                            <constraint firstItem="M8g-ZK-Ooy" firstAttribute="leading" secondItem="Vz9-Hq-VaC" secondAttribute="leading" id="NGJ-T0-VnE"/>
+                            <constraint firstItem="Vz9-Hq-VaC" firstAttribute="trailing" secondItem="M8g-ZK-Ooy" secondAttribute="trailing" id="Qvb-wr-gS2"/>
+                            <constraint firstItem="Q0u-NY-vcG" firstAttribute="leading" secondItem="Vz9-Hq-VaC" secondAttribute="leading" id="R5U-hB-oAc"/>
+                            <constraint firstItem="Q0u-NY-vcG" firstAttribute="top" secondItem="HoF-IS-tvd" secondAttribute="bottom" constant="20" id="fSS-GI-BV3"/>
+                            <constraint firstItem="ViJ-fP-v12" firstAttribute="centerY" secondItem="ouL-rX-3wa" secondAttribute="centerY" id="ipy-lG-XDK"/>
+                            <constraint firstItem="ouL-rX-3wa" firstAttribute="top" secondItem="C0C-wQ-VMx" secondAttribute="bottom" constant="5" id="qYo-2e-r6h"/>
+                            <constraint firstItem="mdm-cz-610" firstAttribute="leading" secondItem="Vz9-Hq-VaC" secondAttribute="leading" constant="20" id="uQr-ub-58s"/>
+                            <constraint firstItem="ouL-rX-3wa" firstAttribute="leading" secondItem="C0C-wQ-VMx" secondAttribute="leading" id="uuh-ij-Iwy"/>
+                            <constraint firstItem="Vz9-Hq-VaC" firstAttribute="trailing" secondItem="Q0u-NY-vcG" secondAttribute="trailing" id="zwz-Fi-IUc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Vz9-Hq-VaC"/>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="M8g-ZK-Ooy" id="VbJ-mF-9TP"/>
+                        <outlet property="lblMessage" destination="ipZ-d1-LMu" id="AZO-Uz-7ha"/>
+                        <outlet property="lblOnlineStatus" destination="ViJ-fP-v12" id="pkJ-XX-rGz"/>
+                        <outlet property="lblUsername" destination="C0C-wQ-VMx" id="ym7-wA-HEV"/>
+                        <outlet property="onlineIcon" destination="ouL-rX-3wa" id="Ihg-AS-6U0"/>
+                        <outlet property="userImage" destination="HoF-IS-tvd" id="MRm-wE-5bO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bgi-9A-yoG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4458" y="2120"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Bg" width="380" height="815"/>
@@ -3727,6 +3827,8 @@
         <image name="attach-1" width="18.666666030883789" height="18.666666030883789"/>
         <image name="back" width="18.666666030883789" height="15.333333015441895"/>
         <image name="capture" width="55" height="55"/>
+        <image name="chatBackIcon" width="18.666666030883789" height="15.333333015441895"/>
+        <image name="chatUserIcon" width="44" height="44"/>
         <image name="close" width="12.666666984558105" height="12.666666984558105"/>
         <image name="editIcon" width="8.6666669845581055" height="8.6666669845581055"/>
         <image name="email" width="17" height="10.333333015441895"/>
@@ -3743,6 +3845,7 @@
         <image name="menuUserImage" width="83" height="83"/>
         <image name="minus" width="23.666666030883789" height="23.666666030883789"/>
         <image name="notification" width="12.333333015441895" height="23"/>
+        <image name="onlineIcon" width="11" height="11"/>
         <image name="options" width="4.3333334922790527" height="16.666666030883789"/>
         <image name="password" width="17" height="19.666666030883789"/>
         <image name="pencil-striped-symbol-for-interface-edit-buttons" width="16.333333969116211" height="16.333333969116211"/>

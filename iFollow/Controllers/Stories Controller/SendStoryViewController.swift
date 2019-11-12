@@ -8,12 +8,17 @@
 
 import UIKit
 
+protocol SendStoryViewControllerDelegate {
+    func sendStoryPopupDismissed()
+}
+
 class SendStoryViewController: UIViewController {
 
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var txtFieldSearch: UITextField!
     @IBOutlet weak var btnClose: UIButton!
     @IBOutlet weak var friendsTableView: UITableView!
+    var delegate: SendStoryViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +38,9 @@ class SendStoryViewController: UIViewController {
     
     @IBAction func btnCloseTapped(_ sender: UIButton){
         self.dismiss(animated: true, completion: nil)
+        if (delegate != nil){
+            self.delegate.sendStoryPopupDismissed()
+        }
     }
 
 }

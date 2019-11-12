@@ -56,4 +56,9 @@ extension AllGroupsListViewController: UITableViewDataSource, UITableViewDelegat
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = Utility.getChatContainerViewController()
+        self.pushToVC(vc: vc)
+    }
+    
 }
