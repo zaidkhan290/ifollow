@@ -19,3 +19,15 @@ class HalfSizePresentationController : UIPresentationController {
         }
     }
 }
+
+class FullSizePresentationController : UIPresentationController {
+    override var frameOfPresentedViewInContainerView: CGRect {
+        get {
+            guard let theView = containerView else {
+                return CGRect.zero
+            }
+            
+            return CGRect(x: 0, y: 0, width: theView.bounds.width, height: theView.bounds.height)
+        }
+    }
+}

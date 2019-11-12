@@ -109,6 +109,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "SendStoryViewController") as! SendStoryViewController
     }
     
+    static func getNewPostViewController() -> NewPostViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "NewPostViewController") as! NewPostViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

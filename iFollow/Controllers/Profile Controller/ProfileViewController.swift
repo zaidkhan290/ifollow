@@ -8,6 +8,7 @@
 
 import UIKit
 import iCarousel
+import Toast_Swift
 
 class ProfileViewController: UIViewController {
 
@@ -21,6 +22,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var txtFiledSearch: UITextField!
     @IBOutlet weak var carouselView: iCarousel!
+    
+    var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,14 +41,20 @@ class ProfileViewController: UIViewController {
         
         searchView.dropShadow(color: .white)
         searchView.layer.cornerRadius = 25
+        txtFiledSearch.isUserInteractionEnabled = false
+        searchView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
         Utility.setTextFieldPlaceholder(textField: txtFiledSearch, placeholder: "What's in your mind?", color: Theme.searchFieldColor)
         
         carouselView.type = .rotary
         self.carouselView.dataSource = self
         self.carouselView.delegate = self
         
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        imagePicker.mediaTypes = ["public.image" /*"public.movie"*/]
+        imagePicker.delegate = self
+        
     }
-    
     
     //MARk:- Actions
     
@@ -59,6 +68,10 @@ class ProfileViewController: UIViewController {
     @objc func editViewTapped(){
         let vc = Utility.getEditProfileViewController()
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func searchViewTapped(){
+        self.present(imagePicker, animated: true, completion: nil)
     }
     
     @IBAction func btnMenuTapped(_ sender: UIButton) {
@@ -94,6 +107,50 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         
         return view
         
+    }
+    
+}
+
+extension ProfileViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return FullSizePresentationController(presentedViewController: presented, presenting: presenting)
+    }
+    
+}
+
+extension ProfileViewController: PostViewControllerDelegate{
+    
+    func postTapped(postView: UIViewController) {
+        self.view.makeToast("Your post share successfully..")
+        postView.dismiss(animated: true, completion: nil)
+    }
+    
+    func imageTapped(postView: UIViewController) {
+        postView.dismiss(animated: true, completion: nil)
+        searchViewTapped()
+    }
+}
+
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+     
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            let vc = Utility.getNewPostViewController()
+            vc.postSelectedImage = pickedImage
+            vc.delegate = self
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            self.present(vc, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
 }
