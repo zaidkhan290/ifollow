@@ -8,13 +8,18 @@
 
 import UIKit
 
+protocol FriendsTableViewCellDelegate: class {
+    func btnSendTapped(indexPath: IndexPath)
+}
+
 class FriendsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var lblUsername: UILabel!
     @IBOutlet weak var lblLastSeen: UILabel!
     @IBOutlet weak var btnSend: UIButton!
-    
+    var delegate: FriendsTableViewCellDelegate!
+    var indexPath: IndexPath!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,6 +33,9 @@ class FriendsTableViewCell: UITableViewCell {
     }
     
     @IBAction func btnSendTapped(_ sender: UIButton) {
+        if (delegate != nil){
+            self.delegate.btnSendTapped(indexPath: indexPath)
+        }
     }
     
 }

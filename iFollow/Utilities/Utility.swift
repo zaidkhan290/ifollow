@@ -113,6 +113,18 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "NewPostViewController") as! NewPostViewController
     }
     
+    static func getTrendersContainerViewController() -> TrendersContainerViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "TrendersContainerViewController") as! TrendersContainerViewController
+    }
+    
+    static func getTrendesViewController() -> TrendesViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "TrendesViewController") as! TrendesViewController
+    }
+    
+    static func getTrendingViewController() -> TrendingViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "TrendingViewController") as! TrendingViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

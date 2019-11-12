@@ -45,6 +45,11 @@ class ProfileViewController: UIViewController {
         searchView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
         Utility.setTextFieldPlaceholder(textField: txtFiledSearch, placeholder: "What's in your mind?", color: Theme.searchFieldColor)
         
+        lblTrends.isUserInteractionEnabled = true
+        lblTrends.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendesTapped)))
+        lblTrending.isUserInteractionEnabled = true
+        lblTrending.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendesTapped)))
+        
         carouselView.type = .rotary
         self.carouselView.dataSource = self
         self.carouselView.delegate = self
@@ -63,6 +68,11 @@ class ProfileViewController: UIViewController {
         let navigationVC = UINavigationController(rootViewController: vc)
         navigationVC.navigationBar.isHidden = true
         self.present(navigationVC, animated: true, completion: nil)
+    }
+    
+    @objc func trendesTapped(){
+        let vc = Utility.getTrendersContainerViewController()
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc func editViewTapped(){

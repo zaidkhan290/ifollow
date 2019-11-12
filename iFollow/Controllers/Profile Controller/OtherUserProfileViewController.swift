@@ -23,7 +23,6 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     @IBOutlet weak var privateTalkView: UIView!
     @IBOutlet weak var trendView: UIView!
     @IBOutlet weak var carouselView: iCarousel!
-    @IBOutlet weak var optionsPickerView: UIPickerView!
     
     var isTrending = false
     var options = [String]()
@@ -41,6 +40,11 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         trendView.layer.borderWidth = 1
         trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
         trendView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendViewTapped)))
+        
+        lblTrends.isUserInteractionEnabled = true
+        lblTrends.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendesTapped)))
+        lblTrending.isUserInteractionEnabled = true
+        lblTrending.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendesTapped)))
         
         carouselView.type = .rotary
         self.carouselView.dataSource = self
@@ -75,6 +79,11 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     
     @objc func privateTalkTapped(){
         
+    }
+    
+    @objc func trendesTapped(){
+        let vc = Utility.getTrendersContainerViewController()
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc func trendViewTapped(){
