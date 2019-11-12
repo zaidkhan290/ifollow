@@ -15,11 +15,15 @@ class ExploreViewController: UIViewController {
     @IBOutlet weak var recentStoriesCollectionView: UICollectionView!
     @IBOutlet weak var allStoriesCollectionView: UICollectionView!
     
+    var imagePicker = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         searchView.dropShadow(color: .white)
         searchView.layer.cornerRadius = 25
+        txtFieldSearch.isUserInteractionEnabled = false
+        searchView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
         Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
         
         let storyCell = UINib(nibName: "StoryCollectionViewCell", bundle: nil)
@@ -35,6 +39,11 @@ class ExploreViewController: UIViewController {
         
         let allStoryCell = UINib(nibName: "AllStoriesCollectionViewCell", bundle: nil)
         self.allStoriesCollectionView.register(allStoryCell, forCellWithReuseIdentifier: "AllStories")
+        
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        imagePicker.mediaTypes = ["public.image" /*"public.movie"*/]
+        imagePicker.delegate = self
         
     }
     
@@ -62,6 +71,10 @@ class ExploreViewController: UIViewController {
     func openCamera(){
         let vc = Utility.getCameraViewController()
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func searchViewTapped(){
+        self.present(imagePicker, animated: true, completion: nil)
     }
     
 }
@@ -121,6 +134,50 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
             }
         }
         
+    }
+    
+}
+
+extension ExploreViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return FullSizePresentationController(presentedViewController: presented, presenting: presenting)
+    }
+    
+}
+
+extension ExploreViewController: PostViewControllerDelegate{
+    
+    func postTapped(postView: UIViewController) {
+        self.view.makeToast("Your post share successfully..")
+        postView.dismiss(animated: true, completion: nil)
+    }
+    
+    func imageTapped(postView: UIViewController) {
+        postView.dismiss(animated: true, completion: nil)
+        searchViewTapped()
+    }
+}
+
+extension ExploreViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            let vc = Utility.getNewPostViewController()
+            vc.postSelectedImage = pickedImage
+            vc.delegate = self
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            self.present(vc, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
 }
