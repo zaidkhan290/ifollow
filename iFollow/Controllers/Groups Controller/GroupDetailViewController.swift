@@ -95,6 +95,8 @@ class GroupDetailViewController: UIViewController {
     }
     
     @IBAction func btnAllMediaTapped(_ sender: UIButton) {
+        let vc = Utility.getMediaViewController()
+        self.pushToVC(vc: vc)
     }
     
     @IBAction func btnAddMembersTapped(_ sender: UIButton) {
@@ -140,6 +142,7 @@ extension GroupDetailViewController: UICollectionViewDataSource, UICollectionVie
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaCell", for: indexPath) as! MediaCollectionViewCell
         cell.mediaImage.image = UIImage(named: mediaImages[indexPath.row])
+        cell.mediaImage.contentMode = .scaleAspectFill
         return cell
     }
     

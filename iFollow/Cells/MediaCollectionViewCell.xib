@@ -33,7 +33,7 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="111" height="90"/>
             <connections>
-                <outlet property="mediaImage" destination="yuY-NY-O8j" id="NYz-bd-9Sz"/>
+                <outlet property="mediaImage" destination="yuY-NY-O8j" id="zd4-0C-Q2x"/>
             </connections>
             <point key="canvasLocation" x="181.8840579710145" y="117.1875"/>
         </collectionViewCell>

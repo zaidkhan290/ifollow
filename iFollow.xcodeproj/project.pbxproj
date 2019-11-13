@@ -57,6 +57,7 @@
 		18847A55237C21F1004D500A /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A54237C21F1004D500A /* GroupDetailViewController.swift */; };
 		18847A58237C3010004D500A /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A56237C3010004D500A /* MediaCollectionViewCell.swift */; };
 		18847A59237C3010004D500A /* MediaCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18847A57237C3010004D500A /* MediaCollectionViewCell.xib */; };
+		18847A5B237C5A52004D500A /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A5A237C5A52004D500A /* MediaViewController.swift */; };
 		1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885744A2372B91900985AC8 /* CameraViewController.swift */; };
 		189329BA237014E90067077F /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329B9237014E90067077F /* Utility.swift */; };
 		189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BB237015D80067077F /* ViewControllerExtension.swift */; };
@@ -138,6 +139,7 @@
 		18847A54237C21F1004D500A /* GroupDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailViewController.swift; sourceTree = "<group>"; };
 		18847A56237C3010004D500A /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		18847A57237C3010004D500A /* MediaCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaCollectionViewCell.xib; sourceTree = "<group>"; };
+		18847A5A237C5A52004D500A /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		1885744A2372B91900985AC8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		189329B9237014E90067077F /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		189329BB237015D80067077F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 			children = (
 				185640EE2374796300CC2777 /* CreateGroupViewController.swift */,
 				18847A54237C21F1004D500A /* GroupDetailViewController.swift */,
+				18847A5A237C5A52004D500A /* MediaViewController.swift */,
 			);
 			path = "Groups Controller";
 			sourceTree = "<group>";
@@ -626,6 +629,7 @@
 				1825A528237AEA41002811E7 /* TrendersContainerViewController.swift in Sources */,
 				182F62582372E94B00A55E52 /* ChatBoxContainerViewController.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
+				18847A5B237C5A52004D500A /* MediaViewController.swift in Sources */,
 				1855081623797DA8008EAC2E /* SendStoryViewController.swift in Sources */,
 				185640E7237426B600CC2777 /* MenuSeperatorTableViewCell.swift in Sources */,
 				182F625F2372EB4E00A55E52 /* ChatListTableViewCell.swift in Sources */,
