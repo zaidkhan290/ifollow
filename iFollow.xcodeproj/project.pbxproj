@@ -53,6 +53,7 @@
 		18781C2023707001001BAF95 /* FeedsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18781C1F23707001001BAF95 /* FeedsView.xib */; };
 		18781C2223707019001BAF95 /* FeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C2123707019001BAF95 /* FeedsView.swift */; };
 		18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C23237087D3001BAF95 /* UIViewExtension.swift */; };
+		18847A53237BF2FA004D500A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A52237BF2FA004D500A /* ChatViewController.swift */; };
 		1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885744A2372B91900985AC8 /* CameraViewController.swift */; };
 		189329BA237014E90067077F /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329B9237014E90067077F /* Utility.swift */; };
 		189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BB237015D80067077F /* ViewControllerExtension.swift */; };
@@ -130,6 +131,7 @@
 		18781C1F23707001001BAF95 /* FeedsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedsView.xib; sourceTree = "<group>"; };
 		18781C2123707019001BAF95 /* FeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsView.swift; sourceTree = "<group>"; };
 		18781C23237087D3001BAF95 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		18847A52237BF2FA004D500A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		1885744A2372B91900985AC8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		189329B9237014E90067077F /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		189329BB237015D80067077F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				182F625B2372E97600A55E52 /* AllGroupsListViewController.swift */,
 				185640E92374444D00CC2777 /* PrivateChatBoxViewController.swift */,
 				1825A52E237AFDEF002811E7 /* ChatContainerViewController.swift */,
+				18847A52237BF2FA004D500A /* ChatViewController.swift */,
 			);
 			path = "Chat Controllers";
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				18781C2223707019001BAF95 /* FeedsView.swift in Sources */,
 				1855081923798976008EAC2E /* FriendsTableViewCell.swift in Sources */,
 				18B14CCA2375CA85005E5CE4 /* StoriesViewController.swift in Sources */,
+				18847A53237BF2FA004D500A /* ChatViewController.swift in Sources */,
 				1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */,
 				185640EA2374444D00CC2777 /* PrivateChatBoxViewController.swift in Sources */,
 				18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */,

@@ -17,11 +17,16 @@ class ChatContainerViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var lblMessage: UILabel!
     
+    var chatController = UIViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         lblMessage.layer.masksToBounds = true
         lblMessage.layer.cornerRadius = 5
+        
+        chatController = Utility.getChatViewController()
+        add(asChildViewController: chatController)
     }
     
     //MARK:- Actions
@@ -30,5 +35,12 @@ class ChatContainerViewController: UIViewController {
         self.goBack()
     }
     
+    private func add(asChildViewController viewController: UIViewController) {
+        addChild(viewController)
+        containerView.addSubview(viewController.view)
+        viewController.view.frame = containerView.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParent: self)
+    }
     
 }

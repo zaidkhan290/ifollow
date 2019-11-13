@@ -129,6 +129,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "ChatContainerViewController") as! ChatContainerViewController
     }
     
+    static func getChatViewController() -> ChatViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 
