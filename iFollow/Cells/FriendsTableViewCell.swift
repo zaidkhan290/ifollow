@@ -18,6 +18,8 @@ class FriendsTableViewCell: UITableViewCell {
     @IBOutlet weak var lblUsername: UILabel!
     @IBOutlet weak var lblLastSeen: UILabel!
     @IBOutlet weak var btnSend: UIButton!
+    @IBOutlet weak var btnOption: UIButton!
+    
     var delegate: FriendsTableViewCellDelegate!
     var indexPath: IndexPath!
     
@@ -37,5 +39,9 @@ class FriendsTableViewCell: UITableViewCell {
             self.delegate.btnSendTapped(indexPath: indexPath)
         }
     }
+    
+    @IBAction func btnOptionsTapped(_ sender: UIButton) {
+    }
+    
     
 }

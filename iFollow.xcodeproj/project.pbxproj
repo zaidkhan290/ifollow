@@ -54,6 +54,9 @@
 		18781C2223707019001BAF95 /* FeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C2123707019001BAF95 /* FeedsView.swift */; };
 		18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C23237087D3001BAF95 /* UIViewExtension.swift */; };
 		18847A53237BF2FA004D500A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A52237BF2FA004D500A /* ChatViewController.swift */; };
+		18847A55237C21F1004D500A /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A54237C21F1004D500A /* GroupDetailViewController.swift */; };
+		18847A58237C3010004D500A /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A56237C3010004D500A /* MediaCollectionViewCell.swift */; };
+		18847A59237C3010004D500A /* MediaCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18847A57237C3010004D500A /* MediaCollectionViewCell.xib */; };
 		1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885744A2372B91900985AC8 /* CameraViewController.swift */; };
 		189329BA237014E90067077F /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329B9237014E90067077F /* Utility.swift */; };
 		189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BB237015D80067077F /* ViewControllerExtension.swift */; };
@@ -132,6 +135,9 @@
 		18781C2123707019001BAF95 /* FeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsView.swift; sourceTree = "<group>"; };
 		18781C23237087D3001BAF95 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		18847A52237BF2FA004D500A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		18847A54237C21F1004D500A /* GroupDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailViewController.swift; sourceTree = "<group>"; };
+		18847A56237C3010004D500A /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
+		18847A57237C3010004D500A /* MediaCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaCollectionViewCell.xib; sourceTree = "<group>"; };
 		1885744A2372B91900985AC8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		189329B9237014E90067077F /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		189329BB237015D80067077F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -319,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				185640EE2374796300CC2777 /* CreateGroupViewController.swift */,
+				18847A54237C21F1004D500A /* GroupDetailViewController.swift */,
 			);
 			path = "Groups Controller";
 			sourceTree = "<group>";
@@ -396,6 +403,8 @@
 				18B14CC62375ABD6005E5CE4 /* OptionsTableViewCell.swift */,
 				1855081723798976008EAC2E /* FriendsTableViewCell.swift */,
 				1855081823798976008EAC2E /* FriendsTableViewCell.xib */,
+				18847A56237C3010004D500A /* MediaCollectionViewCell.swift */,
+				18847A57237C3010004D500A /* MediaCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -515,6 +524,7 @@
 				18B82A352371D05A00693F7F /* NotificationTableViewCell.xib in Resources */,
 				18781C2023707001001BAF95 /* FeedsView.xib in Resources */,
 				18706FFA237323DB007F8BF2 /* EditProfileImageTableViewCell.xib in Resources */,
+				18847A59237C3010004D500A /* MediaCollectionViewCell.xib in Resources */,
 				189329C3237020910067077F /* Lato-Bold_0.ttf in Resources */,
 				1870700223732CF9007F8BF2 /* EditProfileGenderTableViewCell.xib in Resources */,
 				18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */,
@@ -622,10 +632,12 @@
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
 				18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */,
 				1825A52F237AFDEF002811E7 /* ChatContainerViewController.swift in Sources */,
+				18847A58237C3010004D500A /* MediaCollectionViewCell.swift in Sources */,
 				182F625A2372E96A00A55E52 /* AllChatsListViewController.swift in Sources */,
 				18B14CC3237580A0005E5CE4 /* SignupDetail2ViewController.swift in Sources */,
 				185CC0C52379A096006BDC9D /* NewPostViewController.swift in Sources */,
 				18B14CC123758086005E5CE4 /* SignupDetail1ViewController.swift in Sources */,
+				18847A55237C21F1004D500A /* GroupDetailViewController.swift in Sources */,
 				18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				1855081C23799422008EAC2E /* HalfSizePresentation.swift in Sources */,

@@ -61,6 +61,20 @@
                             <action selector="btnSendTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="WYd-b3-d2v"/>
                         </connections>
                     </button>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhc-Nm-a2l">
+                        <rect key="frame" x="313" y="32.5" width="25" height="25"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="ZRc-Vm-Tai"/>
+                            <constraint firstAttribute="height" constant="25" id="yCX-cp-4Np"/>
+                        </constraints>
+                        <state key="normal" image="options-1">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="btnOptionsTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="s7K-9L-OuL"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="oDe-fS-RTC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="06J-46-4H4"/>
@@ -69,12 +83,15 @@
                     <constraint firstAttribute="trailing" secondItem="dEd-xz-arI" secondAttribute="trailing" constant="20" id="KiO-nK-Ubs"/>
                     <constraint firstItem="YEg-yp-rQX" firstAttribute="centerY" secondItem="oDe-fS-RTC" secondAttribute="centerY" multiplier="0.7" id="eTt-Fh-aRY"/>
                     <constraint firstItem="YEg-yp-rQX" firstAttribute="leading" secondItem="oDe-fS-RTC" secondAttribute="trailing" constant="10" id="gZ2-At-CdX"/>
+                    <constraint firstAttribute="trailing" secondItem="yhc-Nm-a2l" secondAttribute="trailing" constant="20" id="grs-ph-q5K"/>
                     <constraint firstItem="PkL-YC-Tft" firstAttribute="leading" secondItem="YEg-yp-rQX" secondAttribute="leading" id="ioP-Ba-J3V"/>
+                    <constraint firstItem="yhc-Nm-a2l" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="mpg-K8-bD6"/>
                     <constraint firstItem="PkL-YC-Tft" firstAttribute="top" secondItem="YEg-yp-rQX" secondAttribute="bottom" constant="1" id="oQL-QI-Oom"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="btnOption" destination="yhc-Nm-a2l" id="5YK-kZ-nPF"/>
                 <outlet property="btnSend" destination="dEd-xz-arI" id="juP-i4-QGk"/>
                 <outlet property="lblLastSeen" destination="PkL-YC-Tft" id="T0m-p0-2IC"/>
                 <outlet property="lblUsername" destination="YEg-yp-rQX" id="tDT-Yw-V5y"/>
@@ -85,5 +102,6 @@
     </objects>
     <resources>
         <image name="Ellipse 24" width="60.5" height="60.5"/>
+        <image name="options-1" width="3" height="10.5"/>
     </resources>
 </document>
