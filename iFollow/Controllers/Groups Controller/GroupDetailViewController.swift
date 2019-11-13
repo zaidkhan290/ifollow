@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AppImageViewer
 
 class GroupDetailViewController: UIViewController {
 
@@ -142,6 +143,17 @@ extension GroupDetailViewController: UICollectionViewDataSource, UICollectionVie
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let cell = collectionView.cellForItem(at: indexPath) as! MediaCollectionViewCell
+        let mediaImage = ViewerImage.appImage(forImage: UIImage(named: mediaImages[indexPath.row])!)
+        let viewer = AppImageViewer(originImage: UIImage(named: mediaImages[indexPath.row])!, photos: [mediaImage], animatedFromView: cell)
+        viewer.delegate = self
+        
+        self.present(viewer, animated: true, completion: nil)
+        
+    }
+    
 }
 
 extension GroupDetailViewController: UITableViewDataSource, UITableViewDelegate{
@@ -194,5 +206,9 @@ extension GroupDetailViewController: UITextFieldDelegate{
         txtFieldGroupName.text = txtFieldGroupName.text == "" ? "Family Group" : txtFieldGroupName.text!
         
     }
+    
+}
+
+extension GroupDetailViewController: AppImageViewerDelegate{
     
 }
