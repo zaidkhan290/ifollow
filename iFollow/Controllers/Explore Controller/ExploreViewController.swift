@@ -22,8 +22,8 @@ class ExploreViewController: UIViewController {
 
         searchView.dropShadow(color: .white)
         searchView.layer.cornerRadius = 25
-        txtFieldSearch.isUserInteractionEnabled = false
-        searchView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
+        //txtFieldSearch.isUserInteractionEnabled = false
+       // searchView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
         Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
         
         let storyCell = UINib(nibName: "StoryCollectionViewCell", bundle: nil)
@@ -133,7 +133,10 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
                 self.present(vc, animated: true, completion: nil)
             }
         }
-        
+        else{
+            let vc = Utility.getStoriesViewController()
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
 }

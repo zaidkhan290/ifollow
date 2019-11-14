@@ -15,6 +15,8 @@ class SignupDetail1ViewController: UIViewController {
     
     var textFieldPlaceholders = [String]()
     var textFieldImages = [String]()
+    var imagePicker = UIImagePickerController()
+    var userImage = UIImage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,12 @@ class SignupDetail1ViewController: UIViewController {
         textFieldPlaceholders = ["", "First Name", "Last Name", "mm/dd/yy", "Username"]
         textFieldImages = ["", "username-1", "username-1", "calendar", "username-1"]
         
+        imagePicker.allowsEditing = true
+        imagePicker.mediaTypes = ["public.image" /*"public.movie"*/]
+        imagePicker.delegate = self
+        
+        userImage = UIImage(named: "editProfilePlaceholder")!
+        
     }
     
     //MARK:- Actions
@@ -42,6 +50,23 @@ class SignupDetail1ViewController: UIViewController {
         self.goBack()
     }
     
+    func openImagePicker(){
+        
+        let alertVC = UIAlertController(title: "Select Action", message: "", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
+            self.imagePicker.sourceType = .camera
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
+        let galleryAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(cameraAction)
+        alertVC.addAction(galleryAction)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
 }
 
 extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegate, EditProfileDelegate{
@@ -54,6 +79,8 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
         
         if (indexPath.row == 0){
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditProfileImageTableViewCell", for: indexPath) as! EditProfileImageTableViewCell
+            cell.userImage.image = userImage
+            cell.userImage.layer.cornerRadius = cell.userImage.bounds.height / 2
             return cell
         }
         else if (indexPath.row == 5){
@@ -72,9 +99,23 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditProfileTextFieldsTableViewCell", for: indexPath) as! EditProfileTextFieldsTableViewCell
             Utility.setTextFieldPlaceholder(textField: cell.txtField, placeholder: textFieldPlaceholders[indexPath.row], color: Theme.editProfileTextFieldColor)
             cell.icon.image = UIImage(named: textFieldImages[indexPath.row])
+            
+            if (indexPath.row == 3){
+                cell.txtField.keyboardType = .numberPad
+            }
+            else{
+                cell.txtField.keyboardType = .default
+            }
+            
             return cell
         }
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath.row == 0){
+            openImagePicker()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -94,4 +135,23 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
         let vc = Utility.getSignupDetail2ViewController()
         self.pushToVC(vc: vc)
     }
+}
+
+extension SignupDetail1ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            userImage = pickedImage
+            self.detailTableView.reloadData()
+        }
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
 }

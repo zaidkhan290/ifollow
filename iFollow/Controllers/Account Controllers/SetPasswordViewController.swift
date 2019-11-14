@@ -44,6 +44,7 @@ class SetPasswordViewController: UIViewController {
     }
     
     @IBAction func btnResetTapped(_ sender: UIButton) {
+        self.view.makeToast("Password change successfully")
     }
     
     @IBAction func btnSignupTapped(_ sender: UIButton) {

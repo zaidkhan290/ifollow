@@ -105,6 +105,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
         itemView.frame = view.frame
+        itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped)))
         itemView.userImage.layer.cornerRadius = 25
         itemView.feedImage.clipsToBounds = true
         itemView.feedImage.image = UIImage(named: "iFollow-white-logo-1")
@@ -119,6 +120,15 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         
     }
     
+//    func userImageTapped(index: Int) {
+//        let vc = Utility.getOtherUserProfileViewController()
+//        self.present(vc, animated: true, completion: nil)
+//    }
+    
+    @objc func userImageTapped() {
+        let vc = Utility.getOtherUserProfileViewController()
+        self.present(vc, animated: true, completion: nil)
+    }
 }
 
 extension ProfileViewController: UIViewControllerTransitioningDelegate {

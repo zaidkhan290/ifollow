@@ -84,6 +84,10 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
             let vc = Utility.getSetPasswordViewController()
             self.pushToVC(vc: vc)
         }
+        else if (indexPath.row == 5){
+            let vc = Utility.getCreateGroupViewController()
+            self.pushToVC(vc: vc)
+        }
         else if (indexPath.row == 12){
             self.dismiss(animated: true, completion: nil)
             NotificationCenter.default.post(name: NSNotification.Name("logoutUser"), object: nil)

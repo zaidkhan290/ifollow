@@ -11,6 +11,7 @@ import iCarousel
 
 class HomeViewController: UIViewController {
 
+    @IBOutlet weak var storyCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var carouselView: iCarousel!
     @IBOutlet weak var storyCollectionView: UICollectionView!
     
@@ -31,6 +32,17 @@ class HomeViewController: UIViewController {
         carouselView.type = .rotary
         self.carouselView.dataSource = self
         self.carouselView.delegate = self
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+//        let storyCollectionHeight = (UIScreen.main.bounds.height) * (0.3)
+//        self.storyCollectionViewHeightConstraint.constant = storyCollectionHeight
+//        self.view.updateConstraintsIfNeeded()
+//        self.view.layoutSubviews()
+//        self.storyCollectionView.reloadData()
         
     }
     
@@ -83,7 +95,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
 }
 
-extension HomeViewController: iCarouselDataSource, iCarouselDelegate, FeedsViewDelegate{
+extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     
     func numberOfItems(in carousel: iCarousel) -> Int {
         return 10
@@ -95,9 +107,8 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate, FeedsViewD
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
         itemView.index = index
-        itemView.delegate = self
         itemView.userImage.isUserInteractionEnabled = true
-        itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTaped)))
+        itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped)))
         itemView.frame = view.frame
         itemView.userImage.layer.cornerRadius = 25
         itemView.feedImage.clipsToBounds = true
@@ -111,12 +122,12 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate, FeedsViewD
         
     }
     
-    func userImageTapped(index: Int) {
-        let vc = Utility.getOtherUserProfileViewController()
-        self.present(vc, animated: true, completion: nil)
-    }
+//    func userImageTapped(index: Int) {
+//        let vc = Utility.getOtherUserProfileViewController()
+//        self.present(vc, animated: true, completion: nil)
+//    }
     
-    @objc func userImageTaped(){
+    @objc func userImageTapped() {
         let vc = Utility.getOtherUserProfileViewController()
         self.present(vc, animated: true, completion: nil)
     }

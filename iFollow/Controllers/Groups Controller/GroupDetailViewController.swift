@@ -43,6 +43,7 @@ class GroupDetailViewController: UIViewController {
         notificationSwitch.onTintColor = Theme.profileLabelsYellowColor
         
         imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         
         txtFieldGroupName.isUserInteractionEnabled = isGroupNameEditable
         txtFieldGroupName.delegate = self
@@ -103,9 +104,21 @@ class GroupDetailViewController: UIViewController {
     }
     
     func openImagePicker(){
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.allowsEditing = false
-        self.present(imagePicker, animated: true, completion: nil)
+        
+        let alertVC = UIAlertController(title: "Select Action", message: "", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
+            self.imagePicker.sourceType = .camera
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
+        let galleryAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(cameraAction)
+        alertVC.addAction(galleryAction)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
     }
     
     @objc func groupImageTapped(){
@@ -181,7 +194,7 @@ extension GroupDetailViewController: UIImagePickerControllerDelegate, UINavigati
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
             groupImage.clipsToBounds = true
             groupImage.contentMode = .scaleAspectFill
             groupImage.image = image

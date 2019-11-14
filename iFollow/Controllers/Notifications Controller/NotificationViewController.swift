@@ -41,6 +41,28 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationCell", for: indexPath) as! NotificationTableViewCell
+      
+        if (indexPath.row == 0){
+            let notificationText = "John requested to trend you"
+            let range1 = notificationText.range(of: "John")
+            let range2 = notificationText.range(of: "requested to trend you")
+            
+            let attributedString = NSMutableAttributedString(string: notificationText)
+            attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoBoldFontOfSize(size: 16.0), range: notificationText.nsRange(from: range1!))
+            attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoRegularFontOfSize(size: 16.0), range: notificationText.nsRange(from: range2!))
+            cell.lblNotification.attributedText = attributedString
+        }
+        else{
+            let notificationText = "John commented on your post"
+            let range1 = notificationText.range(of: "John")
+            let range2 = notificationText.range(of: "commented on your post")
+            
+            let attributedString = NSMutableAttributedString(string: notificationText)
+            attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoBoldFontOfSize(size: 16.0), range: notificationText.nsRange(from: range1!))
+            attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoRegularFontOfSize(size: 16.0), range: notificationText.nsRange(from: range2!))
+            cell.lblNotification.attributedText = attributedString
+        }
+        
         cell.btnMinus.isHidden = indexPath.row == 0 ? false : true
         cell.btnPlus.isHidden = indexPath.row == 0 ? false : true
         return cell

@@ -1379,7 +1379,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages will be deleted if not read in 3 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jp6-cy-4dF">
-                                <rect key="frame" x="82.666666666666686" y="110" width="249" height="14"/>
+                                <rect key="frame" x="85.333333333333329" y="110" width="243.33333333333337" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.12156862745098039" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1468,6 +1468,7 @@
                     <connections>
                         <outlet property="carouselView" destination="opi-3R-ake" id="mWS-8U-m5Q"/>
                         <outlet property="storyCollectionView" destination="0ab-W2-kYa" id="pzK-fM-3vU"/>
+                        <outlet property="storyCollectionViewHeightConstraint" destination="dmC-DI-Mng" id="fJC-B1-uhq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fvu-0o-Tg7" userLabel="First Responder" sceneMemberID="firstResponder"/>

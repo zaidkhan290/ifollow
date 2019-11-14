@@ -15,7 +15,7 @@ class EditProfileImageTableViewCell: UITableViewCell {
     @IBOutlet weak var btnCamera: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        btnCamera.isUserInteractionEnabled = false
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

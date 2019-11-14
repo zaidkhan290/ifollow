@@ -29,6 +29,8 @@ class StoriesViewController: UIViewController {
         super.viewDidLoad()
         
         messageInputView.layer.cornerRadius = 20
+        txtFieldMessage.delegate = self
+        txtFieldMessage.returnKeyType = .send
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(tapOnView(recognizer:)))
         longPressGesture.minimumPressDuration = 0.1
@@ -128,4 +130,22 @@ extension StoriesViewController: SendStoryViewControllerDelegate{
         videoPlayer.play()
         spb.isPaused = false
     }
+}
+
+extension StoriesViewController: UITextFieldDelegate{
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        spb.isPaused = true
+        videoPlayer.pause()
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        sendStoryPopupDismissed()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
+    
 }

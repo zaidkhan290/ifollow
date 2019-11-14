@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Toast_Swift
 
 class ForgotPasswordViewController: UIViewController {
     
@@ -14,7 +15,6 @@ class ForgotPasswordViewController: UIViewController {
     @IBOutlet weak var txtFieldEmail: UITextField!
     @IBOutlet weak var btnSend: UIButton!
     @IBOutlet weak var btnSignup: UIButton!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -16,6 +16,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var btnSignIn: UIButton!
     @IBOutlet weak var btnSignup: UIButton!
     
+    var isForForgotPassword = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,24 +35,35 @@ class LoginViewController: UIViewController {
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if(isForForgotPassword){
+            self.view.makeToast("Code sent to your email")
+        }
+    }
+    
     //MARK:- Actions
     
     @IBAction func btnForgotPasswordTapped(_ sender: UIButton) {
+        isForForgotPassword = true
         let vc = Utility.getForgotPasswordViewController()
         self.pushToVC(vc: vc)
     }
     
     @IBAction func btnSignInTapped(_ sender: UIButton) {
+        isForForgotPassword = false
         let vc = Utility.getTabBarViewController()
         self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func btnSignupTapped(_ sender: UIButton) {
+        isForForgotPassword = false
         let vc = Utility.getSignupViewController()
         self.pushToVC(vc: vc)
     }
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
+        isForForgotPassword = false
         self.goBack()
     }
     

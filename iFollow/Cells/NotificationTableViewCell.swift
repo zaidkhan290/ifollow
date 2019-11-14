@@ -21,14 +21,6 @@ class NotificationTableViewCell: UITableViewCell {
         super.awakeFromNib()
         userImage.layer.cornerRadius = 35
         
-        let notificationText = "John commented on your post"
-        let range1 = notificationText.range(of: "John")
-        let range2 = notificationText.range(of: "commented on your post")
-        
-        let attributedString = NSMutableAttributedString(string: notificationText)
-        attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoBoldFontOfSize(size: 16.0), range: notificationText.nsRange(from: range1!))
-        attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoRegularFontOfSize(size: 16.0), range: notificationText.nsRange(from: range2!))
-        lblNotification.attributedText = attributedString
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

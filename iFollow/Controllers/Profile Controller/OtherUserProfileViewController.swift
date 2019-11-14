@@ -44,7 +44,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         lblTrends.isUserInteractionEnabled = true
         lblTrends.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendesTapped)))
         lblTrending.isUserInteractionEnabled = true
-        lblTrending.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendesTapped)))
+        lblTrending.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendersTapped)))
         
         carouselView.type = .rotary
         self.carouselView.dataSource = self
@@ -83,6 +83,13 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     
     @objc func trendesTapped(){
         let vc = Utility.getTrendersContainerViewController()
+        vc.selectedIndex = 0
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func trendersTapped(){
+        let vc = Utility.getTrendersContainerViewController()
+        vc.selectedIndex = 1
         self.present(vc, animated: true, completion: nil)
     }
     
