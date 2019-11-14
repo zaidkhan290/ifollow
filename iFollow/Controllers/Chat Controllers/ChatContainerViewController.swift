@@ -10,6 +10,7 @@ import UIKit
 
 class ChatContainerViewController: UIViewController {
 
+    @IBOutlet weak var alertView: UIView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var lblUsername: UILabel!
@@ -17,9 +18,11 @@ class ChatContainerViewController: UIViewController {
     @IBOutlet weak var lblOnlineStatus: UILabel!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var lblMessage: UILabel!
+    var isPrivateChat = false
     
     var chatController = UIViewController()
     var isFromGroupChat = false
+    var isFromProfile = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +35,28 @@ class ChatContainerViewController: UIViewController {
         topView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(topViewTapped)))
         
         chatController = Utility.getChatViewController()
+        (chatController as! ChatViewController).isPrivateChat = isPrivateChat
         add(asChildViewController: chatController)
+        
+        if (isPrivateChat){
+            self.lblMessage.backgroundColor = .clear
+            lblUsername.textColor = .white
+            self.view.backgroundColor = Theme.privateChatBackgroundColor
+            self.alertView.backgroundColor = Theme.privateChatBackgroundColor
+            
+        }
     }
     
     //MARK:- Actions
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
-        self.goBack()
+        if (isFromProfile){
+            self.dismiss(animated: true, completion: nil)
+        }
+        else{
+           self.goBack()
+        }
+        
     }
     
     @objc func topViewTapped(){

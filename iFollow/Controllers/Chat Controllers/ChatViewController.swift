@@ -10,27 +10,36 @@ import UIKit
 import JSQMessagesViewController
 
 class ChatViewController: JSQMessagesViewController, JSQMessageMediaData {
-
-    let incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: Theme.profileLabelsYellowColor)
-    let outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: Theme.privateChatBoxSearchBarColor)
+    
+    var isPrivateChat = false
+    var incomingBubble: JSQMessagesBubbleImage!
+    var outgoingBubble: JSQMessagesBubbleImage!
     var messages = [JSQMessage]()
     var userImages = [String]()
     var sendButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: isPrivateChat ? Theme.privateChatIncomingMessage : Theme.profileLabelsYellowColor)
+        outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: isPrivateChat ? Theme.privateChatOutgoingMessage : Theme.privateChatBoxSearchBarColor)
+        
+        if (isPrivateChat){
+            self.collectionView.backgroundColor = Theme.privateChatBackgroundColor
+            self.inputToolbar.contentView.textView.textColor = .white
+        }
         self.setup()
         self.messageAdded()
         self.inputToolbar.contentView.leftBarButtonItem.setImage(UIImage(named: "emojiIcon"), for: .normal)
         self.inputToolbar.contentView.leftBarButtonItem.setImage(UIImage(named: "emojiIcon"), for: .selected)
         self.inputToolbar.contentView.leftBarButtonItem.setImage(UIImage(named: "emojiIcon"), for: .highlighted)
       //  self.inputToolbar.contentView.textView.layer.borderColor = UIColor.clear.cgColor
-        self.inputToolbar.contentView.dropShadow(color: .white)
+        self.inputToolbar.contentView.dropShadow(color: isPrivateChat ? Theme.privateChatBackgroundColor : .white)
        // self.inputToolbar.contentView.frame = CGRect(x: 30, y: 5, width: 100, height: 80)
         self.inputToolbar.contentView.textView.placeHolder = "Type a message..."
         self.inputToolbar.contentView.textView.font = Theme.getLatoRegularFontOfSize(size: 15)
         self.inputToolbar.contentView.textView.layer.borderColor = UIColor.clear.cgColor
+        self.inputToolbar.contentView.textView.backgroundColor = .clear
         //self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "send-1"), for: .normal)
         //self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "send-1"), for: .selected)
         //self.inputToolbar.contentView.rightBarButtonItem.setImage(UIImage(named: "send-1"), for: .highlighted)

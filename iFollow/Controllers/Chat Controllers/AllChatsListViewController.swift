@@ -56,6 +56,7 @@ extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = Utility.getChatContainerViewController()
         vc.isFromGroupChat = false
+        vc.isPrivateChat = isPrivateChat
         self.pushToVC(vc: vc)
     }
     

@@ -4087,7 +4087,7 @@
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M8g-ZK-Ooy">
                                 <rect key="frame" x="0.0" y="116" width="414" height="620"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4117,6 +4117,7 @@
                         <viewLayoutGuide key="safeArea" id="Vz9-Hq-VaC"/>
                     </view>
                     <connections>
+                        <outlet property="alertView" destination="Q0u-NY-vcG" id="Maq-y5-kVc"/>
                         <outlet property="containerView" destination="M8g-ZK-Ooy" id="VbJ-mF-9TP"/>
                         <outlet property="lblMessage" destination="ipZ-d1-LMu" id="AZO-Uz-7ha"/>
                         <outlet property="lblOnlineStatus" destination="ViJ-fP-v12" id="pkJ-XX-rGz"/>

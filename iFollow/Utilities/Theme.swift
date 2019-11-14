@@ -22,6 +22,7 @@ struct Theme {
     static let memberNameColor = UIColor.init(red: 93.0/255.0, green: 93.0/255.0, blue: 93.0/255.0, alpha: 1.0)
     static let privateChatOutgoingMessage = UIColor.init(red: 67.0/255.0, green: 67.0/255.0, blue: 64.0/255.0, alpha: 1.0)
     static let privateChatIncomingMessage = UIColor.init(red: 103.0/255.0, green: 103.0/255.0, blue: 103.0/255.0, alpha: 1.0)
+    static let privateChatBackgroundColor = UIColor.init(red: 33.0/255.0, green: 31.0/255.0, blue: 25.0/255.0, alpha: 1.0)
     
     static func getLatoRegularFontOfSize(size: CGFloat) -> UIFont{
         return UIFont(name: "Lato-Regular", size: size)!

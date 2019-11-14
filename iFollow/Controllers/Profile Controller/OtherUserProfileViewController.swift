@@ -78,7 +78,9 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     @objc func privateTalkTapped(){
-        
+        let vc = Utility.getChatContainerViewController()
+        vc.isFromProfile = true
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc func trendesTapped(){
@@ -103,8 +105,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.none
     }
-    
-    
+
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.none
     }
