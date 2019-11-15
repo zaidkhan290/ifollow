@@ -46,8 +46,21 @@
                         <color key="textColor" red="0.36470588240000001" green="0.36470588240000001" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="messageCounter" translatesAutoresizingMaskIntoConstraints="NO" id="lQk-Np-DFZ">
+                        <rect key="frame" x="493.5" y="51" width="20" height="17.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17.5" id="gC3-v6-VCp"/>
+                            <constraint firstAttribute="width" constant="20" id="lOU-rb-EV1"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wis-ba-Ip2">
+                        <rect key="frame" x="497.5" y="53.5" width="12" height="12"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:40 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tt3-dz-LUb">
-                        <rect key="frame" x="484" y="60.5" width="39" height="12"/>
+                        <rect key="frame" x="484" y="73.5" width="39" height="12"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <color key="textColor" red="0.36470588240000001" green="0.36470588240000001" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -56,17 +69,23 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="tt3-dz-LUb" secondAttribute="trailing" constant="20" id="2g2-VC-g11"/>
+                    <constraint firstItem="Wis-ba-Ip2" firstAttribute="centerX" secondItem="tt3-dz-LUb" secondAttribute="centerX" id="53M-Gv-mx3"/>
                     <constraint firstItem="K9a-ay-fBs" firstAttribute="centerY" secondItem="ygh-Iv-aIe" secondAttribute="centerY" multiplier="0.8" id="75O-7o-W4M"/>
+                    <constraint firstItem="lQk-Np-DFZ" firstAttribute="centerX" secondItem="tt3-dz-LUb" secondAttribute="centerX" id="IrE-iJ-Be6"/>
                     <constraint firstItem="K9a-ay-fBs" firstAttribute="leading" secondItem="ygh-Iv-aIe" secondAttribute="trailing" id="MEf-eu-vY3"/>
                     <constraint firstItem="ygh-Iv-aIe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="VHg-AB-rSf"/>
-                    <constraint firstItem="tt3-dz-LUb" firstAttribute="centerY" secondItem="ygh-Iv-aIe" secondAttribute="centerY" id="WXg-LO-fNE"/>
+                    <constraint firstItem="tt3-dz-LUb" firstAttribute="centerY" secondItem="ygh-Iv-aIe" secondAttribute="centerY" multiplier="1.2" id="WXg-LO-fNE"/>
                     <constraint firstItem="ygh-Iv-aIe" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Yia-R7-5ih"/>
                     <constraint firstItem="rGu-fW-f5x" firstAttribute="leading" secondItem="K9a-ay-fBs" secondAttribute="leading" id="aLL-jQ-59f"/>
                     <constraint firstItem="rGu-fW-f5x" firstAttribute="top" secondItem="K9a-ay-fBs" secondAttribute="bottom" constant="5" id="bPq-VH-kRN"/>
+                    <constraint firstItem="tt3-dz-LUb" firstAttribute="top" secondItem="Wis-ba-Ip2" secondAttribute="bottom" constant="8" id="dQb-Nw-sab"/>
+                    <constraint firstItem="tt3-dz-LUb" firstAttribute="top" secondItem="lQk-Np-DFZ" secondAttribute="bottom" constant="5" id="kiF-g4-pil"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="lblMessageCounter" destination="Wis-ba-Ip2" id="0Ly-YV-seN"/>
+                <outlet property="lblTime" destination="tt3-dz-LUb" id="soA-Oc-aMe"/>
                 <outlet property="lblUserMessage" destination="rGu-fW-f5x" id="gJF-mq-MvR"/>
                 <outlet property="lblUsername" destination="K9a-ay-fBs" id="tyY-ax-csW"/>
                 <outlet property="userImage" destination="ygh-Iv-aIe" id="kvO-f6-W6n"/>
@@ -75,6 +94,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="messageCounter" width="17.5" height="17.5"/>
         <image name="profilePic" width="143" height="143"/>
     </resources>
 </document>

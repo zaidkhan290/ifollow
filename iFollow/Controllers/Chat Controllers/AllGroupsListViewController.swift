@@ -51,6 +51,9 @@ extension AllGroupsListViewController: UITableViewDataSource, UITableViewDelegat
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as! ChatListTableViewCell
         cell.backgroundColor = isPrivateChat ? .clear : .white
+        cell.userImage.image = UIImage(named: "family")
+        cell.userImage.contentMode = .center
+        cell.lblUsername.text = "Family Group"
         cell.lblUserMessage.text = "Watson, Pollan, Kane..(15 others)"
         return cell
         

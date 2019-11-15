@@ -30,7 +30,12 @@ class ChatContainerViewController: UIViewController {
         lblMessage.layer.masksToBounds = true
         lblMessage.layer.cornerRadius = 5
         
+        lblUsername.text = isFromGroupChat ? "Family Group" : "Emma Watson"
         lblOnlineStatus.text = isFromGroupChat ? "Watson, Poland, Kane..(+15 others)" : "Online"
+       
+        if (isFromGroupChat){
+            userImage.image = UIImage(named: "family")
+        }
         
         topView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(topViewTapped)))
         

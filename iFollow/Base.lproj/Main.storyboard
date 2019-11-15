@@ -4030,36 +4030,40 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mdm-cz-610">
-                                <rect key="frame" x="20" y="37" width="16" height="22"/>
+                                <rect key="frame" x="20" y="51" width="16" height="22"/>
                                 <state key="normal" image="chatBackIcon"/>
                                 <connections>
                                     <action selector="btnBackTapped:" destination="umN-9q-Xkt" eventType="touchUpInside" id="mUG-dQ-3VP"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chatUserIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HoF-IS-tvd">
-                                <rect key="frame" x="65" y="40" width="16" height="16"/>
+                                <rect key="frame" x="65" y="40" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="7Kg-9b-HTL"/>
+                                    <constraint firstAttribute="height" constant="44" id="Xa2-u5-tfP"/>
+                                </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emma Watson" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0C-wQ-VMx">
-                                <rect key="frame" x="91" y="34.333333333333336" width="97" height="18"/>
+                                <rect key="frame" x="119" y="46.666666666666664" width="97" height="17.999999999999993"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onlineIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ouL-rX-3wa">
-                                <rect key="frame" x="91" y="57.333333333333343" width="16" height="16"/>
+                                <rect key="frame" x="119" y="69.666666666666671" width="16" height="16"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Online" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ViJ-fP-v12">
-                                <rect key="frame" x="112" y="59.333333333333343" width="28.666666666666657" height="12"/>
+                                <rect key="frame" x="140" y="71.666666666666671" width="28.666666666666657" height="12"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                                 <color key="textColor" red="0.52156862749999999" green="0.52156862749999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qyz-20-cbk">
-                                <rect key="frame" x="60" y="0.0" width="354" height="75"/>
+                                <rect key="frame" x="60" y="0.0" width="354" height="103"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0u-NY-vcG">
-                                <rect key="frame" x="0.0" y="76" width="414" height="40"/>
+                                <rect key="frame" x="0.0" y="104" width="414" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages will be deleted if not read in the next 3 hours" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipZ-d1-LMu">
                                         <rect key="frame" x="82" y="10" width="250" height="20"/>
@@ -4086,7 +4090,7 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M8g-ZK-Ooy">
-                                <rect key="frame" x="0.0" y="116" width="414" height="620"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="592"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </containerView>
                         </subviews>
