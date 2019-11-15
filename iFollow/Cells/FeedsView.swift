@@ -25,6 +25,7 @@ class FeedsView: UIView {
     @IBOutlet weak var feedImage: UIImageView!
     @IBOutlet weak var likeView: UIView!
     @IBOutlet weak var feedBackView: UIView!
+    @IBOutlet weak var likeImage: UIImageView!
     
     var index: Int!
     var delegate: FeedsViewDelegate!

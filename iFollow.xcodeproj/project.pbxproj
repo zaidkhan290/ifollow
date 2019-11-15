@@ -85,6 +85,7 @@
 		18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D81237184E2005C739F /* ExploreViewController.swift */; };
 		18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */; };
 		18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */; };
+		18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD2D8B237EE167007A2C3B /* CommentViewController.swift */; };
 		18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -168,6 +169,7 @@
 		18C88D81237184E2005C739F /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStoriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllStoriesCollectionViewCell.xib; sourceTree = "<group>"; };
+		18CD2D8B237EE167007A2C3B /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.release.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.release.xcconfig"; sourceTree = "<group>"; };
 		2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.debug.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.debug.xcconfig"; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 		1839089E236C7865009A28E6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				18CD2D8A237EE14C007A2C3B /* Comment Controller */,
 				1825A526237AEA06002811E7 /* Trenders and Trending Controller */,
 				185CC0C32379A058006BDC9D /* New Post Controller */,
 				18B14CC82375CA38005E5CE4 /* Stories Controller */,
@@ -386,8 +389,8 @@
 			children = (
 				189329D2237061A70067077F /* StoryCollectionViewCell.swift */,
 				189329D3237061A70067077F /* StoryCollectionViewCell.xib */,
-				18781C1F23707001001BAF95 /* FeedsView.xib */,
 				18781C2123707019001BAF95 /* FeedsView.swift */,
+				18781C1F23707001001BAF95 /* FeedsView.xib */,
 				18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */,
 				18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */,
 				18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */,
@@ -446,6 +449,14 @@
 				18C88D81237184E2005C739F /* ExploreViewController.swift */,
 			);
 			path = "Explore Controller";
+			sourceTree = "<group>";
+		};
+		18CD2D8A237EE14C007A2C3B /* Comment Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18CD2D8B237EE167007A2C3B /* CommentViewController.swift */,
+			);
+			path = "Comment Controller";
 			sourceTree = "<group>";
 		};
 		18D0B3BA2372CBAC00C6BD06 /* Profile Controller */ = {
@@ -657,6 +668,7 @@
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,
 				18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */,
 				185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */,
+				18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -107,6 +107,8 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.frame = view.frame
         itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped)))
         itemView.userImage.layer.cornerRadius = 25
+        itemView.feedBackView.isUserInteractionEnabled = true
+        itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped)))
         itemView.feedImage.clipsToBounds = true
         itemView.feedImage.image = UIImage(named: "iFollow-white-logo-1")
         itemView.feedImage.contentMode = .scaleAspectFit
@@ -129,6 +131,13 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         let vc = Utility.getOtherUserProfileViewController()
         self.present(vc, animated: true, completion: nil)
     }
+    
+    @objc func feedbackViewTapped(){
+        let vc = Utility.getCommentViewController()
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
+    } 
 }
 
 extension ProfileViewController: UIViewControllerTransitioningDelegate {

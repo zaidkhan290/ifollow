@@ -109,6 +109,8 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.index = index
         itemView.userImage.isUserInteractionEnabled = true
         itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped)))
+        itemView.feedBackView.isUserInteractionEnabled = true
+        itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped)))
         itemView.frame = view.frame
         itemView.userImage.layer.cornerRadius = 25
         itemView.feedImage.clipsToBounds = true
@@ -131,4 +133,19 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         let vc = Utility.getOtherUserProfileViewController()
         self.present(vc, animated: true, completion: nil)
     }
+    
+    @objc func feedbackViewTapped(){
+        let vc = Utility.getCommentViewController()
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+}
+
+extension HomeViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return FullSizePresentationController(presentedViewController: presented, presenting: presenting)
+    }
+    
 }

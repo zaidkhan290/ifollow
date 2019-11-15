@@ -145,6 +145,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "AddMembersViewController") as! AddMembersViewController
     }
     
+    static func getCommentViewController() -> CommentViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 
