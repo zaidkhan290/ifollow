@@ -72,6 +72,7 @@
 		189329D023705E510067077F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329CF23705E510067077F /* HomeViewController.swift */; };
 		189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329D2237061A70067077F /* StoryCollectionViewCell.swift */; };
 		189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189329D3237061A70067077F /* StoryCollectionViewCell.xib */; };
+		18AC39A5237ED0A40044136B /* AddMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AC39A4237ED0A40044136B /* AddMembersViewController.swift */; };
 		18B086432371AA71002D773E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B086422371AA71002D773E /* TabBarViewController.swift */; };
 		18B14CC123758086005E5CE4 /* SignupDetail1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC023758086005E5CE4 /* SignupDetail1ViewController.swift */; };
 		18B14CC3237580A0005E5CE4 /* SignupDetail2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC2237580A0005E5CE4 /* SignupDetail2ViewController.swift */; };
@@ -154,6 +155,7 @@
 		189329CF23705E510067077F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		189329D2237061A70067077F /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		189329D3237061A70067077F /* StoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoryCollectionViewCell.xib; sourceTree = "<group>"; };
+		18AC39A4237ED0A40044136B /* AddMembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMembersViewController.swift; sourceTree = "<group>"; };
 		18B086422371AA71002D773E /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		18B14CC023758086005E5CE4 /* SignupDetail1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupDetail1ViewController.swift; sourceTree = "<group>"; };
 		18B14CC2237580A0005E5CE4 /* SignupDetail2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupDetail2ViewController.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				185640EE2374796300CC2777 /* CreateGroupViewController.swift */,
 				18847A54237C21F1004D500A /* GroupDetailViewController.swift */,
 				18847A5A237C5A52004D500A /* MediaViewController.swift */,
+				18AC39A4237ED0A40044136B /* AddMembersViewController.swift */,
 			);
 			path = "Groups Controller";
 			sourceTree = "<group>";
@@ -626,6 +629,7 @@
 				18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */,
 				18B82A312371CBDB00693F7F /* NotificationViewController.swift in Sources */,
 				189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */,
+				18AC39A5237ED0A40044136B /* AddMembersViewController.swift in Sources */,
 				1825A528237AEA41002811E7 /* TrendersContainerViewController.swift in Sources */,
 				182F62582372E94B00A55E52 /* ChatBoxContainerViewController.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,

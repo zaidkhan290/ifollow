@@ -19,6 +19,7 @@ class FriendsTableViewCell: UITableViewCell {
     @IBOutlet weak var lblLastSeen: UILabel!
     @IBOutlet weak var btnSend: UIButton!
     @IBOutlet weak var btnOption: UIButton!
+    @IBOutlet weak var selectImage: UIImageView!
     
     var delegate: FriendsTableViewCellDelegate!
     var indexPath: IndexPath!

@@ -141,6 +141,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "MediaViewController") as! MediaViewController
     }
     
+    static func getAddMembersViewController() -> AddMembersViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "AddMembersViewController") as! AddMembersViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

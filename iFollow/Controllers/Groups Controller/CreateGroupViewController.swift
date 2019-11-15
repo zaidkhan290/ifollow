@@ -56,6 +56,11 @@ class CreateGroupViewController: UIViewController {
         
     }
     
+    @IBAction func btnAddTapped(_ sender: UIButton) {
+        let vc = Utility.getAddMembersViewController()
+        self.pushToVC(vc: vc)
+    }
+    
     func openImagePicker(){
         
         let alertVC = UIAlertController(title: "Select Action", message: "", preferredStyle: .actionSheet)

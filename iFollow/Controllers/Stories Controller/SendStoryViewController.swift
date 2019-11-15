@@ -37,6 +37,7 @@ class SendStoryViewController: UIViewController {
        // searchView.layer.borderColor = UIColor.black.cgColor
         searchView.dropShadow(color: .white)
         searchView.layer.cornerRadius = 25
+        Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "Search", color: Theme.searchFieldColor)
         
         allView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(allViewTapped)))
         groupView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(groupViewTapped)))
