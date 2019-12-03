@@ -22,6 +22,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var txtFiledSearch: UITextField!
     @IBOutlet weak var carouselView: iCarousel!
+    @IBOutlet weak var trendesView: UIView!
+    @IBOutlet weak var trendingView: UIView!
     
     var imagePicker = UIImagePickerController()
     
@@ -45,10 +47,10 @@ class ProfileViewController: UIViewController {
         searchView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
         Utility.setTextFieldPlaceholder(textField: txtFiledSearch, placeholder: "What's in your mind?", color: Theme.searchFieldColor)
         
-        lblTrends.isUserInteractionEnabled = true
-        lblTrends.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendesTapped)))
-        lblTrending.isUserInteractionEnabled = true
-        lblTrending.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendesTapped)))
+        trendesView.isUserInteractionEnabled = true
+        trendesView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendesTapped)))
+        trendingView.isUserInteractionEnabled = true
+        trendingView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendingTapped)))
         
         carouselView.type = .rotary
         self.carouselView.dataSource = self
@@ -72,6 +74,13 @@ class ProfileViewController: UIViewController {
     
     @objc func trendesTapped(){
         let vc = Utility.getTrendersContainerViewController()
+        vc.selectedIndex = 0
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func trendingTapped(){
+        let vc = Utility.getTrendersContainerViewController()
+        vc.selectedIndex = 1
         self.present(vc, animated: true, completion: nil)
     }
     
