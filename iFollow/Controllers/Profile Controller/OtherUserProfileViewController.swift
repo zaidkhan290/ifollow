@@ -73,6 +73,22 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         
     }
     
+    @objc func showFeedsOptionsPopup(sender: UIButton){
+        
+        let vc = Utility.getOptionsViewController()
+        vc.options = ["Hide", "Share"]
+        vc.isFromPostView = true
+        vc.modalPresentationStyle = .popover
+        vc.preferredContentSize = CGSize(width: 150, height: 100)
+        
+        let popup = vc.popoverPresentationController
+        popup?.permittedArrowDirections = UIPopoverArrowDirection.up
+        popup?.sourceView = sender
+        popup?.delegate = self
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
     @IBAction func btnBackTapped(_ sender: UIButton){
         self.dismiss(animated: true, completion: nil)
     }
@@ -129,6 +145,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.feedImage.clipsToBounds = true
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
+        itemView.btnOptions.addTarget(self, action: #selector(showFeedsOptionsPopup(sender:)), for: .touchUpInside)
         view.backgroundColor = .white
         view.clipsToBounds = true
         view.addSubview(itemView)

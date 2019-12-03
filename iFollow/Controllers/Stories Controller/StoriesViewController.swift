@@ -8,6 +8,7 @@
 
 import UIKit
 import ARKit
+import IQKeyboardManagerSwift
 
 class StoriesViewController: UIViewController {
 
@@ -45,6 +46,8 @@ class StoriesViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
+        IQKeyboardManager.shared.enable = false
+        
         spb = SegmentedProgressBar(numberOfSegments: 3, duration: 5)
         spb.frame = CGRect(x: 15, y: view.safeAreaInsets.top + 20, width: view.frame.width - 30, height: 4)
         view.addSubview(spb)
@@ -62,8 +65,12 @@ class StoriesViewController: UIViewController {
         playerLayer.frame = self.videoView.frame
         self.videoView.layer.addSublayer(playerLayer)
         videoPlayer.play()
-      
- 
+    
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        IQKeyboardManager.shared.enable = true
     }
     
     //MARK:- Actions
@@ -126,6 +133,7 @@ extension StoriesViewController: UIViewControllerTransitioningDelegate {
 }
 
 extension StoriesViewController: SendStoryViewControllerDelegate{
+    
     func sendStoryPopupDismissed() {
         videoPlayer.play()
         spb.isPaused = false

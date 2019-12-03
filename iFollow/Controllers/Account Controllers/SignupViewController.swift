@@ -29,7 +29,7 @@ class SignupViewController: UIViewController {
         btnSignIn.setAttributedTitle(attributedString, for: .normal)
         
         Utility.setTextFieldPlaceholder(textField: txtFieldEmail, placeholder: "Email", color: Theme.textFieldColor)
-        Utility.setTextFieldPlaceholder(textField: txtFieldPassword, placeholder: "New Password", color: Theme.textFieldColor)
+        Utility.setTextFieldPlaceholder(textField: txtFieldPassword, placeholder: "Password", color: Theme.textFieldColor)
         Utility.setTextFieldPlaceholder(textField: txtFieldConfirmPassword, placeholder: "Confirm Password", color: Theme.textFieldColor)
     }
     

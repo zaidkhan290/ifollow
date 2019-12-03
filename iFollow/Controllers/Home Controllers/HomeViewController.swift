@@ -53,6 +53,22 @@ class HomeViewController: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
+    @objc func showOptionsPopup(sender: UIButton){
+        
+        let vc = Utility.getOptionsViewController()
+        vc.options = ["Hide", "Share"]
+        vc.isFromPostView = true
+        vc.modalPresentationStyle = .popover
+        vc.preferredContentSize = CGSize(width: 150, height: 100)
+        
+        let popup = vc.popoverPresentationController
+        popup?.permittedArrowDirections = UIPopoverArrowDirection.up
+        popup?.sourceView = sender
+        popup?.delegate = self
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
 }
 
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate{
@@ -116,6 +132,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.feedImage.clipsToBounds = true
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
+        itemView.btnOptions.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
         view.backgroundColor = .white
         view.clipsToBounds = true
         view.addSubview(itemView)
@@ -146,6 +163,18 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return FullSizePresentationController(presentedViewController: presented, presenting: presenting)
+    }
+    
+}
+
+extension HomeViewController: UIAdaptivePresentationControllerDelegate, UIPopoverPresentationControllerDelegate{
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
     }
     
 }

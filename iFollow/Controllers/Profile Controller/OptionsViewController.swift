@@ -12,17 +12,20 @@ class OptionsViewController: UIViewController, UITableViewDataSource, UITableVie
 
     @IBOutlet weak var optionTableView: UITableView!
     var options = [String]()
+    var isFromPostView = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         optionTableView.rowHeight = 50
-        options = ["Block", "Report", "Copy User Url", "Private Talk"]
+        if !(isFromPostView){
+            options = ["Block", "Report", "Copy User Url", "Private Talk"]
+        }
         
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return options.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

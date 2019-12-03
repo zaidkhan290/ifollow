@@ -91,6 +91,22 @@ class ProfileViewController: UIViewController {
         self.present(navigationVC, animated: true, completion: nil)
     }
     
+    @objc func showFeedsOptionsPopup(sender: UIButton){
+        
+        let vc = Utility.getOptionsViewController()
+        vc.options = ["Edit", "Delete"]
+        vc.isFromPostView = true
+        vc.modalPresentationStyle = .popover
+        vc.preferredContentSize = CGSize(width: 150, height: 100)
+        
+        let popup = vc.popoverPresentationController
+        popup?.permittedArrowDirections = UIPopoverArrowDirection.up
+        popup?.sourceView = sender
+        popup?.delegate = self
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
 }
 
 extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
@@ -114,6 +130,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.feedImage.contentMode = .scaleAspectFit
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
+        itemView.btnOptions.addTarget(self, action: #selector(showFeedsOptionsPopup(sender:)), for: .touchUpInside)
         view.backgroundColor = .white
         view.clipsToBounds = true
         view.addSubview(itemView)
@@ -180,6 +197,18 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension ProfileViewController: UIAdaptivePresentationControllerDelegate, UIPopoverPresentationControllerDelegate{
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
     }
     
 }

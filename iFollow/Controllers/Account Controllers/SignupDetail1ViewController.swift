@@ -17,6 +17,7 @@ class SignupDetail1ViewController: UIViewController {
     var textFieldImages = [String]()
     var imagePicker = UIImagePickerController()
     var userImage = UIImage()
+    var selectedDate = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,13 @@ class SignupDetail1ViewController: UIViewController {
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
         self.goBack()
+    }
+    
+    @objc func handleDatePicker(sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        selectedDate = dateFormatter.string(from: sender.date)
+        self.detailTableView.reloadData()
     }
     
     func openImagePicker(){
@@ -101,9 +109,15 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
             cell.icon.image = UIImage(named: textFieldImages[indexPath.row])
             
             if (indexPath.row == 3){
+                cell.txtField.text = selectedDate
                 cell.txtField.keyboardType = .numberPad
+                let datePicker = UIDatePicker()
+                datePicker.datePickerMode = .date
+                cell.txtField.inputView = datePicker
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
             }
             else{
+                cell.txtField.text = cell.txtField.text
                 cell.txtField.keyboardType = .default
             }
             

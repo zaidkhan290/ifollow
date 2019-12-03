@@ -17,6 +17,7 @@ class EditProfileViewController: UIViewController {
     
     var textFieldPlaceholders = [String]()
     var textFieldImages = [String]()
+    var selectedDate = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +48,13 @@ class EditProfileViewController: UIViewController {
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func handleDatePicker(sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        selectedDate = dateFormatter.string(from: sender.date)
+        self.editProfileTableView.reloadData()
     }
     
     func openImagePicker(){
@@ -97,6 +105,12 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
             
             if (indexPath.row == 3){
                 cell.txtField.keyboardType = .numberPad
+                cell.txtField.text = selectedDate
+                cell.txtField.keyboardType = .numberPad
+                let datePicker = UIDatePicker()
+                datePicker.datePickerMode = .date
+                cell.txtField.inputView = datePicker
+                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
             }
             else{
                 cell.txtField.keyboardType = .default
