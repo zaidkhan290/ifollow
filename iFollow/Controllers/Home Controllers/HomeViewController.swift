@@ -59,7 +59,7 @@ class HomeViewController: UIViewController {
         vc.options = ["Hide", "Share"]
         vc.isFromPostView = true
         vc.modalPresentationStyle = .popover
-        vc.preferredContentSize = CGSize(width: 150, height: 100)
+        vc.preferredContentSize = CGSize(width: 100, height: 100)
         
         let popup = vc.popoverPresentationController
         popup?.permittedArrowDirections = UIPopoverArrowDirection.up
