@@ -16,11 +16,15 @@ class TrendersContainerViewController: UIViewController {
     @IBOutlet weak var trendersSelectedView: UIView!
     @IBOutlet weak var trendingView: UIView!
     @IBOutlet weak var trendingSelectedView: UIView!
+    @IBOutlet weak var lblTrenders: UILabel!
+    @IBOutlet weak var lblTrending: UILabel!
     @IBOutlet weak var containerView: UIView!
     
     var selectedIndex = 0
     var trendesController = UIViewController()
     var trendingController = UIViewController()
+    var firstTabTitle = ""
+    var secondTabTitle = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +33,8 @@ class TrendersContainerViewController: UIViewController {
         
         trendesController = Utility.getTrendesViewController()
         trendingController = Utility.getTrendingViewController()
+        lblTrenders.text = firstTabTitle
+        lblTrending.text = secondTabTitle
         
         trendersView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendesTapped)))
         trendingView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendingTapped)))

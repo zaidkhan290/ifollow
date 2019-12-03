@@ -96,6 +96,7 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
         }
         else if (indexPath.row == 11){
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditProfileSaveButtonTableViewCell", for: indexPath) as! EditProfileSaveButtonTableViewCell
+            cell.delegate = self
             return cell
         }
         else{
@@ -159,4 +160,10 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
         picker.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension EditProfileViewController: EditProfileDelegate{
+    func btnDoneTapped() {
+        self.dismiss(animated: true, completion: nil)
+    }
 }

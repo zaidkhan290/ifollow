@@ -102,12 +102,16 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     @objc func trendesTapped(){
         let vc = Utility.getTrendersContainerViewController()
         vc.selectedIndex = 0
+        vc.firstTabTitle = "TRENDERS"
+        vc.secondTabTitle = "TRENDES"
         self.present(vc, animated: true, completion: nil)
     }
     
     @objc func trendersTapped(){
         let vc = Utility.getTrendersContainerViewController()
         vc.selectedIndex = 1
+        vc.firstTabTitle = "TRENDERS"
+        vc.secondTabTitle = "TRENDES"
         self.present(vc, animated: true, completion: nil)
     }
     

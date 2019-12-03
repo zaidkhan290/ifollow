@@ -75,12 +75,16 @@ class ProfileViewController: UIViewController {
     @objc func trendesTapped(){
         let vc = Utility.getTrendersContainerViewController()
         vc.selectedIndex = 0
+        vc.firstTabTitle = "TRENDS"
+        vc.secondTabTitle = "TRENDING"
         self.present(vc, animated: true, completion: nil)
     }
     
     @objc func trendingTapped(){
         let vc = Utility.getTrendersContainerViewController()
         vc.selectedIndex = 1
+        vc.firstTabTitle = "TRENDS"
+        vc.secondTabTitle = "TRENDING"
         self.present(vc, animated: true, completion: nil)
     }
     

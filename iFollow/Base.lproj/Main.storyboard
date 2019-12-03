@@ -4012,6 +4012,8 @@
                     </view>
                     <connections>
                         <outlet property="containerView" destination="epU-vK-zD9" id="b57-qU-uH6"/>
+                        <outlet property="lblTrenders" destination="vG3-we-Etp" id="w0z-t6-Nlm"/>
+                        <outlet property="lblTrending" destination="cUX-pG-wFf" id="kUm-1z-e8G"/>
                         <outlet property="lblUsername" destination="aAY-oM-AxZ" id="jFB-8E-t2V"/>
                         <outlet property="mainView" destination="gfp-I5-aoL" id="TDp-zy-GmH"/>
                         <outlet property="trendersSelectedView" destination="ygC-RD-iZd" id="oUI-FY-sfC"/>
