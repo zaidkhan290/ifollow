@@ -32,8 +32,8 @@ class MenuViewController: UIViewController {
         menuTableView.register(menuItemCellNib, forCellReuseIdentifier: "MenuCell")
         menuTableView.register(menuSeperatorCellNib, forCellReuseIdentifier: "MenuSeperatorTableViewCell")
         
-        menuItems = ["Account Settings", "Privacy Settings", "Payments", "Geo Tagging", "", "Create Group", "Office", "High School", "Family", "", "Change Password", "Invite Friends", "Sign Out"]
-        menuIcons = ["setting", "privacy", "credit-card", "map-location (1)", "", "create-group-button", "groupIcon", "groupIcon", "groupIcon", "", "password", "friends", "logout"]
+        menuItems = ["Account Settings", "Privacy Settings", "Payments", "Geo Tagging", "Story View", "", "Create Group", "Office", "High School", "Family", "", "Change Password", "Invite Friends", "Sign Out"]
+        menuIcons = ["setting", "privacy", "credit-card", "map-location (1)", "Group 7194", "", "create-group-button", "groupIcon", "groupIcon", "groupIcon", "", "password", "friends", "logout"]
         
     }
     
@@ -53,12 +53,12 @@ class MenuViewController: UIViewController {
 extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 13
+        return 14
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if (indexPath.row == 4 || indexPath.row == 9){
+        if (indexPath.row == 5 || indexPath.row == 10){
             let cell = tableView.dequeueReusableCell(withIdentifier: "MenuSeperatorTableViewCell", for: indexPath) as! MenuSeperatorTableViewCell
             return cell
         }
@@ -66,13 +66,16 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
             let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as! MenuTableViewCell
             cell.menuTitle.text = menuItems[indexPath.row]
             cell.menuIcon.image = UIImage(named: menuIcons[indexPath.row])
+            cell.menuSwitch.isHidden = indexPath.row == 4 ? false : true
+            cell.menuSwitch.isOn = false
+            cell.menuSwitch.tintColor = Theme.profileLabelsYellowColor
+            cell.menuSwitch.onTintColor = Theme.profileLabelsYellowColor
             return cell
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath.row == 4 || indexPath.row == 9){
+        if (indexPath.row == 5 || indexPath.row == 10){
             return 20
         }
         return 50
@@ -80,15 +83,15 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if (indexPath.row == 10){
+        if (indexPath.row == 11){
             let vc = Utility.getSetPasswordViewController()
             self.pushToVC(vc: vc)
         }
-        else if (indexPath.row == 5){
+        else if (indexPath.row == 6){
             let vc = Utility.getCreateGroupViewController()
             self.pushToVC(vc: vc)
         }
-        else if (indexPath.row == 12){
+        else if (indexPath.row == 13){
             self.dismiss(animated: true, completion: nil)
             NotificationCenter.default.post(name: NSNotification.Name("logoutUser"), object: nil)
         }

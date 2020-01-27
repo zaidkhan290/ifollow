@@ -14,12 +14,12 @@ protocol SendStoryViewControllerDelegate {
 
 class SendStoryViewController: UIViewController {
 
-    @IBOutlet weak var allView: UIView!
-    @IBOutlet weak var lblAll: UILabel!
-    @IBOutlet weak var allSelectedView: UIView!
-    @IBOutlet weak var groupView: UIView!
-    @IBOutlet weak var lblGroup: UILabel!
-    @IBOutlet weak var groupSelectedView: UIView!
+//    @IBOutlet weak var allView: UIView!
+//    @IBOutlet weak var lblAll: UILabel!
+//    @IBOutlet weak var allSelectedView: UIView!
+//    @IBOutlet weak var groupView: UIView!
+//    @IBOutlet weak var lblGroup: UILabel!
+//    @IBOutlet weak var groupSelectedView: UIView!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var txtFieldSearch: UITextField!
     @IBOutlet weak var btnClose: UIButton!
@@ -39,8 +39,8 @@ class SendStoryViewController: UIViewController {
         searchView.layer.cornerRadius = 25
         Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "Search", color: Theme.searchFieldColor)
         
-        allView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(allViewTapped)))
-        groupView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(groupViewTapped)))
+//        allView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(allViewTapped)))
+//        groupView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(groupViewTapped)))
         
         let cellNib = UINib(nibName: "FriendsTableViewCell", bundle: nil)
         friendsTableView.register(cellNib, forCellReuseIdentifier: "FriendsTableViewCell")
@@ -70,18 +70,18 @@ class SendStoryViewController: UIViewController {
     
     func changeTab(){
         
-        if (selectedIndex == 0){
-            lblAll.textColor = Theme.profileLabelsYellowColor
-            allSelectedView.isHidden = false
-            lblGroup.textColor = Theme.privateChatBoxTabsColor
-            groupSelectedView.isHidden = true
-        }
-        else{
-            lblGroup.textColor = Theme.profileLabelsYellowColor
-            groupSelectedView.isHidden = false
-            lblAll.textColor = Theme.privateChatBoxTabsColor
-            allSelectedView.isHidden = true
-        }
+//        if (selectedIndex == 0){
+//            lblAll.textColor = Theme.profileLabelsYellowColor
+//            allSelectedView.isHidden = false
+//            lblGroup.textColor = Theme.privateChatBoxTabsColor
+//            groupSelectedView.isHidden = true
+//        }
+//        else{
+//            lblGroup.textColor = Theme.profileLabelsYellowColor
+//            groupSelectedView.isHidden = false
+//            lblAll.textColor = Theme.privateChatBoxTabsColor
+//            allSelectedView.isHidden = true
+//        }
         
     }
     

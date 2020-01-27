@@ -109,6 +109,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "SendStoryViewController") as! SendStoryViewController
     }
     
+    static func getViewersViewController() -> ViewersViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "ViewersViewController") as! ViewersViewController
+    }
+    
     static func getNewPostViewController() -> NewPostViewController{
         return storyBoard.instantiateViewController(withIdentifier: "NewPostViewController") as! NewPostViewController
     }

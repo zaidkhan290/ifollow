@@ -37,19 +37,26 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="KwB-gr-LBy">
+                        <rect key="frame" x="245" y="33.5" width="51" height="31"/>
+                        <color key="onTintColor" red="0.90588235294117647" green="0.62745098039215685" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
+                    </switch>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="2dj-HD-FKB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="E9p-8f-wVe"/>
+                    <constraint firstAttribute="trailing" secondItem="KwB-gr-LBy" secondAttribute="trailing" constant="40" id="Ik1-57-28N"/>
                     <constraint firstItem="2dj-HD-FKB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="U1M-iM-Pqx"/>
                     <constraint firstItem="g5K-r6-8dN" firstAttribute="leading" secondItem="2dj-HD-FKB" secondAttribute="trailing" constant="10" id="gdB-gS-XOE"/>
                     <constraint firstItem="g5K-r6-8dN" firstAttribute="centerY" secondItem="2dj-HD-FKB" secondAttribute="centerY" id="iQJ-os-htS"/>
+                    <constraint firstItem="KwB-gr-LBy" firstAttribute="centerY" secondItem="g5K-r6-8dN" secondAttribute="centerY" id="sFu-Kc-qhx"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="menuIcon" destination="2dj-HD-FKB" id="fiy-W7-DzI"/>
+                <outlet property="menuSwitch" destination="KwB-gr-LBy" id="PxN-ic-dZr"/>
                 <outlet property="menuTitle" destination="g5K-r6-8dN" id="Wu5-ah-jx8"/>
             </connections>
             <point key="canvasLocation" x="147.82608695652175" y="119.86607142857142"/>

@@ -17,6 +17,7 @@ class StoriesViewController: UIViewController {
     @IBOutlet weak var btnSend: UIButton!
     @IBOutlet weak var btnEmoji: UIButton!
     @IBOutlet weak var messageInputView: UIView!
+    @IBOutlet weak var btnView: UIButton!
     @IBOutlet weak var txtFieldMessage: UITextField!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var lblUsername: UILabel!
@@ -91,6 +92,16 @@ class StoriesViewController: UIViewController {
         
     }
     
+    @IBAction func btnViewTapped(_ sender: UIButton) {
+        spb.isPaused = true
+        videoPlayer.pause()
+        let vc = Utility.getViewersViewController()
+        vc.delegate = self
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     @IBAction func btnOptionsTapped(_ sender: UIButton) {
     }
    
@@ -138,6 +149,15 @@ extension StoriesViewController: SendStoryViewControllerDelegate{
         videoPlayer.play()
         spb.isPaused = false
     }
+}
+
+extension StoriesViewController: ViewersControllerDelegate{
+    
+    func viewersPopupDismissed() {
+        videoPlayer.play()
+        spb.isPaused = false
+    }
+    
 }
 
 extension StoriesViewController: UITextFieldDelegate{

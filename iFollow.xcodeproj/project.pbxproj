@@ -59,6 +59,7 @@
 		18847A59237C3010004D500A /* MediaCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18847A57237C3010004D500A /* MediaCollectionViewCell.xib */; };
 		18847A5B237C5A52004D500A /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A5A237C5A52004D500A /* MediaViewController.swift */; };
 		1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885744A2372B91900985AC8 /* CameraViewController.swift */; };
+		1889F2DE23DF41100079DB72 /* ViewersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1889F2DD23DF41100079DB72 /* ViewersViewController.swift */; };
 		189329BA237014E90067077F /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329B9237014E90067077F /* Utility.swift */; };
 		189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BB237015D80067077F /* ViewControllerExtension.swift */; };
 		189329BF23701EE50067077F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BE23701EE50067077F /* SignupViewController.swift */; };
@@ -143,6 +144,7 @@
 		18847A57237C3010004D500A /* MediaCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaCollectionViewCell.xib; sourceTree = "<group>"; };
 		18847A5A237C5A52004D500A /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		1885744A2372B91900985AC8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		1889F2DD23DF41100079DB72 /* ViewersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewersViewController.swift; sourceTree = "<group>"; };
 		189329B9237014E90067077F /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		189329BB237015D80067077F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		189329BE23701EE50067077F /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 			children = (
 				18B14CC92375CA85005E5CE4 /* StoriesViewController.swift */,
 				1855081523797DA8008EAC2E /* SendStoryViewController.swift */,
+				1889F2DD23DF41100079DB72 /* ViewersViewController.swift */,
 			);
 			path = "Stories Controller";
 			sourceTree = "<group>";
@@ -668,6 +671,7 @@
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,
 				18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */,
 				185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */,
+				1889F2DE23DF41100079DB72 /* ViewersViewController.swift in Sources */,
 				18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
