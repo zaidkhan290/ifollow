@@ -26,6 +26,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var trendingView: UIView!
     
     var imagePicker = UIImagePickerController()
+    var isFullScreen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,6 +139,8 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.userImage.layer.cornerRadius = 25
         itemView.feedBackView.isUserInteractionEnabled = true
         itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped)))
+        itemView.postlikeView.isUserInteractionEnabled = true
+        itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped)))
         itemView.feedImage.clipsToBounds = true
         itemView.feedImage.image = UIImage(named: "iFollow-white-logo-1")
         itemView.feedImage.contentMode = .scaleAspectFit
@@ -164,16 +167,31 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
     
     @objc func feedbackViewTapped(){
         let vc = Utility.getCommentViewController()
+        isFullScreen = true
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)
-    } 
+    }
+    
+    @objc func postLikeViewTapped(){
+        let vc = Utility.getViewersViewController()
+        vc.isForLike = true
+        isFullScreen = false
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
 }
 
 extension ProfileViewController: UIViewControllerTransitioningDelegate {
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return FullSizePresentationController(presentedViewController: presented, presenting: presenting)
+        if (isFullScreen){
+            return FullSizePresentationController(presentedViewController: presented, presenting: presenting)
+        }
+        else{
+            return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+        }
     }
     
 }

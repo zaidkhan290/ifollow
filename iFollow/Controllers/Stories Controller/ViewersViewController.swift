@@ -15,9 +15,11 @@ protocol ViewersControllerDelegate {
 class ViewersViewController: UIViewController {
 
     @IBOutlet weak var btnClose: UIButton!
+    @IBOutlet weak var lblHeading: UILabel!
     @IBOutlet weak var lblViews: UILabel!
     @IBOutlet weak var friendsTableView: UITableView!
     var delegate: ViewersControllerDelegate!
+    var isForLike = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,11 @@ class ViewersViewController: UIViewController {
         friendsTableView.register(cellNib, forCellReuseIdentifier: "FriendsTableViewCell")
         friendsTableView.rowHeight = 60
         self.view.layer.cornerRadius = 20
+        
+        if (isForLike){
+            lblHeading.text = "Post Trend Views"
+            lblViews.text = "23 trends"
+        }
     }
     
     @IBAction func btnCloseTapped(_ sender: UIButton){

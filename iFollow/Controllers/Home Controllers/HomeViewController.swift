@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var storyCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var carouselView: iCarousel!
     @IBOutlet weak var storyCollectionView: UICollectionView!
+    var isFullScreen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,6 +128,8 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped)))
         itemView.feedBackView.isUserInteractionEnabled = true
         itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped)))
+        itemView.postlikeView.isUserInteractionEnabled = true
+        itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped)))
         itemView.frame = view.frame
         itemView.userImage.layer.cornerRadius = 25
         itemView.feedImage.clipsToBounds = true
@@ -153,6 +156,16 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     
     @objc func feedbackViewTapped(){
         let vc = Utility.getCommentViewController()
+        isFullScreen = true
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func postLikeViewTapped(){
+        let vc = Utility.getViewersViewController()
+        vc.isForLike = true
+        isFullScreen = false
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)
@@ -162,7 +175,14 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
 extension HomeViewController: UIViewControllerTransitioningDelegate {
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return FullSizePresentationController(presentedViewController: presented, presenting: presenting)
+        
+        if (isFullScreen){
+            return FullSizePresentationController(presentedViewController: presented, presenting: presenting)
+        }
+        else{
+            return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+        }
+        
     }
     
 }
