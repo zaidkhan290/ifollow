@@ -53,9 +53,9 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
             cell.lblNotification.attributedText = attributedString
         }
         else{
-            let notificationText = "John commented on your post"
+            let notificationText = "John left feedback on your post"
             let range1 = notificationText.range(of: "John")
-            let range2 = notificationText.range(of: "commented on your post")
+            let range2 = notificationText.range(of: "left feedback on your post")
             
             let attributedString = NSMutableAttributedString(string: notificationText)
             attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoBoldFontOfSize(size: 16.0), range: notificationText.nsRange(from: range1!))

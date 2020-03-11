@@ -153,6 +153,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
     }
     
+    static func getEmojisViewController() -> EmojisViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "EmojisViewController") as! EmojisViewController
+    }
+    
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
 

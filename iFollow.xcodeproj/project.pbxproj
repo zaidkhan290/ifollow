@@ -73,6 +73,14 @@
 		189329D023705E510067077F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329CF23705E510067077F /* HomeViewController.swift */; };
 		189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329D2237061A70067077F /* StoryCollectionViewCell.swift */; };
 		189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189329D3237061A70067077F /* StoryCollectionViewCell.xib */; };
+		18A32622240FBCD900CF329E /* UIImage+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A32621240FBCD800CF329E /* UIImage+Transform.swift */; };
+		18A32627240FBCE800CF329E /* DSSwipableFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A32623240FBCE700CF329E /* DSSwipableFilterView.swift */; };
+		18A32628240FBCE800CF329E /* DSFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A32624240FBCE800CF329E /* DSFilterView.swift */; };
+		18A32629240FBCE800CF329E /* DSSwipableFilterViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A32625240FBCE800CF329E /* DSSwipableFilterViewDataSource.swift */; };
+		18A3262A240FBCE800CF329E /* DSFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A32626240FBCE800CF329E /* DSFilter.swift */; };
+		18A3262C241010AE00CF329E /* EmojisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3262B241010AE00CF329E /* EmojisViewController.swift */; };
+		18A3262F241010D300CF329E /* EmojisCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3262D241010D300CF329E /* EmojisCollectionViewCell.swift */; };
+		18A32630241010D300CF329E /* EmojisCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A3262E241010D300CF329E /* EmojisCollectionViewCell.xib */; };
 		18AC39A5237ED0A40044136B /* AddMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AC39A4237ED0A40044136B /* AddMembersViewController.swift */; };
 		18B086432371AA71002D773E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B086422371AA71002D773E /* TabBarViewController.swift */; };
 		18B14CC123758086005E5CE4 /* SignupDetail1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC023758086005E5CE4 /* SignupDetail1ViewController.swift */; };
@@ -158,6 +166,14 @@
 		189329CF23705E510067077F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		189329D2237061A70067077F /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		189329D3237061A70067077F /* StoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoryCollectionViewCell.xib; sourceTree = "<group>"; };
+		18A32621240FBCD800CF329E /* UIImage+Transform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Transform.swift"; sourceTree = "<group>"; };
+		18A32623240FBCE700CF329E /* DSSwipableFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSSwipableFilterView.swift; sourceTree = "<group>"; };
+		18A32624240FBCE800CF329E /* DSFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSFilterView.swift; sourceTree = "<group>"; };
+		18A32625240FBCE800CF329E /* DSSwipableFilterViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSSwipableFilterViewDataSource.swift; sourceTree = "<group>"; };
+		18A32626240FBCE800CF329E /* DSFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSFilter.swift; sourceTree = "<group>"; };
+		18A3262B241010AE00CF329E /* EmojisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojisViewController.swift; sourceTree = "<group>"; };
+		18A3262D241010D300CF329E /* EmojisCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojisCollectionViewCell.swift; sourceTree = "<group>"; };
+		18A3262E241010D300CF329E /* EmojisCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojisCollectionViewCell.xib; sourceTree = "<group>"; };
 		18AC39A4237ED0A40044136B /* AddMembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMembersViewController.swift; sourceTree = "<group>"; };
 		18B086422371AA71002D773E /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		18B14CC023758086005E5CE4 /* SignupDetail1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupDetail1ViewController.swift; sourceTree = "<group>"; };
@@ -268,6 +284,7 @@
 		1839088B236C70D6009A28E6 /* iFollow */ = {
 			isa = PBXGroup;
 			children = (
+				18A32620240FBCA800CF329E /* Filters Library */,
 				1855081023796956008EAC2E /* Video */,
 				1855080D23795330008EAC2E /* Segment Progress Bar */,
 				189329D12370618F0067077F /* Cells */,
@@ -353,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				1885744A2372B91900985AC8 /* CameraViewController.swift */,
+				18A3262B241010AE00CF329E /* EmojisViewController.swift */,
 			);
 			path = "Camera Controller";
 			sourceTree = "<group>";
@@ -416,8 +434,22 @@
 				1855081823798976008EAC2E /* FriendsTableViewCell.xib */,
 				18847A56237C3010004D500A /* MediaCollectionViewCell.swift */,
 				18847A57237C3010004D500A /* MediaCollectionViewCell.xib */,
+				18A3262D241010D300CF329E /* EmojisCollectionViewCell.swift */,
+				18A3262E241010D300CF329E /* EmojisCollectionViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		18A32620240FBCA800CF329E /* Filters Library */ = {
+			isa = PBXGroup;
+			children = (
+				18A32626240FBCE800CF329E /* DSFilter.swift */,
+				18A32624240FBCE800CF329E /* DSFilterView.swift */,
+				18A32623240FBCE700CF329E /* DSSwipableFilterView.swift */,
+				18A32625240FBCE800CF329E /* DSSwipableFilterViewDataSource.swift */,
+				18A32621240FBCD800CF329E /* UIImage+Transform.swift */,
+			);
+			path = "Filters Library";
 			sourceTree = "<group>";
 		};
 		18B086412371AA57002D773E /* Tab bar Controller */ = {
@@ -549,6 +581,7 @@
 				1870700223732CF9007F8BF2 /* EditProfileGenderTableViewCell.xib in Resources */,
 				18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */,
 				185508122379696E008EAC2E /* sampleVideo.mp4 in Resources */,
+				18A32630241010D300CF329E /* EmojisCollectionViewCell.xib in Resources */,
 				189329C5237020910067077F /* Lato-Regular_0.ttf in Resources */,
 				182F62602372EB4E00A55E52 /* ChatListTableViewCell.xib in Resources */,
 				185640E8237426B600CC2777 /* MenuSeperatorTableViewCell.xib in Resources */,
@@ -627,6 +660,7 @@
 				18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */,
 				18B14CC52375AB8F005E5CE4 /* OptionsViewController.swift in Sources */,
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
+				18A32627240FBCE800CF329E /* DSSwipableFilterView.swift in Sources */,
 				1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */,
 				1825A52A237AEA50002811E7 /* TrendesViewController.swift in Sources */,
 				189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */,
@@ -641,18 +675,23 @@
 				1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */,
 				185640EA2374444D00CC2777 /* PrivateChatBoxViewController.swift in Sources */,
 				18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */,
+				18A3262C241010AE00CF329E /* EmojisViewController.swift in Sources */,
 				18B82A312371CBDB00693F7F /* NotificationViewController.swift in Sources */,
 				189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */,
+				18A32629240FBCE800CF329E /* DSSwipableFilterViewDataSource.swift in Sources */,
 				18AC39A5237ED0A40044136B /* AddMembersViewController.swift in Sources */,
 				1825A528237AEA41002811E7 /* TrendersContainerViewController.swift in Sources */,
+				18A3262F241010D300CF329E /* EmojisCollectionViewCell.swift in Sources */,
 				182F62582372E94B00A55E52 /* ChatBoxContainerViewController.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
 				18847A5B237C5A52004D500A /* MediaViewController.swift in Sources */,
 				1855081623797DA8008EAC2E /* SendStoryViewController.swift in Sources */,
 				185640E7237426B600CC2777 /* MenuSeperatorTableViewCell.swift in Sources */,
 				182F625F2372EB4E00A55E52 /* ChatListTableViewCell.swift in Sources */,
+				18A32622240FBCD900CF329E /* UIImage+Transform.swift in Sources */,
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
 				18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */,
+				18A32628240FBCE800CF329E /* DSFilterView.swift in Sources */,
 				1825A52F237AFDEF002811E7 /* ChatContainerViewController.swift in Sources */,
 				18847A58237C3010004D500A /* MediaCollectionViewCell.swift in Sources */,
 				182F625A2372E96A00A55E52 /* AllChatsListViewController.swift in Sources */,
@@ -666,6 +705,7 @@
 				18706FFD23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift in Sources */,
 				18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */,
 				1855080F23795352008EAC2E /* SegmentProgressBar.swift in Sources */,
+				18A3262A240FBCE800CF329E /* DSFilter.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
 				185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */,
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,
