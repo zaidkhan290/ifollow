@@ -13,5 +13,6 @@ pod 'CarbonKit'
 pod 'Toast-Swift', '4.0.1'
 pod 'JSQMessagesViewController'
 pod 'AppImageViewer'
+pod 'ColorSlider'
 
 end

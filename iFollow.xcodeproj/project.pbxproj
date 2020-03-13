@@ -41,6 +41,15 @@
 		185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */; };
 		185640EF2374796300CC2777 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640EE2374796300CC2777 /* CreateGroupViewController.swift */; };
 		185CC0C52379A096006BDC9D /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0C42379A096006BDC9D /* NewPostViewController.swift */; };
+		1863EB98241BC548000E5C31 /* LEMONMILK-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1863EB97241BC548000E5C31 /* LEMONMILK-MediumItalic.otf */; };
+		1863EB9A241BC5BD000E5C31 /* Gobold Lowplus.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1863EB99241BC5BD000E5C31 /* Gobold Lowplus.otf */; };
+		1863EB9C241BC5E8000E5C31 /* PoetsenOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1863EB9B241BC5E8000E5C31 /* PoetsenOne-Regular.ttf */; };
+		1863EB9E241BC613000E5C31 /* Evogria Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1863EB9D241BC613000E5C31 /* Evogria Italic.otf */; };
+		186A989F241A9B9D000AD9AB /* Rightland.otf in Resources */ = {isa = PBXBuildFile; fileRef = 186A989E241A9B9D000AD9AB /* Rightland.otf */; };
+		186A98A1241A9BA7000AD9AB /* Cream Cake.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 186A98A0241A9BA7000AD9AB /* Cream Cake.ttf */; };
+		186A98A3241A9BBF000AD9AB /* JandaCurlygirlSerif.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 186A98A2241A9BBF000AD9AB /* JandaCurlygirlSerif.ttf */; };
+		186A98A5241A9BDE000AD9AB /* Simplisicky Fill.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 186A98A4241A9BDE000AD9AB /* Simplisicky Fill.ttf */; };
+		186A98A7241A9BF0000AD9AB /* yellosun.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 186A98A6241A9BF0000AD9AB /* yellosun.ttf */; };
 		18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF52373209D007F8BF2 /* EditProfileViewController.swift */; };
 		18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */; };
 		18706FFA237323DB007F8BF2 /* EditProfileImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */; };
@@ -134,6 +143,15 @@
 		185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
 		185640EE2374796300CC2777 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		185CC0C42379A096006BDC9D /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
+		1863EB97241BC548000E5C31 /* LEMONMILK-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LEMONMILK-MediumItalic.otf"; sourceTree = "<group>"; };
+		1863EB99241BC5BD000E5C31 /* Gobold Lowplus.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gobold Lowplus.otf"; sourceTree = "<group>"; };
+		1863EB9B241BC5E8000E5C31 /* PoetsenOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PoetsenOne-Regular.ttf"; sourceTree = "<group>"; };
+		1863EB9D241BC613000E5C31 /* Evogria Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Evogria Italic.otf"; sourceTree = "<group>"; };
+		186A989E241A9B9D000AD9AB /* Rightland.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Rightland.otf; sourceTree = "<group>"; };
+		186A98A0241A9BA7000AD9AB /* Cream Cake.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cream Cake.ttf"; sourceTree = "<group>"; };
+		186A98A2241A9BBF000AD9AB /* JandaCurlygirlSerif.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = JandaCurlygirlSerif.ttf; sourceTree = "<group>"; };
+		186A98A4241A9BDE000AD9AB /* Simplisicky Fill.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Simplisicky Fill.ttf"; sourceTree = "<group>"; };
+		186A98A6241A9BF0000AD9AB /* yellosun.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = yellosun.ttf; sourceTree = "<group>"; };
 		18706FF52373209D007F8BF2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageTableViewCell.swift; sourceTree = "<group>"; };
 		18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileImageTableViewCell.xib; sourceTree = "<group>"; };
@@ -366,6 +384,22 @@
 			path = "New Post Controller";
 			sourceTree = "<group>";
 		};
+		186A989D241A9B86000AD9AB /* Picture Editing Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				186A98A6241A9BF0000AD9AB /* yellosun.ttf */,
+				186A98A4241A9BDE000AD9AB /* Simplisicky Fill.ttf */,
+				186A98A2241A9BBF000AD9AB /* JandaCurlygirlSerif.ttf */,
+				186A98A0241A9BA7000AD9AB /* Cream Cake.ttf */,
+				186A989E241A9B9D000AD9AB /* Rightland.otf */,
+				1863EB97241BC548000E5C31 /* LEMONMILK-MediumItalic.otf */,
+				1863EB99241BC5BD000E5C31 /* Gobold Lowplus.otf */,
+				1863EB9B241BC5E8000E5C31 /* PoetsenOne-Regular.ttf */,
+				1863EB9D241BC613000E5C31 /* Evogria Italic.otf */,
+			);
+			path = "Picture Editing Fonts";
+			sourceTree = "<group>";
+		};
 		188574492372B8FB00985AC8 /* Camera Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,6 +422,7 @@
 		189329BD23701E520067077F /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				186A989D241A9B86000AD9AB /* Picture Editing Fonts */,
 				189329C0237020900067077F /* Lato-Bold_0.ttf */,
 				189329C2237020910067077F /* Lato-Regular_0.ttf */,
 				189329C1237020900067077F /* Lato-Semibold_0.ttf */,
@@ -574,18 +609,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				18B82A352371D05A00693F7F /* NotificationTableViewCell.xib in Resources */,
+				186A98A5241A9BDE000AD9AB /* Simplisicky Fill.ttf in Resources */,
 				18781C2023707001001BAF95 /* FeedsView.xib in Resources */,
 				18706FFA237323DB007F8BF2 /* EditProfileImageTableViewCell.xib in Resources */,
 				18847A59237C3010004D500A /* MediaCollectionViewCell.xib in Resources */,
 				189329C3237020910067077F /* Lato-Bold_0.ttf in Resources */,
+				1863EB98241BC548000E5C31 /* LEMONMILK-MediumItalic.otf in Resources */,
 				1870700223732CF9007F8BF2 /* EditProfileGenderTableViewCell.xib in Resources */,
 				18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */,
 				185508122379696E008EAC2E /* sampleVideo.mp4 in Resources */,
 				18A32630241010D300CF329E /* EmojisCollectionViewCell.xib in Resources */,
+				186A989F241A9B9D000AD9AB /* Rightland.otf in Resources */,
+				1863EB9E241BC613000E5C31 /* Evogria Italic.otf in Resources */,
+				186A98A7241A9BF0000AD9AB /* yellosun.ttf in Resources */,
 				189329C5237020910067077F /* Lato-Regular_0.ttf in Resources */,
+				1863EB9A241BC5BD000E5C31 /* Gobold Lowplus.otf in Resources */,
 				182F62602372EB4E00A55E52 /* ChatListTableViewCell.xib in Resources */,
 				185640E8237426B600CC2777 /* MenuSeperatorTableViewCell.xib in Resources */,
 				189329C4237020910067077F /* Lato-Semibold_0.ttf in Resources */,
+				186A98A1241A9BA7000AD9AB /* Cream Cake.ttf in Resources */,
 				1855081423796E5E008EAC2E /* video.mp4 in Resources */,
 				183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */,
 				18706FFE23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.xib in Resources */,
@@ -594,8 +636,10 @@
 				18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */,
 				185640E4237423C100CC2777 /* MenuTableViewCell.xib in Resources */,
 				18390894236C70DA009A28E6 /* Assets.xcassets in Resources */,
+				1863EB9C241BC5E8000E5C31 /* PoetsenOne-Regular.ttf in Resources */,
 				18390892236C70D6009A28E6 /* Main.storyboard in Resources */,
 				1855081A23798976008EAC2E /* FriendsTableViewCell.xib in Resources */,
+				186A98A3241A9BBF000AD9AB /* JandaCurlygirlSerif.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

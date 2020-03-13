@@ -7,8 +7,9 @@
 //
 
 import UIKit
-import Photos
 import AVFoundation
+import Photos
+import ColorSlider
 
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
 
@@ -26,6 +27,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var lblLive: UILabel!
     @IBOutlet weak var lblNormal: UILabel!
     @IBOutlet weak var filterView: UIView!
+    @IBOutlet weak var editableTextField: UITextField!
+    @IBOutlet weak var fontSlider: UISlider!
+    @IBOutlet weak var lblFont: UILabel!
     
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
@@ -36,6 +40,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     var emojis = [UIImage]()
     var imagePicker = UIImagePickerController()
     var isLive = false
+    var colorSlider: ColorSlider!
+    var fontSize: Float = 30.0
+    var selectedFont = ""
+    var fontsNames = ["Rightland", "LemonMilk", "Cream", "Gobold", "Janda", "Poetsen", "Simplisicky", "Evogria", "Yellosun"]
     
     let filterSwipeView = DSSwipableFilterView(frame: UIScreen.main.bounds)
     
@@ -65,6 +73,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
         
+        editableTextField.delegate = self
+        
         btnEmoji.isEnabled = false
         btnLocation.isHidden = true
         btnText.isHidden = true
@@ -73,6 +83,14 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         lblLive.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(lblLiveTapped)))
         lblNormal.isUserInteractionEnabled = true
         lblNormal.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(lblNormalTapped)))
+        
+        lblFont.layer.borderWidth = 1
+        lblFont.layer.borderColor = UIColor.white.cgColor
+        lblFont.layer.cornerRadius = lblFont.frame.height / 2
+        lblFont.layer.masksToBounds = true
+        lblFont.text = fontsNames.first!
+        lblFont.isUserInteractionEnabled = true
+        lblFont.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(lblFontsTapped)))
         
     }
     
@@ -102,11 +120,22 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         catch let error  {
             print("Error Unable to initialize back camera:  \(error.localizedDescription)")
         }
+        
+        colorSlider = ColorSlider(orientation: .vertical, previewSide: .right)
+        colorSlider.frame = CGRect(x: 20, y: (UIScreen.main.bounds.height / 2) - 150, width: 15, height: 300)
+        view.addSubview(colorSlider)
+        colorSlider.isHidden = true
+        colorSlider.addTarget(self, action: #selector(colorSliderValueChanged(_:)), for: .valueChanged)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.captureSession.stopRunning()
+    }
+    
+    @objc func colorSliderValueChanged(_ slider: ColorSlider) {
+        let color = slider.color
+        editableTextField.textColor = color
     }
 
     @objc func lblLiveTapped(){
@@ -208,6 +237,12 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             deleteIcon.isHidden = true
         }
         
+        if (sender.view!.isKind(of: UITextField.self)){
+            fontSlider.isHidden = true
+            colorSlider.isHidden = true
+            lblFont.isHidden = true
+        }
+        
         var rec: CGRect = sender.view!.frame
         let imgvw: CGRect = cameraView.frame
         if rec.origin.y > cameraView.bounds.height{
@@ -244,9 +279,22 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
                 deleteIcon.image = UIImage(named: "delete-selected")
                 sender.view?.alpha = 0.6
                 if (sender.state == .ended){
-                    sender.view?.removeFromSuperview()
-                    deleteIcon.isHidden = true
-                    deleteIcon.image = UIImage(named: "delete")
+                    if (sender.view!.isKind(of: UITextField.self)){
+                        editableTextField.text = ""
+                        editableTextField.isHidden = true
+                        editableTextField.alpha = 1
+                        selectedFont = ""
+                        lblFont.text = fontsNames.first!
+                        lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames.first!, size: 20)
+                        editableTextField.font = Theme.getLatoBoldFontOfSize(size: 30)
+                        editableTextField.textColor = .white
+                    }
+                    else{
+                        sender.view?.removeFromSuperview()
+                        deleteIcon.isHidden = true
+                        deleteIcon.image = UIImage(named: "delete")
+                    }
+                    
                 }
                 
             }
@@ -270,6 +318,11 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             isPictureCaptured = true
             btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
         }
+        else{
+            let image = self.filterView.screenshot()
+            UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
+            self.dismiss(animated: true, completion: nil)
+        }
         
     }
     
@@ -290,7 +343,12 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     }
     
     @IBAction func btnTextTapped(_ sender: UIButton) {
-        
+        editableTextField.isHidden = false
+        self.filterView.bringSubviewToFront(editableTextField)
+        colorSlider.isHidden = false
+        lblFont.isHidden = false
+        fontSlider.isHidden = false
+        editableTextField.becomeFirstResponder()
     }
     
     @IBAction func btnEmojiTapped(_ sender: UIButton){
@@ -345,6 +403,73 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         }
     }
     
+    @IBAction func fontSliderValueChanged(_ sender: UISlider) {
+        fontSize = sender.value.rounded()
+        editableTextField.font = selectedFont == "" ? Theme.getLatoBoldFontOfSize(size: CGFloat(fontSize)) : Theme.getPictureEditFonts(fontName: selectedFont, size: CGFloat(fontSize))
+    }
+    
+    @objc func lblFontsTapped(){
+        if (lblFont.text == fontsNames[0]){
+            editableTextField.font = Theme.getPictureEditFonts(fontName: fontsNames[0], size: CGFloat(fontSize))
+            selectedFont = fontsNames[0]
+            lblFont.text = fontsNames[1]
+            lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames[1], size: 20)
+        }
+        else if (lblFont.text == fontsNames[1]){
+            editableTextField.font = Theme.getPictureEditFonts(fontName: fontsNames[1], size: CGFloat(fontSize))
+            selectedFont = fontsNames[1]
+            lblFont.text = fontsNames[2]
+            lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames[2], size: 20)
+        }
+        else if (lblFont.text == fontsNames[2]){
+            editableTextField.font = Theme.getPictureEditFonts(fontName: fontsNames[2], size: CGFloat(fontSize))
+            selectedFont = fontsNames[2]
+            lblFont.text = fontsNames[3]
+            lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames[3], size: 20)
+        }
+        else if (lblFont.text == fontsNames[3]){
+            editableTextField.font = Theme.getPictureEditFonts(fontName: fontsNames[3], size: CGFloat(fontSize))
+            selectedFont = fontsNames[3]
+            lblFont.text = fontsNames[4]
+            lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames[4], size: 20)
+        }
+        else if (lblFont.text == fontsNames[4]){
+            editableTextField.font = Theme.getPictureEditFonts(fontName: fontsNames[4], size: CGFloat(fontSize))
+            selectedFont = fontsNames[4]
+            lblFont.text = fontsNames[5]
+            lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames[5], size: 20)
+        }
+        else if (lblFont.text == fontsNames[5]){
+            editableTextField.font = Theme.getPictureEditFonts(fontName: fontsNames[5], size: CGFloat(fontSize))
+            selectedFont = fontsNames[5]
+            lblFont.text = fontsNames[6]
+            lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames[6], size: 20)
+        }
+        else if (lblFont.text == fontsNames[6]){
+            editableTextField.font = Theme.getPictureEditFonts(fontName: fontsNames[6], size: CGFloat(fontSize))
+            selectedFont = fontsNames[6]
+            lblFont.text = fontsNames[7]
+            lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames[7], size: 20)
+        }
+        else if (lblFont.text == fontsNames[7]){
+            editableTextField.font = Theme.getPictureEditFonts(fontName: fontsNames[7], size: CGFloat(fontSize))
+            selectedFont = fontsNames[7]
+            lblFont.text = fontsNames[8]
+            lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames[8], size: 20)
+        }
+        else if (lblFont.text == fontsNames[8]){
+            editableTextField.font = Theme.getPictureEditFonts(fontName: fontsNames[8], size: CGFloat(fontSize))
+            selectedFont = fontsNames[8]
+            lblFont.text = fontsNames[0]
+            lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames[0], size: 20)
+        }
+    }
+    
+    @objc func editableTextFieldTapped(){
+        colorSlider.isHidden = false
+        lblFont.isHidden = false
+        fontSlider.isHidden = false
+    }
 }
 
 extension CameraViewController: DSSwipableFilterViewDataSource {
@@ -375,19 +500,18 @@ extension CameraViewController: EmojisViewControllerDelegate{
     func emojiTapped(image: UIImage, isEmojis: Bool) {
         var width: CGFloat = 0.0
         if (isEmojis){
-            width = 80
+            width = 90
         }
         else{
             width = (UIScreen.main.bounds.width - 30) / 3
         }
-        let imageView = UIImageView(frame: CGRect(x: (UIScreen.main.bounds.width / 2) - 40, y: (UIScreen.main.bounds.height / 4), width: width, height: isEmojis ? 80 : 110))
+        let imageView = UIImageView(frame: CGRect(x: (UIScreen.main.bounds.width / 2) - 40, y: (UIScreen.main.bounds.height / 4), width: width, height: isEmojis ? 90 : 110))
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFill
         imageView.image = image
         filterSwipeView.addSubview(imageView)
         imageView.isUserInteractionEnabled = true
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
-        panGesture.delegate = self
         imageView.addGestureRecognizer(panGesture)
         imageView.enableZoom()
         
@@ -424,8 +548,20 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
 }
 
-extension CameraViewController: UIGestureRecognizerDelegate{
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
+extension CameraViewController: UITextFieldDelegate{
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if (textField.text == ""){
+            fontSlider.isHidden = true
+            colorSlider.isHidden = true
+            lblFont.isHidden = true
+            editableTextField.isHidden = true
+        }
+        else{
+            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
+            editableTextField.gestureRecognizers?.removeAll()
+            editableTextField.addGestureRecognizer(panGesture)
+        }
+        
     }
 }

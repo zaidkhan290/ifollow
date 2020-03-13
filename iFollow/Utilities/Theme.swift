@@ -40,4 +40,36 @@ struct Theme {
         return UIFont(name: "Lato-Black", size: size)!
     }
     
+    static func getPictureEditFonts(fontName: String, size: CGFloat) -> UIFont{
+        var font = ""
+        if (fontName == "Rightland"){
+            font = "Rightland"
+        }
+        else if (fontName == "Cream"){
+            font = "CreamCake"
+        }
+        else if (fontName == "Janda"){
+            font = "JandaCurlygirlSerif"
+        }
+        else if (fontName == "Simplisicky"){
+            font = "SimplisickyFill"
+        }
+        else if (fontName == "Yellosun"){
+            font = "yellosun"
+        }
+        else if (fontName == "LemonMilk"){
+            font = "LEMONMILK-MediumItalic"
+        }
+        else if (fontName == "Gobold"){
+            font = "GoboldLowplus"
+        }
+        else if (fontName == "Poetsen"){
+            font = "PoetsenOne-Regular"
+        }
+        else if (fontName == "Evogria"){
+            font = "Evogria-Italic"
+        }
+        return UIFont(name: font, size: size)!
+    }
+    
 }

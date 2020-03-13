@@ -23,6 +23,8 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This app requires camera permission for sharing your stories</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app requires photo library permission for saving screenshot</string>
+	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires photo library permission for sharing your stories</string>
 	<key>UIAppFonts</key>
 	<array>
@@ -30,6 +32,15 @@
 		<string>Lato-Regular_0.ttf</string>
 		<string>Lato-Semibold_0.ttf</string>
 		<string>Lato-Black.ttf</string>
+		<string>yellosun.ttf</string>
+		<string>Simplisicky Fill.ttf</string>
+		<string>JandaCurlygirlSerif.ttf</string>
+		<string>Cream Cake.ttf</string>
+		<string>Rightland.otf</string>
+		<string>LEMONMILK-MediumItalic.otf</string>
+		<string>Gobold Lowplus.otf</string>
+		<string>PoetsenOne-Regular.ttf</string>
+		<string>Evogria Italic.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

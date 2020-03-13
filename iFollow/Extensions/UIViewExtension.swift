@@ -32,6 +32,12 @@ extension UIView{
         self.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
     
+    func screenshot() -> UIImage {
+        return UIGraphicsImageRenderer(size: bounds.size).image { _ in
+            drawHierarchy(in: CGRect(origin: .zero, size: bounds.size), afterScreenUpdates: true)
+        }
+    }
+    
 //    func startRotating(duration: Double = 1) {
 //        let kAnimationKey = "rotation"
 //        

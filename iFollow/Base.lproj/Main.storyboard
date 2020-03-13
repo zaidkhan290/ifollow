@@ -16,6 +16,9 @@
         <array key="Lato-Regular_0.ttf">
             <string>Lato-Regular</string>
         </array>
+        <array key="Rightland.otf">
+            <string>Rightland</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Main View Controller-->
@@ -2019,9 +2022,21 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XDX-CZ-y98">
+                            <view hidden="YES" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="XDX-CZ-y98">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <subviews>
+                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mqu-dI-MyL">
+                                        <rect key="frame" x="200.66666666666666" y="350.66666666666669" width="13" height="35"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="30"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Mqu-dI-MyL" firstAttribute="centerY" secondItem="XDX-CZ-y98" secondAttribute="centerY" id="fMt-2l-BFR"/>
+                                    <constraint firstItem="Mqu-dI-MyL" firstAttribute="centerX" secondItem="XDX-CZ-y98" secondAttribute="centerX" id="kP2-TE-bE4"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zcm-Q6-Kfl">
                                 <rect key="frame" x="20" y="40" width="25" height="25"/>
@@ -2034,6 +2049,26 @@
                                     <action selector="btnBackTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="Sij-PY-XqG"/>
                                 </connections>
                             </button>
+                            <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="30" minValue="25" maxValue="70" translatesAutoresizingMaskIntoConstraints="NO" id="D3w-Qz-cp8">
+                                <rect key="frame" x="81.666666666666686" y="604" width="251" height="31"/>
+                                <color key="minimumTrackTintColor" red="0.94509803920000002" green="0.67843137249999996" blue="0.1019607843" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="maximumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="thumbTintColor" red="0.94509803920000002" green="0.67843137249999996" blue="0.1019607843" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="fontSliderValueChanged:" destination="S2Q-oF-kr8" eventType="valueChanged" id="HoV-Qd-5pd"/>
+                                </connections>
+                            </slider>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rightland" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cL-Nk-pjt">
+                                <rect key="frame" x="142" y="32.666666666666664" width="130" height="39.999999999999993"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="130" id="KGP-Mi-V3g"/>
+                                    <constraint firstAttribute="height" constant="40" id="kCu-fD-0bL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Rightland" family="Rightland" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="delete" translatesAutoresizingMaskIntoConstraints="NO" id="ZSm-yG-JQX">
                                 <rect key="frame" x="175" y="30" width="64" height="64"/>
                                 <constraints>
@@ -2148,12 +2183,14 @@
                             <constraint firstItem="ZSm-yG-JQX" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="43v-t8-gDQ"/>
                             <constraint firstItem="sw2-9r-yua" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="56I-q1-l35"/>
                             <constraint firstItem="BdC-mz-ckV" firstAttribute="width" secondItem="WSe-4k-XPy" secondAttribute="width" multiplier="0.4" id="59G-WY-Ael"/>
+                            <constraint firstItem="D3w-Qz-cp8" firstAttribute="leading" secondItem="ZdE-8t-qjH" secondAttribute="leading" id="6tQ-B1-ZKx"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="bottom" secondItem="XDX-CZ-y98" secondAttribute="bottom" id="6yB-c3-GQn"/>
                             <constraint firstItem="BdC-mz-ckV" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="8tY-Cj-4u6"/>
                             <constraint firstItem="rJ7-1D-XyO" firstAttribute="top" secondItem="5BY-dE-1iu" secondAttribute="bottom" constant="20" id="8xN-AE-mOb"/>
                             <constraint firstItem="ZdE-8t-qjH" firstAttribute="centerY" secondItem="sw2-9r-yua" secondAttribute="centerY" id="9O6-fU-0Td"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="bottom" secondItem="BdC-mz-ckV" secondAttribute="bottom" constant="20" id="BFl-Fm-VNr"/>
                             <constraint firstItem="Zcm-Q6-Kfl" firstAttribute="top" secondItem="WSe-4k-XPy" secondAttribute="top" constant="20" id="D5X-Sd-YOP"/>
+                            <constraint firstItem="D3w-Qz-cp8" firstAttribute="trailing" secondItem="9hw-sH-gi9" secondAttribute="trailing" id="FRB-cC-YfT"/>
                             <constraint firstItem="E7w-Dh-cgK" firstAttribute="leading" secondItem="WSe-4k-XPy" secondAttribute="leading" id="K5T-tu-IM2"/>
                             <constraint firstItem="ZdE-8t-qjH" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" multiplier="0.5" id="Kpy-2b-gOs"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="gZk-KZ-Qkx" secondAttribute="trailing" constant="20" id="Kwy-4V-n3X"/>
@@ -2161,6 +2198,8 @@
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="bottom" secondItem="wbu-yt-hY1" secondAttribute="bottom" id="NFU-A4-mM0"/>
                             <constraint firstItem="E7w-Dh-cgK" firstAttribute="top" secondItem="3tR-l5-VkQ" secondAttribute="top" id="NdG-cL-Ib6"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="wbu-yt-hY1" secondAttribute="trailing" id="NhD-EX-jtv"/>
+                            <constraint firstItem="8cL-Nk-pjt" firstAttribute="centerY" secondItem="Zcm-Q6-Kfl" secondAttribute="centerY" id="OYQ-gt-q7G"/>
+                            <constraint firstItem="8cL-Nk-pjt" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="UJc-nq-WYW"/>
                             <constraint firstItem="v6H-bX-Lzo" firstAttribute="top" secondItem="rJ7-1D-XyO" secondAttribute="bottom" constant="20" id="UbA-Aa-eSn"/>
                             <constraint firstItem="wbu-yt-hY1" firstAttribute="top" secondItem="3tR-l5-VkQ" secondAttribute="top" id="VGy-Cd-8a7"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="XDX-CZ-y98" secondAttribute="trailing" id="VKU-SH-gIA"/>
@@ -2177,6 +2216,7 @@
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="rJ7-1D-XyO" secondAttribute="trailing" constant="20" id="lat-59-ciw"/>
                             <constraint firstItem="9hw-sH-gi9" firstAttribute="centerY" secondItem="sw2-9r-yua" secondAttribute="centerY" id="lbW-Hs-zGc"/>
                             <constraint firstItem="Zcm-Q6-Kfl" firstAttribute="leading" secondItem="WSe-4k-XPy" secondAttribute="leading" constant="20" id="mOe-kA-cnO"/>
+                            <constraint firstItem="sw2-9r-yua" firstAttribute="top" secondItem="D3w-Qz-cp8" secondAttribute="bottom" constant="15" id="mlF-ri-l2D"/>
                             <constraint firstItem="gZk-KZ-Qkx" firstAttribute="top" secondItem="v6H-bX-Lzo" secondAttribute="bottom" constant="20" id="n7B-fp-rT6"/>
                             <constraint firstItem="ZSm-yG-JQX" firstAttribute="top" secondItem="WSe-4k-XPy" secondAttribute="top" constant="10" id="omW-vO-fVL"/>
                             <constraint firstItem="9hw-sH-gi9" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" multiplier="1.5" id="p2k-3E-Pxw"/>
@@ -2194,7 +2234,10 @@
                         <outlet property="cameraView" destination="E7w-Dh-cgK" id="0sH-8F-RHK"/>
                         <outlet property="deleteIcon" destination="ZSm-yG-JQX" id="NDS-eF-RKU"/>
                         <outlet property="deleteView" destination="G7X-9m-hIY" id="gsx-mv-Qsm"/>
+                        <outlet property="editableTextField" destination="Mqu-dI-MyL" id="maf-ik-xtQ"/>
                         <outlet property="filterView" destination="XDX-CZ-y98" id="6TX-Rc-ZXP"/>
+                        <outlet property="fontSlider" destination="D3w-Qz-cp8" id="Psa-lo-kog"/>
+                        <outlet property="lblFont" destination="8cL-Nk-pjt" id="fKD-je-2Ea"/>
                         <outlet property="lblLive" destination="50l-zo-8Hg" id="5nV-zP-Zih"/>
                         <outlet property="lblNormal" destination="SOI-Ge-DiU" id="doA-Ok-TAq"/>
                         <outlet property="previewView" destination="wbu-yt-hY1" id="IPI-4D-Dnl"/>
@@ -4649,13 +4692,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23 views" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73s-cO-8NO">
-                                <rect key="frame" x="20.000000000000004" y="77" width="47.333333333333343" height="14.666666666666671"/>
+                                <rect key="frame" x="20" y="77" width="47" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
                                 <color key="textColor" red="0.3803921569" green="0.3803921569" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7Yy-L2-9Ob">
-                                <rect key="frame" x="0.0" y="111.66666666666669" width="414" height="624.33333333333326"/>
+                                <rect key="frame" x="0.0" y="111" width="414" height="625"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="phg-uV-E39" id="ibx-2g-a8T"/>
