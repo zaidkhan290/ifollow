@@ -12,6 +12,7 @@ import UIKit
 struct Utility {
     
     static let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+    static private var timeFormatter: DateFormatter?
     
     static func getMainViewController() -> MainViewController{
         return storyBoard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
@@ -155,6 +156,27 @@ struct Utility {
     
     static func getEmojisViewController() -> EmojisViewController{
         return storyBoard.instantiateViewController(withIdentifier: "EmojisViewController") as! EmojisViewController
+    }
+    
+    static var storyTimeFormatter: DateFormatter{
+        get{
+            if (timeFormatter == nil){
+                timeFormatter = DateFormatter()
+                timeFormatter?.timeZone = .current
+                timeFormatter?.timeStyle = .medium
+                timeFormatter?.dateFormat = "hh:mm a" //2019-12-12 16:50:31
+            }
+            return timeFormatter!
+        }
+        set{
+            
+        }
+    }
+    
+    static func getCurrentTime() -> String{
+        let date = Date()
+        let time = storyTimeFormatter.string(from: date)
+        return time
     }
     
     static func setTextFieldPlaceholder(textField: UITextField, placeholder: String, color: UIColor){

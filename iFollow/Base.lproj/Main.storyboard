@@ -2031,9 +2031,39 @@
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="30"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textField>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhd-In-lDz">
+                                        <rect key="frame" x="139.66666666666666" y="311.33333333333331" width="134.99999999999997" height="40"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clock-unfill" translatesAutoresizingMaskIntoConstraints="NO" id="FSe-qM-sUp">
+                                                <rect key="frame" x="10" y="7" width="26" height="26"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="26" id="BQk-MF-grY"/>
+                                                    <constraint firstAttribute="width" constant="26" id="qEl-wr-JQr"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="04:57 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Pg-kA-5PV">
+                                                <rect key="frame" x="46" y="9.3333333333333712" width="79" height="21"/>
+                                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="18"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.94509803920000002" green="0.67843137249999996" blue="0.1019607843" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="9Pg-kA-5PV" firstAttribute="leading" secondItem="FSe-qM-sUp" secondAttribute="trailing" constant="10" id="1Ev-RY-f8o"/>
+                                            <constraint firstAttribute="trailing" secondItem="9Pg-kA-5PV" secondAttribute="trailing" constant="10" id="8JO-PE-XLp"/>
+                                            <constraint firstAttribute="width" constant="135" id="OLl-FJ-lPO"/>
+                                            <constraint firstAttribute="height" constant="40" id="TPN-hc-7FK"/>
+                                            <constraint firstItem="FSe-qM-sUp" firstAttribute="leading" secondItem="rhd-In-lDz" secondAttribute="leading" constant="10" id="WcZ-Zd-BsT"/>
+                                            <constraint firstItem="FSe-qM-sUp" firstAttribute="centerY" secondItem="rhd-In-lDz" secondAttribute="centerY" id="n3h-yN-TuB"/>
+                                            <constraint firstItem="9Pg-kA-5PV" firstAttribute="centerY" secondItem="rhd-In-lDz" secondAttribute="centerY" id="yKe-8A-MZ2"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="rhd-In-lDz" firstAttribute="centerY" secondItem="XDX-CZ-y98" secondAttribute="centerY" multiplier="0.9" id="0sx-yu-Hdf"/>
+                                    <constraint firstItem="rhd-In-lDz" firstAttribute="centerX" secondItem="XDX-CZ-y98" secondAttribute="centerX" id="1rz-qc-Kmd"/>
                                     <constraint firstItem="Mqu-dI-MyL" firstAttribute="centerY" secondItem="XDX-CZ-y98" secondAttribute="centerY" id="fMt-2l-BFR"/>
                                     <constraint firstItem="Mqu-dI-MyL" firstAttribute="centerX" secondItem="XDX-CZ-y98" secondAttribute="centerX" id="kP2-TE-bE4"/>
                                 </constraints>
@@ -2128,6 +2158,17 @@
                                     <action selector="btnTextTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="wFG-E8-MYj"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wx1-Cl-rp8">
+                                <rect key="frame" x="354" y="272.66666666666669" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="TvQ-7s-77y"/>
+                                    <constraint firstAttribute="height" constant="40" id="bjC-eh-kds"/>
+                                </constraints>
+                                <state key="normal" image="clock-outline"/>
+                                <connections>
+                                    <action selector="btnClockTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="qMw-Ho-FQG"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sw2-9r-yua">
                                 <rect key="frame" x="199" y="649" width="16" height="22"/>
                                 <state key="normal" image="capture"/>
@@ -2199,11 +2240,13 @@
                             <constraint firstItem="E7w-Dh-cgK" firstAttribute="top" secondItem="3tR-l5-VkQ" secondAttribute="top" id="NdG-cL-Ib6"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="wbu-yt-hY1" secondAttribute="trailing" id="NhD-EX-jtv"/>
                             <constraint firstItem="8cL-Nk-pjt" firstAttribute="centerY" secondItem="Zcm-Q6-Kfl" secondAttribute="centerY" id="OYQ-gt-q7G"/>
+                            <constraint firstItem="Wx1-Cl-rp8" firstAttribute="top" secondItem="gZk-KZ-Qkx" secondAttribute="bottom" constant="20" id="TUK-5x-8Wy"/>
                             <constraint firstItem="8cL-Nk-pjt" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="UJc-nq-WYW"/>
                             <constraint firstItem="v6H-bX-Lzo" firstAttribute="top" secondItem="rJ7-1D-XyO" secondAttribute="bottom" constant="20" id="UbA-Aa-eSn"/>
                             <constraint firstItem="wbu-yt-hY1" firstAttribute="top" secondItem="3tR-l5-VkQ" secondAttribute="top" id="VGy-Cd-8a7"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="XDX-CZ-y98" secondAttribute="trailing" id="VKU-SH-gIA"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="5BY-dE-1iu" secondAttribute="trailing" constant="20" id="YEW-BC-qkA"/>
+                            <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="Wx1-Cl-rp8" secondAttribute="trailing" constant="20" id="YwW-I7-mqU"/>
                             <constraint firstItem="BdC-mz-ckV" firstAttribute="top" secondItem="sw2-9r-yua" secondAttribute="bottom" constant="20" id="bTU-6h-3Lp"/>
                             <constraint firstItem="G7X-9m-hIY" firstAttribute="top" secondItem="3tR-l5-VkQ" secondAttribute="top" constant="15" id="bbb-Ku-WHc"/>
                             <constraint firstItem="wbu-yt-hY1" firstAttribute="leading" secondItem="WSe-4k-XPy" secondAttribute="leading" id="dwl-IP-Jwj"/>
@@ -2225,6 +2268,7 @@
                     </view>
                     <connections>
                         <outlet property="btnCapture" destination="sw2-9r-yua" id="RGZ-Da-2YM"/>
+                        <outlet property="btnClock" destination="Wx1-Cl-rp8" id="ZxB-fT-eqG"/>
                         <outlet property="btnEmoji" destination="9hw-sH-gi9" id="VEi-if-E8X"/>
                         <outlet property="btnFlash" destination="rJ7-1D-XyO" id="FD6-9L-TJi"/>
                         <outlet property="btnGallery" destination="ZdE-8t-qjH" id="e6F-RM-c4n"/>
@@ -2232,6 +2276,7 @@
                         <outlet property="btnRotate" destination="5BY-dE-1iu" id="i35-cO-UEq"/>
                         <outlet property="btnText" destination="gZk-KZ-Qkx" id="koc-uy-rIX"/>
                         <outlet property="cameraView" destination="E7w-Dh-cgK" id="0sH-8F-RHK"/>
+                        <outlet property="clockIcon" destination="FSe-qM-sUp" id="6oP-oa-hGo"/>
                         <outlet property="deleteIcon" destination="ZSm-yG-JQX" id="NDS-eF-RKU"/>
                         <outlet property="deleteView" destination="G7X-9m-hIY" id="gsx-mv-Qsm"/>
                         <outlet property="editableTextField" destination="Mqu-dI-MyL" id="maf-ik-xtQ"/>
@@ -2240,7 +2285,9 @@
                         <outlet property="lblFont" destination="8cL-Nk-pjt" id="fKD-je-2Ea"/>
                         <outlet property="lblLive" destination="50l-zo-8Hg" id="5nV-zP-Zih"/>
                         <outlet property="lblNormal" destination="SOI-Ge-DiU" id="doA-Ok-TAq"/>
+                        <outlet property="lblTime" destination="9Pg-kA-5PV" id="nGF-0J-Ewo"/>
                         <outlet property="previewView" destination="wbu-yt-hY1" id="IPI-4D-Dnl"/>
+                        <outlet property="timeView" destination="rhd-In-lDz" id="cLO-fy-sFS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2gb-bH-qed" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3320,13 +3367,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages will be deleted if not read in 3 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iey-Xz-Ghm">
-                                <rect key="frame" x="85.333333333333329" y="110" width="243.33333333333337" height="14.666666666666671"/>
+                                <rect key="frame" x="85.333333333333329" y="110" width="243.33333333333337" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.1215686275" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1sc-lT-gaZ">
-                                <rect key="frame" x="0.0" y="134.66666666666669" width="414" height="601.33333333333326"/>
+                                <rect key="frame" x="0.0" y="134" width="414" height="602"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="U2w-XT-Ctt" id="DnT-UN-oHx"/>
@@ -4820,6 +4867,8 @@
         <image name="capture" width="55" height="55"/>
         <image name="chatBackIcon" width="18.666666030883789" height="15.333333015441895"/>
         <image name="chatUserIcon" width="44" height="44"/>
+        <image name="clock-outline" width="26" height="26"/>
+        <image name="clock-unfill" width="25.333333969116211" height="25.333333969116211"/>
         <image name="close" width="12.666666984558105" height="12.666666984558105"/>
         <image name="delete" width="64" height="64"/>
         <image name="editIcon" width="8.6666669845581055" height="8.6666669845581055"/>

@@ -21,6 +21,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var btnFlash: UIButton!
     @IBOutlet weak var btnRotate: UIButton!
     @IBOutlet weak var btnLocation: UIButton!
+    @IBOutlet weak var btnClock: UIButton!
     @IBOutlet weak var btnText: UIButton!
     @IBOutlet weak var deleteView: UIView!
     @IBOutlet weak var deleteIcon: UIImageView!
@@ -30,6 +31,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var editableTextField: UITextField!
     @IBOutlet weak var fontSlider: UISlider!
     @IBOutlet weak var lblFont: UILabel!
+    @IBOutlet weak var timeView: UIView!
+    @IBOutlet weak var clockIcon: UIImageView!
+    @IBOutlet weak var lblTime: UILabel!
     
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
@@ -43,6 +47,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     var colorSlider: ColorSlider!
     var fontSize: Float = 30.0
     var selectedFont = ""
+    var timeViewFrame: CGRect!
+    var timeViewStyle = 1 // 1 for Yellow, 2 for unfill, 3 for white
+    var timeViewTapGesture = UITapGestureRecognizer()
     var fontsNames = ["Rightland", "LemonMilk", "Cream", "Gobold", "Janda", "Poetsen", "Simplisicky", "Evogria", "Yellosun"]
     
     let filterSwipeView = DSSwipableFilterView(frame: UIScreen.main.bounds)
@@ -78,6 +85,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         btnEmoji.isEnabled = false
         btnLocation.isHidden = true
         btnText.isHidden = true
+        btnClock.isHidden = true
         
         lblLive.isUserInteractionEnabled = true
         lblLive.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(lblLiveTapped)))
@@ -91,6 +99,16 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         lblFont.text = fontsNames.first!
         lblFont.isUserInteractionEnabled = true
         lblFont.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(lblFontsTapped)))
+        
+        timeView.layer.cornerRadius = 5
+        timeViewFrame = timeView.frame
+        timeViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(timeViewTapped))
+        timeViewTapGesture.delegate = self
+        clockIcon.isUserInteractionEnabled = true
+        lblTime.isUserInteractionEnabled = true
+        clockIcon.addGestureRecognizer(timeViewTapGesture)
+        lblTime.addGestureRecognizer(timeViewTapGesture)
+        changeTimeViewStyle()
         
     }
     
@@ -148,6 +166,40 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         isLive = false
         lblNormal.font = Theme.getLatoBoldFontOfSize(size: 18)
         lblLive.font = Theme.getLatoRegularFontOfSize(size: 15)
+    }
+    
+    @objc func timeViewTapped(){
+        if (timeViewStyle == 1){
+            timeViewStyle = 2
+        }
+        else if (timeViewStyle == 2){
+            timeViewStyle = 3
+        }
+        else if (timeViewStyle == 3){
+            timeViewStyle = 1
+        }
+        changeTimeViewStyle()
+    }
+    
+    @objc func changeTimeViewStyle(){
+        if (timeViewStyle == 1){
+            timeView.backgroundColor = Theme.profileLabelsYellowColor
+            timeView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+            lblTime.textColor = .white
+            clockIcon.image = UIImage(named: "clock-unfill")
+        }
+        else if (timeViewStyle == 2){
+            timeView.backgroundColor = .clear
+            timeView.layer.borderWidth = 1
+            timeView.layer.borderColor = UIColor.white.cgColor
+            lblTime.textColor = .white
+            clockIcon.image = UIImage(named: "clock-unfill")
+        }
+        else if (timeViewStyle == 3){
+            timeView.backgroundColor = .white
+            lblTime.textColor = .black
+            clockIcon.image = UIImage(named: "clock-fill")
+        }
     }
     
     fileprivate func prepareFilterView() {
@@ -220,6 +272,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         btnEmoji.isEnabled = true
         btnLocation.isHidden = false
         btnText.isHidden = false
+        btnClock.isHidden = false
         lblLive.isHidden = true
         lblNormal.isHidden = true
         btnRotate.isEnabled = false
@@ -242,6 +295,12 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             colorSlider.isHidden = true
             lblFont.isHidden = true
         }
+        
+//        if (sender.view! == timeView){
+//            if (sender.state == .began){
+//                timeViewTapped()
+//            }
+//        }
         
         var rec: CGRect = sender.view!.frame
         let imgvw: CGRect = cameraView.frame
@@ -288,6 +347,12 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
                         lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames.first!, size: 20)
                         editableTextField.font = Theme.getLatoBoldFontOfSize(size: 30)
                         editableTextField.textColor = .white
+                    }
+                    else if (sender.view! == timeView){
+                        timeView.isHidden = true
+                        timeView.alpha = 1
+                        timeView.frame = timeViewFrame
+                        timeViewStyle = 1
                     }
                     else{
                         sender.view?.removeFromSuperview()
@@ -340,6 +405,17 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
     @IBAction func btnLocationTapped(_ sender: UIButton) {
         
+    }
+    
+    @IBAction func btnClockTapped(_ sender: UIButton){
+        lblTime.text = Utility.getCurrentTime()
+        timeView.isHidden = false
+        self.filterView.bringSubviewToFront(timeView)
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
+        panGesture.delegate = self
+        panGesture.require(toFail: timeViewTapGesture)
+        timeView.gestureRecognizers?.removeAll()
+        timeView.addGestureRecognizer(panGesture)
     }
     
     @IBAction func btnTextTapped(_ sender: UIButton) {
@@ -512,6 +588,7 @@ extension CameraViewController: EmojisViewControllerDelegate{
         filterSwipeView.addSubview(imageView)
         imageView.isUserInteractionEnabled = true
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
+        panGesture.delegate = self
         imageView.addGestureRecognizer(panGesture)
         imageView.enableZoom()
         
@@ -532,6 +609,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
             btnEmoji.isEnabled = true
             btnLocation.isHidden = false
             btnText.isHidden = false
+            btnClock.isHidden = false
             btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
             lblLive.isHidden = true
             lblNormal.isHidden = true
@@ -559,9 +637,16 @@ extension CameraViewController: UITextFieldDelegate{
         }
         else{
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
+            panGesture.delegate = self
             editableTextField.gestureRecognizers?.removeAll()
             editableTextField.addGestureRecognizer(panGesture)
         }
         
+    }
+}
+
+extension CameraViewController: UIGestureRecognizerDelegate{
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
