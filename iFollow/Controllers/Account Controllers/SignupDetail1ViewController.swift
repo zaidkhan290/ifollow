@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Loaf
 
 class SignupDetail1ViewController: UIViewController {
 
@@ -18,6 +19,11 @@ class SignupDetail1ViewController: UIViewController {
     var imagePicker = UIImagePickerController()
     var userImage = UIImage()
     var selectedDate = ""
+    
+    var firstName = ""
+    var lastName = ""
+    var dob = ""
+    var username = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +61,7 @@ class SignupDetail1ViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
         selectedDate = dateFormatter.string(from: sender.date)
+        dob = selectedDate
         self.detailTableView.reloadData()
     }
     
@@ -74,6 +81,21 @@ class SignupDetail1ViewController: UIViewController {
         alertVC.addAction(galleryAction)
         alertVC.addAction(cancelAction)
         self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    @objc func textFieldTextChanged(_ sender: UITextField){
+        if (sender.tag == 1){
+            firstName = sender.text!
+        }
+        else if (sender.tag == 2){
+            lastName = sender.text!
+        }
+        else if (sender.tag == 3){
+            dob = sender.text!
+        }
+        else if (sender.tag == 4){
+            username = sender.text!
+        }
     }
 }
 
@@ -107,6 +129,8 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditProfileTextFieldsTableViewCell", for: indexPath) as! EditProfileTextFieldsTableViewCell
             Utility.setTextFieldPlaceholder(textField: cell.txtField, placeholder: textFieldPlaceholders[indexPath.row], color: Theme.editProfileTextFieldColor)
             cell.icon.image = UIImage(named: textFieldImages[indexPath.row])
+            cell.txtField.tag = indexPath.row
+            cell.txtField.addTarget(self, action: #selector(textFieldTextChanged(_:)), for: .editingChanged)
             
             if (indexPath.row == 3){
                 cell.txtField.text = selectedDate
@@ -146,6 +170,26 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func btnDoneTapped() {
+        
+        if (firstName == ""){
+            Loaf(kFirstNameError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
+        }
+        else if (lastName == ""){
+            Loaf(kLastNameError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
+        }
+        else if (username == ""){
+            Loaf(kUsernameError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
+        }
+        
         let vc = Utility.getSignupDetail2ViewController()
         self.pushToVC(vc: vc)
     }

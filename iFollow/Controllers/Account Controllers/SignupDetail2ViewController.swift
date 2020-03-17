@@ -17,6 +17,11 @@ class SignupDetail2ViewController: UIViewController {
     var textFieldPlaceholders = [String]()
     var textFieldImages = [String]()
     
+    var shortBio = ""
+    var hobby = ""
+    var country = ""
+    var zipCode = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,15 +35,30 @@ class SignupDetail2ViewController: UIViewController {
         detailTableView.register(txtFieldCellNib, forCellReuseIdentifier: "EditProfileTextFieldsTableViewCell")
         detailTableView.register(doneButtonCellNib, forCellReuseIdentifier: "EditProfileSaveButtonTableViewCell")
         
-        textFieldPlaceholders = ["", "Short Bio", "Hobby", "Country", "Zip Code", "City"]
-        textFieldImages = ["", "username-1", "hobby", "country", "zip-code", "city"]
+        textFieldPlaceholders = ["", "Short Bio", "Hobby", "Country", "Zip Code"]
+        textFieldImages = ["", "username-1", "hobby", "country", "zip-code"]
         
     }
     
-    //MARK:- Actions
+    //MARK:- Actions and Methods
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
         self.goBack()
+    }
+    
+    @objc func textFieldTextChanged(_ sender: UITextField){
+        if (sender.tag == 1){
+            shortBio = sender.text!
+        }
+        else if (sender.tag == 2){
+            hobby = sender.text!
+        }
+        else if (sender.tag == 3){
+            country = sender.text!
+        }
+        else if (sender.tag == 4){
+            zipCode = sender.text!
+        }
     }
     
 }
@@ -46,7 +66,7 @@ class SignupDetail2ViewController: UIViewController {
 extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegate, EditProfileDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,7 +78,7 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
             cell.doneIcon.isHidden = false
             return cell
         }
-        else if (indexPath.row == 6){
+        else if (indexPath.row == 5){
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditProfileSaveButtonTableViewCell", for: indexPath) as! EditProfileSaveButtonTableViewCell
             // cell.btnDone.backgroundColor = .clear
             cell.btnDone.setTitle("Next", for: .normal)
@@ -70,6 +90,8 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditProfileTextFieldsTableViewCell", for: indexPath) as! EditProfileTextFieldsTableViewCell
             Utility.setTextFieldPlaceholder(textField: cell.txtField, placeholder: textFieldPlaceholders[indexPath.row], color: Theme.editProfileTextFieldColor)
             cell.icon.image = UIImage(named: textFieldImages[indexPath.row])
+            cell.txtField.tag = indexPath.row
+            cell.txtField.addTarget(self, action: #selector(textFieldTextChanged(_:)), for: .editingChanged)
             return cell
         }
         
@@ -79,13 +101,16 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
         if (indexPath.row == 0){
             return 220
         }
-        else if (indexPath.row == 6){
+        else if (indexPath.row == 5){
             return 130
         }
         return 60
     }
     
     func btnDoneTapped() {
+        
+        print("Short Bio is \(shortBio)\nHobby is \(hobby)\nCountry is \(country)\nZipCode is \(zipCode)")
+        
         let vc = Utility.getTabBarViewController()
         self.present(vc, animated: true, completion: nil)
     }
