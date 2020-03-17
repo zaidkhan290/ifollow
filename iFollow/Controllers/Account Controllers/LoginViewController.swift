@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Loaf
 
 class LoginViewController: UIViewController {
 
@@ -37,9 +38,6 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        if(isForForgotPassword){
-            self.view.makeToast("Code sent to your email")
-        }
     }
     
     //MARK:- Actions
@@ -51,6 +49,20 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func btnSignInTapped(_ sender: UIButton) {
+        
+        if (txtFieldUsername.text == ""){
+            Loaf(kUsernameError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
+        }
+        else if (!Utility.isValid(password: txtFieldPassword.text!)){
+            Loaf(kPasswordError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
+        }
+        
         isForForgotPassword = false
         let vc = Utility.getTabBarViewController()
         self.present(vc, animated: true, completion: nil)

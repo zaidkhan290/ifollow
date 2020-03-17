@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Loaf
 
 class SignupViewController: UIViewController {
     
@@ -36,6 +37,26 @@ class SignupViewController: UIViewController {
     //MARK:- Actions
     
     @IBAction func btnStartTapped(_ sender: UIButton) {
+        
+        if (!Utility.isValid(email: txtFieldEmail.text!)){
+            Loaf(kEmailError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
+        }
+        else if (!Utility.isValid(password: txtFieldPassword.text!)){
+            Loaf(kPasswordError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
+        }
+        else if (txtFieldConfirmPassword.text! != txtFieldPassword.text!){
+            Loaf(kPasswordNotMatchError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
+        }
+        
         let vc = Utility.getSignupDetail1ViewController()
         self.pushToVC(vc: vc)
     }

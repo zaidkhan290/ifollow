@@ -8,6 +8,7 @@
 
 import UIKit
 import Toast_Swift
+import Loaf
 
 class ForgotPasswordViewController: UIViewController {
     
@@ -35,7 +36,18 @@ class ForgotPasswordViewController: UIViewController {
     //MARK:- Actions
     
     @IBAction func btnSendTapped(_ sender: UIButton) {
-        self.goBack()
+        
+        if (!Utility.isValid(email: txtFieldEmail.text!)){
+            Loaf(kEmailError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
+        }
+        
+        Loaf(kUsernameError, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+            self.goBack()
+        }
+        
     }
     
     @IBAction func btnSignupTapped(_ sender: UIButton) {

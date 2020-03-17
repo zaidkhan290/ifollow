@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Loaf
 
 class SignupDetail2ViewController: UIViewController {
 

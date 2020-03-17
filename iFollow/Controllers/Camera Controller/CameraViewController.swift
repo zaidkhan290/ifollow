@@ -51,17 +51,21 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     var timeViewStyle = 1 // 1 for Yellow, 2 for unfill, 3 for white
     var timeViewTapGesture = UITapGestureRecognizer()
     var fontsNames = ["Rightland", "LemonMilk", "Cream", "Gobold", "Janda", "Poetsen", "Simplisicky", "Evogria", "Yellosun"]
+    let filters = ["","CIPhotoEffectMono", "CIPhotoEffectChrome", "CIPhotoEffectTransfer", "CIPhotoEffectInstant", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectFade"]
+    var selectedFilter = 0
+    var selectedImage = UIImage()
     
-    let filterSwipeView = DSSwipableFilterView(frame: UIScreen.main.bounds)
+  //  let filterSwipeView = DSSwipableFilterView(frame: UIScreen.main.bounds)
     
-    let filterList = [DSFilter(name: "No Filter", type: .ciFilter),
-                      DSFilter(name: "CIPhotoEffectMono", type: .ciFilter),
-                      DSFilter(name: "CIPhotoEffectChrome", type: .ciFilter),
-                      DSFilter(name: "CIPhotoEffectTransfer", type: .ciFilter),
-                      DSFilter(name: "CIPhotoEffectInstant", type: .ciFilter),
-                      DSFilter(name: "CIPhotoEffectNoir", type: .ciFilter),
-                      DSFilter(name: "CIPhotoEffectProcess", type: .ciFilter),
-                      DSFilter(name: "CIPhotoEffectTonal", type: .ciFilter)]
+//    let filterList = [DSFilter(name: "No Filter", type: .ciFilter),
+//                      DSFilter(name: "CIPhotoEffectMono", type: .ciFilter),
+//                      DSFilter(name: "CIPhotoEffectChrome", type: .ciFilter),
+//                      DSFilter(name: "CIPhotoEffectTransfer", type: .ciFilter),
+//                      DSFilter(name: "CIPhotoEffectInstant", type: .ciFilter),
+//                      DSFilter(name: "CIPhotoEffectNoir", type: .ciFilter),
+//                      DSFilter(name: "CIPhotoEffectProcess", type: .ciFilter),
+//                      DSFilter(name: "CIPhotoEffectTonal", type: .ciFilter),
+//                      DSFilter(name: "CIPhotoEffectFade", type: .ciFilter)]
     
     //MARK:- Methods
     
@@ -75,7 +79,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             .map(Character.init)
             .compactMap { String($0).image() }
         
-        prepareFilterView()
+     //   prepareFilterView()
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
@@ -110,6 +114,14 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         lblTime.addGestureRecognizer(timeViewTapGesture)
         changeTimeViewStyle()
         
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeLeft(_:)))
+        swipeLeftGesture.direction = .left
+        
+        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(_:)))
+        swipeRightGesture.direction = .right
+        
+        self.filterView.addGestureRecognizer(swipeLeftGesture)
+        self.filterView.addGestureRecognizer(swipeRightGesture)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -202,18 +214,18 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         }
     }
     
-    fileprivate func prepareFilterView() {
-        filterSwipeView.dataSource = self
-        filterSwipeView.isUserInteractionEnabled = true
-        filterSwipeView.isMultipleTouchEnabled = true
-        filterSwipeView.isExclusiveTouch = false
-        self.filterView.addSubview(filterSwipeView)
-        filterSwipeView.reloadData()
-    }
+//    fileprivate func prepareFilterView() {
+//        filterSwipeView.dataSource = self
+//        filterSwipeView.isUserInteractionEnabled = true
+//        filterSwipeView.isMultipleTouchEnabled = true
+//        filterSwipeView.isExclusiveTouch = false
+//        self.filterView.addSubview(filterSwipeView)
+//        filterSwipeView.reloadData()
+//    }
     
-    fileprivate func preview(image: UIImage) {
-        filterSwipeView.setRenderImage(image: image)
-    }
+//    fileprivate func preview(image: UIImage) {
+//        filterSwipeView.setRenderImage(image: image)
+//    }
     
     func setupLivePreview() {
         
@@ -266,9 +278,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         
         let image = UIImage(data: imageData)
         cameraView.isHidden = false
-        cameraView.image = image
+        selectedImage = image!
+        cameraView.image = image!
         filterView.isHidden = false
-        filterSwipeView.isPlayingLibraryVideo = true
+//        filterSwipeView.isPlayingLibraryVideo = true
         btnEmoji.isEnabled = true
         btnLocation.isHidden = false
         btnText.isHidden = false
@@ -278,7 +291,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         btnRotate.isEnabled = false
         btnFlash.isEnabled = false
         toggleTorch(on: false)
-        preview(image: image!)
+      //  preview(image: image!)
     }
     
     @objc func setDragging(_ sender:UIPanGestureRecognizer){
@@ -370,6 +383,31 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         }
     }
     
+    @objc func swipeLeft(_ gesture: UISwipeGestureRecognizer){
+        if (selectedFilter < filters.count - 1){
+            selectedFilter += 1
+            changeImageFilter()
+        }
+    }
+    
+    @objc func swipeRight(_ gesture: UISwipeGestureRecognizer){
+        if (selectedFilter > 0){
+            selectedFilter -= 1
+            changeImageFilter()
+        }
+    }
+    
+    func changeImageFilter(){
+        if (selectedFilter == 0){
+            cameraView.image = selectedImage
+        }
+        else{
+            let image = selectedImage
+            let filteredImage = image.addFilter(filter: filters[selectedFilter])
+            cameraView.image = filteredImage
+        }
+    }
+    
     //MARK:- Actions
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
@@ -379,6 +417,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBAction func btnCaptureTapped(_ sender: UIButton) {
         if (!isPictureCaptured){
             let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
+            settings.flashMode = isFlashOn ? .on : .off
             stillImageOutput.capturePhoto(with: settings, delegate: self)
             isPictureCaptured = true
             btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
@@ -398,7 +437,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBAction func btnFlashTapped(_ sender: UIButton) {
         if (!isFrontCamera){
             isFlashOn = !isFlashOn
-            toggleTorch(on: isFlashOn)
+          //  toggleTorch(on: isFlashOn)
         }
         
     }
@@ -411,6 +450,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         lblTime.text = Utility.getCurrentTime()
         timeView.isHidden = false
         self.filterView.bringSubviewToFront(timeView)
+       // self.cameraView.bringSubviewToFront(timeView)
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
         panGesture.delegate = self
         panGesture.require(toFail: timeViewTapGesture)
@@ -421,6 +461,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBAction func btnTextTapped(_ sender: UIButton) {
         editableTextField.isHidden = false
         self.filterView.bringSubviewToFront(editableTextField)
+       // self.cameraView.bringSubviewToFront(editableTextField)
         colorSlider.isHidden = false
         lblFont.isHidden = false
         fontSlider.isHidden = false
@@ -548,21 +589,21 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     }
 }
 
-extension CameraViewController: DSSwipableFilterViewDataSource {
-    
-    func numberOfFilters(_ filterView: DSSwipableFilterView) -> Int {
-        return filterList.count
-    }
-    
-    func filter(_ filterView: DSSwipableFilterView, filterAtIndex index: Int) -> DSFilter {
-        return filterList[index]
-    }
-    
-    func startAtIndex(_ filterView: DSSwipableFilterView) -> Int {
-        return 0
-    }
-    
-}
+//extension CameraViewController: DSSwipableFilterViewDataSource {
+//
+//    func numberOfFilters(_ filterView: DSSwipableFilterView) -> Int {
+//        return filterList.count
+//    }
+//
+//    func filter(_ filterView: DSSwipableFilterView, filterAtIndex index: Int) -> DSFilter {
+//        return filterList[index]
+//    }
+//
+//    func startAtIndex(_ filterView: DSSwipableFilterView) -> Int {
+//        return 0
+//    }
+//
+//}
 
 extension CameraViewController: UIViewControllerTransitioningDelegate {
     
@@ -585,7 +626,8 @@ extension CameraViewController: EmojisViewControllerDelegate{
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFill
         imageView.image = image
-        filterSwipeView.addSubview(imageView)
+        filterView.addSubview(imageView)
+     //   cameraView.addSubview(imageView)
         imageView.isUserInteractionEnabled = true
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
         panGesture.delegate = self
@@ -602,10 +644,11 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             isPictureCaptured = true
             cameraView.isHidden = false
+            selectedImage = image
             cameraView.image = image
             filterView.isHidden = false
-            filterSwipeView.isPlayingLibraryVideo = true
-            preview(image: image)
+//            filterSwipeView.isPlayingLibraryVideo = true
+//            preview(image: image)
             btnEmoji.isEnabled = true
             btnLocation.isHidden = false
             btnText.isHidden = false

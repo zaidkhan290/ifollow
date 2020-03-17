@@ -73,7 +73,8 @@ open class DSSwipableFilterView: UIView {
     }
     
     fileprivate func renderImage(image: CIImage) {
-        filterView.setRenderImage(image: isPlayingLibraryVideo ? image.scaleAndResize(forRect: frame, and: contentMode) : image)
+      //  filterView.setRenderImage(image: isPlayingLibraryVideo ? image.scaleAndResize(forRect: frame, and: contentMode) : image)
+        filterView.setRenderImage(image: image)
     }
 
     fileprivate func cleanData() {

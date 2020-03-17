@@ -71,6 +71,83 @@ extension UIImage {
         
         return newImage!
     }
+    
+    public func resizeToBoundingSquare(_ boundingSquareSideLength : CGFloat) -> UIImage {
+        let imgScale = self.size.width > self.size.height ? boundingSquareSideLength / self.size.width : boundingSquareSideLength / self.size.height
+        let newWidth = self.size.width * imgScale
+        let newHeight = self.size.height * imgScale
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        UIGraphicsBeginImageContext(newSize)
+        self.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext();
+        return resizedImage!
+    }
+    
+    func addFilter(filter : String) -> UIImage {
+        let filter = CIFilter(name: filter)
+        // convert UIImage to CIImage and set as input
+        let ciInput = CIImage(image: self.fixedOrientation())
+        filter?.setValue(ciInput, forKey: "inputImage")
+        // get output CIImage, render as CGImage first to retain proper UIImage scale
+        let ciOutput = filter?.outputImage
+        let ciContext = CIContext()
+        let cgImage = ciContext.createCGImage(ciOutput!, from: (ciOutput?.extent)!)
+        //Return the image
+        return UIImage(cgImage: cgImage!)
+    }
+    
+    func fixedOrientation() -> UIImage
+    {
+        if imageOrientation == .up {
+            return self
+        }
+        
+        var transform: CGAffineTransform = CGAffineTransform.identity
+        
+        switch imageOrientation {
+        case .down, .downMirrored:
+            transform = transform.translatedBy(x: size.width, y: size.height)
+            transform = transform.rotated(by: CGFloat.pi)
+            break
+        case .left, .leftMirrored:
+            transform = transform.translatedBy(x: size.width, y: 0)
+            transform = transform.rotated(by: CGFloat.pi / 2.0)
+            break
+        case .right, .rightMirrored:
+            transform = transform.translatedBy(x: 0, y: size.height)
+            transform = transform.rotated(by: CGFloat.pi / -2.0)
+            break
+        case .up, .upMirrored:
+            break
+        }
+        switch imageOrientation {
+        case .upMirrored, .downMirrored:
+            transform.translatedBy(x: size.width, y: 0)
+            transform.scaledBy(x: -1, y: 1)
+            break
+        case .leftMirrored, .rightMirrored:
+            transform.translatedBy(x: size.height, y: 0)
+            transform.scaledBy(x: -1, y: 1)
+        case .up, .down, .left, .right:
+            break
+        }
+        
+        let ctx: CGContext = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: self.cgImage!.bitsPerComponent, bytesPerRow: 0, space: self.cgImage!.colorSpace!, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        
+        ctx.concatenate(transform)
+        
+        switch imageOrientation {
+        case .left, .leftMirrored, .right, .rightMirrored:
+            ctx.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
+        default:
+            ctx.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            break
+        }
+        
+        return UIImage(cgImage: ctx.makeImage()!)
+    }
+    
 }
 
 
