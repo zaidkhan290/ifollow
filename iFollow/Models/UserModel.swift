@@ -50,4 +50,12 @@ class UserModel: Object {
         userToken = json["jwt"].stringValue
     }
     
+    static func getCurrentUser() -> UserModel?{
+        let realm = try! Realm()
+        if let model = realm.objects(UserModel.self).first{
+            return model
+        }
+        return nil
+    }
+    
 }

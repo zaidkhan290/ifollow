@@ -14,6 +14,9 @@ class ProfileViewController: UIViewController {
 
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var userSmallImage: UIImageView!
+    @IBOutlet weak var lblUsername: UILabel!
+    @IBOutlet weak var lblUserBio: UILabel!
     @IBOutlet weak var editView: UIView!
     @IBOutlet weak var lblTrending: UILabel!
     @IBOutlet weak var lblTrends: UILabel!
@@ -64,7 +67,21 @@ class ProfileViewController: UIViewController {
         
     }
     
-    //MARk:- Actions
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        setUserData()
+    }
+    
+    //MARk:- Actions and Methods
+    
+    func setUserData(){
+        profileImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+        profileImage.layer.cornerRadius = profileImage.frame.height / 2
+        userSmallImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+        userSmallImage.layer.cornerRadius = userSmallImage.frame.height / 2
+        lblUsername.text = Utility.getLoginUserFullName()
+        lblUserBio.text  = Utility.getLoginUserBio()
+    }
     
     @objc func privateChatTapped(){
         let vc = Utility.getChatBoxContainerViewController()

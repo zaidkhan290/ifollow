@@ -8,6 +8,7 @@
 
 import UIKit
 import Loaf
+import RealmSwift
 
 class LoginViewController: UIViewController {
 
@@ -16,8 +17,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var btnForgotPassword: UIButton!
     @IBOutlet weak var btnSignIn: UIButton!
     @IBOutlet weak var btnSignup: UIButton!
-    
-    var isForForgotPassword = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +42,6 @@ class LoginViewController: UIViewController {
     //MARK:- Actions
     
     @IBAction func btnForgotPasswordTapped(_ sender: UIButton) {
-        isForForgotPassword = true
         let vc = Utility.getForgotPasswordViewController()
         self.pushToVC(vc: vc)
     }
@@ -62,21 +60,53 @@ class LoginViewController: UIViewController {
             }
             return
         }
-        
-        isForForgotPassword = false
-        let vc = Utility.getTabBarViewController()
-        self.present(vc, animated: true, completion: nil)
+        loginUserWithRequest()
     }
     
     @IBAction func btnSignupTapped(_ sender: UIButton) {
-        isForForgotPassword = false
         let vc = Utility.getSignupViewController()
         self.pushToVC(vc: vc)
     }
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
-        isForForgotPassword = false
         self.goBack()
+    }
+    
+    //MARK:- Methods
+    
+    func loginUserWithRequest(){
+        
+        let params = ["username": txtFieldUsername.text!,
+                      "password": txtFieldPassword.text!]
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        API.sharedInstance.executeAPI(type: .login, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    
+                    let realm = try! Realm()
+                    try! realm.safeWrite {
+                        realm.deleteAll()
+                        let model = UserModel()
+                        model.updateModelWithJSON(json: result["user"])
+                        realm.add(model)
+                    }
+                    let vc = Utility.getTabBarViewController()
+                    self.present(vc, animated: true, completion: nil)
+                }
+                else{
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                
+            }
+        }
+        
     }
     
 }

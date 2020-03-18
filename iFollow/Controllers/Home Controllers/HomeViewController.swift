@@ -85,6 +85,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         if (indexPath.row == 0){
             cell.userImage.isHidden = true
             cell.addIcon.isHidden = false
+            cell.storyImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         }
         else{
             cell.userImage.isHidden = false

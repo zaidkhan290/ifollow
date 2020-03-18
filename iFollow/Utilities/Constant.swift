@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 //Errors Messages
 
@@ -16,3 +17,8 @@ let kPasswordNotMatchError = "Password not match"
 let kFirstNameError = "Please enter your first name"
 let kLastNameError = "Please enter your last name"
 let kUsernameError = "Please enter your username"
+let kOldPasswordError = "Please enter your old password"
+
+//Others
+let BASEURL = "https://ifollowinc.herokuapp.com/users/"
+let UIWINDOW = UIApplication.shared.delegate!.window!

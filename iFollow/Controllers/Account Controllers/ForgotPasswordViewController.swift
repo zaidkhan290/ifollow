@@ -43,11 +43,7 @@ class ForgotPasswordViewController: UIViewController {
             }
             return
         }
-        
-        Loaf(kUsernameError, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
-            self.goBack()
-        }
-        
+        forgotPasswordWithRequest()
     }
     
     @IBAction func btnSignupTapped(_ sender: UIButton) {
@@ -57,5 +53,33 @@ class ForgotPasswordViewController: UIViewController {
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
         self.goBack()
+    }
+    
+    //MARK:- Methods
+    
+    func forgotPasswordWithRequest(){
+        
+        let params = ["email": txtFieldEmail.text!]
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        API.sharedInstance.executeAPI(type: .forgotPassword, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        self.goBack()
+                    }
+                }
+                else{
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                
+            }
+        }
     }
 }

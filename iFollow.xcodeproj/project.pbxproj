@@ -19,6 +19,8 @@
 		182F62602372EB4E00A55E52 /* ChatListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182F625E2372EB4E00A55E52 /* ChatListTableViewCell.xib */; };
 		18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18307AB1236C86CE00A0A7C6 /* LoginViewController.swift */; };
 		18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18307AB4236C97CB00A0A7C6 /* StringExtension.swift */; };
+		1834832A2422313A00200F8C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183483292422313A00200F8C /* API.swift */; };
+		1834832C24223E5500200F8C /* ExtensionOfRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1834832B24223E5500200F8C /* ExtensionOfRealm.swift */; };
 		1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839088C236C70D6009A28E6 /* AppDelegate.swift */; };
 		18390892236C70D6009A28E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390890236C70D6009A28E6 /* Main.storyboard */; };
 		18390894236C70DA009A28E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18390893236C70DA009A28E6 /* Assets.xcassets */; };
@@ -121,6 +123,8 @@
 		182F625E2372EB4E00A55E52 /* ChatListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatListTableViewCell.xib; sourceTree = "<group>"; };
 		18307AB1236C86CE00A0A7C6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		18307AB4236C97CB00A0A7C6 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		183483292422313A00200F8C /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		1834832B24223E5500200F8C /* ExtensionOfRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionOfRealm.swift; sourceTree = "<group>"; };
 		18390889236C70D6009A28E6 /* iFollow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iFollow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1839088C236C70D6009A28E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18390891236C70D6009A28E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -281,8 +285,17 @@
 				189329BB237015D80067077F /* ViewControllerExtension.swift */,
 				189329CC237035670067077F /* LabelExtension.swift */,
 				18781C23237087D3001BAF95 /* UIViewExtension.swift */,
+				1834832B24223E5500200F8C /* ExtensionOfRealm.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		183483282422312800200F8C /* API Router */ = {
+			isa = PBXGroup;
+			children = (
+				183483292422313A00200F8C /* API.swift */,
+			);
+			path = "API Router";
 			sourceTree = "<group>";
 		};
 		18390880236C70D6009A28E6 = {
@@ -306,6 +319,7 @@
 		1839088B236C70D6009A28E6 /* iFollow */ = {
 			isa = PBXGroup;
 			children = (
+				183483282422312800200F8C /* API Router */,
 				1890CB7F242135F30096044E /* Models */,
 				18A32620240FBCA800CF329E /* Filters Library */,
 				1855081023796956008EAC2E /* Video */,
@@ -717,6 +731,7 @@
 				185640E023741B7800CC2777 /* MenuViewController.swift in Sources */,
 				18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */,
 				18B14CC52375AB8F005E5CE4 /* OptionsViewController.swift in Sources */,
+				1834832C24223E5500200F8C /* ExtensionOfRealm.swift in Sources */,
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
 				18A32627240FBCE800CF329E /* DSSwipableFilterView.swift in Sources */,
 				1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */,
@@ -772,6 +787,7 @@
 				18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */,
 				185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */,
 				1889F2DE23DF41100079DB72 /* ViewersViewController.swift in Sources */,
+				1834832A2422313A00200F8C /* API.swift in Sources */,
 				18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

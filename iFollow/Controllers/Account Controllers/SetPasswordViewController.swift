@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Loaf
 
 class SetPasswordViewController: UIViewController {
     
@@ -44,10 +45,26 @@ class SetPasswordViewController: UIViewController {
     }
     
     @IBAction func btnResetTapped(_ sender: UIButton) {
-        self.view.makeToast("Password change successfully")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-            self.goBack()
+        
+        if (txtFieldOldPassword.text! == ""){
+            Loaf(kOldPasswordError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
         }
+        else if (!Utility.isValid(password: txtFieldNewPassword.text!)){
+            Loaf(kPasswordError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
+        }
+        else if (txtFieldConfirmPassword.text! != txtFieldNewPassword.text!){
+            Loaf(kPasswordNotMatchError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+            return
+        }
+        changePasswordWithRequest()
     }
     
     @IBAction func btnSignupTapped(_ sender: UIButton) {
@@ -55,5 +72,34 @@ class SetPasswordViewController: UIViewController {
         self.pushToVC(vc: vc)
     }
     
-    
+    func changePasswordWithRequest(){
+        
+        let params = ["password": txtFieldOldPassword.text!,
+                      "new_password":txtFieldNewPassword.text!]
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        API.sharedInstance.executeAPI(type: .changePassword, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+        }
+    }
 }

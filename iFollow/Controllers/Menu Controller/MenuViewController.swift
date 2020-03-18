@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MenuViewController: UIViewController {
 
@@ -37,14 +38,41 @@ class MenuViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        setUserData()
+    }
+    
     //MARK:- Actions
     
     @IBAction func btnCloseTapped(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
     
+    //MARK:- Methods
+    
+    func setUserData(){
+        userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+        userImage.layer.cornerRadius = userImage.frame.height / 2
+        lblUsername.text = Utility.getLoginUserFullName()
+
+    }
+    
     @objc func editProfileTapped(){
         let vc = Utility.getEditProfileViewController()
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func showLogoutPopup(){
+        let vc = UIAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+                Utility.logoutUser()
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        vc.addAction(yesAction)
+        vc.addAction(noAction)
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -97,8 +125,7 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
             self.pushToVC(vc: vc)
         }
         else if (indexPath.row == 14){
-            self.dismiss(animated: true, completion: nil)
-            NotificationCenter.default.post(name: NSNotification.Name("logoutUser"), object: nil)
+            showLogoutPopup()
         }
         
     }

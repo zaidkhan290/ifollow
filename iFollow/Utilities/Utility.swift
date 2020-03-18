@@ -8,11 +8,17 @@
 
 import Foundation
 import UIKit
+import NVActivityIndicatorView
+import RealmSwift
 
 struct Utility {
     
     static let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
     static private var timeFormatter: DateFormatter?
+    
+    static func getLoginNavigationController() -> UINavigationController{
+        return storyBoard.instantiateViewController(withIdentifier: "LoginNavigation") as! UINavigationController
+    }
     
     static func getMainViewController() -> MainViewController{
         return storyBoard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
@@ -158,6 +164,48 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "EmojisViewController") as! EmojisViewController
     }
     
+    static func getLoginUserId() -> Int{
+        if let user = UserModel.getCurrentUser(){
+            return user.userId
+        }
+        return 0
+    }
+    
+    static func getLoginUserFirstName() -> String{
+        if let user = UserModel.getCurrentUser(){
+            return user.userFirstName
+        }
+        return ""
+    }
+    
+    static func getLoginUserLastName() -> String{
+        if let user = UserModel.getCurrentUser(){
+            return user.userLastName
+        }
+        return ""
+    }
+    
+    static func getLoginUserFullName() -> String{
+        if let user = UserModel.getCurrentUser(){
+            return "\(user.userFirstName) \(user.userLastName)"
+        }
+        return ""
+    }
+    
+    static func getLoginUserImage() -> String{
+        if let user = UserModel.getCurrentUser(){
+            return user.userImage
+        }
+        return ""
+    }
+    
+    static func getLoginUserBio() -> String{
+        if let user = UserModel.getCurrentUser(){
+            return user.userShortBio
+        }
+        return ""
+    }
+    
     static var storyTimeFormatter: DateFormatter{
         get{
             if (timeFormatter == nil){
@@ -193,4 +241,22 @@ struct Utility {
         return (password.count < 6 || password.count > 16) ? false : true
     }
     
+    static func showOrHideLoader(shouldShow: Bool){
+        let activityData = ActivityData(size: CGSize(width: 60, height: 60), message: "", messageFont: nil, messageSpacing: nil, type: .ballRotateChase, color: Theme.profileLabelsYellowColor, padding: nil, displayTimeThreshold: nil, minimumDisplayTime: 2, backgroundColor: .clear, textColor: nil)
+        if (shouldShow){
+            NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+        }
+        else{
+            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+        }
+    }
+    
+    static func logoutUser(){
+        let realm = try! Realm()
+        try! realm.safeWrite {
+            realm.deleteAll()
+        }
+        let vc = Utility.getLoginNavigationController()
+        UIWINDOW!.rootViewController = vc
+    }
 }

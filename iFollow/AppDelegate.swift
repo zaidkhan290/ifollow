@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         IQKeyboardManager.shared.enable = true
+        navigateTOInitialViewController()
         return true
     }
 
@@ -41,6 +42,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func navigateTOInitialViewController() {
+        if (UserModel.getCurrentUser() != nil){
+            let vc = Utility.getTabBarViewController()
+            UIWINDOW!.rootViewController = vc
+        }
+        else {
+            let vc = Utility.getLoginNavigationController()
+            UIWINDOW!.rootViewController = vc
+        }
     }
 
 
