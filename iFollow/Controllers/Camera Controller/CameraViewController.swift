@@ -13,6 +13,7 @@ import ColorSlider
 
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
 
+    @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var previewView: UIView!
     @IBOutlet weak var cameraView: UIImageView!
     @IBOutlet weak var btnEmoji: UIButton!
@@ -38,7 +39,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
     var videoPreviewLayer: AVCaptureVideoPreviewLayer!
-    var isFlashOn = false
+    var flashMode = AVCaptureDevice.FlashMode.off
     var isFrontCamera = false
     var isPictureCaptured = false
     var emojis = [UIImage]()
@@ -120,8 +121,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(_:)))
         swipeRightGesture.direction = .right
         
-        self.filterView.addGestureRecognizer(swipeLeftGesture)
-        self.filterView.addGestureRecognizer(swipeRightGesture)
+//        self.filterView.addGestureRecognizer(swipeLeftGesture)
+//        self.filterView.addGestureRecognizer(swipeRightGesture)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -256,21 +257,6 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         return nil
     }
     
-    func toggleTorch(on: Bool) {
-        guard
-            let device = AVCaptureDevice.default(for: AVMediaType.video),
-            device.hasTorch
-            else { return }
-        
-        do {
-            try device.lockForConfiguration()
-            device.torchMode = on ? .on : .off
-            device.unlockForConfiguration()
-        } catch {
-            print("Torch could not be used")
-        }
-    }
-    
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         
         guard let imageData = photo.fileDataRepresentation()
@@ -290,7 +276,6 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         lblNormal.isHidden = true
         btnRotate.isEnabled = false
         btnFlash.isEnabled = false
-        toggleTorch(on: false)
       //  preview(image: image!)
     }
     
@@ -397,6 +382,16 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         }
     }
     
+    func changeFilter(){
+        if (selectedFilter < filters.count - 1){
+            selectedFilter += 1
+        }
+        else{
+            selectedFilter = 0
+        }
+        changeImageFilter()
+    }
+    
     func changeImageFilter(){
         if (selectedFilter == 0){
             cameraView.image = selectedImage
@@ -411,16 +406,47 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     //MARK:- Actions
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        if (isPictureCaptured){
+            isPictureCaptured = false
+            filterView.isHidden = true
+            cameraView.isHidden = true
+            cameraView.image = nil
+            btnBack.setImage(UIImage(named: "back"), for: .normal)
+            btnGallery.setImage(UIImage(named: "attach-1"), for: .normal)
+            btnCapture.setImage(UIImage(named: "capture"), for: .normal)
+            btnRotate.isEnabled = true
+            btnFlash.isEnabled = true
+            btnLocation.isHidden = true
+            btnText.isHidden = true
+            btnClock.isHidden = true
+            btnEmoji.isEnabled = false
+            timeView.isHidden = true
+            editableTextField.isHidden = true
+            editableTextField.text = ""
+            for subView in filterView.subviews{
+                if (subView == cameraView || subView == timeView || subView == editableTextField){
+                    
+                }
+                else{
+                    subView.removeFromSuperview()
+                }
+            }
+        }
+        else{
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
     @IBAction func btnCaptureTapped(_ sender: UIButton) {
         if (!isPictureCaptured){
             let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
-            settings.flashMode = isFlashOn ? .on : .off
+            settings.flashMode = isFrontCamera ? .off : flashMode
             stillImageOutput.capturePhoto(with: settings, delegate: self)
             isPictureCaptured = true
             btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
+            btnGallery.setImage(UIImage(named: "filter"), for: .normal)
+            btnBack.setImage(UIImage(named: "close-1"), for: .normal)
         }
         else{
             let image = self.filterView.screenshot()
@@ -431,15 +457,29 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     }
     
     @IBAction func btnGalleryTapped(_ sender: UIButton) {
-        self.present(imagePicker, animated: true, completion: nil)
+        if (isPictureCaptured){
+            changeFilter()
+        }
+        else{
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        
     }
     
     @IBAction func btnFlashTapped(_ sender: UIButton) {
-        if (!isFrontCamera){
-            isFlashOn = !isFlashOn
-          //  toggleTorch(on: isFlashOn)
-        }
         
+        if (flashMode == .off){
+            flashMode = .on
+            btnFlash.setImage(UIImage(named: "flash_on"), for: .normal)
+        }
+        else if (flashMode == .on){
+            flashMode = .auto
+            btnFlash.setImage(UIImage(named: "auto_flash"), for: .normal)
+        }
+        else if (flashMode == .auto){
+            flashMode = .off
+            btnFlash.setImage(UIImage(named: "flash_off"), for: .normal)
+        }
     }
     
     @IBAction func btnLocationTapped(_ sender: UIButton) {
@@ -493,10 +533,11 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
                 if (input.device.position == .back) {
                     newCamera = cameraWithPosition(position: .front)
                     isFrontCamera = true
-                    isFlashOn = false
+                    btnFlash.isEnabled = false
                 } else {
                     newCamera = cameraWithPosition(position: .back)
                     isFrontCamera = false
+                    btnFlash.isEnabled = true
                 }
             }
             
@@ -654,11 +695,12 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
             btnText.isHidden = false
             btnClock.isHidden = false
             btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
+            btnGallery.setImage(UIImage(named: "filter"), for: .normal)
+            btnBack.setImage(UIImage(named: "close-1"), for: .normal)
             lblLive.isHidden = true
             lblNormal.isHidden = true
             btnRotate.isEnabled = false
             btnFlash.isEnabled = false
-            toggleTorch(on: false)
             picker.dismiss(animated: true, completion: nil)
         }
         

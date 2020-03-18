@@ -2093,10 +2093,10 @@
                                 </connections>
                             </slider>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rightland" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cL-Nk-pjt">
-                                <rect key="frame" x="142" y="32.666666666666664" width="130" height="39.999999999999993"/>
+                                <rect key="frame" x="137" y="32.666666666666664" width="140" height="39.999999999999993"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="130" id="KGP-Mi-V3g"/>
+                                    <constraint firstAttribute="width" constant="140" id="KGP-Mi-V3g"/>
                                     <constraint firstAttribute="height" constant="40" id="kCu-fD-0bL"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Rightland" family="Rightland" pointSize="20"/>
@@ -2135,7 +2135,7 @@
                                     <constraint firstAttribute="height" constant="40" id="BcN-vT-Twx"/>
                                     <constraint firstAttribute="width" constant="40" id="ff3-2A-uQ2"/>
                                 </constraints>
-                                <state key="normal" image="flash"/>
+                                <state key="normal" image="flash_off"/>
                                 <connections>
                                     <action selector="btnFlashTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="cHH-eS-23B"/>
                                 </connections>
@@ -2267,6 +2267,7 @@
                         <viewLayoutGuide key="safeArea" id="WSe-4k-XPy"/>
                     </view>
                     <connections>
+                        <outlet property="btnBack" destination="Zcm-Q6-Kfl" id="naC-SC-WJu"/>
                         <outlet property="btnCapture" destination="sw2-9r-yua" id="RGZ-Da-2YM"/>
                         <outlet property="btnClock" destination="Wx1-Cl-rp8" id="ZxB-fT-eqG"/>
                         <outlet property="btnEmoji" destination="9hw-sH-gi9" id="VEi-if-E8X"/>
@@ -4876,7 +4877,7 @@
         <image name="emotions" width="31" height="31"/>
         <image name="eye" width="32.666667938232422" height="21"/>
         <image name="fedora" width="18.666666030883789" height="19.333333969116211"/>
-        <image name="flash" width="34.333332061767578" height="42.666667938232422"/>
+        <image name="flash_off" width="21" height="25"/>
         <image name="footprint" width="244.33332824707031" height="267.33334350585938"/>
         <image name="footprint_login" width="163" height="178.33332824707031"/>
         <image name="homeSelected" width="24" height="21.666666030883789"/>

@@ -69,6 +69,7 @@
 		18847A5B237C5A52004D500A /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A5A237C5A52004D500A /* MediaViewController.swift */; };
 		1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885744A2372B91900985AC8 /* CameraViewController.swift */; };
 		1889F2DE23DF41100079DB72 /* ViewersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1889F2DD23DF41100079DB72 /* ViewersViewController.swift */; };
+		1890CB81242136060096044E /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1890CB80242136060096044E /* UserModel.swift */; };
 		189329BA237014E90067077F /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329B9237014E90067077F /* Utility.swift */; };
 		189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BB237015D80067077F /* ViewControllerExtension.swift */; };
 		189329BF23701EE50067077F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BE23701EE50067077F /* SignupViewController.swift */; };
@@ -172,6 +173,7 @@
 		18847A5A237C5A52004D500A /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		1885744A2372B91900985AC8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		1889F2DD23DF41100079DB72 /* ViewersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewersViewController.swift; sourceTree = "<group>"; };
+		1890CB80242136060096044E /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		189329B9237014E90067077F /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		189329BB237015D80067077F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		189329BE23701EE50067077F /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 		1839088B236C70D6009A28E6 /* iFollow */ = {
 			isa = PBXGroup;
 			children = (
+				1890CB7F242135F30096044E /* Models */,
 				18A32620240FBCA800CF329E /* Filters Library */,
 				1855081023796956008EAC2E /* Video */,
 				1855080D23795330008EAC2E /* Segment Progress Bar */,
@@ -409,6 +412,14 @@
 				18A3262B241010AE00CF329E /* EmojisViewController.swift */,
 			);
 			path = "Camera Controller";
+			sourceTree = "<group>";
+		};
+		1890CB7F242135F30096044E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1890CB80242136060096044E /* UserModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		189329B8237014D50067077F /* Utilities */ = {
@@ -717,6 +728,7 @@
 				189329CD237035670067077F /* LabelExtension.swift in Sources */,
 				18781C2223707019001BAF95 /* FeedsView.swift in Sources */,
 				1855081923798976008EAC2E /* FriendsTableViewCell.swift in Sources */,
+				1890CB81242136060096044E /* UserModel.swift in Sources */,
 				18B14CCA2375CA85005E5CE4 /* StoriesViewController.swift in Sources */,
 				18847A53237BF2FA004D500A /* ChatViewController.swift in Sources */,
 				1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */,
