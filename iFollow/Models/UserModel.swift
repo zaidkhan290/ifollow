@@ -39,7 +39,7 @@ class UserModel: Object {
         userShortBio = json["short_bio"].stringValue
         userHobby = json["hobby"].stringValue
         userCountry = json["country"].stringValue
-        userImage = json["image"].stringValue
+        userImage = json["image"].stringValue.replacingOccurrences(of: "\\", with: "")
         userZipCode = json["zip_code"].stringValue
         userGender = json["gender"].stringValue
         userEmail = json["email"].stringValue

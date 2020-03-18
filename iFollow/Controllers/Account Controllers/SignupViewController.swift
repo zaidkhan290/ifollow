@@ -58,6 +58,10 @@ class SignupViewController: UIViewController {
         }
         
         let vc = Utility.getSignupDetail1ViewController()
+        let userModel = UserModel()
+        userModel.userEmail = txtFieldEmail.text!
+        userModel.userPassword = txtFieldPassword.text!
+        vc.userModel = userModel
         self.pushToVC(vc: vc)
     }
     

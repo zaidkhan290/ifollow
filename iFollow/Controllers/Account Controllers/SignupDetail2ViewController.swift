@@ -8,6 +8,8 @@
 
 import UIKit
 import Loaf
+import RealmSwift
+import SKCountryPicker
 
 class SignupDetail2ViewController: UIViewController {
 
@@ -17,9 +19,11 @@ class SignupDetail2ViewController: UIViewController {
     var textFieldPlaceholders = [String]()
     var textFieldImages = [String]()
     
+    var userModel = UserModel()
+    var userImage = UIImage()
     var shortBio = ""
     var hobby = ""
-    var country = ""
+    var userCountry = ""
     var zipCode = ""
     
     override func viewDidLoad() {
@@ -54,11 +58,55 @@ class SignupDetail2ViewController: UIViewController {
             hobby = sender.text!
         }
         else if (sender.tag == 3){
-            country = sender.text!
+            userCountry = sender.text!
         }
         else if (sender.tag == 4){
             zipCode = sender.text!
         }
+    }
+    
+    func signupUserWithRequest(){
+        
+        let params = ["first_name": userModel.userFirstName,
+                      "last_name": userModel.userLastName,
+                      "date_of_birth": userModel.userDOB,
+                      "username": userModel.username,
+                      "gender": userModel.userGender,
+                      "short_bio": shortBio,
+                      "hobby": hobby,
+                      "country": userCountry,
+                      "zip_code": zipCode,
+                      "email": userModel.userEmail,
+                      "password": userModel.userPassword]
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        API.sharedInstance.executeAPI(type: .signup, method: .post, params: params, imageData: userImage.jpegData(compressionQuality: 0.5)) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    
+                    let realm = try! Realm()
+                    try! realm.safeWrite {
+                        realm.deleteAll()
+                        let model = UserModel()
+                        model.updateModelWithJSON(json: result["user"])
+                        realm.add(model)
+                    }
+                    let vc = Utility.getTabBarViewController()
+                    self.present(vc, animated: true, completion: nil)
+                }
+                else{
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                
+            }
+        }
+        
     }
     
 }
@@ -91,7 +139,9 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
             Utility.setTextFieldPlaceholder(textField: cell.txtField, placeholder: textFieldPlaceholders[indexPath.row], color: Theme.editProfileTextFieldColor)
             cell.icon.image = UIImage(named: textFieldImages[indexPath.row])
             cell.txtField.tag = indexPath.row
+            cell.txtField.delegate = self
             cell.txtField.addTarget(self, action: #selector(textFieldTextChanged(_:)), for: .editingChanged)
+            cell.txtField.text = indexPath.row == 3 ? userCountry : cell.txtField.text!
             return cell
         }
         
@@ -108,11 +158,23 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func btnDoneTapped() {
-        
-        print("Short Bio is \(shortBio)\nHobby is \(hobby)\nCountry is \(country)\nZipCode is \(zipCode)")
-        
-        let vc = Utility.getTabBarViewController()
-        self.present(vc, animated: true, completion: nil)
+        signupUserWithRequest()
     }
     
+}
+
+extension SignupDetail2ViewController: UITextFieldDelegate{
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if (textField.tag == 3){
+            let countryPicker = CountryPickerWithSectionViewController.presentController(on: self) { (country) in
+                self.userCountry = country.countryName
+                self.detailTableView.reloadData()
+            }
+            countryPicker.isCountryDialHidden = true
+            countryPicker.flagStyle = .circular
+            self.view.endEditing(true)
+            textField.endEditing(true)
+        }
+        
+    }
 }

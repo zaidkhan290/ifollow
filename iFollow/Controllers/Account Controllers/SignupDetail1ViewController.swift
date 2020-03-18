@@ -24,6 +24,8 @@ class SignupDetail1ViewController: UIViewController {
     var lastName = ""
     var dob = ""
     var username = ""
+    var userGender = ""
+    var userModel = UserModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -191,6 +193,13 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
         }
         
         let vc = Utility.getSignupDetail2ViewController()
+        userModel.userFirstName = firstName
+        userModel.userLastName = lastName
+        userModel.userDOB = dob
+        userModel.username = username
+        userModel.userGender = userGender
+        vc.userModel = userModel
+        vc.userImage = userImage
         self.pushToVC(vc: vc)
     }
 }
@@ -212,4 +221,10 @@ extension SignupDetail1ViewController: UIImagePickerControllerDelegate, UINaviga
         picker.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension SignupDetail1ViewController: EditProfileGenderTableViewCellDelegate{
+    func genderTapped(gender: String) {
+        userGender = gender
+    }
 }
