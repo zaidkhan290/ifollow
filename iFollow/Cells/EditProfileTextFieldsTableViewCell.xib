@@ -37,7 +37,7 @@
                             <constraint firstAttribute="height" constant="30" id="dOR-WV-hHG"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
+                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                     </textField>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="asE-rf-siD">
                         <rect key="frame" x="20" y="47.5" width="298" height="1"/>
