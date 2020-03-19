@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 import ColorSlider
+import GooglePlaces
 
 protocol CameraViewControllerDelegate: class {
     func getStoryImage(image: UIImage)
@@ -488,7 +489,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     }
     
     @IBAction func btnLocationTapped(_ sender: UIButton) {
-        
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
     }
     
     @IBAction func btnClockTapped(_ sender: UIButton){
@@ -738,5 +741,25 @@ extension CameraViewController: UITextFieldDelegate{
 extension CameraViewController: UIGestureRecognizerDelegate{
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+}
+
+extension CameraViewController: GMSAutocompleteViewControllerDelegate{
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        print("Place name: \(place.name)")
+        print("Place ID: \(place.placeID)")
+        print("Place attributions: \(place.attributions)")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        // TODO: handle the error.
+        print("Error: ", error.localizedDescription)
+    }
+    
+    // User canceled the operation.
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
     }
 }

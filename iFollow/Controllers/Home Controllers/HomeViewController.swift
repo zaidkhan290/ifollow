@@ -10,6 +10,7 @@ import UIKit
 import iCarousel
 import FirebaseStorage
 import Loaf
+import CoreLocation
 
 class HomeViewController: UIViewController {
 
@@ -20,6 +21,9 @@ class HomeViewController: UIViewController {
     var isFullScreen = false
     var storyImage = UIImage()
     var storageRef: StorageReference?
+    let manager = CLLocationManager()
+    let geocoder = CLGeocoder()
+    var userCurrentAddress = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,17 +44,15 @@ class HomeViewController: UIViewController {
         self.carouselView.delegate = self
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        
-//        let storyCollectionHeight = (UIScreen.main.bounds.height) * (0.3)
-//        self.storyCollectionViewHeightConstraint.constant = storyCollectionHeight
-//        self.view.updateConstraintsIfNeeded()
-//        self.view.layoutSubviews()
-//        self.storyCollectionView.reloadData()
-        
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
     }
     
     //MARK:- Methods
@@ -290,4 +292,32 @@ extension HomeViewController: CameraViewControllerDelegate{
         storyImage = image
         saveStoryMediaToFirebase(image: storyImage)
     }
+}
+
+extension HomeViewController: CLLocationManagerDelegate{
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[0]
+        manager.stopUpdatingLocation()
+        
+        geocoder.reverseGeocodeLocation(location, completionHandler: {(placemarks, error) in
+            if (error != nil) {
+                print("Error in reverseGeocode")
+            }
+            
+            let placemark = placemarks! as [CLPlacemark]
+            if placemark.count > 0 {
+                let placemark = placemarks![0]
+                if let area = placemark.name, let city = placemark.locality, let country = placemark.country{
+                    self.userCurrentAddress = "\(area), \(city), \(country)"
+                    print(self.userCurrentAddress)
+                }
+            }
+        })
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+    }
+    
 }

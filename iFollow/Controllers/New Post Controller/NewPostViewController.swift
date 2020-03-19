@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GooglePlaces
 
 protocol PostViewControllerDelegate: class {
     func postTapped(postView: UIViewController)
@@ -108,6 +109,9 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnLocationTapped(_ sender: UIButton) {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
     }
     
     @objc func budgetSliderValueChange(){
@@ -160,5 +164,25 @@ class NewPostViewController: UIViewController {
         self.view.updateConstraintsIfNeeded()
         self.view.layoutSubviews()
         
+    }
+}
+
+extension NewPostViewController: GMSAutocompleteViewControllerDelegate{
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        print("Place name: \(place.name)")
+        print("Place ID: \(place.placeID)")
+        print("Place attributions: \(place.attributions)")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        // TODO: handle the error.
+        print("Error: ", error.localizedDescription)
+    }
+    
+    // User canceled the operation.
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
     }
 }

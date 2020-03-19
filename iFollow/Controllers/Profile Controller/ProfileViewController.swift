@@ -235,6 +235,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             let vc = Utility.getNewPostViewController()
             vc.postSelectedImage = pickedImage
+            isFullScreen = true
             vc.delegate = self
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self

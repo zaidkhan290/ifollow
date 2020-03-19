@@ -31,5 +31,6 @@ pod 'Firebase/Database'
 pod 'Firebase/Storage'
 pod 'Fabric'
 pod 'Crashlytics'
+pod 'GooglePlaces', '3.5.0'
 
 end
