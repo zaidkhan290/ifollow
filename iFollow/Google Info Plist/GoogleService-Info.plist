@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>977065173099-0sl42r8u3v6hh91nkfhbl2qkb4v3mtgh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.977065173099-0sl42r8u3v6hh91nkfhbl2qkb4v3mtgh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA7oFL_W-gT4OG1kg-O-q_5S5-LpOPkDSQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>977065173099</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mou.iFollow</string>
+	<key>PROJECT_ID</key>
+	<string>ifollow-13644</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ifollow-13644.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:977065173099:ios:e78535bd524577214c512e</string>
+	<key>DATABASE_URL</key>
+	<string>https://ifollow-13644.firebaseio.com</string>
+</dict>
+</plist>

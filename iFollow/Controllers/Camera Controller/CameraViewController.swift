@@ -11,6 +11,10 @@ import AVFoundation
 import Photos
 import ColorSlider
 
+protocol CameraViewControllerDelegate: class {
+    func getStoryImage(image: UIImage)
+}
+
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
 
     @IBOutlet weak var btnBack: UIButton!
@@ -55,6 +59,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     let filters = ["","CIPhotoEffectMono", "CIPhotoEffectChrome", "CIPhotoEffectTransfer", "CIPhotoEffectInstant", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectFade"]
     var selectedFilter = 0
     var selectedImage = UIImage()
+    var delegate: CameraViewControllerDelegate!
     
   //  let filterSwipeView = DSSwipableFilterView(frame: UIScreen.main.bounds)
     
@@ -450,7 +455,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         }
         else{
             let image = self.filterView.screenshot()
-            UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
+            self.delegate.getStoryImage(image: image)
             self.dismiss(animated: true, completion: nil)
         }
         

@@ -23,5 +23,13 @@ pod 'RealmSwift'
 pod 'SDWebImage'
 pod 'LoadingPlaceholderView'
 pod 'EmptyDataSet-Swift'
+pod 'Firebase/Analytics'
+pod 'FirebaseCore'
+pod 'FirebaseMessaging'
+pod 'FirebaseFirestore'
+pod 'Firebase/Database'
+pod 'Firebase/Storage'
+pod 'Fabric'
+pod 'Crashlytics'
 
 end

@@ -19,6 +19,8 @@ enum EndPoint: String {
     case changePassword = "change_password"
     case updateProfile = "update_profile"
     case updateProfilePicture = "update_profile_picture"
+    case createStory = "add_story"
+    case createPost = "add_post"
 }
 
 enum StatusCodes {

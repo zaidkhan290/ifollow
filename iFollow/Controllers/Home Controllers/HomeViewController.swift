@@ -8,13 +8,18 @@
 
 import UIKit
 import iCarousel
+import FirebaseStorage
+import Loaf
 
 class HomeViewController: UIViewController {
 
     @IBOutlet weak var storyCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var carouselView: iCarousel!
     @IBOutlet weak var storyCollectionView: UICollectionView!
+    
     var isFullScreen = false
+    var storyImage = UIImage()
+    var storageRef: StorageReference?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +38,7 @@ class HomeViewController: UIViewController {
         carouselView.type = .rotary
         self.carouselView.dataSource = self
         self.carouselView.delegate = self
+        storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         
     }
     
@@ -51,6 +57,7 @@ class HomeViewController: UIViewController {
     
     func openCamera(){
         let vc = Utility.getCameraViewController()
+        vc.delegate = self
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -68,6 +75,84 @@ class HomeViewController: UIViewController {
         popup?.delegate = self
         self.present(vc, animated: true, completion: nil)
         
+    }
+    
+    func saveStoryMediaToFirebase(image: UIImage){
+        
+        let timeStemp = Int(Date().timeIntervalSince1970)
+        let mediaRef = storageRef?.child("/Media")
+        let iosRef = mediaRef?.child("/iOS").child("/Images")
+        let picRef = iosRef?.child("/StoryImage\(timeStemp).jgp")
+        
+        //        let imageData2 = UIImagePNGRepresentation(image)
+        if let imageData2 = image.jpegData(compressionQuality: 0.5) {
+            // Create file metadata including the content type
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            
+            Utility.showOrHideLoader(shouldShow: true)
+            
+            let uploadTask = picRef?.putData(imageData2, metadata: metadata, completion: { (metaData, error) in
+                if(error != nil){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(error!.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+                        
+                    }
+                }else{
+                    
+                    picRef?.downloadURL(completion: { (url, error) in
+                        if let imageURL = url{
+                            self.postStory(mediaUrl: imageURL.absoluteString)
+                        }
+                    })
+                    
+                    
+                }
+            })
+            uploadTask?.resume()
+            
+            var i = 0
+            uploadTask?.observe(.progress, handler: { (snapshot) in
+                if(i == 0){
+                    
+                }
+                i += 1
+                
+            })
+            
+            uploadTask?.observe(.success, handler: { (snapshot) in
+                
+            })
+        }
+    }
+    
+    func postStory(mediaUrl: String){
+        let params = ["media": mediaUrl,
+                      "expire_hours": 48] as [String : Any]
+        
+        API.sharedInstance.executeAPI(type: .createStory, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
     }
     
 }
@@ -198,4 +283,11 @@ extension HomeViewController: UIAdaptivePresentationControllerDelegate, UIPopove
         return UIModalPresentationStyle.none
     }
     
+}
+
+extension HomeViewController: CameraViewControllerDelegate{
+    func getStoryImage(image: UIImage) {
+        storyImage = image
+        saveStoryMediaToFirebase(image: storyImage)
+    }
 }

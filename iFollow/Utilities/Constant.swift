@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 //Errors Messages
 
@@ -22,3 +23,6 @@ let kOldPasswordError = "Please enter your old password"
 //Others
 let BASEURL = "https://ifollowinc.herokuapp.com/users/"
 let UIWINDOW = UIApplication.shared.delegate!.window!
+let GOOGLECLIENTID = "977065173099-0sl42r8u3v6hh91nkfhbl2qkb4v3mtgh.apps.googleusercontent.com"
+let rootRef = Database.database().reference()
+let FireBaseStorageURL = "gs://ifollow-13644.appspot.com"

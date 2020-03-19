@@ -52,6 +52,7 @@
 		186A98A3241A9BBF000AD9AB /* JandaCurlygirlSerif.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 186A98A2241A9BBF000AD9AB /* JandaCurlygirlSerif.ttf */; };
 		186A98A5241A9BDE000AD9AB /* Simplisicky Fill.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 186A98A4241A9BDE000AD9AB /* Simplisicky Fill.ttf */; };
 		186A98A7241A9BF0000AD9AB /* yellosun.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 186A98A6241A9BF0000AD9AB /* yellosun.ttf */; };
+		186CD0D4242391BF004E7D90 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 186CD0D3242391BF004E7D90 /* GoogleService-Info.plist */; };
 		18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF52373209D007F8BF2 /* EditProfileViewController.swift */; };
 		18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */; };
 		18706FFA237323DB007F8BF2 /* EditProfileImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */; };
@@ -158,6 +159,7 @@
 		186A98A2241A9BBF000AD9AB /* JandaCurlygirlSerif.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = JandaCurlygirlSerif.ttf; sourceTree = "<group>"; };
 		186A98A4241A9BDE000AD9AB /* Simplisicky Fill.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Simplisicky Fill.ttf"; sourceTree = "<group>"; };
 		186A98A6241A9BF0000AD9AB /* yellosun.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = yellosun.ttf; sourceTree = "<group>"; };
+		186CD0D3242391BF004E7D90 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18706FF52373209D007F8BF2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		18706FF7237323DB007F8BF2 /* EditProfileImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageTableViewCell.swift; sourceTree = "<group>"; };
 		18706FF8237323DB007F8BF2 /* EditProfileImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileImageTableViewCell.xib; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 		1839088B236C70D6009A28E6 /* iFollow */ = {
 			isa = PBXGroup;
 			children = (
+				186CD0D2242391A6004E7D90 /* Google Info Plist */,
 				183483282422312800200F8C /* API Router */,
 				1890CB7F242135F30096044E /* Models */,
 				18A32620240FBCA800CF329E /* Filters Library */,
@@ -417,6 +420,14 @@
 				1863EB9D241BC613000E5C31 /* Evogria Italic.otf */,
 			);
 			path = "Picture Editing Fonts";
+			sourceTree = "<group>";
+		};
+		186CD0D2242391A6004E7D90 /* Google Info Plist */ = {
+			isa = PBXGroup;
+			children = (
+				186CD0D3242391BF004E7D90 /* GoogleService-Info.plist */,
+			);
+			path = "Google Info Plist";
 			sourceTree = "<group>";
 		};
 		188574492372B8FB00985AC8 /* Camera Controller */ = {
@@ -637,6 +648,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18B82A352371D05A00693F7F /* NotificationTableViewCell.xib in Resources */,
+				186CD0D4242391BF004E7D90 /* GoogleService-Info.plist in Resources */,
 				186A98A5241A9BDE000AD9AB /* Simplisicky Fill.ttf in Resources */,
 				18781C2023707001001BAF95 /* FeedsView.xib in Resources */,
 				18706FFA237323DB007F8BF2 /* EditProfileImageTableViewCell.xib in Resources */,
