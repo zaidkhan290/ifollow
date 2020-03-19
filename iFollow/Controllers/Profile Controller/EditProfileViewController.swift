@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SDWebImage
+import Loaf
+import RealmSwift
 
 class EditProfileViewController: UIViewController {
 
@@ -14,6 +17,7 @@ class EditProfileViewController: UIViewController {
     @IBOutlet weak var editProfileTableView: UITableView!
     var imagePicker = UIImagePickerController()
     var userImage = UIImage()
+    var isImageUpdated = false
     
     var textFieldPlaceholders = [String]()
     var textFieldImages = [String]()
@@ -41,10 +45,9 @@ class EditProfileViewController: UIViewController {
         imagePicker.mediaTypes = ["public.image" /*"public.movie"*/]
         imagePicker.delegate = self
         
-        userImage = UIImage(named: "editProfilePlaceholder")!
     }
    
-    //MARK:- Actions
+    //MARK:- Actions and Methods
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
@@ -74,6 +77,42 @@ class EditProfileViewController: UIViewController {
         alertVC.addAction(cancelAction)
         self.present(alertVC, animated: true, completion: nil)
     }
+    
+    func updateImageWithRequest(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        API.sharedInstance.executeAPI(type: .updateProfilePicture, method: .post, params: nil, imageData: userImage.jpegData(compressionQuality: 0.5)) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                    let realm = try! Realm()
+                    try! realm.safeWrite {
+                        if let user = UserModel.getCurrentUser(){
+                            user.userImage = result["image"].stringValue.replacingOccurrences(of: "\\", with: "")
+                        }
+                    }
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+        
+    }
 }
 
 extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
@@ -86,7 +125,13 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
         
         if (indexPath.row == 0){
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditProfileImageTableViewCell", for: indexPath) as! EditProfileImageTableViewCell
-            cell.userImage.image = userImage
+            
+            if (isImageUpdated){
+                cell.userImage.image = userImage
+            }
+            else{
+               cell.userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+            }
             cell.userImage.layer.cornerRadius = cell.userImage.bounds.height / 2
             return cell
         }
@@ -151,7 +196,9 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
         
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             userImage = pickedImage
+            isImageUpdated = true
             self.editProfileTableView.reloadData()
+            self.updateImageWithRequest()
         }
         
     }

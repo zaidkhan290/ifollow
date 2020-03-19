@@ -17,6 +17,8 @@ enum EndPoint: String {
     case signup = "register"
     case forgotPassword = "forgot_password"
     case changePassword = "change_password"
+    case updateProfile = "update_profile"
+    case updateProfilePicture = "update_profile_picture"
 }
 
 enum StatusCodes {
@@ -54,14 +56,17 @@ class API: NSObject {
         
         let endPoint = type.rawValue
         
-        if (type == .signup){
+        if (type == .signup || type == .updateProfilePicture){
             Alamofire.upload(multipartFormData: { (multipart) in
                 if let data = imageData{
                     multipart.append(data, withName: "image", fileName: "\(Date().timeIntervalSince1970).jpeg", mimeType: "image/jpeg")
                 }
-                for (key, value) in params!{
-                    multipart.append((value as! String).data(using: String.Encoding.utf8)!, withName: key)
+                if params != nil{
+                    for (key, value) in params!{
+                        multipart.append((value as! String).data(using: String.Encoding.utf8)!, withName: key)
+                    }
                 }
+                
             }, to: BASEURL + endPoint, method: method, headers: headers) { (result) in
 
                 switch result{

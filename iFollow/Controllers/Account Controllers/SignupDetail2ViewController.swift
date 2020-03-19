@@ -140,6 +140,8 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
             cell.icon.image = UIImage(named: textFieldImages[indexPath.row])
             cell.txtField.tag = indexPath.row
             cell.txtField.delegate = self
+            cell.txtField.autocapitalizationType = .sentences
+            cell.txtField.keyboardType = indexPath.row == 4 ? .numberPad : .default
             cell.txtField.addTarget(self, action: #selector(textFieldTextChanged(_:)), for: .editingChanged)
             cell.txtField.text = indexPath.row == 3 ? userCountry : cell.txtField.text!
             return cell
@@ -166,6 +168,8 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
 extension SignupDetail2ViewController: UITextFieldDelegate{
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if (textField.tag == 3){
+            textField.endEditing(true)
+            textField.resignFirstResponder()
             let countryPicker = CountryPickerWithSectionViewController.presentController(on: self) { (country) in
                 self.userCountry = country.countryName
                 self.detailTableView.reloadData()

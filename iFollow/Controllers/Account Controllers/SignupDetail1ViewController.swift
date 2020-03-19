@@ -19,6 +19,7 @@ class SignupDetail1ViewController: UIViewController {
     var imagePicker = UIImagePickerController()
     var userImage = UIImage()
     var selectedDate = ""
+    var dobDatePicker = UIDatePicker()
     
     var firstName = ""
     var lastName = ""
@@ -50,6 +51,7 @@ class SignupDetail1ViewController: UIViewController {
         imagePicker.delegate = self
         
         userImage = UIImage(named: "editProfilePlaceholder")!
+        dobDatePicker.datePickerMode = .date
         
     }
     
@@ -59,12 +61,13 @@ class SignupDetail1ViewController: UIViewController {
         self.goBack()
     }
     
-    @objc func handleDatePicker(sender: UIDatePicker) {
+    @objc func handleDatePicker() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
-        selectedDate = dateFormatter.string(from: sender.date)
+        selectedDate = dateFormatter.string(from: dobDatePicker.date)
+        let cell = self.detailTableView.cellForRow(at: IndexPath(row: 3, section: 0)) as! EditProfileTextFieldsTableViewCell
+        cell.txtField.text = selectedDate
         dob = selectedDate
-        self.detailTableView.reloadData()
     }
     
     func openImagePicker(){
@@ -83,6 +86,18 @@ class SignupDetail1ViewController: UIViewController {
         alertVC.addAction(galleryAction)
         alertVC.addAction(cancelAction)
         self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    @objc func textfieldDidBeginEditing(_ sender: UITextField){
+        if (sender.tag == 3){
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd MMM yyyy"
+            selectedDate = dateFormatter.string(from: dobDatePicker.date)
+            let cell = self.detailTableView.cellForRow(at: IndexPath(row: 3, section: 0)) as! EditProfileTextFieldsTableViewCell
+            cell.txtField.text = selectedDate
+            dob = selectedDate
+            dobDatePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
+        }
     }
     
     @objc func textFieldTextChanged(_ sender: UITextField){
@@ -135,16 +150,13 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
             cell.txtField.addTarget(self, action: #selector(textFieldTextChanged(_:)), for: .editingChanged)
             
             if (indexPath.row == 3){
-                cell.txtField.text = selectedDate
-                cell.txtField.keyboardType = .numberPad
-                let datePicker = UIDatePicker()
-                datePicker.datePickerMode = .date
-                cell.txtField.inputView = datePicker
-                datePicker.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
+                cell.txtField.inputView = dobDatePicker
+                cell.txtField.addTarget(self, action: #selector(textfieldDidBeginEditing(_:)), for: .editingDidBegin)
             }
             else{
                 cell.txtField.text = cell.txtField.text
                 cell.txtField.keyboardType = .default
+                cell.txtField.autocapitalizationType = indexPath.row == 4 ? .none : .words
             }
             
             return cell
