@@ -40,6 +40,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var timeView: UIView!
     @IBOutlet weak var clockIcon: UIImageView!
     @IBOutlet weak var lblTime: UILabel!
+    @IBOutlet weak var locationView: UIView!
+    @IBOutlet weak var locationIcon: UIImageView!
+    @IBOutlet weak var lblLocation: UILabel!
     
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
@@ -54,8 +57,11 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     var fontSize: Float = 30.0
     var selectedFont = ""
     var timeViewFrame: CGRect!
+    var locationViewFrame: CGRect!
     var timeViewStyle = 1 // 1 for Yellow, 2 for unfill, 3 for white
+    var locationViewStyle = 1 // 1 for Yellow, 2 for unfill, 3 for white
     var timeViewTapGesture = UITapGestureRecognizer()
+    var locationViewTapGesture = UITapGestureRecognizer()
     var fontsNames = ["Rightland", "LemonMilk", "Cream", "Gobold", "Janda", "Poetsen", "Simplisicky", "Evogria", "Yellosun"]
     let filters = ["","CIPhotoEffectMono", "CIPhotoEffectChrome", "CIPhotoEffectTransfer", "CIPhotoEffectInstant", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectFade"]
     var selectedFilter = 0
@@ -120,6 +126,16 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         clockIcon.addGestureRecognizer(timeViewTapGesture)
         lblTime.addGestureRecognizer(timeViewTapGesture)
         changeTimeViewStyle()
+        
+        locationView.layer.cornerRadius = 5
+        locationViewFrame = locationView.frame
+        locationViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(locationViewTapped))
+        locationViewTapGesture.delegate = self
+        locationIcon.isUserInteractionEnabled = true
+        lblLocation.isUserInteractionEnabled = true
+        locationIcon.addGestureRecognizer(locationViewTapGesture)
+        lblLocation.addGestureRecognizer(locationViewTapGesture)
+        changeLocationViewStyle()
         
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeLeft(_:)))
         swipeLeftGesture.direction = .left
@@ -200,6 +216,19 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         changeTimeViewStyle()
     }
     
+    @objc func locationViewTapped(){
+        if (locationViewStyle == 1){
+            locationViewStyle = 2
+        }
+        else if (locationViewStyle == 2){
+            locationViewStyle = 3
+        }
+        else if (locationViewStyle == 3){
+            locationViewStyle = 1
+        }
+        changeLocationViewStyle()
+    }
+    
     @objc func changeTimeViewStyle(){
         if (timeViewStyle == 1){
             timeView.backgroundColor = Theme.profileLabelsYellowColor
@@ -218,6 +247,27 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             timeView.backgroundColor = .white
             lblTime.textColor = .black
             clockIcon.image = UIImage(named: "clock-fill")
+        }
+    }
+    
+    @objc func changeLocationViewStyle(){
+        if (locationViewStyle == 1){
+            locationView.backgroundColor = Theme.profileLabelsYellowColor
+            locationView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+            lblLocation.textColor = .white
+            locationIcon.image = UIImage(named: "location-unfill")
+        }
+        else if (locationViewStyle == 2){
+            locationView.backgroundColor = .clear
+            locationView.layer.borderWidth = 1
+            locationView.layer.borderColor = UIColor.white.cgColor
+            lblLocation.textColor = .white
+            locationIcon.image = UIImage(named: "location-unfill")
+        }
+        else if (locationViewStyle == 3){
+            locationView.backgroundColor = .white
+            lblLocation.textColor = .black
+            locationIcon.image = UIImage(named: "location-fill")
         }
     }
     
@@ -358,6 +408,12 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
                         timeView.frame = timeViewFrame
                         timeViewStyle = 1
                     }
+                    else if (sender.view! == locationView){
+                        locationView.isHidden = true
+                        locationView.alpha = 1
+                        locationView.frame = timeViewFrame
+                        locationViewStyle = 1
+                    }
                     else{
                         sender.view?.removeFromSuperview()
                         deleteIcon.isHidden = true
@@ -427,10 +483,11 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             btnClock.isHidden = true
             btnEmoji.isEnabled = false
             timeView.isHidden = true
+            locationView.isHidden = true
             editableTextField.isHidden = true
             editableTextField.text = ""
             for subView in filterView.subviews{
-                if (subView == cameraView || subView == timeView || subView == editableTextField){
+                if (subView == cameraView || subView == timeView || subView == editableTextField || subView == locationView){
                     
                 }
                 else{
@@ -747,9 +804,18 @@ extension CameraViewController: UIGestureRecognizerDelegate{
 extension CameraViewController: GMSAutocompleteViewControllerDelegate{
     
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        print("Place name: \(place.name)")
-        print("Place ID: \(place.placeID)")
-        print("Place attributions: \(place.attributions)")
+
+        if let placeName = place.name{
+            lblLocation.text = placeName
+            locationView.isHidden = false
+            self.filterView.bringSubviewToFront(locationView)
+            // self.cameraView.bringSubviewToFront(timeView)
+            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
+            panGesture.delegate = self
+            panGesture.require(toFail: locationViewTapGesture)
+            locationView.gestureRecognizers?.removeAll()
+            locationView.addGestureRecognizer(panGesture)
+        }
         dismiss(animated: true, completion: nil)
     }
     

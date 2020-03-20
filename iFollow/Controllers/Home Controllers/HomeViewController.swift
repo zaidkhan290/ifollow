@@ -11,6 +11,7 @@ import iCarousel
 import FirebaseStorage
 import Loaf
 import CoreLocation
+import RealmSwift
 
 class HomeViewController: UIViewController {
 
@@ -258,6 +259,45 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)
     }
+    
+    func getStikcers(){
+        
+        let params = ["location": userCurrentAddress]
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        API.sharedInstance.executeAPI(type: .stickers, method: .get, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                
+                if (status == .success){
+                    let realm = try! Realm()
+                    try! realm.safeWrite {
+                        let stickers = result["messsage"].arrayValue
+                        realm.delete(realm.objects(StickersModel.self))
+                        for sticker in stickers{
+                            let model = StickersModel()
+                            model.updateModelWithJSON(json: sticker)
+                            realm.add(model)
+                        }
+                        Utility.showOrHideLoader(shouldShow: false)
+                    }
+                }
+                else if (status == .failure){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+    }
 }
 
 extension HomeViewController: UIViewControllerTransitioningDelegate {
@@ -311,6 +351,7 @@ extension HomeViewController: CLLocationManagerDelegate{
                 if let area = placemark.name, let city = placemark.locality, let country = placemark.country{
                     self.userCurrentAddress = "\(area), \(city), \(country)"
                     print(self.userCurrentAddress)
+                    self.getStikcers()
                 }
             }
         })
@@ -318,6 +359,9 @@ extension HomeViewController: CLLocationManagerDelegate{
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
+        if (status == CLAuthorizationStatus.denied){
+            self.getStikcers()
+        }
     }
     
 }

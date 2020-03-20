@@ -8,6 +8,8 @@
 
 import UIKit
 import GooglePlaces
+import FirebaseStorage
+import Loaf
 
 protocol PostViewControllerDelegate: class {
     func postTapped(postView: UIViewController)
@@ -38,14 +40,19 @@ class NewPostViewController: UIViewController {
     @IBOutlet weak var lblVisa: UILabel!
     @IBOutlet weak var btnBoostPost: UIButton!
     
+    var storageRef: StorageReference?
     var isDetail = false
     var postSelectedImage = UIImage()
     var delegate: PostViewControllerDelegate!
     var days = 1
+    var userAddress = ""
+    var budget: Float = 5.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
+        
         postView.layer.cornerRadius = 20
         postView.dropShadow(color: .white)
         postImage.image = postSelectedImage
@@ -81,8 +88,8 @@ class NewPostViewController: UIViewController {
         
         budgetSlider.minimumValue = 5
         budgetSlider.maximumValue = 100
-        budgetSlider.value = 20
-        lblAddBudget.text = "Add Budget ($20)"
+        budgetSlider.value = 5
+        lblAddBudget.text = "Add Budget ($5)"
         budgetSlider.addTarget(self, action: #selector(budgetSliderValueChange), for: .valueChanged)
         
     }
@@ -115,7 +122,7 @@ class NewPostViewController: UIViewController {
     }
     
     @objc func budgetSliderValueChange(){
-        let budget = budgetSlider.value.rounded()
+        budget = budgetSlider.value.rounded()
         let budgetString = String(format: "%.0f", budget)
         lblAddBudget.text = "Add Budget ($\(budgetString))"
     }
@@ -125,9 +132,7 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnPostTapped(_ sender: UIButton){
-        if (delegate != nil){
-            self.delegate.postTapped(postView: self)
-        }
+        self.savePostMediaToFirebase(image: postSelectedImage)
     }
     
     @IBAction func btnMinusTapped(_ sender: UIButton) {
@@ -145,6 +150,7 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnBoosPostTapped(_ sender: UIButton) {
+        self.savePostMediaToFirebase(image: postSelectedImage)
     }
     
     func changePostViewSize(){
@@ -165,14 +171,110 @@ class NewPostViewController: UIViewController {
         self.view.layoutSubviews()
         
     }
+    
+    func savePostMediaToFirebase(image: UIImage){
+        
+        let timeStemp = Int(Date().timeIntervalSince1970)
+        let mediaRef = storageRef?.child("/Media")
+        let iosRef = mediaRef?.child("/iOS").child("/Images")
+        let picRef = iosRef?.child("/PostImage\(timeStemp).jgp")
+        
+        //        let imageData2 = UIImagePNGRepresentation(image)
+        if let imageData2 = image.jpegData(compressionQuality: 0.25) {
+            // Create file metadata including the content type
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            
+            Utility.showOrHideLoader(shouldShow: true)
+            
+            let uploadTask = picRef?.putData(imageData2, metadata: metadata, completion: { (metaData, error) in
+                if(error != nil){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(error!.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+                        
+                    }
+                }else{
+                    
+                    picRef?.downloadURL(completion: { (url, error) in
+                        if let imageURL = url{
+                            var params = [String: Any]()
+                            if (self.isDetail){
+                                params = ["media": imageURL.absoluteString,
+                                              "description": self.txtFieldStatus.text!,
+                                              "location": self.userAddress,
+                                              "expire_hours": 48,
+                                              "duration": self.days,
+                                "budget": self.budget] as [String: Any]
+                            }
+                            else{
+                                params = ["media": imageURL.absoluteString,
+                                              "description": self.txtFieldStatus.text!,
+                                              "location": self.userAddress,
+                                              "expire_hours": 48,
+                                              "duration": 0,
+                                              "budget": 0] as [String: Any]
+                            }
+                            self.addPostWithRequest(params: params)
+                        }
+                    })
+                    
+                    
+                }
+            })
+            uploadTask?.resume()
+            
+            var i = 0
+            uploadTask?.observe(.progress, handler: { (snapshot) in
+                if(i == 0){
+                    
+                }
+                i += 1
+                
+            })
+            
+            uploadTask?.observe(.success, handler: { (snapshot) in
+                
+            })
+        }
+    }
+    
+    func addPostWithRequest(params: [String: Any]){
+        
+        API.sharedInstance.executeAPI(type: .createPost, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        self.delegate.postTapped(postView: self)
+                    }
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+        
+    }
 }
 
 extension NewPostViewController: GMSAutocompleteViewControllerDelegate{
     
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        print("Place name: \(place.name)")
-        print("Place ID: \(place.placeID)")
-        print("Place attributions: \(place.attributions)")
+        
+        if let placeName = place.name{
+            userAddress = placeName
+        }
+        
         dismiss(animated: true, completion: nil)
     }
     

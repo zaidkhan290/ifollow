@@ -21,6 +21,7 @@ enum EndPoint: String {
     case updateProfilePicture = "update_profile_picture"
     case createStory = "add_story"
     case createPost = "add_post"
+    case stickers = "stickers"
 }
 
 enum StatusCodes {
@@ -113,7 +114,7 @@ class API: NSObject {
         }
         else{
         
-            request = Alamofire.request(BASEURL + endPoint, method: method, parameters: params, encoding: JSONEncoding.default, headers:headers)
+            request = Alamofire.request(BASEURL + endPoint, method: method, parameters: params, encoding: method == .get ? URLEncoding.queryString : JSONEncoding.default, headers:headers)
             
             request.responseJSON { response in
                 

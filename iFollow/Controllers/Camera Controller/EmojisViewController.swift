@@ -17,7 +17,7 @@ class EmojisViewController: UIViewController {
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var emojisCollectionView: UICollectionView!
     var emojis = [UIImage]()
-    var stickers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    var stickers = [StickersModel]()
     var delegate: EmojisViewControllerDelegate!
     var isEmojis = false
     var stickersLayout = UICollectionViewFlowLayout()
@@ -34,6 +34,7 @@ class EmojisViewController: UIViewController {
             .map(Character.init)
             .compactMap { String($0).image() }
         setupCollectionView()
+        stickers = StickersModel.getAllStickers()
     }
 
     func setupCollectionView(){
@@ -91,7 +92,8 @@ extension EmojisViewController: UICollectionViewDataSource, UICollectionViewDele
         }
         else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojisCollectionViewCell", for: indexPath) as! EmojisCollectionViewCell
-            cell.emojiImageView.image = UIImage(named: stickers[indexPath.row])
+            let sticker = stickers[indexPath.row]
+            cell.emojiImageView.sd_setImage(with: URL(string: sticker.stickerImage))
             cell.emojiImageView.contentMode = .scaleAspectFill
             return cell
         }
@@ -106,8 +108,9 @@ extension EmojisViewController: UICollectionViewDataSource, UICollectionViewDele
             self.dismiss(animated: true, completion: nil)
         }
         else{
-            let image = UIImage(named: stickers[indexPath.row])
-            self.delegate.emojiTapped(image: image!, isEmojis: false)
+            let cell = collectionView.cellForItem(at: indexPath) as! EmojisCollectionViewCell
+            let image = cell.emojiImageView.image!
+            self.delegate.emojiTapped(image: image, isEmojis: false)
             self.dismiss(animated: true, completion: nil)
         }
     }

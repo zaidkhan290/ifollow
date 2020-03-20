@@ -216,7 +216,7 @@ extension ProfileViewController: UIViewControllerTransitioningDelegate {
 extension ProfileViewController: PostViewControllerDelegate{
     
     func postTapped(postView: UIViewController) {
-        self.view.makeToast("Your post share successfully..")
+      //  self.view.makeToast("Your post share successfully..")
         postView.dismiss(animated: true, completion: nil)
     }
     
