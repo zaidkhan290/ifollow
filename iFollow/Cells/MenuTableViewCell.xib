@@ -41,20 +41,57 @@
                         <rect key="frame" x="245" y="33.5" width="51" height="31"/>
                         <color key="onTintColor" red="0.90588235294117647" green="0.62745098039215685" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                     </switch>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dh3-6Q-X0B">
+                        <rect key="frame" x="270" y="37" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="Ggk-xB-81K"/>
+                            <constraint firstAttribute="height" constant="24" id="c7a-FA-Mu6"/>
+                        </constraints>
+                        <state key="normal" image="minus"/>
+                        <connections>
+                            <action selector="btnMinusTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="um1-Ho-wKI"/>
+                        </connections>
+                    </button>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CBx-2s-RDA">
+                        <rect key="frame" x="243" y="40.5" width="17" height="17"/>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbn-jY-LQc">
+                        <rect key="frame" x="209" y="37" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="Yju-Kd-lu8"/>
+                            <constraint firstAttribute="height" constant="24" id="iLw-2B-oEi"/>
+                        </constraints>
+                        <state key="normal" image="plus"/>
+                        <connections>
+                            <action selector="btnPlusTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bw1-NX-3D9"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
+                    <constraint firstItem="dh3-6Q-X0B" firstAttribute="centerY" secondItem="g5K-r6-8dN" secondAttribute="centerY" id="3Yr-a4-xYp"/>
                     <constraint firstItem="2dj-HD-FKB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="E9p-8f-wVe"/>
                     <constraint firstAttribute="trailing" secondItem="KwB-gr-LBy" secondAttribute="trailing" constant="40" id="Ik1-57-28N"/>
                     <constraint firstItem="2dj-HD-FKB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="U1M-iM-Pqx"/>
+                    <constraint firstItem="CBx-2s-RDA" firstAttribute="leading" secondItem="rbn-jY-LQc" secondAttribute="trailing" constant="10" id="W5Y-lm-E5j"/>
+                    <constraint firstItem="CBx-2s-RDA" firstAttribute="centerY" secondItem="dh3-6Q-X0B" secondAttribute="centerY" id="cUg-cM-ZcS"/>
+                    <constraint firstItem="dh3-6Q-X0B" firstAttribute="leading" secondItem="CBx-2s-RDA" secondAttribute="trailing" constant="10" id="e70-Jw-675"/>
+                    <constraint firstAttribute="trailing" secondItem="dh3-6Q-X0B" secondAttribute="trailing" constant="40" id="fUW-3t-cDP"/>
                     <constraint firstItem="g5K-r6-8dN" firstAttribute="leading" secondItem="2dj-HD-FKB" secondAttribute="trailing" constant="10" id="gdB-gS-XOE"/>
                     <constraint firstItem="g5K-r6-8dN" firstAttribute="centerY" secondItem="2dj-HD-FKB" secondAttribute="centerY" id="iQJ-os-htS"/>
                     <constraint firstItem="KwB-gr-LBy" firstAttribute="centerY" secondItem="g5K-r6-8dN" secondAttribute="centerY" id="sFu-Kc-qhx"/>
+                    <constraint firstItem="rbn-jY-LQc" firstAttribute="centerY" secondItem="dh3-6Q-X0B" secondAttribute="centerY" id="uSm-VL-1MK"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="btnMinus" destination="dh3-6Q-X0B" id="ThC-Xt-9SU"/>
+                <outlet property="btnPlus" destination="rbn-jY-LQc" id="lZv-dF-D8s"/>
+                <outlet property="lblDuration" destination="CBx-2s-RDA" id="R5h-lb-cde"/>
                 <outlet property="menuIcon" destination="2dj-HD-FKB" id="fiy-W7-DzI"/>
                 <outlet property="menuSwitch" destination="KwB-gr-LBy" id="PxN-ic-dZr"/>
                 <outlet property="menuTitle" destination="g5K-r6-8dN" id="Wu5-ah-jx8"/>
@@ -63,6 +100,8 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="minus" width="23.5" height="23.5"/>
+        <image name="plus" width="23.5" height="23.5"/>
         <image name="setting" width="13" height="13"/>
     </resources>
 </document>

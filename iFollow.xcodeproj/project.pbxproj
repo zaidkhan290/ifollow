@@ -43,6 +43,7 @@
 		185640EA2374444D00CC2777 /* PrivateChatBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640E92374444D00CC2777 /* PrivateChatBoxViewController.swift */; };
 		185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */; };
 		185640EF2374796300CC2777 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640EE2374796300CC2777 /* CreateGroupViewController.swift */; };
+		185AFE2F242A462500AC38FB /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185AFE2E242A462500AC38FB /* PrivacyViewController.swift */; };
 		185CC0C52379A096006BDC9D /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0C42379A096006BDC9D /* NewPostViewController.swift */; };
 		1863EB98241BC548000E5C31 /* LEMONMILK-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1863EB97241BC548000E5C31 /* LEMONMILK-MediumItalic.otf */; };
 		1863EB9A241BC5BD000E5C31 /* Gobold Lowplus.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1863EB99241BC5BD000E5C31 /* Gobold Lowplus.otf */; };
@@ -151,6 +152,7 @@
 		185640E92374444D00CC2777 /* PrivateChatBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateChatBoxViewController.swift; sourceTree = "<group>"; };
 		185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
 		185640EE2374796300CC2777 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
+		185AFE2E242A462500AC38FB /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
 		185CC0C42379A096006BDC9D /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
 		1863EB97241BC548000E5C31 /* LEMONMILK-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LEMONMILK-MediumItalic.otf"; sourceTree = "<group>"; };
 		1863EB99241BC5BD000E5C31 /* Gobold Lowplus.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gobold Lowplus.otf"; sourceTree = "<group>"; };
@@ -385,6 +387,7 @@
 			isa = PBXGroup;
 			children = (
 				185640DF23741B7800CC2777 /* MenuViewController.swift */,
+				185AFE2E242A462500AC38FB /* PrivacyViewController.swift */,
 			);
 			path = "Menu Controller";
 			sourceTree = "<group>";
@@ -819,6 +822,7 @@
 				181709472424D8AB00EE5753 /* StickersModel.swift in Sources */,
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,
 				18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */,
+				185AFE2F242A462500AC38FB /* PrivacyViewController.swift in Sources */,
 				185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */,
 				1889F2DE23DF41100079DB72 /* ViewersViewController.swift in Sources */,
 				1834832A2422313A00200F8C /* API.swift in Sources */,

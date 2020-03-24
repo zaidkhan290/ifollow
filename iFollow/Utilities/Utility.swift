@@ -85,6 +85,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
     }
     
+    static func getPrivacyViewController() -> PrivacyViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "PrivacyViewController") as! PrivacyViewController
+    }
+    
     static func getPrivateChatBoxViewControllers() -> PrivateChatBoxViewController{
         return storyBoard.instantiateViewController(withIdentifier: "PrivateChatBoxViewController") as! PrivateChatBoxViewController
     }
