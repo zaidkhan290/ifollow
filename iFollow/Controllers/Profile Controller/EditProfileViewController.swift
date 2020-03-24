@@ -112,12 +112,6 @@ class EditProfileViewController: UIViewController {
         else if (sender.tag == 4){
             username = sender.text!
         }
-        else if (sender.tag == 6){
-            shortBio = sender.text!
-        }
-        else if (sender.tag == 7){
-            hobby = sender.text!
-        }
         else if (sender.tag == 8){
             userCountry = sender.text!
         }
@@ -290,47 +284,83 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
             cell.icon.image = UIImage(named: textFieldImages[indexPath.row])
             cell.txtField.tag = indexPath.row
             cell.txtField.delegate = self
+            cell.txtView.tag = indexPath.row
             cell.txtField.addTarget(self, action: #selector(textFieldTextChanged(_:)), for: .editingChanged)
+            cell.txtView.delegate = self
+            cell.txtView.layer.borderWidth = 0.5
+            cell.txtView.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
             
             if (indexPath.row == 1){
                 cell.txtField.text = firstName
                 cell.txtField.keyboardType = .default
                 cell.txtField.autocapitalizationType = .words
+                cell.txtField.isHidden = false
+                cell.seperatorView.isHidden = false
+                cell.txtView.isHidden = true
+                cell.txtViewSeperator.isHidden = true
             }
             else if (indexPath.row == 2){
                 cell.txtField.text = lastName
                 cell.txtField.keyboardType = .default
                 cell.txtField.autocapitalizationType = .words
+                cell.txtField.isHidden = false
+                cell.seperatorView.isHidden = false
+                cell.txtView.isHidden = true
+                cell.txtViewSeperator.isHidden = true
             }
             else if (indexPath.row == 3){
                 cell.txtField.text = dob
                 cell.txtField.inputView = dobDatePicker
                 cell.txtField.addTarget(self, action: #selector(textfieldDidBeginEditing(_:)), for: .editingDidBegin)
+                cell.txtField.isHidden = false
+                cell.seperatorView.isHidden = false
+                cell.txtView.isHidden = true
+                cell.txtViewSeperator.isHidden = true
             }
             else if (indexPath.row == 4){
                 cell.txtField.text = username
                 cell.txtField.keyboardType = .default
                 cell.txtField.autocapitalizationType = .none
+                cell.txtField.isHidden = false
+                cell.seperatorView.isHidden = false
+                cell.txtView.isHidden = true
+                cell.txtViewSeperator.isHidden = true
             }
             else if (indexPath.row == 6){
-                cell.txtField.text = shortBio
-                cell.txtField.keyboardType = .default
-                cell.txtField.autocapitalizationType = .sentences
+                cell.txtView.text = shortBio
+                cell.txtView.keyboardType = .default
+                cell.txtView.autocapitalizationType = .sentences
+                cell.txtField.isHidden = true
+                cell.seperatorView.isHidden = true
+                cell.txtView.isHidden = false
+                cell.txtViewSeperator.isHidden = false
             }
             else if (indexPath.row == 7){
-                cell.txtField.text = hobby
-                cell.txtField.keyboardType = .default
-                cell.txtField.autocapitalizationType = .sentences
+                cell.txtView.text = hobby
+                cell.txtView.keyboardType = .default
+                cell.txtView.autocapitalizationType = .sentences
+                cell.txtField.isHidden = true
+                cell.seperatorView.isHidden = true
+                cell.txtView.isHidden = false
+                cell.txtViewSeperator.isHidden = false
             }
             else if (indexPath.row == 8){
                 cell.txtField.text = userCountry
                 cell.txtField.keyboardType = .default
                 cell.txtField.autocapitalizationType = .words
+                cell.txtField.isHidden = false
+                cell.seperatorView.isHidden = false
+                cell.txtView.isHidden = true
+                cell.txtViewSeperator.isHidden = true
             }
             else if (indexPath.row == 9){
                 cell.txtField.text = zipCode
                 cell.txtField.keyboardType = .numberPad
                 cell.txtField.autocapitalizationType = .none
+                cell.txtField.isHidden = false
+                cell.seperatorView.isHidden = false
+                cell.txtView.isHidden = true
+                cell.txtViewSeperator.isHidden = true
             }
             
             return cell
@@ -350,6 +380,9 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
         }
         else if (indexPath.row == 5){
             return 70
+        }
+        else if (indexPath.row == 6 || indexPath.row == 7){
+            return 110
         }
         else if (indexPath.row == 11){
             return 80
@@ -428,5 +461,16 @@ extension EditProfileViewController: UITextFieldDelegate{
             textField.endEditing(true)
         }
         
+    }
+}
+
+extension EditProfileViewController: UITextViewDelegate{
+    func textViewDidChange(_ textView: UITextView) {
+        if (textView.tag == 6){
+            shortBio = textView.text!
+        }
+        else if (textView.tag == 7){
+            hobby = textView.text!
+        }
     }
 }

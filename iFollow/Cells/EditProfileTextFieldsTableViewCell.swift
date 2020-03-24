@@ -13,6 +13,8 @@ class EditProfileTextFieldsTableViewCell: UITableViewCell {
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var txtField: UITextField!
     @IBOutlet weak var seperatorView: UIView!
+    @IBOutlet weak var txtView: UITextView!
+    @IBOutlet weak var txtViewSeperator: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

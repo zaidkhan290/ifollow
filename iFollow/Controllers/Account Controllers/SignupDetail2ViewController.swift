@@ -51,13 +51,7 @@ class SignupDetail2ViewController: UIViewController {
     }
     
     @objc func textFieldTextChanged(_ sender: UITextField){
-        if (sender.tag == 1){
-            shortBio = sender.text!
-        }
-        else if (sender.tag == 2){
-            hobby = sender.text!
-        }
-        else if (sender.tag == 3){
+        if (sender.tag == 3){
             userCountry = sender.text!
         }
         else if (sender.tag == 4){
@@ -140,10 +134,51 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
             cell.icon.image = UIImage(named: textFieldImages[indexPath.row])
             cell.txtField.tag = indexPath.row
             cell.txtField.delegate = self
+            cell.txtView.tag = indexPath.row
+            cell.txtView.delegate = self
+            cell.txtView.autocapitalizationType = .sentences
             cell.txtField.autocapitalizationType = .sentences
-            cell.txtField.keyboardType = indexPath.row == 4 ? .numberPad : .default
             cell.txtField.addTarget(self, action: #selector(textFieldTextChanged(_:)), for: .editingChanged)
-            cell.txtField.text = indexPath.row == 3 ? userCountry : cell.txtField.text!
+            cell.txtView.layer.borderWidth = 0.5
+            cell.txtView.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
+            
+            if (indexPath.row == 1){
+                cell.txtView.text = cell.txtView.text!
+                cell.txtView.keyboardType = .default
+                cell.txtView.autocapitalizationType = .sentences
+                cell.txtField.isHidden = true
+                cell.seperatorView.isHidden = true
+                cell.txtView.isHidden = false
+                cell.txtViewSeperator.isHidden = false
+            }
+            else if (indexPath.row == 2){
+                cell.txtView.text = cell.txtView.text!
+                cell.txtView.keyboardType = .default
+                cell.txtView.autocapitalizationType = .sentences
+                cell.txtField.isHidden = true
+                cell.seperatorView.isHidden = true
+                cell.txtView.isHidden = false
+                cell.txtViewSeperator.isHidden = false
+            }
+            else if (indexPath.row == 3){
+                cell.txtField.text = userCountry
+                cell.txtField.keyboardType = .default
+                cell.txtField.autocapitalizationType = .words
+                cell.txtField.isHidden = false
+                cell.seperatorView.isHidden = false
+                cell.txtView.isHidden = true
+                cell.txtViewSeperator.isHidden = true
+            }
+            else if (indexPath.row == 4){
+                cell.txtField.text = cell.txtView.text!
+                cell.txtField.keyboardType = .numberPad
+                cell.txtField.autocapitalizationType = .words
+                cell.txtField.isHidden = false
+                cell.seperatorView.isHidden = false
+                cell.txtView.isHidden = true
+                cell.txtViewSeperator.isHidden = true
+            }
+            
             return cell
         }
         
@@ -152,6 +187,9 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if (indexPath.row == 0){
             return 220
+        }
+        else if (indexPath.row == 1 || indexPath.row == 2){
+            return 110
         }
         else if (indexPath.row == 5){
             return 130
@@ -180,5 +218,16 @@ extension SignupDetail2ViewController: UITextFieldDelegate{
             textField.endEditing(true)
         }
         
+    }
+}
+
+extension SignupDetail2ViewController: UITextViewDelegate{
+    func textViewDidChange(_ textView: UITextView) {
+        if (textView.tag == 1){
+            shortBio = textView.text!
+        }
+        else if (textView.tag == 2){
+            hobby = textView.text!
+        }
     }
 }
