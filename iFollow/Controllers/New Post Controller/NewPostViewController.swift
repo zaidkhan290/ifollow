@@ -10,6 +10,8 @@ import UIKit
 import GooglePlaces
 import FirebaseStorage
 import Loaf
+import AVFoundation
+import AVKit
 
 protocol PostViewControllerDelegate: class {
     func postTapped(postView: UIViewController)
@@ -43,6 +45,8 @@ class NewPostViewController: UIViewController {
     var storageRef: StorageReference?
     var isDetail = false
     var postSelectedImage = UIImage()
+    var isVideo = false
+    var videoURL: URL!
     var delegate: PostViewControllerDelegate!
     var days = 1
     var userAddress = ""
@@ -91,6 +95,9 @@ class NewPostViewController: UIViewController {
         budgetSlider.value = 5
         lblAddBudget.text = "Add Budget ($5)"
         budgetSlider.addTarget(self, action: #selector(budgetSliderValueChange), for: .valueChanged)
+        
+        postImage.isUserInteractionEnabled = true
+        postImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postImageTapped)))
         
     }
     
@@ -153,6 +160,18 @@ class NewPostViewController: UIViewController {
         self.savePostMediaToFirebase(image: postSelectedImage)
     }
     
+    @objc func postImageTapped(){
+        if (isVideo){
+            let player = AVPlayer(url: videoURL)
+            
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+                playerViewController.player!.play()
+            }
+        }
+    }
+    
     func changePostViewSize(){
         
         isDetail = !isDetail
@@ -174,68 +193,136 @@ class NewPostViewController: UIViewController {
     
     func savePostMediaToFirebase(image: UIImage){
         
-        let timeStemp = Int(Date().timeIntervalSince1970)
-        let mediaRef = storageRef?.child("/Media")
-        let iosRef = mediaRef?.child("/iOS").child("/Images")
-        let picRef = iosRef?.child("/PostImage\(timeStemp).jgp")
-        
-        //        let imageData2 = UIImagePNGRepresentation(image)
-        if let imageData2 = image.jpegData(compressionQuality: 0.25) {
-            // Create file metadata including the content type
-            let metadata = StorageMetadata()
-            metadata.contentType = "image/jpeg"
+        if (isVideo){
+            let timeStemp = Int(Date().timeIntervalSince1970)
+            let mediaRef = storageRef?.child("/Media")
+            let iosRef = mediaRef?.child("/iOS").child("/Videos")
+            let videoRef = iosRef?.child("/PostVideo\(timeStemp).mov")
             
-            Utility.showOrHideLoader(shouldShow: true)
-            
-            let uploadTask = picRef?.putData(imageData2, metadata: metadata, completion: { (metaData, error) in
-                if(error != nil){
-                    Utility.showOrHideLoader(shouldShow: false)
-                    Loaf(error!.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+            if let videoData = try? Data(contentsOf: videoURL){
+                
+                Utility.showOrHideLoader(shouldShow: true)
+                
+                let uploadTask = videoRef?.putData(videoData, metadata: nil, completion: { (metaData, error) in
+                    if(error != nil){
+                        Utility.showOrHideLoader(shouldShow: false)
+                        Loaf(error!.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+                            
+                        }
+                    }else{
                         
-                    }
-                }else{
-                    
-                    picRef?.downloadURL(completion: { (url, error) in
-                        if let imageURL = url{
-                            var params = [String: Any]()
-                            if (self.isDetail){
-                                params = ["media": imageURL.absoluteString,
+                        videoRef?.downloadURL(completion: { (url, error) in
+                            if let videoURL = url{
+                                var params = [String: Any]()
+                                if (self.isDetail){
+                                    params = ["media": videoURL.absoluteString,
                                               "description": self.txtFieldStatus.text!,
                                               "location": self.userAddress,
                                               "expire_hours": 48,
                                               "duration": self.days,
-                                "budget": self.budget] as [String: Any]
-                            }
-                            else{
-                                params = ["media": imageURL.absoluteString,
+                                              "media_type": "video",
+                                              "budget": self.budget] as [String: Any]
+                                }
+                                else{
+                                    params = ["media": videoURL.absoluteString,
                                               "description": self.txtFieldStatus.text!,
                                               "location": self.userAddress,
                                               "expire_hours": 48,
                                               "duration": 0,
+                                              "media_type": "video",
                                               "budget": 0] as [String: Any]
+                                }
+                                self.addPostWithRequest(params: params)
                             }
-                            self.addPostWithRequest(params: params)
-                        }
-                    })
-                    
-                    
-                }
-            })
-            uploadTask?.resume()
-            
-            var i = 0
-            uploadTask?.observe(.progress, handler: { (snapshot) in
-                if(i == 0){
-                    
-                }
-                i += 1
+                        })
+                        
+                        
+                    }
+                })
+                uploadTask?.resume()
                 
-            })
-            
-            uploadTask?.observe(.success, handler: { (snapshot) in
+                var i = 0
+                uploadTask?.observe(.progress, handler: { (snapshot) in
+                    if(i == 0){
+                        
+                    }
+                    i += 1
+                    
+                })
                 
-            })
+                uploadTask?.observe(.success, handler: { (snapshot) in
+                    
+                })
+            }
+            
         }
+        else{
+            let timeStemp = Int(Date().timeIntervalSince1970)
+            let mediaRef = storageRef?.child("/Media")
+            let iosRef = mediaRef?.child("/iOS").child("/Images")
+            let picRef = iosRef?.child("/PostImage\(timeStemp).jgp")
+            
+            //        let imageData2 = UIImagePNGRepresentation(image)
+            if let imageData2 = image.jpegData(compressionQuality: 0.25) {
+                // Create file metadata including the content type
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
+                
+                Utility.showOrHideLoader(shouldShow: true)
+                
+                let uploadTask = picRef?.putData(imageData2, metadata: metadata, completion: { (metaData, error) in
+                    if(error != nil){
+                        Utility.showOrHideLoader(shouldShow: false)
+                        Loaf(error!.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+                            
+                        }
+                    }else{
+                        
+                        picRef?.downloadURL(completion: { (url, error) in
+                            if let imageURL = url{
+                                var params = [String: Any]()
+                                if (self.isDetail){
+                                    params = ["media": imageURL.absoluteString,
+                                              "description": self.txtFieldStatus.text!,
+                                              "location": self.userAddress,
+                                              "expire_hours": 48,
+                                              "duration": self.days,
+                                              "media_type": "image",
+                                              "budget": self.budget] as [String: Any]
+                                }
+                                else{
+                                    params = ["media": imageURL.absoluteString,
+                                              "description": self.txtFieldStatus.text!,
+                                              "location": self.userAddress,
+                                              "expire_hours": 48,
+                                              "duration": 0,
+                                              "media_type": "image",
+                                              "budget": 0] as [String: Any]
+                                }
+                                self.addPostWithRequest(params: params)
+                            }
+                        })
+                        
+                        
+                    }
+                })
+                uploadTask?.resume()
+                
+                var i = 0
+                uploadTask?.observe(.progress, handler: { (snapshot) in
+                    if(i == 0){
+                        
+                    }
+                    i += 1
+                    
+                })
+                
+                uploadTask?.observe(.success, handler: { (snapshot) in
+                    
+                })
+            }
+        }
+        
     }
     
     func addPostWithRequest(params: [String: Any]){

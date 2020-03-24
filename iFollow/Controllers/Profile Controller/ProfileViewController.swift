@@ -30,6 +30,7 @@ class ProfileViewController: UIViewController {
     
     var imagePicker = UIImagePickerController()
     var isFullScreen = false
+    var videoURL: URL!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +63,9 @@ class ProfileViewController: UIViewController {
         
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
-        imagePicker.mediaTypes = ["public.image" /*"public.movie"*/]
+        imagePicker.mediaTypes = ["public.image", "public.movie"]
+        imagePicker.videoMaximumDuration = 60
+        imagePicker.videoQuality = .typeLow
         imagePicker.delegate = self
         
     }
@@ -235,13 +238,28 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             let vc = Utility.getNewPostViewController()
             vc.postSelectedImage = pickedImage
+            vc.isVideo = false
             isFullScreen = true
             vc.delegate = self
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             self.present(vc, animated: true, completion: nil)
         }
-        
+        if let video = info[UIImagePickerController.InfoKey.mediaURL] as? URL{
+            DispatchQueue.main.async {
+                if let videoScreenShot = Utility.imageFromVideo(url: video, at: 0){
+                    let vc = Utility.getNewPostViewController()
+                    vc.postSelectedImage = videoScreenShot
+                    vc.videoURL = video
+                    vc.isVideo = true
+                    self.isFullScreen = true
+                    vc.delegate = self
+                    vc.modalPresentationStyle = .custom
+                    vc.transitioningDelegate = self
+                    self.present(vc, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

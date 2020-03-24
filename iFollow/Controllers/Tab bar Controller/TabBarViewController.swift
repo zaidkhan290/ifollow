@@ -241,7 +241,8 @@ class TabBarViewController: UIViewController {
     
     func postStory(mediaUrl: String){
         let params = ["media": mediaUrl,
-                      "expire_hours": 48] as [String : Any]
+                      "expire_hours": 48,
+            "media_type": "image"] as [String : Any]
         
         API.sharedInstance.executeAPI(type: .createStory, method: .post, params: params) { (status, result, message) in
             
