@@ -8,6 +8,7 @@
 
 import UIKit
 import iCarousel
+import Lightbox
 
 class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationControllerDelegate, UIPopoverPresentationControllerDelegate {
 
@@ -158,4 +159,25 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         
     }
     
+    func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
+        
+        let image = LightboxImage(image: UIImage(named: "Rectangle 15")!, text: "This is a simple dummy text for viewing image.", videoURL: nil)
+        let vc = LightboxController(images: [image], startIndex: 0)
+        vc.pageDelegate = self
+        vc.dismissalDelegate = self
+        vc.dynamicBackground = true
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
+}
+
+extension OtherUserProfileViewController: LightboxControllerPageDelegate, LightboxControllerDismissalDelegate{
+    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+        
+    }
+    
+    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+        
+    }
 }

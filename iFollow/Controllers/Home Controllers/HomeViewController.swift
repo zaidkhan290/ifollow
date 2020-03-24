@@ -12,6 +12,7 @@ import FirebaseStorage
 import Loaf
 import CoreLocation
 import RealmSwift
+import Lightbox
 
 class HomeViewController: UIViewController {
 
@@ -234,6 +235,17 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         
     }
     
+    func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
+        
+        let image = LightboxImage(image: UIImage(named: "Rectangle 15")!, text: "This is a simple dummy text for viewing image.", videoURL: nil)
+        let vc = LightboxController(images: [image], startIndex: 0)
+        vc.pageDelegate = self
+        vc.dismissalDelegate = self
+        vc.dynamicBackground = true
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
 //    func userImageTapped(index: Int) {
 //        let vc = Utility.getOtherUserProfileViewController()
 //        self.present(vc, animated: true, completion: nil)
@@ -365,4 +377,14 @@ extension HomeViewController: CLLocationManagerDelegate{
         }
     }
     
+}
+
+extension HomeViewController: LightboxControllerPageDelegate, LightboxControllerDismissalDelegate{
+    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+        
+    }
+    
+    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+        
+    }
 }
