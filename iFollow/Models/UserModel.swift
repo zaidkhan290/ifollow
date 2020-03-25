@@ -28,6 +28,9 @@ class UserModel: Object {
     @objc dynamic var userRegisteredAt: String = ""
     @objc dynamic var userUpdatedAt: String = ""
     @objc dynamic var userCode: String = ""
+    @objc dynamic var userTrenders: Int = 0
+    @objc dynamic var userTrendings: Int = 0
+    @objc dynamic var userPosts: Int = 0
     @objc dynamic var userToken: String = ""
     
     func updateModelWithJSON(json: JSON){

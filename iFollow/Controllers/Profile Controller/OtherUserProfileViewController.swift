@@ -161,7 +161,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         
-        let image = LightboxImage(image: UIImage(named: "Rectangle 15")!, text: "This is a simple dummy text for viewing image.", videoURL: nil)
+        let image = LightboxImage(image: UIImage(named: "Rectangle 15")!, text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", videoURL: nil)
         let vc = LightboxController(images: [image], startIndex: 0)
         vc.pageDelegate = self
         vc.dismissalDelegate = self

@@ -67,6 +67,8 @@
 		18781C2023707001001BAF95 /* FeedsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18781C1F23707001001BAF95 /* FeedsView.xib */; };
 		18781C2223707019001BAF95 /* FeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C2123707019001BAF95 /* FeedsView.swift */; };
 		18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C23237087D3001BAF95 /* UIViewExtension.swift */; };
+		188073AB242B41EF0005CAE4 /* UserPostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188073AA242B41EF0005CAE4 /* UserPostsModel.swift */; };
+		188073AD242B47E30005CAE4 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188073AC242B47E30005CAE4 /* Reachability.swift */; };
 		18847A53237BF2FA004D500A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A52237BF2FA004D500A /* ChatViewController.swift */; };
 		18847A55237C21F1004D500A /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A54237C21F1004D500A /* GroupDetailViewController.swift */; };
 		18847A58237C3010004D500A /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A56237C3010004D500A /* MediaCollectionViewCell.swift */; };
@@ -176,6 +178,8 @@
 		18781C1F23707001001BAF95 /* FeedsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedsView.xib; sourceTree = "<group>"; };
 		18781C2123707019001BAF95 /* FeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsView.swift; sourceTree = "<group>"; };
 		18781C23237087D3001BAF95 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		188073AA242B41EF0005CAE4 /* UserPostsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostsModel.swift; sourceTree = "<group>"; };
+		188073AC242B47E30005CAE4 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		18847A52237BF2FA004D500A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		18847A54237C21F1004D500A /* GroupDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailViewController.swift; sourceTree = "<group>"; };
 		18847A56237C3010004D500A /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -300,6 +304,7 @@
 			isa = PBXGroup;
 			children = (
 				183483292422313A00200F8C /* API.swift */,
+				188073AC242B47E30005CAE4 /* Reachability.swift */,
 			);
 			path = "API Router";
 			sourceTree = "<group>";
@@ -449,6 +454,7 @@
 			children = (
 				1890CB80242136060096044E /* UserModel.swift */,
 				181709462424D8AB00EE5753 /* StickersModel.swift */,
+				188073AA242B41EF0005CAE4 /* UserPostsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -763,6 +769,7 @@
 				189329BF23701EE50067077F /* SignupViewController.swift in Sources */,
 				18B086432371AA71002D773E /* TabBarViewController.swift in Sources */,
 				18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */,
+				188073AD242B47E30005CAE4 /* Reachability.swift in Sources */,
 				1825A52C237AEA64002811E7 /* TrendingViewController.swift in Sources */,
 				185640E023741B7800CC2777 /* MenuViewController.swift in Sources */,
 				18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */,
@@ -820,6 +827,7 @@
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
 				185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */,
 				181709472424D8AB00EE5753 /* StickersModel.swift in Sources */,
+				188073AB242B41EF0005CAE4 /* UserPostsModel.swift in Sources */,
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,
 				18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */,
 				185AFE2F242A462500AC38FB /* PrivacyViewController.swift in Sources */,

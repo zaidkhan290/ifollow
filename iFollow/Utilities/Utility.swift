@@ -176,6 +176,27 @@ struct Utility {
         return 0
     }
     
+    static func getLoginUserTrendersCount() -> Int{
+        if let user = UserModel.getCurrentUser(){
+            return user.userTrenders
+        }
+        return 0
+    }
+    
+    static func getLoginUserTrendingsCount() -> Int{
+        if let user = UserModel.getCurrentUser(){
+            return user.userTrendings
+        }
+        return 0
+    }
+    
+    static func getLoginUserPostsCount() -> Int{
+        if let user = UserModel.getCurrentUser(){
+            return user.userPosts
+        }
+        return 0
+    }
+    
     static func getLoginUserFirstName() -> String{
         if let user = UserModel.getCurrentUser(){
             return user.userFirstName
@@ -193,6 +214,13 @@ struct Utility {
     static func getLoginUserFullName() -> String{
         if let user = UserModel.getCurrentUser(){
             return "\(user.userFirstName) \(user.userLastName)"
+        }
+        return ""
+    }
+    
+    static func getLoginUserCountry() -> String{
+        if let user = UserModel.getCurrentUser(){
+            return user.userCountry
         }
         return ""
     }

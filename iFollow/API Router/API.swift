@@ -22,6 +22,7 @@ enum EndPoint: String {
     case createStory = "add_story"
     case createPost = "add_post"
     case stickers = "stickers"
+    case getMyProfile = "profile_page"
 }
 
 enum StatusCodes {

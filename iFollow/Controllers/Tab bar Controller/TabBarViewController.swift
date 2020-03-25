@@ -168,6 +168,7 @@ class TabBarViewController: UIViewController {
             
             remove(asChildViewController: [homeController, exploreController, notificationController])
             add(asChildViewController: profileController)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshUserPosts"), object: nil)
             
         }
     }
