@@ -357,16 +357,18 @@ extension HomeViewController: CLLocationManagerDelegate{
             if (error != nil) {
                 print("Error in reverseGeocode")
             }
-            
-            let placemark = placemarks! as [CLPlacemark]
-            if placemark.count > 0 {
-                let placemark = placemarks![0]
-                if let area = placemark.name, let city = placemark.locality, let country = placemark.country{
-                    self.userCurrentAddress = "\(area), \(city), \(country)"
-                    print(self.userCurrentAddress)
-                    self.getStikcers()
+            if placemarks != nil{
+                let placemark = placemarks! as [CLPlacemark]
+                if placemark.count > 0 {
+                    let placemark = placemarks![0]
+                    if let area = placemark.name, let city = placemark.locality, let country = placemark.country{
+                        self.userCurrentAddress = "\(area), \(city), \(country)"
+                        print(self.userCurrentAddress)
+                        self.getStikcers()
+                    }
                 }
             }
+            
         })
     }
     

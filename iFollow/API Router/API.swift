@@ -23,6 +23,13 @@ enum EndPoint: String {
     case createPost = "add_post"
     case stickers = "stickers"
     case getMyProfile = "profile_page"
+    case getOtherUserProfile = "user_page"
+    case reportUser = "report_user"
+    case blockUser = "block_user"
+    case trendRequest = "trend"
+    case getNotifications = "notifications"
+    case acceptTrendRequest = "accept_trend"
+    case rejectTrendRequest = "reject_trend"
 }
 
 enum StatusCodes {

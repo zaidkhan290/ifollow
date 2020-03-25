@@ -63,9 +63,6 @@ class ProfileViewController: UIViewController {
         searchView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
         Utility.setTextFieldPlaceholder(textField: txtFiledSearch, placeholder: "What's in your mind?", color: Theme.searchFieldColor)
         
-        
-        
-        
         carouselView.type = .rotary
         self.carouselView.dataSource = self
         self.carouselView.delegate = self

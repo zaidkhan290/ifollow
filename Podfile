@@ -33,5 +33,6 @@ pod 'Fabric'
 pod 'Crashlytics'
 pod 'GooglePlaces', '3.5.0'
 pod 'Lightbox'
+pod 'DateToolsSwift'
 
 end

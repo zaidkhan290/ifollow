@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol NotificationTableViewCellDelegate: class {
+    func respondToRequest(indexPath: IndexPath, isAccept: Bool)
+}
+
 class NotificationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var userImage: UIImageView!
@@ -15,7 +19,8 @@ class NotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var btnMinus: UIButton!
     @IBOutlet weak var btnPlus: UIButton!
-    
+    var delegate: NotificationTableViewCellDelegate?
+    var indexPath = IndexPath()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,9 +37,15 @@ class NotificationTableViewCell: UITableViewCell {
     //MARK:- Actions
     
     @IBAction func btnMinusTapped(_ sender: UIButton) {
+        if (delegate != nil){
+            self.delegate!.respondToRequest(indexPath: indexPath, isAccept: false)
+        }
     }
     
     @IBAction func btnPlusTapped(_ sender: UIButton) {
+        if (delegate != nil){
+            self.delegate!.respondToRequest(indexPath: indexPath, isAccept: true)
+        }
     }
     
 }

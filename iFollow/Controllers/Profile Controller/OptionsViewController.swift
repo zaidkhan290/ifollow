@@ -8,11 +8,16 @@
 
 import UIKit
 
+protocol OptionsViewControllerDelegate: class {
+    func didTapOnOptions(option: String)
+}
+
 class OptionsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var optionTableView: UITableView!
     var options = [String]()
     var isFromPostView = false
+    var delegate: OptionsViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,5 +37,12 @@ class OptionsViewController: UIViewController, UITableViewDataSource, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "OptionsTableViewCell", for: indexPath) as! OptionsTableViewCell
         cell.lblTitle.text = options[indexPath.row]
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.dismiss(animated: true, completion: nil)
+        if (self.delegate != nil){
+            self.delegate?.didTapOnOptions(option: options[indexPath.row])
+        }
     }
 }

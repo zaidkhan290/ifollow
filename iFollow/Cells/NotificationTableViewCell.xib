@@ -28,26 +28,26 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userSample" translatesAutoresizingMaskIntoConstraints="NO" id="hXF-eG-ofX">
-                        <rect key="frame" x="10" y="4.5" width="70" height="70"/>
+                        <rect key="frame" x="10" y="14.5" width="50" height="50"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="6bd-cq-WsN"/>
-                            <constraint firstAttribute="height" constant="70" id="pfF-dO-mFr"/>
+                            <constraint firstAttribute="width" constant="50" id="6bd-cq-WsN"/>
+                            <constraint firstAttribute="height" constant="50" id="pfF-dO-mFr"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John commented on your post." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fe6-OA-1tw">
-                        <rect key="frame" x="80" y="21.5" width="219" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John commented on your post." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fe6-OA-1tw">
+                        <rect key="frame" x="70" y="21.5" width="260" height="19.5"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8 minutes ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OiI-uF-9d0">
-                        <rect key="frame" x="80" y="42.5" width="74" height="15"/>
+                        <rect key="frame" x="70" y="42" width="74" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" red="0.70980392156862748" green="0.70980392156862748" blue="0.70980392156862748" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8WN-eZ-oMe">
-                        <rect key="frame" x="296" y="47" width="24" height="24"/>
+                        <rect key="frame" x="296" y="46.5" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="hJJ-3H-588"/>
                             <constraint firstAttribute="height" constant="24" id="vyu-8z-4dY"/>
@@ -58,7 +58,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKi-DV-BEf">
-                        <rect key="frame" x="252" y="47" width="24" height="24"/>
+                        <rect key="frame" x="252" y="46.5" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="QSd-CY-zeR"/>
                             <constraint firstAttribute="height" constant="24" id="o6q-Fb-g9d"/>
@@ -77,8 +77,8 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="8WN-eZ-oMe" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" multiplier="1.5" id="GcT-e3-fB0"/>
-                    <constraint firstItem="Fe6-OA-1tw" firstAttribute="leading" secondItem="hXF-eG-ofX" secondAttribute="trailing" id="JHY-Ga-FOh"/>
+                    <constraint firstItem="L5I-Rw-Z2e" firstAttribute="top" secondItem="OiI-uF-9d0" secondAttribute="bottom" constant="20.5" id="EL7-gU-7Cx"/>
+                    <constraint firstItem="Fe6-OA-1tw" firstAttribute="leading" secondItem="hXF-eG-ofX" secondAttribute="trailing" constant="10" id="JHY-Ga-FOh"/>
                     <constraint firstItem="8WN-eZ-oMe" firstAttribute="leading" secondItem="sKi-DV-BEf" secondAttribute="trailing" constant="20" id="MCK-i7-lWy"/>
                     <constraint firstItem="OiI-uF-9d0" firstAttribute="top" secondItem="Fe6-OA-1tw" secondAttribute="bottom" constant="1" id="Ozy-Ln-TEN"/>
                     <constraint firstItem="sKi-DV-BEf" firstAttribute="centerY" secondItem="8WN-eZ-oMe" secondAttribute="centerY" id="PRX-xA-smc"/>
@@ -88,7 +88,9 @@
                     <constraint firstItem="L5I-Rw-Z2e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Yis-qb-544"/>
                     <constraint firstItem="Fe6-OA-1tw" firstAttribute="centerY" secondItem="hXF-eG-ofX" secondAttribute="centerY" multiplier="0.8" id="cKh-CE-nSJ"/>
                     <constraint firstItem="OiI-uF-9d0" firstAttribute="leading" secondItem="Fe6-OA-1tw" secondAttribute="leading" id="gwd-pd-ecQ"/>
+                    <constraint firstAttribute="trailing" secondItem="Fe6-OA-1tw" secondAttribute="trailing" constant="10" id="h7z-xW-De6"/>
                     <constraint firstAttribute="trailing" secondItem="L5I-Rw-Z2e" secondAttribute="trailing" constant="20" id="mlp-Iv-dxJ"/>
+                    <constraint firstItem="L5I-Rw-Z2e" firstAttribute="top" secondItem="8WN-eZ-oMe" secondAttribute="bottom" constant="7" id="oL3-Sx-SqO"/>
                     <constraint firstItem="hXF-eG-ofX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="tzE-3m-bTe"/>
                 </constraints>
             </tableViewCellContentView>

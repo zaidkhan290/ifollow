@@ -11,11 +11,13 @@ import UIKit
 import NVActivityIndicatorView
 import RealmSwift
 import AVFoundation
+import DateToolsSwift
 
 struct Utility {
     
     static let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
     static private var timeFormatter: DateFormatter?
+    static private var notificationDateFormatter: DateFormatter?
     
     static func getLoginNavigationController() -> UINavigationController{
         return storyBoard.instantiateViewController(withIdentifier: "LoginNavigation") as! UINavigationController
@@ -252,6 +254,32 @@ struct Utility {
         set{
             
         }
+    }
+    
+    static var serverNotificationDateFormatter: DateFormatter{
+        get{
+            if (notificationDateFormatter == nil){
+                notificationDateFormatter = DateFormatter()
+                notificationDateFormatter?.timeZone = TimeZone(abbreviation: "UTC")
+                notificationDateFormatter?.dateFormat = "yyyy-MM-dd HH:mm:ss" //2019-12-12 16:50:31
+            }
+            return notificationDateFormatter!
+        }
+        set{
+            
+        }
+    }
+    
+    static func getNotificationDateFrom(dateString: String) -> Date{
+        var formattedDate = Date()
+        if let notificationDate = serverNotificationDateFormatter.date(from: dateString){
+            formattedDate = notificationDate
+        }
+        return formattedDate
+    }
+    
+    static func getNotificationTime(date: Date) -> String{
+        return date.timeAgoSinceNow
     }
     
     static func getCurrentTime() -> String{

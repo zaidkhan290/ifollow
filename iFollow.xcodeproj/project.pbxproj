@@ -69,6 +69,8 @@
 		18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18781C23237087D3001BAF95 /* UIViewExtension.swift */; };
 		188073AB242B41EF0005CAE4 /* UserPostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188073AA242B41EF0005CAE4 /* UserPostsModel.swift */; };
 		188073AD242B47E30005CAE4 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188073AC242B47E30005CAE4 /* Reachability.swift */; };
+		188073AF242B73810005CAE4 /* OtherUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188073AE242B73810005CAE4 /* OtherUserModel.swift */; };
+		188073B1242BA1040005CAE4 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188073B0242BA1040005CAE4 /* NotificationModel.swift */; };
 		18847A53237BF2FA004D500A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A52237BF2FA004D500A /* ChatViewController.swift */; };
 		18847A55237C21F1004D500A /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A54237C21F1004D500A /* GroupDetailViewController.swift */; };
 		18847A58237C3010004D500A /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A56237C3010004D500A /* MediaCollectionViewCell.swift */; };
@@ -180,6 +182,8 @@
 		18781C23237087D3001BAF95 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		188073AA242B41EF0005CAE4 /* UserPostsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostsModel.swift; sourceTree = "<group>"; };
 		188073AC242B47E30005CAE4 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		188073AE242B73810005CAE4 /* OtherUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserModel.swift; sourceTree = "<group>"; };
+		188073B0242BA1040005CAE4 /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
 		18847A52237BF2FA004D500A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		18847A54237C21F1004D500A /* GroupDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailViewController.swift; sourceTree = "<group>"; };
 		18847A56237C3010004D500A /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -455,6 +459,8 @@
 				1890CB80242136060096044E /* UserModel.swift */,
 				181709462424D8AB00EE5753 /* StickersModel.swift */,
 				188073AA242B41EF0005CAE4 /* UserPostsModel.swift */,
+				188073AE242B73810005CAE4 /* OtherUserModel.swift */,
+				188073B0242BA1040005CAE4 /* NotificationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -807,6 +813,7 @@
 				182F625F2372EB4E00A55E52 /* ChatListTableViewCell.swift in Sources */,
 				18A32622240FBCD900CF329E /* UIImage+Transform.swift in Sources */,
 				18DC8813242127FE00494FAD /* Constant.swift in Sources */,
+				188073AF242B73810005CAE4 /* OtherUserModel.swift in Sources */,
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
 				18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */,
 				18A32628240FBCE800CF329E /* DSFilterView.swift in Sources */,
@@ -824,6 +831,7 @@
 				18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */,
 				1855080F23795352008EAC2E /* SegmentProgressBar.swift in Sources */,
 				18A3262A240FBCE800CF329E /* DSFilter.swift in Sources */,
+				188073B1242BA1040005CAE4 /* NotificationModel.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
 				185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */,
 				181709472424D8AB00EE5753 /* StickersModel.swift in Sources */,

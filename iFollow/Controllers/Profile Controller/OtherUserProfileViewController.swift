@@ -9,6 +9,9 @@
 import UIKit
 import iCarousel
 import Lightbox
+import Loaf
+import AVKit
+import AVFoundation
 
 class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationControllerDelegate, UIPopoverPresentationControllerDelegate {
 
@@ -16,6 +19,8 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     @IBOutlet weak var optionsView: UIView!
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var lblUsername: UILabel!
+    @IBOutlet weak var lblUserBio: UILabel!
     @IBOutlet weak var editView: UIView!
     @IBOutlet weak var lblTrending: UILabel!
     @IBOutlet weak var lblTrend: UILabel!
@@ -25,8 +30,10 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     @IBOutlet weak var trendView: UIView!
     @IBOutlet weak var carouselView: iCarousel!
     
+    var otherUserProfile = OtherUserModel()
     var isTrending = false
     var options = [String]()
+    var userId = 3
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,17 +59,91 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         self.carouselView.delegate = self
         
         options = ["Block", "Report", "Copy User Url", "Private Talk"]
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.getOtherUserDetail()
+        }
     }
     
-    //MARK:- Actions
+    //MARK:- Actions and Methods
     
     @IBAction func optionsTapped(_ sender: Any) {
         showOptionsPopup()
     }
     
+    func getOtherUserDetail(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        let params = ["id": userId]
+        
+        API.sharedInstance.executeAPI(type: .getOtherUserProfile, method: .get, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    let model = OtherUserModel()
+                    model.updateModelWithJSON(json: result)
+                    self.otherUserProfile = model
+                    self.setOtherUserData()
+                }
+                else if (status == .failure){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+                else if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+        
+    }
+    
+    func setOtherUserData(){
+        profileImage.sd_setImage(with: URL(string: otherUserProfile.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+        profileImage.layer.cornerRadius = profileImage.frame.height / 2
+        lblUsername.text = otherUserProfile.userFullName
+        lblUserBio.text = otherUserProfile.userBio
+        lblTrends.text = "\(otherUserProfile.userTrendersCount)"
+        lblTrending.text = "\(otherUserProfile.userTrendingsCount)"
+        lblPosts.text = "\(otherUserProfile.userPostsCount)"
+        if (otherUserProfile.userRequestStatus == ""){
+            trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+            trendView.backgroundColor = .clear
+            trendView.alpha = 1
+            lblTrend.text = "Trend"
+            lblTrend.textColor = Theme.profileLabelsYellowColor
+            trendView.isUserInteractionEnabled = true
+        }
+        else if (otherUserProfile.userRequestStatus == "success"){
+            trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+            lblTrend.text = "Trending"
+            lblTrend.textColor = .white
+            trendView.backgroundColor = Theme.profileLabelsYellowColor
+            trendView.alpha = 1
+            trendView.isUserInteractionEnabled = true
+        }
+        else{
+            trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+            trendView.backgroundColor = .clear
+            trendView.alpha = 0.5
+            lblTrend.text = "Trend"
+            lblTrend.textColor = Theme.profileLabelsYellowColor
+            trendView.isUserInteractionEnabled = false
+        }
+        self.carouselView.reloadData()
+    }
+    
     func showOptionsPopup(){
         
         let vc = Utility.getOptionsViewController()
+        vc.delegate = self
         vc.modalPresentationStyle = .popover
         vc.preferredContentSize = CGSize(width: 150, height: 200)
         
@@ -117,10 +198,142 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     @objc func trendViewTapped(){
-        isTrending = !isTrending
-        lblTrend.textColor = isTrending ? .white : Theme.profileLabelsYellowColor
-        lblTrend.text = isTrending ? "Trending" : "Trend"
-        trendView.backgroundColor = isTrending ? Theme.profileLabelsYellowColor : .white
+        sendTrendRequest()
+    }
+    
+    func showBlockUserPopup(){
+        let vc = UIAlertController(title: "Block", message: "Are you sure you want to block \(otherUserProfile.userFullName)?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+                
+                Utility.showOrHideLoader(shouldShow: true)
+                let params = ["user_id": self.userId]
+                API.sharedInstance.executeAPI(type: .blockUser, method: .post, params: params, completion: { (status, result, message) in
+                    DispatchQueue.main.async {
+                        Utility.showOrHideLoader(shouldShow: true)
+                        if (status == .success){
+                            Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        }
+                        else if (status == .failure){
+                            Utility.showOrHideLoader(shouldShow: false)
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                
+                            }
+                        }
+                        else if (status == .authError){
+                            Utility.showOrHideLoader(shouldShow: false)
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                Utility.logoutUser()
+                            }
+                        }
+                    }
+                })
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        vc.addAction(yesAction)
+        vc.addAction(noAction)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func showReportUserPopup(){
+        let vc = UIAlertController(title: "Report", message: "Are you sure you want to report \(otherUserProfile.userFullName)?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.showReportDescriptionPopup()
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        vc.addAction(yesAction)
+        vc.addAction(noAction)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func showReportDescriptionPopup(){
+        let vc = UIAlertController(title: "Report Description", message: "Please enter your description", preferredStyle: .alert)
+        vc.addTextField { (textfield) in
+            textfield.placeholder = "Description"
+            textfield.autocorrectionType = .no
+            textfield.autocapitalizationType = .sentences
+        }
+        let yesAction = UIAlertAction(title: "Report", style: .default) { (action) in
+            DispatchQueue.main.async {
+                
+                guard let textField = vc.textFields?.first else { return }
+                if (textField.text == ""){
+                    Loaf("Please enter reason", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                    return
+                }
+                Utility.showOrHideLoader(shouldShow: true)
+                let params = ["user_id": self.userId,
+                              "options": "",
+                              "description": textField.text!] as [String : Any]
+                API.sharedInstance.executeAPI(type: .reportUser, method: .post, params: params, completion: { (status, result, message) in
+                    DispatchQueue.main.async {
+                        Utility.showOrHideLoader(shouldShow: true)
+                        if (status == .success){
+                            Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        }
+                        else if (status == .failure){
+                            Utility.showOrHideLoader(shouldShow: false)
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                
+                            }
+                        }
+                        else if (status == .authError){
+                            Utility.showOrHideLoader(shouldShow: false)
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                Utility.logoutUser()
+                            }
+                        }
+                    }
+                })
+            }
+        }
+        let noAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        vc.addAction(yesAction)
+        vc.addAction(noAction)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func sendTrendRequest(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["user_id": userId]
+        API.sharedInstance.executeAPI(type: .trendRequest, method: .post, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                    self.otherUserProfile.userRequestStatus = "pending"
+                    self.trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+                    self.trendView.backgroundColor = .clear
+                    self.trendView.alpha = 0.5
+                    self.lblTrend.text = "Trend"
+                    self.lblTrend.textColor = Theme.profileLabelsYellowColor
+                    self.trendView.isUserInteractionEnabled = false
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+        }
+        
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -137,19 +350,29 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
 extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate{
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-        return 10
+        return otherUserProfile.userPosts.count
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
         
         let view = UIView(frame: CGRect(x: 0, y: 0, width: carouselView.frame.width, height: carouselView.frame.height))
+        let post = otherUserProfile.userPosts[index]
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
         itemView.frame = view.frame
+        itemView.lblUsername.text = otherUserProfile.userFullName
+        itemView.userImage.sd_setImage(with: URL(string: otherUserProfile.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+        itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
+        itemView.lblUserAddress.text = otherUserProfile.userCountry
         itemView.userImage.layer.cornerRadius = 25
+        itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "iFollow-white-logo-1"))
         itemView.feedImage.clipsToBounds = true
+        itemView.feedImage.contentMode = .scaleAspectFill
+        itemView.likeImage.image = UIImage(named: "like-1")
+        itemView.playIcon.isHidden = post.postMediaType == "image"
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
+        itemView.btnOptions.tag = index
         itemView.btnOptions.addTarget(self, action: #selector(showFeedsOptionsPopup(sender:)), for: .touchUpInside)
         view.backgroundColor = .white
         view.clipsToBounds = true
@@ -161,12 +384,25 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         
-        let image = LightboxImage(image: UIImage(named: "Rectangle 15")!, text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", videoURL: nil)
-        let vc = LightboxController(images: [image], startIndex: 0)
-        vc.pageDelegate = self
-        vc.dismissalDelegate = self
-        vc.dynamicBackground = true
-        self.present(vc, animated: true, completion: nil)
+        let post = otherUserProfile.userPosts[index]
+        
+        if (post.postMediaType == "image"){
+            let image = LightboxImage(imageURL: URL(string: post.postMedia)!, text: post.postDescription, videoURL: nil)
+            let vc = LightboxController(images: [image], startIndex: 0)
+            vc.pageDelegate = self
+            vc.dismissalDelegate = self
+            vc.dynamicBackground = true
+            self.present(vc, animated: true, completion: nil)
+        }
+        else{
+            let player = AVPlayer(url: URL(string: post.postMedia)!)
+            
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+                playerViewController.player!.play()
+            }
+        }
         
     }
     
@@ -179,5 +415,16 @@ extension OtherUserProfileViewController: LightboxControllerPageDelegate, Lightb
     
     func lightboxControllerWillDismiss(_ controller: LightboxController) {
         
+    }
+}
+
+extension OtherUserProfileViewController: OptionsViewControllerDelegate{
+    func didTapOnOptions(option: String) {
+        if (option == "Block"){
+            self.showBlockUserPopup()
+        }
+        else if (option == "Report"){
+            self.showReportUserPopup()
+        }
     }
 }
