@@ -132,10 +132,10 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         else{
             trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
             trendView.backgroundColor = .clear
-            trendView.alpha = 0.5
-            lblTrend.text = "Trend"
+            trendView.alpha = 1
+            lblTrend.text = "Untrend"
             lblTrend.textColor = Theme.profileLabelsYellowColor
-            trendView.isUserInteractionEnabled = false
+            trendView.isUserInteractionEnabled = true
         }
         self.carouselView.reloadData()
     }
@@ -198,7 +198,12 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     @objc func trendViewTapped(){
-        sendTrendRequest()
+        if (otherUserProfile.userRequestStatus == ""){
+            sendTrendRequest()
+        }
+        else{
+            showUnTrendPopup()
+        }
     }
     
     func showBlockUserPopup(){
@@ -316,10 +321,57 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
                     self.otherUserProfile.userRequestStatus = "pending"
                     self.trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
                     self.trendView.backgroundColor = .clear
-                    self.trendView.alpha = 0.5
+                    self.trendView.alpha = 1
+                    self.lblTrend.text = "Untrend"
+                    self.lblTrend.textColor = Theme.profileLabelsYellowColor
+                    self.trendView.isUserInteractionEnabled = true
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    func showUnTrendPopup(){
+        let vc = UIAlertController(title: "Untrend", message: "Are you sure you want to untrend \(otherUserProfile.userFullName)?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.untrendUser()
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        vc.addAction(yesAction)
+        vc.addAction(noAction)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func untrendUser(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["user_id": userId]
+        API.sharedInstance.executeAPI(type: .untrendUser, method: .post, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                    self.otherUserProfile.userRequestStatus = ""
+                    self.trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+                    self.trendView.backgroundColor = .clear
+                    self.trendView.alpha = 1
                     self.lblTrend.text = "Trend"
                     self.lblTrend.textColor = Theme.profileLabelsYellowColor
-                    self.trendView.isUserInteractionEnabled = false
+                    self.trendView.isUserInteractionEnabled = true
                 }
                 else if (status == .failure){
                     Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in

@@ -27,6 +27,7 @@ enum EndPoint: String {
     case reportUser = "report_user"
     case blockUser = "block_user"
     case trendRequest = "trend"
+    case untrendUser = "un_trend"
     case getNotifications = "notifications"
     case acceptTrendRequest = "accept_trend"
     case rejectTrendRequest = "reject_trend"

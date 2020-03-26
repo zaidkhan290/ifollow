@@ -131,32 +131,21 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.clipsToBounds = true
-        cell.lblNotification.text = notification.notificationMessage
         cell.lblNotification.font = Theme.getLatoRegularFontOfSize(size: 16.0)
         cell.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: notification.notificationDate))
         cell.btnMinus.isHidden = !(notification.notificationTag == "1")
         cell.btnPlus.isHidden = !(notification.notificationTag == "1")
+        let notificationText = notification.notificationMessage
+        let range1 = notificationText.range(of: notification.notificationFriendName)
+        let attributedString = NSMutableAttributedString(string: notificationText)
+        if (range1 == nil){
+            cell.lblNotification.attributedText = attributedString
+        }
+        else{
+            attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoBoldFontOfSize(size: 16.0), range: notificationText.nsRange(from: range1!))
+            cell.lblNotification.attributedText = attributedString
+        }
         
-//        if (indexPath.row == 0){
-//            let notificationText = "John requested to trend you"
-//            let range1 = notificationText.range(of: "John")
-//            let range2 = notificationText.range(of: "requested to trend you")
-//
-//            let attributedString = NSMutableAttributedString(string: notificationText)
-//            attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoBoldFontOfSize(size: 16.0), range: notificationText.nsRange(from: range1!))
-//            attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoRegularFontOfSize(size: 16.0), range: notificationText.nsRange(from: range2!))
-//            cell.lblNotification.attributedText = attributedString
-//        }
-//        else{
-//            let notificationText = "John left feedback on your post"
-//            let range1 = notificationText.range(of: "John")
-//            let range2 = notificationText.range(of: "left feedback on your post")
-//
-//            let attributedString = NSMutableAttributedString(string: notificationText)
-//            attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoBoldFontOfSize(size: 16.0), range: notificationText.nsRange(from: range1!))
-//            attributedString.addAttribute(NSAttributedString.Key.font, value: Theme.getLatoRegularFontOfSize(size: 16.0), range: notificationText.nsRange(from: range2!))
-//            cell.lblNotification.attributedText = attributedString
-//        }
         
         return cell
         

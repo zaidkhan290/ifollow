@@ -16,6 +16,7 @@ class NotificationModel: Object{
     @objc dynamic var notificationUserId: String = ""
     @objc dynamic var notificationFriendId: Int = 0
     @objc dynamic var notificationFriendImage: String = ""
+    @objc dynamic var notificationFriendName: String = ""
     @objc dynamic var notificationMessage: String = ""
     @objc dynamic var notificationTag: String = ""
     @objc dynamic var notificationRequestId: Int = 0
@@ -25,8 +26,9 @@ class NotificationModel: Object{
         notificationId = json["id"].intValue
         notificationUserId = json["user_id"].stringValue
         notificationFriendId = json["friend_id"].intValue
-        notificationMessage = json["message"].stringValue
         notificationFriendImage = json["image"].stringValue.replacingOccurrences(of: "\\", with: "")
+        notificationFriendName = json["name"].stringValue
+        notificationMessage = json["message"].stringValue
         notificationTag = json["tag"].stringValue
         notificationRequestId = json["request_id"].intValue
         notificationDate = json["date"].stringValue
