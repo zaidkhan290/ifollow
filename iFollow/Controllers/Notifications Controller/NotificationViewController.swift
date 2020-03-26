@@ -78,7 +78,7 @@ class NotificationViewController: UIViewController {
         self.notificationTableView.reloadData()
     }
     
-    func respondToNotification(params: [String:Int], isAccept: Bool){
+    func respondToNotification(params: [String:Any], isAccept: Bool){
         
         Utility.showOrHideLoader(shouldShow: true)
         
@@ -170,8 +170,11 @@ extension NotificationViewController: NotificationTableViewCellDelegate{
     
     func respondToRequest(indexPath: IndexPath, isAccept: Bool) {
         let notification = notifications[indexPath.row]
-        let params = ["id": notification.notificationId,
-                      "request_id": notification.notificationRequestId]
+        let params = isAccept ? ["id": notification.notificationId,
+                                 "request_id": notification.notificationRequestId,
+                                 "name": notification.notificationFriendName] :
+            ["id": notification.notificationId,
+             "request_id": notification.notificationRequestId]
         self.respondToNotification(params: params, isAccept: isAccept)
     }
 }

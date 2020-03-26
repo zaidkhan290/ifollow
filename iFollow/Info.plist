@@ -22,12 +22,12 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app requires camera permission for sharing your stories</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app requires your location to show you geo filters</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>This app requires photo library permission for saving screenshot</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires photo library permission for sharing your stories</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app requires your location to show you geo filters</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Bold_0.ttf</string>
@@ -43,6 +43,10 @@
 		<string>Gobold Lowplus.otf</string>
 		<string>PoetsenOne-Regular.ttf</string>
 		<string>Evogria Italic.otf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
