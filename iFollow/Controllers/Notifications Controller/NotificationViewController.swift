@@ -184,7 +184,11 @@ extension NotificationViewController: NotificationTableViewCellDelegate{
 
 extension NotificationViewController: EmptyDataSetSource, EmptyDataSetDelegate{
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        return NSAttributedString(string: "No Notifications")
+        let text = "No Notifications"
+        let attributedText = NSMutableAttributedString(string: text)
+        let range = text.range(of: text)
+        attributedText.addAttributes([NSAttributedString.Key.font : Theme.getLatoBoldFontOfSize(size: 22), NSAttributedString.Key.foregroundColor : UIColor.black], range: text.nsRange(from: range!))
+        return attributedText
     }
     
     func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {

@@ -13,13 +13,13 @@ import Loaf
 import CoreLocation
 import RealmSwift
 import Lightbox
-import EmptyDataSet_Swift
 
 class HomeViewController: UIViewController {
 
     @IBOutlet weak var storyCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var carouselView: iCarousel!
     @IBOutlet weak var storyCollectionView: UICollectionView!
+    @IBOutlet weak var emptyStateView: UIView!
     
     var isFullScreen = false
     var storyImage = UIImage()
@@ -90,7 +90,7 @@ class HomeViewController: UIViewController {
         let picRef = iosRef?.child("/StoryImage\(timeStemp).jgp")
         
         //        let imageData2 = UIImagePNGRepresentation(image)
-        if let imageData2 = image.jpegData(compressionQuality: 0.5) {
+        if let imageData2 = image.jpegData(compressionQuality: 0.75) {
             // Create file metadata including the content type
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
@@ -166,7 +166,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         return 10
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

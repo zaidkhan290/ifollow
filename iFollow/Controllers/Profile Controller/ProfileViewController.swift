@@ -30,6 +30,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var txtFiledSearch: UITextField!
     @IBOutlet weak var carouselView: iCarousel!
+    @IBOutlet weak var emptyDataView: UIView!
     
     var userPosts = [UserPostsModel]()
     var imagePicker = UIImagePickerController()
@@ -71,7 +72,7 @@ class ProfileViewController: UIViewController {
         imagePicker.allowsEditing = true
         imagePicker.mediaTypes = ["public.image", "public.movie"]
         imagePicker.videoMaximumDuration = 60
-        imagePicker.videoQuality = .typeLow
+        imagePicker.videoQuality = .type640x480
         imagePicker.delegate = self
         getUserPosts(isAfterNewPost: false)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshUserPost), name: NSNotification.Name(rawValue: "refreshUserPosts"), object: nil)
@@ -222,6 +223,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
     
     func numberOfItems(in carousel: iCarousel) -> Int {
+        emptyDataView.isHidden = (userPosts.count > 0)
         return userPosts.count
     }
     

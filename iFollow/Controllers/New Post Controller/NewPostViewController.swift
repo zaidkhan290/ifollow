@@ -263,7 +263,7 @@ class NewPostViewController: UIViewController {
             let picRef = iosRef?.child("/PostImage\(timeStemp).jgp")
             
             //        let imageData2 = UIImagePNGRepresentation(image)
-            if let imageData2 = image.jpegData(compressionQuality: 0.25) {
+            if let imageData2 = image.jpegData(compressionQuality: 0.75) {
                 // Create file metadata including the content type
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"

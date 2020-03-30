@@ -75,7 +75,7 @@ class SignupDetail2ViewController: UIViewController {
         
         Utility.showOrHideLoader(shouldShow: true)
         
-        API.sharedInstance.executeAPI(type: .signup, method: .post, params: params, imageData: userImage.jpegData(compressionQuality: 0.5)) { (status, result, message) in
+        API.sharedInstance.executeAPI(type: .signup, method: .post, params: params, imageData: userImage.jpegData(compressionQuality: 0.75)) { (status, result, message) in
             
             DispatchQueue.main.async {
                 Utility.showOrHideLoader(shouldShow: false)

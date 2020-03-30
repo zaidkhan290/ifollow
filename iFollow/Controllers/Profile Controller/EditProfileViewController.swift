@@ -142,7 +142,7 @@ class EditProfileViewController: UIViewController {
         
         Utility.showOrHideLoader(shouldShow: true)
         
-        API.sharedInstance.executeAPI(type: .updateProfilePicture, method: .post, params: nil, imageData: userImage.jpegData(compressionQuality: 0.5)) { (status, result, message) in
+        API.sharedInstance.executeAPI(type: .updateProfilePicture, method: .post, params: nil, imageData: userImage.jpegData(compressionQuality: 0.75)) { (status, result, message) in
             
             DispatchQueue.main.async {
                 Utility.showOrHideLoader(shouldShow: false)
