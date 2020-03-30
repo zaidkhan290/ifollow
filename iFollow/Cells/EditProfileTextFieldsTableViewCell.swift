@@ -11,8 +11,10 @@ import UIKit
 class EditProfileTextFieldsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var icon: UIImageView!
+    @IBOutlet weak var requiredIcon: UILabel!
     @IBOutlet weak var txtField: UITextField!
     @IBOutlet weak var seperatorView: UIView!
+    @IBOutlet weak var lblHeading: UILabel!
     @IBOutlet weak var txtView: UITextView!
     @IBOutlet weak var txtViewSeperator: UIView!
     override func awakeFromNib() {

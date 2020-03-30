@@ -9,6 +9,7 @@
 import UIKit
 import Loaf
 import RealmSwift
+import EmptyDataSet_Swift
 
 class NotificationViewController: UIViewController {
 
@@ -25,6 +26,8 @@ class NotificationViewController: UIViewController {
         
         let cellNib = UINib(nibName: "NotificationTableViewCell", bundle: nil)
         notificationTableView.register(cellNib, forCellReuseIdentifier: "NotificationCell")
+        notificationTableView.emptyDataSetSource = self
+        notificationTableView.emptyDataSetDelegate = self
         
     }
     
@@ -176,5 +179,15 @@ extension NotificationViewController: NotificationTableViewCellDelegate{
             ["id": notification.notificationId,
              "request_id": notification.notificationRequestId]
         self.respondToNotification(params: params, isAccept: isAccept)
+    }
+}
+
+extension NotificationViewController: EmptyDataSetSource, EmptyDataSetDelegate{
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: "No Notifications")
+    }
+    
+    func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
+        return UIImage(named: "no-notification")
     }
 }

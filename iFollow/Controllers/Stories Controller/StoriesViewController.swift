@@ -49,7 +49,7 @@ class StoriesViewController: UIViewController {
         
         IQKeyboardManager.shared.enable = false
         
-        spb = SegmentedProgressBar(numberOfSegments: 3, duration: 5)
+        spb = SegmentedProgressBar(numberOfSegments: 3, durationArrValues: [5, 10, 30])
         spb.frame = CGRect(x: 15, y: view.safeAreaInsets.top + 20, width: view.frame.width - 30, height: 4)
         view.addSubview(spb)
         

@@ -16,6 +16,9 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var txtFieldConfirmPassword: UITextField!
     @IBOutlet weak var btnStart: UIButton!
     @IBOutlet weak var btnSignIn: UIButton!
+    @IBOutlet weak var lblTermsAndConditions: UILabel!
+    @IBOutlet weak var iconCheck: UIImageView!
+    var isTermsAccepted = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +32,55 @@ class SignupViewController: UIViewController {
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: signupText.nsRange(from: range2!))
         btnSignIn.setAttributedTitle(attributedString, for: .normal)
         
+        let termsAndConditionText = "Yes, I understand and agree to the Terms & Conditions and Privacy Policy"
+        
+        let termsRange1 = termsAndConditionText.range(of: "Yes, I understand and agree to the ")
+        let termsRange2 = termsAndConditionText.range(of: "Terms & Conditions")
+        let termsRange3 = termsAndConditionText.range(of: " and ")
+        let termsRange4 = termsAndConditionText.range(of: "Privacy Policy")
+        
+        let termsAttributedString = NSMutableAttributedString(string: termsAndConditionText)
+        termsAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: termsAndConditionText.nsRange(from: termsRange1!))
+        termsAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: termsAndConditionText.nsRange(from: termsRange2!))
+        termsAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: termsAndConditionText.nsRange(from: termsRange3!))
+        termsAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: termsAndConditionText.nsRange(from: termsRange4!))
+        
+        lblTermsAndConditions.attributedText = termsAttributedString
+        lblTermsAndConditions.isUserInteractionEnabled = true
+        lblTermsAndConditions.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnLabel(_:))))
+        iconCheck.isUserInteractionEnabled = true
+        iconCheck.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(iconCheckTapped)))
+        
         Utility.setTextFieldPlaceholder(textField: txtFieldEmail, placeholder: "Email", color: Theme.textFieldColor)
         Utility.setTextFieldPlaceholder(textField: txtFieldPassword, placeholder: "Password", color: Theme.textFieldColor)
         Utility.setTextFieldPlaceholder(textField: txtFieldConfirmPassword, placeholder: "Confirm Password", color: Theme.textFieldColor)
     }
     
-    //MARK:- Actions
+    //MARK:- Methods and Actions
+    
+    @objc func iconCheckTapped(){
+        isTermsAccepted = !isTermsAccepted
+        iconCheck.image = UIImage(named: isTermsAccepted ? "select" : "unselect")
+    }
+    
+    @objc func tappedOnLabel(_ gesture: UITapGestureRecognizer) {
+        let text = "Yes, I understand and agree to the Terms & Conditions and Privacy Policy"
+        
+        let termsAndConditionRange = text.range(of: " Terms & Conditions")
+        let privacyPolicyRange = text.range(of: "Privacy Policy")
+        
+        if gesture.didTapAttributedTextInLabel(label: self.lblTermsAndConditions, inRange: text.nsRange(from: privacyPolicyRange!)) {
+//            let vc = PrivacyPolicyVC.instantiateFromStoryboard()
+//            vc.isFromSignup = true
+//            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if gesture.didTapAttributedTextInLabel(label: self.lblTermsAndConditions, inRange: text.nsRange(from: termsAndConditionRange!)){
+//            let vc = TermsVC.instantiateFromStoryboard()
+//            vc.isFromSignup = true
+//            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+    }
     
     @IBAction func btnStartTapped(_ sender: UIButton) {
         
@@ -55,6 +101,12 @@ class SignupViewController: UIViewController {
                 
             }
             return
+        }
+        else if (!isTermsAccepted){
+            Loaf(kTermsAndConditionError, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(2)) { (handler) in
+                
+            }
+            
         }
         
         let vc = Utility.getSignupDetail1ViewController()

@@ -141,9 +141,12 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
             cell.txtField.addTarget(self, action: #selector(textFieldTextChanged(_:)), for: .editingChanged)
             cell.txtView.layer.borderWidth = 0.5
             cell.txtView.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
+            cell.requiredIcon.isHidden = true
             
             if (indexPath.row == 1){
                 cell.txtView.text = cell.txtView.text!
+                cell.lblHeading.isHidden = false
+                cell.lblHeading.text = "Tell us something about yourself"
                 cell.txtView.keyboardType = .default
                 cell.txtView.autocapitalizationType = .sentences
                 cell.txtField.isHidden = true
@@ -153,6 +156,8 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
             }
             else if (indexPath.row == 2){
                 cell.txtView.text = cell.txtView.text!
+                cell.lblHeading.isHidden = false
+                cell.lblHeading.text = "Tell us some of your hobbies"
                 cell.txtView.keyboardType = .default
                 cell.txtView.autocapitalizationType = .sentences
                 cell.txtField.isHidden = true
@@ -162,6 +167,8 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
             }
             else if (indexPath.row == 3){
                 cell.txtField.text = userCountry
+                cell.lblHeading.isHidden = true
+                cell.lblHeading.text = ""
                 cell.txtField.keyboardType = .default
                 cell.txtField.autocapitalizationType = .words
                 cell.txtField.isHidden = false
@@ -171,6 +178,8 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
             }
             else if (indexPath.row == 4){
                 cell.txtField.text = cell.txtView.text!
+                cell.lblHeading.isHidden = true
+                cell.lblHeading.text = ""
                 cell.txtField.keyboardType = .numberPad
                 cell.txtField.autocapitalizationType = .words
                 cell.txtField.isHidden = false
@@ -189,7 +198,7 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
             return 220
         }
         else if (indexPath.row == 1 || indexPath.row == 2){
-            return 110
+            return 133
         }
         else if (indexPath.row == 5){
             return 130

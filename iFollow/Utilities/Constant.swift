@@ -19,6 +19,7 @@ let kFirstNameError = "Please enter your first name"
 let kLastNameError = "Please enter your last name"
 let kUsernameError = "Please enter your username"
 let kOldPasswordError = "Please enter your old password"
+let kTermsAndConditionError = "In order to continue, you need to accept to our Terms & Conditions and Privacy Policy. Kindly tap on provided check box in order to do that"
 
 //Others
 let BASEURL = "https://ifollowinc.herokuapp.com/users/"

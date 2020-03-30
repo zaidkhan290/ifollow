@@ -298,6 +298,8 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
                 cell.seperatorView.isHidden = false
                 cell.txtView.isHidden = true
                 cell.txtViewSeperator.isHidden = true
+                cell.lblHeading.isHidden = true
+                cell.requiredIcon.isHidden = false
             }
             else if (indexPath.row == 2){
                 cell.txtField.text = lastName
@@ -307,6 +309,8 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
                 cell.seperatorView.isHidden = false
                 cell.txtView.isHidden = true
                 cell.txtViewSeperator.isHidden = true
+                cell.lblHeading.isHidden = true
+                cell.requiredIcon.isHidden = false
             }
             else if (indexPath.row == 3){
                 cell.txtField.text = dob
@@ -316,6 +320,8 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
                 cell.seperatorView.isHidden = false
                 cell.txtView.isHidden = true
                 cell.txtViewSeperator.isHidden = true
+                cell.lblHeading.isHidden = true
+                cell.requiredIcon.isHidden = true
             }
             else if (indexPath.row == 4){
                 cell.txtField.text = username
@@ -325,6 +331,8 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
                 cell.seperatorView.isHidden = false
                 cell.txtView.isHidden = true
                 cell.txtViewSeperator.isHidden = true
+                cell.lblHeading.isHidden = true
+                cell.requiredIcon.isHidden = false
             }
             else if (indexPath.row == 6){
                 cell.txtView.text = shortBio
@@ -334,6 +342,9 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
                 cell.seperatorView.isHidden = true
                 cell.txtView.isHidden = false
                 cell.txtViewSeperator.isHidden = false
+                cell.lblHeading.isHidden = false
+                cell.requiredIcon.isHidden = true
+                cell.lblHeading.text = "Tell us something about yourself"
             }
             else if (indexPath.row == 7){
                 cell.txtView.text = hobby
@@ -343,6 +354,9 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
                 cell.seperatorView.isHidden = true
                 cell.txtView.isHidden = false
                 cell.txtViewSeperator.isHidden = false
+                cell.lblHeading.isHidden = false
+                cell.requiredIcon.isHidden = true
+                cell.lblHeading.text = "Tell us some of your hobbies"
             }
             else if (indexPath.row == 8){
                 cell.txtField.text = userCountry
@@ -352,6 +366,8 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
                 cell.seperatorView.isHidden = false
                 cell.txtView.isHidden = true
                 cell.txtViewSeperator.isHidden = true
+                cell.lblHeading.isHidden = true
+                cell.requiredIcon.isHidden = true
             }
             else if (indexPath.row == 9){
                 cell.txtField.text = zipCode
@@ -361,6 +377,8 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
                 cell.seperatorView.isHidden = false
                 cell.txtView.isHidden = true
                 cell.txtViewSeperator.isHidden = true
+                cell.lblHeading.isHidden = true
+                cell.requiredIcon.isHidden = true
             }
             
             return cell
@@ -382,7 +400,7 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
             return 70
         }
         else if (indexPath.row == 6 || indexPath.row == 7){
-            return 110
+            return 133
         }
         else if (indexPath.row == 11){
             return 80

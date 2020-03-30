@@ -148,13 +148,16 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
             cell.icon.image = UIImage(named: textFieldImages[indexPath.row])
             cell.txtField.tag = indexPath.row
             cell.txtField.addTarget(self, action: #selector(textFieldTextChanged(_:)), for: .editingChanged)
+            cell.lblHeading.isHidden = true
             
             if (indexPath.row == 3){
                 cell.txtField.inputView = dobDatePicker
                 cell.txtField.addTarget(self, action: #selector(textfieldDidBeginEditing(_:)), for: .editingDidBegin)
+                cell.requiredIcon.isHidden = true
             }
             else{
                 cell.txtField.text = cell.txtField.text
+                cell.requiredIcon.isHidden = false
                 cell.txtField.keyboardType = .default
                 cell.txtField.autocapitalizationType = indexPath.row == 4 ? .none : .words
             }
