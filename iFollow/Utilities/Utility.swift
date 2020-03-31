@@ -171,6 +171,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "EmojisViewController") as! EmojisViewController
     }
     
+    static func getPrivacyPolicyViewController() -> PrivacyPolicyViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "PrivacyPolicyViewController") as! PrivacyPolicyViewController
+    }
+    
     static func getLoginUserId() -> Int{
         if let user = UserModel.getCurrentUser(){
             return user.userId

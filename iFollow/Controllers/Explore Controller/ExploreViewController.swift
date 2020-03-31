@@ -91,7 +91,7 @@ class ExploreViewController: UIViewController {
         let picRef = iosRef?.child("/StoryImage\(timeStemp).jgp")
         
         //        let imageData2 = UIImagePNGRepresentation(image)
-        if let imageData2 = image.jpegData(compressionQuality: 0.75) {
+        if let imageData2 = image.jpegData(compressionQuality: 1) {
             // Create file metadata including the content type
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"

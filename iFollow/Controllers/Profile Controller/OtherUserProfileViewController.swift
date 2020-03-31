@@ -33,7 +33,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     var otherUserProfile = OtherUserModel()
     var isTrending = false
     var options = [String]()
-    var userId = 3
+    var userId = 8
     
     override func viewDidLoad() {
         super.viewDidLoad()

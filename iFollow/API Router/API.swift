@@ -105,6 +105,9 @@ class API: NSObject {
                             if (response.response?.statusCode == 200){
                                 completion?(.success,JSON(value),json["message"].stringValue)
                             }
+                            else if (response.response?.statusCode == 503){
+                                completion?(.failure,JSON(value),"Server Error")
+                            }
                             else{
                                 completion?(.failure,JSON(value),json["message"].stringValue)
                             }
@@ -146,6 +149,9 @@ class API: NSObject {
                     
                     if (response.response?.statusCode == 200){
                         completion?(.success,JSON(value),json["message"].stringValue)
+                    }
+                    else if (response.response?.statusCode == 503){
+                        completion?(.failure,JSON(value),"Server Error")
                     }
                     else{
                         completion?(.failure,JSON(value),json["message"].stringValue)

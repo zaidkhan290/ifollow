@@ -69,15 +69,15 @@ class SignupViewController: UIViewController {
         let termsAndConditionRange = text.range(of: " Terms & Conditions")
         let privacyPolicyRange = text.range(of: "Privacy Policy")
         
-        if gesture.didTapAttributedTextInLabel(label: self.lblTermsAndConditions, inRange: text.nsRange(from: privacyPolicyRange!)) {
-//            let vc = PrivacyPolicyVC.instantiateFromStoryboard()
-//            vc.isFromSignup = true
-//            self.navigationController?.pushViewController(vc, animated: true)
+        if gesture.didTapAttributedTextInLabel(label: self.lblTermsAndConditions, inRange: text.nsRange(from: termsAndConditionRange!)) {
+            let vc = Utility.getPrivacyPolicyViewController()
+            vc.isTerms = true
+            self.pushToVC(vc: vc)
         }
-        else if gesture.didTapAttributedTextInLabel(label: self.lblTermsAndConditions, inRange: text.nsRange(from: termsAndConditionRange!)){
-//            let vc = TermsVC.instantiateFromStoryboard()
-//            vc.isFromSignup = true
-//            self.navigationController?.pushViewController(vc, animated: true)
+        else if gesture.didTapAttributedTextInLabel(label: self.lblTermsAndConditions, inRange: text.nsRange(from: privacyPolicyRange!)){
+            let vc = Utility.getPrivacyPolicyViewController()
+            vc.isTerms = false
+            self.pushToVC(vc: vc)
         }
         
     }

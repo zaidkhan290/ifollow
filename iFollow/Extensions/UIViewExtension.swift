@@ -38,6 +38,17 @@ extension UIView{
         }
     }
     
+    func addShadow(shadowColor: CGColor = UIColor.lightGray.cgColor,
+                   shadowOffset: CGSize = CGSize(width: 5.0, height: 5.0),
+                   shadowOpacity: Float = 0.4,
+                   shadowRadius: CGFloat = 3.0) {
+        layer.shadowColor = shadowColor
+        layer.shadowOffset = shadowOffset
+        layer.shadowOpacity = shadowOpacity
+        layer.shadowRadius = shadowRadius
+        layer.masksToBounds = false
+    }
+    
 //    func startRotating(duration: Double = 1) {
 //        let kAnimationKey = "rotation"
 //        

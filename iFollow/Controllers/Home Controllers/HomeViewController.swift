@@ -90,7 +90,7 @@ class HomeViewController: UIViewController {
         let picRef = iosRef?.child("/StoryImage\(timeStemp).jgp")
         
         //        let imageData2 = UIImagePNGRepresentation(image)
-        if let imageData2 = image.jpegData(compressionQuality: 0.75) {
+        if let imageData2 = image.jpegData(compressionQuality: 1) {
             // Create file metadata including the content type
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
@@ -286,7 +286,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
                 if (status == .success){
                     let realm = try! Realm()
                     try! realm.safeWrite {
-                        let stickers = result["messsage"].arrayValue
+                        let stickers = result["message"].arrayValue
                         realm.delete(realm.objects(StickersModel.self))
                         for sticker in stickers{
                             let model = StickersModel()

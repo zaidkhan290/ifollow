@@ -74,7 +74,6 @@ class ProfileViewController: UIViewController {
         imagePicker.videoMaximumDuration = 60
         imagePicker.videoQuality = .type640x480
         imagePicker.delegate = self
-        getUserPosts(isAfterNewPost: false)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshUserPost), name: NSNotification.Name(rawValue: "refreshUserPosts"), object: nil)
     }
     

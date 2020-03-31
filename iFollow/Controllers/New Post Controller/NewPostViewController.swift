@@ -98,6 +98,7 @@ class NewPostViewController: UIViewController {
         
         postImage.isUserInteractionEnabled = true
         postImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postImageTapped)))
+        postView.addShadow()
         
     }
     

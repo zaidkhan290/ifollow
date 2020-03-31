@@ -151,7 +151,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         super.viewDidAppear(true)
         
         captureSession = AVCaptureSession()
-        captureSession.sessionPreset = .medium
+        captureSession.sessionPreset = .hd4K3840x2160
         
         guard let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
             else {
