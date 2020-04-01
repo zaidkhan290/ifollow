@@ -236,7 +236,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.userImage.layer.cornerRadius = 25
         itemView.userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         itemView.lblUsername.text = Utility.getLoginUserFullName()
-        itemView.lblUserAddress.text = Utility.getLoginUserCountry()
+        itemView.lblUserAddress.text = post.postLocation
         itemView.feedBackView.isUserInteractionEnabled = true
         itemView.feedBackView.tag = index
         itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
@@ -347,7 +347,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         }
         if let video = info[UIImagePickerController.InfoKey.mediaURL] as? URL{
             DispatchQueue.main.async {
-                if let videoScreenShot = Utility.imageFromVideo(url: video, at: 0){
+                if let videoScreenShot = Utility.imageFromVideo(url: video, at: 0, totalTime: 60){
                     let vc = Utility.getNewPostViewController()
                     vc.postSelectedImage = videoScreenShot
                     vc.videoURL = video

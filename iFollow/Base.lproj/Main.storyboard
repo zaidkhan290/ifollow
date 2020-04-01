@@ -2186,6 +2186,13 @@
                                     <constraint firstAttribute="width" constant="25" id="br0-L1-f4w"/>
                                 </constraints>
                             </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJR-IE-oQh">
+                                <rect key="frame" x="199" y="357" width="16" height="22"/>
+                                <state key="normal" image="send"/>
+                                <connections>
+                                    <action selector="btnPlayVideoTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="3HO-mP-R3W"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5BY-dE-1iu">
                                 <rect key="frame" x="354" y="32.666666666666664" width="40" height="39.999999999999993"/>
                                 <constraints>
@@ -2271,17 +2278,23 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="BdC-mz-ckV">
-                                <rect key="frame" x="124.33333333333333" y="691" width="165.33333333333337" height="25"/>
+                                <rect key="frame" x="82.666666666666671" y="691" width="248.66666666666663" height="25"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Live" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50l-zo-8Hg">
-                                        <rect key="frame" x="0.0" y="0.0" width="82.666666666666671" height="25"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xnR-K9-jIF">
+                                        <rect key="frame" x="0.0" y="0.0" width="83" height="25"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Normal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SOI-Ge-DiU">
-                                        <rect key="frame" x="82.666666666666657" y="0.0" width="82.666666666666657" height="25"/>
+                                        <rect key="frame" x="82.999999999999972" y="0.0" width="82.666666666666657" height="25"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Live" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50l-zo-8Hg">
+                                        <rect key="frame" x="165.66666666666669" y="0.0" width="83" height="25"/>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -2295,9 +2308,10 @@
                         <constraints>
                             <constraint firstItem="ZSm-yG-JQX" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="43v-t8-gDQ"/>
                             <constraint firstItem="sw2-9r-yua" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="56I-q1-l35"/>
-                            <constraint firstItem="BdC-mz-ckV" firstAttribute="width" secondItem="WSe-4k-XPy" secondAttribute="width" multiplier="0.4" id="59G-WY-Ael"/>
+                            <constraint firstItem="BdC-mz-ckV" firstAttribute="width" secondItem="WSe-4k-XPy" secondAttribute="width" multiplier="0.6" id="59G-WY-Ael"/>
                             <constraint firstItem="D3w-Qz-cp8" firstAttribute="leading" secondItem="ZdE-8t-qjH" secondAttribute="leading" id="6tQ-B1-ZKx"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="bottom" secondItem="XDX-CZ-y98" secondAttribute="bottom" id="6yB-c3-GQn"/>
+                            <constraint firstItem="rJR-IE-oQh" firstAttribute="centerY" secondItem="3tR-l5-VkQ" secondAttribute="centerY" id="7fr-oj-w5W"/>
                             <constraint firstItem="BdC-mz-ckV" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="8tY-Cj-4u6"/>
                             <constraint firstItem="rJ7-1D-XyO" firstAttribute="top" secondItem="5BY-dE-1iu" secondAttribute="bottom" constant="20" id="8xN-AE-mOb"/>
                             <constraint firstItem="ZdE-8t-qjH" firstAttribute="centerY" secondItem="sw2-9r-yua" secondAttribute="centerY" id="9O6-fU-0Td"/>
@@ -2322,6 +2336,7 @@
                             <constraint firstItem="wbu-yt-hY1" firstAttribute="leading" secondItem="WSe-4k-XPy" secondAttribute="leading" id="dwl-IP-Jwj"/>
                             <constraint firstItem="G7X-9m-hIY" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="eqn-50-uhj"/>
                             <constraint firstItem="XDX-CZ-y98" firstAttribute="top" secondItem="3tR-l5-VkQ" secondAttribute="top" id="fAw-bM-2Ni"/>
+                            <constraint firstItem="rJR-IE-oQh" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="gPX-2M-FdY"/>
                             <constraint firstItem="XDX-CZ-y98" firstAttribute="leading" secondItem="WSe-4k-XPy" secondAttribute="leading" id="hs2-vT-EQ1"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="v6H-bX-Lzo" secondAttribute="trailing" constant="20" id="ina-yU-QRi"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="rJ7-1D-XyO" secondAttribute="trailing" constant="20" id="lat-59-ciw"/>
@@ -2342,6 +2357,7 @@
                         <outlet property="btnFlash" destination="rJ7-1D-XyO" id="FD6-9L-TJi"/>
                         <outlet property="btnGallery" destination="ZdE-8t-qjH" id="e6F-RM-c4n"/>
                         <outlet property="btnLocation" destination="v6H-bX-Lzo" id="Xgc-QM-blW"/>
+                        <outlet property="btnPlay" destination="rJR-IE-oQh" id="v8j-fc-KJL"/>
                         <outlet property="btnRotate" destination="5BY-dE-1iu" id="i35-cO-UEq"/>
                         <outlet property="btnText" destination="gZk-KZ-Qkx" id="koc-uy-rIX"/>
                         <outlet property="cameraView" destination="E7w-Dh-cgK" id="0sH-8F-RHK"/>
@@ -2356,6 +2372,7 @@
                         <outlet property="lblLocation" destination="KYI-YN-Jeb" id="U6G-Ag-ePW"/>
                         <outlet property="lblNormal" destination="SOI-Ge-DiU" id="doA-Ok-TAq"/>
                         <outlet property="lblTime" destination="9Pg-kA-5PV" id="nGF-0J-Ewo"/>
+                        <outlet property="lblVideo" destination="xnR-K9-jIF" id="xg1-aM-ZRs"/>
                         <outlet property="locationIcon" destination="uv7-H4-UU8" id="lRz-Is-hDJ"/>
                         <outlet property="locationView" destination="MSi-1I-SUf" id="hpB-jy-b93"/>
                         <outlet property="previewView" destination="wbu-yt-hY1" id="IPI-4D-Dnl"/>

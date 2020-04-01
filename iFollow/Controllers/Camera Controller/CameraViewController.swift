@@ -11,9 +11,11 @@ import AVFoundation
 import Photos
 import ColorSlider
 import GooglePlaces
+import AVKit
 
 protocol CameraViewControllerDelegate: class {
     func getStoryImage(image: UIImage)
+    func getStoryVideo(videoURL: URL)
 }
 
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
@@ -33,6 +35,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var deleteIcon: UIImageView!
     @IBOutlet weak var lblLive: UILabel!
     @IBOutlet weak var lblNormal: UILabel!
+    @IBOutlet weak var lblVideo: UILabel!
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var editableTextField: UITextField!
     @IBOutlet weak var fontSlider: UISlider!
@@ -43,6 +46,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var locationView: UIView!
     @IBOutlet weak var locationIcon: UIImageView!
     @IBOutlet weak var lblLocation: UILabel!
+    @IBOutlet weak var btnPlay: UIButton!
     
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
@@ -53,6 +57,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     var emojis = [UIImage]()
     var imagePicker = UIImagePickerController()
     var isLive = false
+    var isVideo = false
     var colorSlider: ColorSlider!
     var fontSize: Float = 30.0
     var selectedFont = ""
@@ -67,6 +72,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     var selectedFilter = 0
     var selectedImage = UIImage()
     var delegate: CameraViewControllerDelegate!
+    var videoURL: URL!
     
   //  let filterSwipeView = DSSwipableFilterView(frame: UIScreen.main.bounds)
     
@@ -94,8 +100,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         
      //   prepareFilterView()
         imagePicker.delegate = self
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        imagePicker.videoMaximumDuration = 15
+        imagePicker.videoQuality = .type640x480
         
         editableTextField.delegate = self
         
@@ -108,6 +115,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         lblLive.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(lblLiveTapped)))
         lblNormal.isUserInteractionEnabled = true
         lblNormal.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(lblNormalTapped)))
+        lblVideo.isUserInteractionEnabled = true
+        lblVideo.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(lblVideoTapped)))
         
         lblFont.layer.borderWidth = 1
         lblFont.layer.borderColor = UIColor.white.cgColor
@@ -186,6 +195,16 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         self.captureSession.stopRunning()
     }
     
+    func changeView(isVideoSelected: Bool){
+        btnGallery.isHidden = isVideoSelected
+        btnEmoji.isHidden = isVideoSelected
+        btnText.isHidden = isVideoSelected
+        btnLocation.isHidden = isVideoSelected
+        btnFlash.isHidden = isVideoSelected
+        btnRotate.isHidden = isVideoSelected
+        btnPlay.isHidden = !isVideoSelected
+    }
+    
     @objc func colorSliderValueChanged(_ slider: ColorSlider) {
         let color = slider.color
         editableTextField.textColor = color
@@ -193,14 +212,32 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
 
     @objc func lblLiveTapped(){
         isLive = true
+        isVideo = false
+        btnGallery.isEnabled = false
         lblLive.font = Theme.getLatoBoldFontOfSize(size: 18)
         lblNormal.font = Theme.getLatoRegularFontOfSize(size: 15)
+        lblVideo.font = Theme.getLatoRegularFontOfSize(size: 15)
     }
     
     @objc func lblNormalTapped(){
         isLive = false
+        isVideo = false
+        btnGallery.isEnabled = true
         lblNormal.font = Theme.getLatoBoldFontOfSize(size: 18)
         lblLive.font = Theme.getLatoRegularFontOfSize(size: 15)
+        lblVideo.font = Theme.getLatoRegularFontOfSize(size: 15)
+    }
+    
+    @objc func lblVideoTapped(){
+        isLive = false
+        isVideo = true
+        btnGallery.isEnabled = true
+        lblVideo.font = Theme.getLatoBoldFontOfSize(size: 18)
+        lblLive.font = Theme.getLatoRegularFontOfSize(size: 15)
+        lblNormal.font = Theme.getLatoRegularFontOfSize(size: 15)
+        imagePicker.sourceType = .camera
+        imagePicker.mediaTypes = ["public.movie"]
+        self.present(imagePicker, animated: true, completion: nil)
     }
     
     @objc func timeViewTapped(){
@@ -330,8 +367,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         btnClock.isHidden = false
         lblLive.isHidden = true
         lblNormal.isHidden = true
+        lblVideo.isHidden = true
         btnRotate.isEnabled = false
         btnFlash.isEnabled = false
+        changeView(isVideoSelected: false)
       //  preview(image: image!)
     }
     
@@ -485,7 +524,16 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             timeView.isHidden = true
             locationView.isHidden = true
             editableTextField.isHidden = true
+            lblVideo.isHidden = false
+            lblNormal.isHidden = false
+            lblLive.isHidden = false
+            btnPlay.isHidden = true
+            btnGallery.isHidden = false
+            btnEmoji.isHidden = false
+            btnRotate.isHidden = false
+            btnFlash.isHidden = false
             editableTextField.text = ""
+            lblNormalTapped()
             for subView in filterView.subviews{
                 if (subView == cameraView || subView == timeView || subView == editableTextField || subView == locationView){
                     
@@ -503,20 +551,37 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
     @IBAction func btnCaptureTapped(_ sender: UIButton) {
         if (!isPictureCaptured){
-            let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
-            settings.flashMode = isFrontCamera ? .off : flashMode
-            stillImageOutput.capturePhoto(with: settings, delegate: self)
-            isPictureCaptured = true
-            btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
-            btnGallery.setImage(UIImage(named: "filter"), for: .normal)
-            btnBack.setImage(UIImage(named: "close-1"), for: .normal)
+            if (!isLive && !isVideo){
+                let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
+                settings.flashMode = isFrontCamera ? .off : flashMode
+                stillImageOutput.capturePhoto(with: settings, delegate: self)
+                isPictureCaptured = true
+                btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
+                btnGallery.setImage(UIImage(named: "filter"), for: .normal)
+                btnBack.setImage(UIImage(named: "close-1"), for: .normal)
+            }
         }
         else{
-            let image = self.filterView.screenshot()
-            self.delegate.getStoryImage(image: image)
+            if (self.videoURL == nil){
+                let image = self.filterView.screenshot()
+                self.delegate.getStoryImage(image: image)
+            }
+            else{
+                self.delegate.getStoryVideo(videoURL: self.videoURL)
+            }
             self.dismiss(animated: true, completion: nil)
         }
         
+    }
+    
+    @IBAction func btnPlayVideoTapped(_ sender: UIButton){
+        let player = AVPlayer(url: videoURL)
+        
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
     }
     
     @IBAction func btnGalleryTapped(_ sender: UIButton) {
@@ -524,6 +589,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             changeFilter()
         }
         else{
+            imagePicker.mediaTypes = ["public.image", "public.movie"]
+            imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         }
         
@@ -747,6 +814,8 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        picker.dismiss(animated: true, completion: nil)
+        
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             isPictureCaptured = true
             cameraView.isHidden = false
@@ -764,15 +833,38 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
             btnBack.setImage(UIImage(named: "close-1"), for: .normal)
             lblLive.isHidden = true
             lblNormal.isHidden = true
+            lblVideo.isHidden = true
             btnRotate.isEnabled = false
             btnFlash.isEnabled = false
-            picker.dismiss(animated: true, completion: nil)
+            
+        }
+        
+        if let video = info[UIImagePickerController.InfoKey.mediaURL] as? URL{
+            DispatchQueue.main.async {
+                if let videoScreenShot = Utility.imageFromVideo(url: video, at: 0, totalTime: 15){
+                    self.videoURL = video
+                    self.isPictureCaptured = true
+                    self.cameraView.isHidden = false
+                    self.selectedImage = videoScreenShot
+                    self.cameraView.image = videoScreenShot
+                    self.filterView.isHidden = false
+                    self.btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
+                    self.btnGallery.setImage(UIImage(named: "filter"), for: .normal)
+                    self.btnBack.setImage(UIImage(named: "close-1"), for: .normal)
+                    self.lblLive.isHidden = true
+                    self.lblNormal.isHidden = true
+                    self.lblVideo.isHidden = true
+                    self.changeView(isVideoSelected: true)
+                }
+            }
+
         }
         
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
+        lblNormalTapped()
     }
 }
 

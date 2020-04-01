@@ -82,7 +82,7 @@ class HomeViewController: UIViewController {
         
     }
     
-    func saveStoryMediaToFirebase(image: UIImage){
+    func saveStoryImageToFirebase(image: UIImage){
         
         let timeStemp = Int(Date().timeIntervalSince1970)
         let mediaRef = storageRef?.child("/Media")
@@ -107,7 +107,7 @@ class HomeViewController: UIViewController {
                     
                     picRef?.downloadURL(completion: { (url, error) in
                         if let imageURL = url{
-                            self.postStory(mediaUrl: imageURL.absoluteString)
+                            self.postStory(mediaUrl: imageURL.absoluteString, postType: "image")
                         }
                     })
                     
@@ -131,10 +131,54 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func postStory(mediaUrl: String){
+    func saveStoryVideoToFirebase(videoURL: URL){
+        let timeStemp = Int(Date().timeIntervalSince1970)
+        let mediaRef = storageRef?.child("/Media")
+        let iosRef = mediaRef?.child("/iOS").child("/Videos")
+        let videoRef = iosRef?.child("/StoryVideo\(timeStemp).mov")
+        
+        if let videoData = try? Data(contentsOf: videoURL){
+            
+            Utility.showOrHideLoader(shouldShow: true)
+            
+            let uploadTask = videoRef?.putData(videoData, metadata: nil, completion: { (metaData, error) in
+                if(error != nil){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(error!.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+                        
+                    }
+                }else{
+                    
+                    videoRef?.downloadURL(completion: { (url, error) in
+                        if let videoURL = url{
+                            self.postStory(mediaUrl: videoURL.absoluteString, postType: "video")
+                        }
+                    })
+                    
+                    
+                }
+            })
+            uploadTask?.resume()
+            
+            var i = 0
+            uploadTask?.observe(.progress, handler: { (snapshot) in
+                if(i == 0){
+                    
+                }
+                i += 1
+                
+            })
+            
+            uploadTask?.observe(.success, handler: { (snapshot) in
+                
+            })
+        }
+    }
+    
+    func postStory(mediaUrl: String, postType: String){
         let params = ["media": mediaUrl,
                       "expire_hours": 48,
-            "media_type": "image"] as [String : Any]
+            "media_type": postType] as [String : Any]
         
         API.sharedInstance.executeAPI(type: .createStory, method: .post, params: params) { (status, result, message) in
             
@@ -344,7 +388,11 @@ extension HomeViewController: UIAdaptivePresentationControllerDelegate, UIPopove
 extension HomeViewController: CameraViewControllerDelegate{
     func getStoryImage(image: UIImage) {
         storyImage = image
-        saveStoryMediaToFirebase(image: storyImage)
+        saveStoryImageToFirebase(image: storyImage)
+    }
+    
+    func getStoryVideo(videoURL: URL) {
+        saveStoryVideoToFirebase(videoURL: videoURL)
     }
 }
 

@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,8 +38,8 @@
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Markin Lake, Canada" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEY-jN-7kQ">
-                            <rect key="frame" x="80" y="42" width="114.5" height="14"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Markin Lake, Canada" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEY-jN-7kQ">
+                            <rect key="frame" x="80" y="42" width="283" height="14"/>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                             <color key="textColor" red="0.34509803919999998" green="0.35294117650000001" blue="0.35686274509999999" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -157,6 +156,7 @@
                         <constraint firstItem="Nyn-7Y-rJs" firstAttribute="top" secondItem="g0t-Ra-yTE" secondAttribute="top" constant="20" id="Fj8-YB-bKD"/>
                         <constraint firstAttribute="bottom" secondItem="Qqp-t8-b52" secondAttribute="bottom" constant="50" id="FmC-nk-DOC"/>
                         <constraint firstItem="K99-P7-8ug" firstAttribute="top" secondItem="g0t-Ra-yTE" secondAttribute="top" constant="10" id="FnG-xm-Xdg"/>
+                        <constraint firstAttribute="trailing" secondItem="WEY-jN-7kQ" secondAttribute="trailing" constant="10" id="I2K-Hy-Rxv"/>
                         <constraint firstItem="2If-Pd-LEb" firstAttribute="top" secondItem="g0t-Ra-yTE" secondAttribute="top" constant="20" id="MSI-CN-ON0"/>
                         <constraint firstItem="WEY-jN-7kQ" firstAttribute="leading" secondItem="K99-P7-8ug" secondAttribute="trailing" constant="20" id="Msg-cp-ccW"/>
                         <constraint firstAttribute="trailing" secondItem="wPY-hS-Jz4" secondAttribute="trailing" id="PSE-ss-Dt2"/>
