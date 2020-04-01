@@ -35,5 +35,6 @@ pod 'Firebase/Crashlytics'
 pod 'GooglePlaces', '3.5.0'
 pod 'Lightbox'
 pod 'DateToolsSwift'
+pod 'FAStoryKit'
 
 end

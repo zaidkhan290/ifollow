@@ -322,11 +322,11 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         
         let params = ["location": userCurrentAddress]
         Utility.showOrHideLoader(shouldShow: true)
-        
+
         API.sharedInstance.executeAPI(type: .stickers, method: .get, params: params) { (status, result, message) in
-            
+
             DispatchQueue.main.async {
-                
+
                 if (status == .success){
                     let realm = try! Realm()
                     try! realm.safeWrite {
@@ -343,7 +343,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
                 else if (status == .failure){
                     Utility.showOrHideLoader(shouldShow: false)
                     Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-                        
+
                     }
                 }
                 else if (status == .authError){
@@ -353,7 +353,6 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
                     }
                 }
             }
-            
         }
     }
 }
