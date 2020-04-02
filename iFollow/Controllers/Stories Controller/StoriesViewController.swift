@@ -30,7 +30,7 @@ class StoriesViewController: UIViewController {
     @IBOutlet weak var prevStoryView: UIView!
     
     var videoPlayer: AVPlayer!
-    var storiesDict = [[String:String]]()
+    var storiesArray = [StoryModel]()
     var isVideoPlaying = false
     
     var spb: SegmentedProgressBar!
@@ -61,44 +61,32 @@ class StoriesViewController: UIViewController {
 //            durationArray.append(15)
 //        }
         
-        var story1 = [String:String]()
-        story1["url"] = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FVideos%2FStoryVideo1585742103.mov?alt=media&token=5c66bb7e-6c0f-4a5f-82e6-d1402ab6357b"
-        story1["mediaType"] = "video"
-        storiesDict.append(story1)
+        let model1 = StoryModel()
+        model1.storyId = 1
+        model1.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FVideos%2FStoryVideo1585742103.mov?alt=media&token=5c66bb7e-6c0f-4a5f-82e6-d1402ab6357b"
+        model1.storyMediaType = "video"
+        storiesArray.append(model1)
+        
+        let model2 = StoryModel()
+        model2.storyId = 2
+        model2.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1584621848.jgp?alt=media&token=9b21ae6b-43df-4545-bbe1-fd38017b5fdc"
+        model2.storyMediaType = "image"
+        storiesArray.append(model2)
 
-        var story2 = [String:String]()
-        story2["url"] = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1584621848.jgp?alt=media&token=9b21ae6b-43df-4545-bbe1-fd38017b5fdc"
-        story2["mediaType"] = "image"
-        storiesDict.append(story2)
+        let model3 = StoryModel()
+        model3.storyId = 3
+        model3.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FVideos%2FStoryVideo1585741866.mov?alt=media&token=015d7ed0-93bd-432c-b035-f8e42f59d822"
+        model3.storyMediaType = "video"
+        storiesArray.append(model3)
 
-        var story3 = [String:String]()
-        story3["url"] = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FVideos%2FStoryVideo1585741866.mov?alt=media&token=015d7ed0-93bd-432c-b035-f8e42f59d822"
-        story3["mediaType"] = "video"
-        storiesDict.append(story3)
-        
-        var story4 = [String:String]()
-        story4["url"] = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1585654428.jgp?alt=media&token=89487b81-bc98-422f-80d5-143b00c5fdb0"
-        story4["mediaType"] = "image"
-        storiesDict.append(story4)
+        let model4 = StoryModel()
+        model4.storyId = 4
+        model4.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1585654428.jgp?alt=media&token=89487b81-bc98-422f-80d5-143b00c5fdb0"
+        model4.storyMediaType = "image"
+        storiesArray.append(model4)
         
         
-//        var story1 = [String:String]()
-//        story1["url"] = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1584621848.jgp?alt=media&token=9b21ae6b-43df-4545-bbe1-fd38017b5fdc"
-//        story1["mediaType"] = "image"
-//        storiesDict.append(story1)
-//
-//        var story2 = [String:String]()
-//        story2["url"] = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1585737991.jgp?alt=media&token=7225eb23-23d4-4fdf-ae30-6fe93b36915e"
-//        story2["mediaType"] = "image"
-//        storiesDict.append(story2)
-//
-//        var story3 = [String:String]()
-//        story3["url"] = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1585654428.jgp?alt=media&token=89487b81-bc98-422f-80d5-143b00c5fdb0"
-//        story3["mediaType"] = "image"
-//        storiesDict.append(story3)
-        
-        
-        spb = SegmentedProgressBar(numberOfSegments: storiesDict.count, duration: 15)
+        spb = SegmentedProgressBar(numberOfSegments: storiesArray.count, duration: 15)
         spb.frame = CGRect(x: 15, y: view.safeAreaInsets.top + 20, width: view.frame.width - 30, height: 4)
         view.addSubview(spb)
         
@@ -107,10 +95,7 @@ class StoriesViewController: UIViewController {
         spb.bottomColor = UIColor.gray
         spb.padding = 2
         
-        let story = self.storiesDict.first!
-        let storyUrl = story["url"]
-        let storyType = story["mediaType"]
-        self.setStory(storyURL: storyUrl!, storyType: storyType!, isFirstStory: true)
+        self.setStory(storyModel: storiesArray.first!, isFirstStory: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -120,71 +105,94 @@ class StoriesViewController: UIViewController {
     
     //MARK:- Methods and Actions
     
-    func setStory(storyURL: String, storyType: String, isFirstStory: Bool){
-        if (storyType == "video"){
-            self.downloadVideo(videoURL: storyURL, isFirstStory: isFirstStory)
+    func setStory(storyModel: StoryModel, isFirstStory: Bool){
+        if (storyModel.storyMediaType == "video"){
+            self.downloadVideo(storyModel: storyModel, isFirstStory: isFirstStory)
         }
         else{
-            self.downloadPhoto(photoURL: storyURL, isFirstStory: isFirstStory)
+            self.downloadPhoto(storyModel: storyModel, isFirstStory: isFirstStory)
         }
     }
     
-    func downloadVideo(videoURL: String, isFirstStory: Bool){
+    func downloadVideo(storyModel: StoryModel, isFirstStory: Bool){
         
         if (!isFirstStory){
             self.spb.isPaused = true
         }
-        Alamofire.request(videoURL).downloadProgress(closure : { (progress) in
-            print(progress.fractionCompleted)
-            Utility.showOrHideLoader(shouldShow: true)
-        }).responseData{ (response) in
-            print(response)
-            print(response.result.value!)
-            print(response.result.description)
-            if let data = response.result.value {
-                
-                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-                let videoURL = documentsURL.appendingPathComponent("video.mp4")
-                do {
-                    try data.write(to: videoURL)
-                } catch {
-                    Loaf("Something went wrong", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1), completionHandler: { (dimsiss) in
-                        self.dismissStory()
-                    })
+        
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let videoURL = documentsURL.appendingPathComponent("\(storyModel.storyId).mp4")
+        if (try? Data(contentsOf: videoURL)) != nil{
+            self.videoView.isHidden = false
+            self.imageView.isHidden = true
+            self.videoPlayer = AVPlayer(url: videoURL)
+            let playerLayer = AVPlayerLayer(player: self.videoPlayer)
+            playerLayer.frame = self.videoView.frame
+            self.videoView.layer.addSublayer(playerLayer)
+            Utility.showOrHideLoader(shouldShow: false)
+            self.videoPlayer.play()
+            self.isVideoPlaying = true
+            if (isFirstStory){
+                self.spb.startAnimation()
+                self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
+                self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
+            }
+            self.spb.isPaused = false
+        }
+        else{
+            Alamofire.request(storyModel.storyURL).downloadProgress(closure : { (progress) in
+                print(progress.fractionCompleted)
+                Utility.showOrHideLoader(shouldShow: true)
+            }).responseData{ (response) in
+                print(response)
+                print(response.result.value!)
+                print(response.result.description)
+                if let data = response.result.value {
+                    
+                    let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                    let videoURL = documentsURL.appendingPathComponent("\(storyModel.storyId).mp4")
+                    do {
+                        try data.write(to: videoURL)
+                    } catch {
+                        Loaf("Something went wrong", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1), completionHandler: { (dimsiss) in
+                            self.dismissStory()
+                        })
+                    }
+                    print(videoURL)
+                    self.videoView.isHidden = false
+                    self.imageView.isHidden = true
+                    self.videoPlayer = AVPlayer(url: videoURL)
+                    let playerLayer = AVPlayerLayer(player: self.videoPlayer)
+                    playerLayer.frame = self.videoView.frame
+                    self.videoView.layer.addSublayer(playerLayer)
+                    Utility.showOrHideLoader(shouldShow: false)
+                    self.videoPlayer.play()
+                    self.isVideoPlaying = true
+                    if (isFirstStory){
+                        self.spb.startAnimation()
+                        self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
+                        self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
+                    }
+                    self.spb.isPaused = false
                 }
-                print(videoURL)
-                self.videoView.isHidden = false
-                self.imageView.isHidden = true
-                self.videoPlayer = AVPlayer(url: videoURL)
-                let playerLayer = AVPlayerLayer(player: self.videoPlayer)
-                playerLayer.frame = self.videoView.frame
-                self.videoView.layer.addSublayer(playerLayer)
-                Utility.showOrHideLoader(shouldShow: false)
-                self.videoPlayer.play()
-                self.isVideoPlaying = true
-                if (isFirstStory){
-                    self.spb.startAnimation()
-                    self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
-                    self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
-                }
-                self.spb.isPaused = false
             }
         }
+        
     }
     
-    func downloadPhoto(photoURL: String, isFirstStory: Bool){
+    func downloadPhoto(storyModel: StoryModel, isFirstStory: Bool){
         
-        Utility.showOrHideLoader(shouldShow: true)
         if (!isFirstStory){
             self.spb.isPaused = true
         }
-        SDWebImageDownloader.shared.downloadImage(with: URL(string: photoURL)) { (image, data, error, success) in
-
-            if (error == nil){
-                Utility.showOrHideLoader(shouldShow: false)
-                self.videoView.isHidden = true
-                self.imageView.isHidden = false
-                self.imageView.image = image
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let photoURL = documentsURL.appendingPathComponent("\(storyModel.storyId).jpg")
+        if (try? Data(contentsOf: photoURL)) != nil{
+            self.videoView.isHidden = true
+            self.imageView.isHidden = false
+            if let downloadedImageData = try? Data(contentsOf: photoURL){
+                let downloadedImage = UIImage(data: downloadedImageData)
+                self.imageView.image = downloadedImage
                 self.isVideoPlaying = false
                 if (isFirstStory){
                     self.spb.startAnimation()
@@ -192,7 +200,38 @@ class StoriesViewController: UIViewController {
                     self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
                 }
                 self.spb.isPaused = false
-
+            }
+            
+        }
+        else{
+            Utility.showOrHideLoader(shouldShow: true)
+            SDWebImageDownloader.shared.downloadImage(with: URL(string: storyModel.storyURL)) { (image, data, error, success) in
+                
+                if (error == nil){
+                    let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                    let photoURL = documentsURL.appendingPathComponent("\(storyModel.storyId).jpg")
+                    do {
+                        try data!.write(to: photoURL)
+                    } catch {
+                        Loaf("Something went wrong", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1), completionHandler: { (dimsiss) in
+                            self.dismissStory()
+                        })
+                    }
+                    print(photoURL)
+                    
+                    Utility.showOrHideLoader(shouldShow: false)
+                    self.videoView.isHidden = true
+                    self.imageView.isHidden = false
+                    self.imageView.image = image
+                    self.isVideoPlaying = false
+                    if (isFirstStory){
+                        self.spb.startAnimation()
+                        self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
+                        self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
+                    }
+                    self.spb.isPaused = false
+                    
+                }
             }
         }
         
@@ -277,10 +316,8 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
         self.imageView.isHidden = false
         self.imageView.image = nil
         self.imageView.backgroundColor = .black
-        let story = self.storiesDict[index]
-        let storyUrl = story["url"]
-        let storyType = story["mediaType"]
-        self.setStory(storyURL: storyUrl!, storyType: storyType!, isFirstStory: false)
+        let story = self.storiesArray[index]
+        self.setStory(storyModel: story, isFirstStory: false)
     }
     
     func segmentedProgressBarFinished() {
