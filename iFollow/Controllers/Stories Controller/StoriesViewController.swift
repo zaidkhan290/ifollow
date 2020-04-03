@@ -32,6 +32,7 @@ class StoriesViewController: UIViewController {
     var videoPlayer: AVPlayer!
     var storiesArray = [StoryModel]()
     var isVideoPlaying = false
+    var startIndex = 0
     
     var spb: SegmentedProgressBar!
     
@@ -61,30 +62,6 @@ class StoriesViewController: UIViewController {
 //            durationArray.append(15)
 //        }
         
-        let model1 = StoryModel()
-        model1.storyId = 1
-        model1.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FVideos%2FStoryVideo1585742103.mov?alt=media&token=5c66bb7e-6c0f-4a5f-82e6-d1402ab6357b"
-        model1.storyMediaType = "video"
-        storiesArray.append(model1)
-        
-        let model2 = StoryModel()
-        model2.storyId = 2
-        model2.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1584621848.jgp?alt=media&token=9b21ae6b-43df-4545-bbe1-fd38017b5fdc"
-        model2.storyMediaType = "image"
-        storiesArray.append(model2)
-
-        let model3 = StoryModel()
-        model3.storyId = 3
-        model3.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FVideos%2FStoryVideo1585741866.mov?alt=media&token=015d7ed0-93bd-432c-b035-f8e42f59d822"
-        model3.storyMediaType = "video"
-        storiesArray.append(model3)
-
-        let model4 = StoryModel()
-        model4.storyId = 4
-        model4.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1585654428.jgp?alt=media&token=89487b81-bc98-422f-80d5-143b00c5fdb0"
-        model4.storyMediaType = "image"
-        storiesArray.append(model4)
-        
         
         spb = SegmentedProgressBar(numberOfSegments: storiesArray.count, duration: 15)
         spb.frame = CGRect(x: 15, y: view.safeAreaInsets.top + 20, width: view.frame.width - 30, height: 4)
@@ -94,8 +71,8 @@ class StoriesViewController: UIViewController {
         spb.topColor = UIColor.white
         spb.bottomColor = UIColor.gray
         spb.padding = 2
-        
-        self.setStory(storyModel: storiesArray.first!, isFirstStory: true)
+        startIndex = self.storiesArray.firstIndex{$0.isWatched == false}!
+        self.setStory(storyModel: storiesArray[startIndex], isFirstStory: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -134,6 +111,9 @@ class StoriesViewController: UIViewController {
             self.isVideoPlaying = true
             if (isFirstStory){
                 self.spb.startAnimation()
+                for i in 0..<self.startIndex{
+                    self.spb.skip()
+                }
                 self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
                 self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
             }
@@ -170,6 +150,9 @@ class StoriesViewController: UIViewController {
                     self.isVideoPlaying = true
                     if (isFirstStory){
                         self.spb.startAnimation()
+                        for i in 0..<self.startIndex{
+                            self.spb.skip()
+                        }
                         self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
                         self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
                     }
@@ -196,6 +179,9 @@ class StoriesViewController: UIViewController {
                 self.isVideoPlaying = false
                 if (isFirstStory){
                     self.spb.startAnimation()
+                    for i in 0..<self.startIndex{
+                        self.spb.skip()
+                    }
                     self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
                     self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
                 }
@@ -226,6 +212,9 @@ class StoriesViewController: UIViewController {
                     self.isVideoPlaying = false
                     if (isFirstStory){
                         self.spb.startAnimation()
+                        for i in 0..<self.startIndex{
+                            self.spb.skip()
+                        }
                         self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
                         self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
                     }
@@ -306,6 +295,15 @@ class StoriesViewController: UIViewController {
         }
     }
     
+    func animateToNextUserStory(vc: UIViewController){
+        UIView.beginAnimations("", context: nil)
+        UIView.setAnimationDuration(1.0)
+        UIView.setAnimationCurve(UIView.AnimationCurve.easeInOut)
+        UIView.setAnimationTransition(UIView.AnimationTransition.flipFromRight, for: (self.navigationController?.view)!, cache: false)
+        self.navigationController?.pushViewController(vc, animated: true)
+        UIView.commitAnimations()
+    }
+    
 }
 
 extension StoriesViewController: SegmentedProgressBarDelegate{
@@ -321,7 +319,30 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
     }
     
     func segmentedProgressBarFinished() {
-        self.dismissStory()
+        
+        if (storiesArray.count == 2){
+            self.dismissStory()
+        }
+        else{
+            var nextUserStories = [StoryModel]()
+            let model1 = StoryModel()
+            model1.storyId = 5
+            model1.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1585831533.jgp?alt=media&token=a13e40f2-b5a6-4e4f-a807-f8d0ceb53982"
+            model1.storyMediaType = "image"
+            model1.isWatched = false
+            nextUserStories.append(model1)
+            
+            let model2 = StoryModel()
+            model2.storyId = 6
+            model2.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FVideos%2FStoryVideo1585831670.mov?alt=media&token=a41d8357-b412-44a5-993c-bb8504c17835"
+            model2.storyMediaType = "video"
+            model2.isWatched = false
+            nextUserStories.append(model2)
+            let vc = Utility.getStoriesViewController()
+            vc.storiesArray = nextUserStories
+            self.animateToNextUserStory(vc: vc)
+        }
+        
     }
     
 }

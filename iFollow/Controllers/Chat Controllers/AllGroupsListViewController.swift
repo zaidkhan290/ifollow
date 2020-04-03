@@ -12,6 +12,7 @@ import UIKit
 
 class AllGroupsListViewController: UIViewController {
     
+    @IBOutlet weak var lblAlert: UILabel!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var txtFieldSearch: UITextField!
     @IBOutlet weak var chatListTableView: UITableView!
@@ -26,11 +27,13 @@ class AllGroupsListViewController: UIViewController {
             searchView.layer.cornerRadius = 25
             Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: .white)
             self.view.backgroundColor = .clear
+            lblAlert.text = "Messages will be deleted if not read in 12 hours"
         }
         else{
             searchView.dropShadow(color: .white)
             searchView.layer.cornerRadius = 25
             Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
+            lblAlert.text = ""
         }
         
         let cellNib = UINib(nibName: "ChatListTableViewCell", bundle: nil)

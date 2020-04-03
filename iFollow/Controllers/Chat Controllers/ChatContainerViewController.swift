@@ -18,6 +18,7 @@ class ChatContainerViewController: UIViewController {
     @IBOutlet weak var lblOnlineStatus: UILabel!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var lblMessage: UILabel!
+    @IBOutlet weak var alertViewHeightConstraint: NSLayoutConstraint!
     var isPrivateChat = false
     
     var chatController = UIViewController()
@@ -48,8 +49,16 @@ class ChatContainerViewController: UIViewController {
             lblUsername.textColor = .white
             self.view.backgroundColor = Theme.privateChatBackgroundColor
             self.alertView.backgroundColor = Theme.privateChatBackgroundColor
+            self.alertViewHeightConstraint.constant = 40
+            self.lblMessage.isHidden = false
             
         }
+        else{
+            self.alertViewHeightConstraint.constant = 0
+            self.lblMessage.isHidden = true
+        }
+        self.view.updateConstraintsIfNeeded()
+        self.view.layoutSubviews()
     }
     
     //MARK:- Actions

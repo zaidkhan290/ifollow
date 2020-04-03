@@ -13,5 +13,6 @@ class StoryModel: NSObject {
     var storyId: Int = 0
     var storyURL: String = ""
     var storyMediaType = ""
+    var isWatched = false
     
 }

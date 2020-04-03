@@ -241,8 +241,42 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             self.openCamera()
         }
         else{
+            
+            var storiesArray = [StoryModel]()
+            
+            let model1 = StoryModel()
+            model1.storyId = 1
+            model1.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FVideos%2FStoryVideo1585742103.mov?alt=media&token=5c66bb7e-6c0f-4a5f-82e6-d1402ab6357b"
+            model1.storyMediaType = "video"
+            model1.isWatched = false
+            storiesArray.append(model1)
+            
+            let model2 = StoryModel()
+            model2.storyId = 2
+            model2.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1584621848.jgp?alt=media&token=9b21ae6b-43df-4545-bbe1-fd38017b5fdc"
+            model2.storyMediaType = "image"
+            model2.isWatched = false
+            storiesArray.append(model2)
+            
+            let model3 = StoryModel()
+            model3.storyId = 3
+            model3.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FVideos%2FStoryVideo1585741866.mov?alt=media&token=015d7ed0-93bd-432c-b035-f8e42f59d822"
+            model3.storyMediaType = "video"
+            model3.isWatched = false
+            storiesArray.append(model3)
+            
+            let model4 = StoryModel()
+            model4.storyId = 4
+            model4.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1585654428.jgp?alt=media&token=89487b81-bc98-422f-80d5-143b00c5fdb0"
+            model4.storyMediaType = "image"
+            model4.isWatched = false
+            storiesArray.append(model4)
+            
             let vc = Utility.getStoriesViewController()
-            self.present(vc, animated: true, completion: nil)
+            vc.storiesArray = storiesArray
+            let navVC = UINavigationController(rootViewController: vc)
+            navVC.isNavigationBarHidden = true
+            self.present(navVC, animated: true, completion: nil)
         }
     }
     

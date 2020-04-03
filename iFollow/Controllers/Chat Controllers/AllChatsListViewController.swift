@@ -10,6 +10,7 @@ import UIKit
 
 class AllChatsListViewController: UIViewController {
 
+    @IBOutlet weak var lblAlert: UILabel!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var txtFieldSearch: UITextField!
     @IBOutlet weak var chatListTableView: UITableView!
@@ -20,12 +21,14 @@ class AllChatsListViewController: UIViewController {
         super.viewDidLoad()
 
         if (isPrivateChat){
+            lblAlert.text = "Messages will be deleted if not read in 12 hours"
             searchView.dropShadow(color: Theme.privateChatBoxSearchBarColor)
             searchView.layer.cornerRadius = 25
             Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: .white)
             self.view.backgroundColor = .clear
         }
         else{
+            lblAlert.text = ""
             searchView.dropShadow(color: .white)
             searchView.layer.cornerRadius = 25
             Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
