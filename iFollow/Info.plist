@@ -29,7 +29,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires photo library permission for sharing your stories</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app requires microphone to record video</string>
+	<string>This app requires microphone to record your audio</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Bold_0.ttf</string>

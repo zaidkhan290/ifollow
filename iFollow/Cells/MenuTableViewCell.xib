@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -40,6 +39,9 @@
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="KwB-gr-LBy">
                         <rect key="frame" x="245" y="33.5" width="51" height="31"/>
                         <color key="onTintColor" red="0.90588235294117647" green="0.62745098039215685" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
+                        <connections>
+                            <action selector="switchChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="SrV-9b-qYy"/>
+                        </connections>
                     </switch>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dh3-6Q-X0B">
                         <rect key="frame" x="270" y="37" width="24" height="24"/>

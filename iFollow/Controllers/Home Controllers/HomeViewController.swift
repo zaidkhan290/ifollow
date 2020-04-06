@@ -11,8 +11,10 @@ import iCarousel
 import FirebaseStorage
 import Loaf
 import CoreLocation
-import RealmSwift
 import Lightbox
+import AVKit
+import AVFoundation
+import RealmSwift
 
 class HomeViewController: UIViewController {
 
@@ -27,6 +29,7 @@ class HomeViewController: UIViewController {
     let manager = CLLocationManager()
     let geocoder = CLGeocoder()
     var userCurrentAddress = ""
+    var postsArray = [HomePostsModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +52,10 @@ class HomeViewController: UIViewController {
         
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.getHomeData()
+        }
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshHomeData), name: NSNotification.Name(rawValue: "refreshHomeData"), object: nil)
         
     }
     
@@ -64,6 +71,10 @@ class HomeViewController: UIViewController {
         let vc = Utility.getCameraViewController()
         vc.delegate = self
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func refreshHomeData(){
+        getHomeData()
     }
     
     @objc func showOptionsPopup(sender: UIButton){
@@ -177,7 +188,7 @@ class HomeViewController: UIViewController {
     
     func postStory(mediaUrl: String, postType: String){
         let params = ["media": mediaUrl,
-                      "expire_hours": 48,
+                      "expire_hours": Utility.getLoginUserStoryExpireHours(),
             "media_type": postType] as [String : Any]
         
         API.sharedInstance.executeAPI(type: .createStory, method: .post, params: params) { (status, result, message) in
@@ -202,6 +213,52 @@ class HomeViewController: UIViewController {
                 }
             }
             
+        }
+    }
+    
+    func getHomeData(){
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        API.sharedInstance.executeAPI(type: .homePage, method: .get, params: nil) { (status, result, message) in
+            DispatchQueue.main.async {
+                
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    
+                    let realm = try! Realm()
+                    try! realm.safeWrite {
+                        realm.delete(realm.objects(HomePostsModel.self))
+                        let posts = result["posts"].arrayValue
+                        for post in posts{
+                            let model = HomePostsModel()
+                            model.updateModelWithJSON(json: post)
+                            realm.add(model)
+                        }
+                        self.postsArray = HomePostsModel.getAllHomePosts()
+                        self.carouselView.reloadData()
+                    }
+                    
+                }
+                else if (status == .failure){
+                    
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        self.postsArray = HomePostsModel.getAllHomePosts()
+                        self.carouselView.reloadData()
+                    }
+                    
+                }
+                else if (status == .authError){
+                    
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                    
+                }
+                
+            }
         }
     }
     
@@ -285,7 +342,8 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
 extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-        return 10
+        emptyStateView.isHidden = (postsArray.count > 0)
+        return postsArray.count
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
@@ -294,12 +352,31 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
         itemView.index = index
+        let post = postsArray[index]
+        
+        itemView.lblUsername.text = post.postUserFullName
+        itemView.userImage.sd_setImage(with: URL(string: post.postUserName), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+        itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
+        itemView.lblUserAddress.text = post.postLocation
+        itemView.userImage.layer.cornerRadius = 25
+        itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "iFollow-white-logo-1"))
+        itemView.feedImage.clipsToBounds = true
+        itemView.feedImage.contentMode = .scaleAspectFill
+        itemView.playIcon.isHidden = post.postMediaType == "image"
+        itemView.lblLikeComments.text = "\(post.postLikes)"
+        itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
+        
         itemView.userImage.isUserInteractionEnabled = true
-        itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped)))
+        itemView.userImage.tag = index
+        itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped(_:))))
         itemView.feedBackView.isUserInteractionEnabled = true
         itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped)))
         itemView.postlikeView.isUserInteractionEnabled = true
-        itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped)))
+        itemView.postlikeView.tag = index
+        itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
+        itemView.likeView.isUserInteractionEnabled = true
+        itemView.likeView.tag = index
+        itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
         itemView.frame = view.frame
         itemView.userImage.layer.cornerRadius = 25
         itemView.feedImage.clipsToBounds = true
@@ -316,12 +393,25 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         
-        let image = LightboxImage(image: UIImage(named: "Rectangle 15")!, text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", videoURL: nil)
-        let vc = LightboxController(images: [image], startIndex: 0)
-        vc.pageDelegate = self
-        vc.dismissalDelegate = self
-        vc.dynamicBackground = true
-        self.present(vc, animated: true, completion: nil)
+        let post = postsArray[index]
+        
+        if (post.postMediaType == "image"){
+            let image = LightboxImage(imageURL: URL(string: post.postMedia)!, text: post.postDescription, videoURL: nil)
+            let vc = LightboxController(images: [image], startIndex: 0)
+            vc.pageDelegate = self
+            vc.dismissalDelegate = self
+            vc.dynamicBackground = true
+            self.present(vc, animated: true, completion: nil)
+        }
+        else{
+            let player = AVPlayer(url: URL(string: post.postMedia)!)
+            
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+                playerViewController.player!.play()
+            }
+        }
         
     }
     
@@ -330,8 +420,9 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
 //        self.present(vc, animated: true, completion: nil)
 //    }
     
-    @objc func userImageTapped() {
+    @objc func userImageTapped(_ sender: UITapGestureRecognizer) {
         let vc = Utility.getOtherUserProfileViewController()
+        vc.userId = postsArray[sender.view!.tag].postUserId
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -343,10 +434,43 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         self.present(vc, animated: true, completion: nil)
     }
     
-    @objc func postLikeViewTapped(){
+    @objc func likeViewTapped(_ sender: UITapGestureRecognizer){
+        
+        let realm = try! Realm()
+        let postId = postsArray[sender.view!.tag].postId
+        let postUserId = postsArray[sender.view!.tag].postUserId
+        
+        try! realm.safeWrite {
+            if let model = realm.objects(HomePostsModel.self).filter("postId = \(postId)").first{
+                model.postLikes = model.isPostLike == 0 ? model.postLikes + 1 : model.postLikes - 1
+                model.isPostLike = model.isPostLike == 0 ? 1 : 0
+            }
+        }
+        self.carouselView.reloadItem(at: sender.view!.tag, animated: true)
+        
+        let params = ["user_id": postUserId,
+                      "post_id": postId]
+        
+        API.sharedInstance.executeAPI(type: .likePost, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    @objc func postLikeViewTapped(_ sender: UITapGestureRecognizer){
         let vc = Utility.getViewersViewController()
         vc.isForLike = true
-        isFullScreen = false
+        vc.numberOfTrends = postsArray[sender.view!.tag].postLikes
+        vc.postId = postsArray[sender.view!.tag].postId
+        isFullScreen = true
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)

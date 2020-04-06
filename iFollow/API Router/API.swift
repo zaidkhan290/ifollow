@@ -31,6 +31,10 @@ enum EndPoint: String {
     case getNotifications = "notifications"
     case acceptTrendRequest = "accept_trend"
     case rejectTrendRequest = "reject_trend"
+    case homePage = "home_page"
+    case likePost = "post_like"
+    case getPostTrends = "post_likes"
+    case updateUserSettings = "user_settings"
 }
 
 enum StatusCodes {

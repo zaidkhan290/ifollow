@@ -46,18 +46,26 @@ class OtherUserModel: NSObject{
 
 class OtherUserPostModel: NSObject{
     
+    var postId: Int = 0
     var postMedia: String = ""
     var postDescription: String = ""
     var postLocation: String = ""
     var postCreatedAt: String = ""
     var postMediaType: String = ""
+    var postLikes: Int = 0
+    var postComments: Int = 0
+    var isPostLike: Int = 0
     
     func updateModelWithJSON(json: JSON){
+        postId = json["post_id"].intValue
         postMedia = json["media"].stringValue
         postDescription = json["description"].stringValue
         postLocation = json["location"].stringValue
         postCreatedAt = json["created_at"].stringValue
         postMediaType = json["media_type"].stringValue
+        postLikes = json["post_likes"].intValue
+        postComments = json["post_comments"].intValue
+        isPostLike = json["isLiked"].intValue
     }
     
 }

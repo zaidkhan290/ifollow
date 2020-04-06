@@ -13,6 +13,10 @@ import RealmSwift
 class UserModel: Object {
     
     @objc dynamic var userId: Int = 0
+    @objc dynamic var userPostExpireHours: Int = 0
+    @objc dynamic var userStoryExpireHours: Int = 0
+    @objc dynamic var isUserPostViewEnable: Int = 0
+    @objc dynamic var isUserStoryViewEnable: Int = 0
     @objc dynamic var userFirstName: String = ""
     @objc dynamic var userLastName: String = ""
     @objc dynamic var userDOB: String = ""
@@ -34,23 +38,31 @@ class UserModel: Object {
     @objc dynamic var userToken: String = ""
     
     func updateModelWithJSON(json: JSON){
-        userId = json["id"].intValue
-        userFirstName = json["first_name"].stringValue
-        userLastName = json["last_name"].stringValue
-        userDOB = json["date_of_birth"].stringValue
-        username = json["username"].stringValue
-        userShortBio = json["short_bio"].stringValue
-        userHobby = json["hobby"].stringValue
-        userCountry = json["country"].stringValue
-        userImage = json["image"].stringValue.replacingOccurrences(of: "\\", with: "")
-        userZipCode = json["zip_code"].stringValue
-        userGender = json["gender"].stringValue
-        userEmail = json["email"].stringValue
-        userPassword = json["password"].stringValue
-        userRegisteredAt = json["registered_at"].stringValue
-        userUpdatedAt = json["updated_at"].stringValue
-        userCode = json["code"].stringValue
-        userToken = json["jwt"].stringValue
+        
+        let user = json["user"]
+        let userSettings = json["user_settings"]
+        
+        userId = user["id"].intValue
+        userPostExpireHours = userSettings["post_hours"].intValue
+        userStoryExpireHours = userSettings["story_hours"].intValue
+        isUserPostViewEnable = userSettings["post_view"].intValue
+        isUserStoryViewEnable = userSettings["story_view"].intValue
+        userFirstName = user["first_name"].stringValue
+        userLastName = user["last_name"].stringValue
+        userDOB = user["date_of_birth"].stringValue
+        username = user["username"].stringValue
+        userShortBio = user["short_bio"].stringValue
+        userHobby = user["hobby"].stringValue
+        userCountry = user["country"].stringValue
+        userImage = user["image"].stringValue.replacingOccurrences(of: "\\", with: "")
+        userZipCode = user["zip_code"].stringValue
+        userGender = user["gender"].stringValue
+        userEmail = user["email"].stringValue
+        userPassword = user["password"].stringValue
+        userRegisteredAt = user["registered_at"].stringValue
+        userUpdatedAt = user["updated_at"].stringValue
+        userCode = user["code"].stringValue
+        userToken = user["jwt"].stringValue
     }
     
     static func getCurrentUser() -> UserModel?{

@@ -243,13 +243,13 @@ class StoriesViewController: UIViewController {
     }
     
     @IBAction func btnViewTapped(_ sender: UIButton) {
-        spb.isPaused = true
-        videoPlayer.pause()
-        let vc = Utility.getViewersViewController()
-        vc.delegate = self
-        vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = self
-        self.present(vc, animated: true, completion: nil)
+//        spb.isPaused = true
+//        videoPlayer.pause()
+//        let vc = Utility.getViewersViewController()
+//        vc.delegate = self
+//        vc.modalPresentationStyle = .custom
+//        vc.transitioningDelegate = self
+//        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func btnOptionsTapped(_ sender: UIButton) {

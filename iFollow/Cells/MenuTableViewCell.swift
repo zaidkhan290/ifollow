@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol MenuTableViewCellDelegate: class {
+    func switchChanged(isOn: Bool, indexPath: IndexPath)
+    func durationChanged(isPlus: Bool, indexPath: IndexPath)
+}
+
 class MenuTableViewCell: UITableViewCell {
 
     @IBOutlet weak var menuIcon: UIImageView!
@@ -16,11 +21,11 @@ class MenuTableViewCell: UITableViewCell {
     @IBOutlet weak var btnMinus: UIButton!
     @IBOutlet weak var lblDuration: UILabel!
     @IBOutlet weak var btnPlus: UIButton!
+    var delegate: MenuTableViewCellDelegate!
+    var indexPath = IndexPath()
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        btnMinus.isEnabled = false
-        btnPlus.isEnabled = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -30,29 +35,16 @@ class MenuTableViewCell: UITableViewCell {
     }
     
     @IBAction func btnMinusTapped(_ sender: UIButton) {
-        if (lblDuration.text == "72"){
-            lblDuration.text = "48"
-            btnMinus.isEnabled = true
-            btnPlus.isEnabled = true
-        }
-        else if (lblDuration.text == "48"){
-            lblDuration.text = "24"
-            btnMinus.isEnabled = false
-            btnPlus.isEnabled = true
-        }
+        self.delegate.durationChanged(isPlus: false, indexPath: indexPath)
     }
     
     @IBAction func btnPlusTapped(_ sender: UIButton) {
-        if (lblDuration.text == "24"){
-            lblDuration.text = "48"
-            btnPlus.isEnabled = true
-            btnMinus.isEnabled = true
-        }
-        else if (lblDuration.text == "48"){
-            lblDuration.text = "72"
-            btnPlus.isEnabled = false
-            btnMinus.isEnabled = true
-        }
+        self.delegate.durationChanged(isPlus: true, indexPath: indexPath)
     }
+    
+    @IBAction func switchChanged(_ sender: UISwitch) {
+        self.delegate.switchChanged(isOn: sender.isOn, indexPath: indexPath)
+    }
+    
     
 }

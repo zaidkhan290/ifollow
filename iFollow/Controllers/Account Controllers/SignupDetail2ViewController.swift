@@ -86,7 +86,7 @@ class SignupDetail2ViewController: UIViewController {
                     try! realm.safeWrite {
                         realm.deleteAll()
                         let model = UserModel()
-                        model.updateModelWithJSON(json: result["user"])
+                        model.updateModelWithJSON(json: result)
                         realm.add(model)
                     }
                     let vc = Utility.getTabBarViewController()

@@ -245,6 +245,34 @@ struct Utility {
         return ""
     }
     
+    static func getLoginUserPostExpireHours() -> Int{
+        if let user = UserModel.getCurrentUser(){
+            return user.userPostExpireHours
+        }
+        return 0
+    }
+    
+    static func getLoginUserStoryExpireHours() -> Int{
+        if let user = UserModel.getCurrentUser(){
+            return user.userStoryExpireHours
+        }
+        return 0
+    }
+    
+    static func getLoginUserIsPostViewEnable() -> Int{
+        if let user = UserModel.getCurrentUser(){
+            return user.isUserPostViewEnable
+        }
+        return 0
+    }
+    
+    static func getLoginUserIsStoryViewEnable() -> Int{
+        if let user = UserModel.getCurrentUser(){
+            return user.isUserStoryViewEnable
+        }
+        return 0
+    }
+    
     static var storyTimeFormatter: DateFormatter{
         get{
             if (timeFormatter == nil){

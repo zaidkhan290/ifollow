@@ -60,16 +60,20 @@ class AudioRecorderSingleton: NSObject, AVAudioRecorderDelegate{
     }
     
     func finishRecording(success: Bool, completion: (completionBlock)? = nil) {
-        audioRecorder.stop()
-        print(audioRecorder.url)
-        let data = try! Data(contentsOf: audioRecorder.url)
-        audioRecorder = nil
         
-        if success {
-            completion!(data)
-        } else {
-            completion!(nil)
+        if (audioRecorder != nil){
+            audioRecorder.stop()
+            print(audioRecorder.url)
+            let data = try! Data(contentsOf: audioRecorder.url)
+            audioRecorder = nil
+            
+            if success {
+                completion!(data)
+            } else {
+                completion!(nil)
+            }
         }
+
     }
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {

@@ -120,6 +120,8 @@
 		18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */; };
 		18D6BBD424375749004D90EB /* AudioRecorderSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6BBD324375749004D90EB /* AudioRecorderSingleton.swift */; };
 		18DC8813242127FE00494FAD /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC8812242127FE00494FAD /* Constant.swift */; };
+		18E198F1243B140900511296 /* HomePostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E198F0243B140900511296 /* HomePostsModel.swift */; };
+		18E198F3243B5BDD00511296 /* PostLikesUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E198F2243B5BDD00511296 /* PostLikesUserModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -238,6 +240,8 @@
 		18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		18D6BBD324375749004D90EB /* AudioRecorderSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderSingleton.swift; sourceTree = "<group>"; };
 		18DC8812242127FE00494FAD /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		18E198F0243B140900511296 /* HomePostsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostsModel.swift; sourceTree = "<group>"; };
+		18E198F2243B5BDD00511296 /* PostLikesUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikesUserModel.swift; sourceTree = "<group>"; };
 		262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.release.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.release.xcconfig"; sourceTree = "<group>"; };
 		2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.debug.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.debug.xcconfig"; sourceTree = "<group>"; };
 		5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iFollow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -467,6 +471,8 @@
 				188073AE242B73810005CAE4 /* OtherUserModel.swift */,
 				188073B0242BA1040005CAE4 /* NotificationModel.swift */,
 				1895C31424358036006F3CE7 /* StoryModel.swift */,
+				18E198F0243B140900511296 /* HomePostsModel.swift */,
+				18E198F2243B5BDD00511296 /* PostLikesUserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -827,6 +833,7 @@
 				18A32627240FBCE800CF329E /* DSSwipableFilterView.swift in Sources */,
 				1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */,
 				1825A52A237AEA50002811E7 /* TrendesViewController.swift in Sources */,
+				18E198F1243B140900511296 /* HomePostsModel.swift in Sources */,
 				189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */,
 				185640EF2374796300CC2777 /* CreateGroupViewController.swift in Sources */,
 				182F625C2372E97600A55E52 /* AllGroupsListViewController.swift in Sources */,
@@ -870,6 +877,7 @@
 				18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				1855081C23799422008EAC2E /* HalfSizePresentation.swift in Sources */,
+				18E198F3243B5BDD00511296 /* PostLikesUserModel.swift in Sources */,
 				18706FFD23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift in Sources */,
 				18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */,
 				1855080F23795352008EAC2E /* SegmentProgressBar.swift in Sources */,

@@ -217,6 +217,37 @@ class ProfileViewController: UIViewController {
         
     }
     
+    @objc func likeViewTapped(_ sender: UITapGestureRecognizer){
+        
+        let realm = try! Realm()
+        let postId = userPosts[sender.view!.tag].postId
+        let postUserId = Utility.getLoginUserId()
+        
+        try! realm.safeWrite {
+            if let model = realm.objects(UserPostsModel.self).filter("postId = \(postId)").first{
+                model.postLikes = model.isPostLike == 0 ? model.postLikes + 1 : model.postLikes - 1
+                model.isPostLike = model.isPostLike == 0 ? 1 : 0
+            }
+        }
+        self.carouselView.reloadItem(at: sender.view!.tag, animated: true)
+        
+        let params = ["user_id": postUserId,
+                      "post_id": postId]
+        
+        API.sharedInstance.executeAPI(type: .likePost, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+    }
+    
 }
 
 extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
@@ -243,13 +274,17 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.postlikeView.isUserInteractionEnabled = true
         itemView.postlikeView.tag = index
         itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
+        itemView.lblLikeComments.text = "\(post.postLikes)"
         itemView.feedImage.clipsToBounds = true
         itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "iFollow-white-logo-1"))
-        itemView.likeImage.image = UIImage(named: "like-1")
+        itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
         itemView.feedImage.contentMode = .scaleAspectFill
         itemView.playIcon.isHidden = post.postMediaType == "image"
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
+        itemView.likeView.isUserInteractionEnabled = true
+        itemView.likeView.tag = index
+        itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
         itemView.btnOptions.tag = index
         itemView.btnOptions.addTarget(self, action: #selector(showFeedsOptionsPopup(sender:)), for: .touchUpInside)
         view.backgroundColor = .white
@@ -292,10 +327,12 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         self.present(vc, animated: true, completion: nil)
     }
     
-    @objc func postLikeViewTapped(_ sender: UIView){
+    @objc func postLikeViewTapped(_ sender: UITapGestureRecognizer){
         let vc = Utility.getViewersViewController()
         vc.isForLike = true
-        isFullScreen = false
+        vc.numberOfTrends = userPosts[sender.view!.tag].postLikes
+        vc.postId = userPosts[sender.view!.tag].postId
+        isFullScreen = true
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)

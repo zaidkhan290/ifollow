@@ -117,6 +117,7 @@ class TabBarViewController: UIViewController {
             
             remove(asChildViewController: [exploreController, notificationController, profileController])
             add(asChildViewController: homeController)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshHomeData"), object: nil)
             
         }
         else if (selectedIndex == 1){
@@ -286,7 +287,7 @@ class TabBarViewController: UIViewController {
     
     func postStory(mediaUrl: String, postType: String){
         let params = ["media": mediaUrl,
-                      "expire_hours": 48,
+                      "expire_hours": Utility.getLoginUserStoryExpireHours(),
             "media_type": postType] as [String : Any]
         
         API.sharedInstance.executeAPI(type: .createStory, method: .post, params: params) { (status, result, message) in

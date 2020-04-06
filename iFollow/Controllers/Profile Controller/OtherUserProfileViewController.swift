@@ -12,6 +12,7 @@ import Lightbox
 import Loaf
 import AVKit
 import AVFoundation
+import RealmSwift
 
 class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationControllerDelegate, UIPopoverPresentationControllerDelegate {
 
@@ -29,11 +30,12 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     @IBOutlet weak var privateTalkView: UIView!
     @IBOutlet weak var trendView: UIView!
     @IBOutlet weak var carouselView: iCarousel!
+    @IBOutlet weak var emptyStateView: UIView!
     
     var otherUserProfile = OtherUserModel()
     var isTrending = false
     var options = [String]()
-    var userId = 8
+    var userId = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -388,6 +390,44 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         
     }
     
+    @objc func postLikeViewTapped(_ sender: UITapGestureRecognizer){
+        let vc = Utility.getViewersViewController()
+        vc.isForLike = true
+        vc.numberOfTrends = otherUserProfile.userPosts[sender.view!.tag].postLikes
+        vc.postId = otherUserProfile.userPosts[sender.view!.tag].postId
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func likeViewTapped(_ sender: UITapGestureRecognizer){
+        
+        let postId = otherUserProfile.userPosts[sender.view!.tag].postId
+        let postUserId = userId
+        
+        let model = otherUserProfile.userPosts[sender.view!.tag]
+        model.postLikes = model.isPostLike == 0 ? model.postLikes + 1 : model.postLikes - 1
+        model.isPostLike = model.isPostLike == 0 ? 1 : 0
+        
+        self.carouselView.reloadItem(at: sender.view!.tag, animated: true)
+        
+        let params = ["user_id": postUserId,
+                      "post_id": postId]
+        
+        API.sharedInstance.executeAPI(type: .likePost, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+    }
+    
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.none
     }
@@ -402,6 +442,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
 extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate{
     
     func numberOfItems(in carousel: iCarousel) -> Int {
+        emptyStateView.isHidden = (otherUserProfile.userPosts.count > 0)
         return otherUserProfile.userPosts.count
     }
     
@@ -415,15 +456,22 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.lblUsername.text = otherUserProfile.userFullName
         itemView.userImage.sd_setImage(with: URL(string: otherUserProfile.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
-        itemView.lblUserAddress.text = otherUserProfile.userCountry
+        itemView.lblUserAddress.text = post.postLocation
         itemView.userImage.layer.cornerRadius = 25
         itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "iFollow-white-logo-1"))
+        itemView.lblLikeComments.text = "\(post.postLikes)"
         itemView.feedImage.clipsToBounds = true
         itemView.feedImage.contentMode = .scaleAspectFill
-        itemView.likeImage.image = UIImage(named: "like-1")
+        itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
         itemView.playIcon.isHidden = post.postMediaType == "image"
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
+        itemView.likeView.isUserInteractionEnabled = true
+        itemView.likeView.tag = index
+        itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
+        itemView.postlikeView.isUserInteractionEnabled = true
+        itemView.postlikeView.tag = index
+        itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
         itemView.btnOptions.tag = index
         itemView.btnOptions.addTarget(self, action: #selector(showFeedsOptionsPopup(sender:)), for: .touchUpInside)
         view.backgroundColor = .white
@@ -479,4 +527,14 @@ extension OtherUserProfileViewController: OptionsViewControllerDelegate{
             self.showReportUserPopup()
         }
     }
+}
+
+extension OtherUserProfileViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        
+        return FullSizePresentationController(presentedViewController: presented, presenting: presenting)
+        
+    }
+    
 }
