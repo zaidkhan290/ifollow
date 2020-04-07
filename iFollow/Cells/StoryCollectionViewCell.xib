@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,12 +20,13 @@
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rectangle 10" translatesAutoresizingMaskIntoConstraints="NO" id="8zn-YB-rLQ">
                         <rect key="frame" x="0.0" y="15" width="332" height="463"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ellipse 24" translatesAutoresizingMaskIntoConstraints="NO" id="Qhq-ws-T0u">
-                        <rect key="frame" x="136" y="438" width="60" height="60"/>
+                        <rect key="frame" x="146" y="453" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="60" id="9ah-9y-KQr"/>
-                            <constraint firstAttribute="width" constant="60" id="D8D-7G-w4F"/>
+                            <constraint firstAttribute="height" constant="40" id="9ah-9y-KQr"/>
+                            <constraint firstAttribute="width" constant="40" id="D8D-7G-w4F"/>
                         </constraints>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group 7130" translatesAutoresizingMaskIntoConstraints="NO" id="4EM-cJ-X3z">
@@ -42,7 +42,7 @@
                 <constraint firstItem="8zn-YB-rLQ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="f8Z-Cp-HnG"/>
                 <constraint firstItem="8zn-YB-rLQ" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="iZy-M9-8PQ"/>
                 <constraint firstItem="8zn-YB-rLQ" firstAttribute="width" secondItem="ZTg-uK-7eu" secondAttribute="width" id="mDy-Mv-xmX"/>
-                <constraint firstItem="Qhq-ws-T0u" firstAttribute="top" secondItem="8zn-YB-rLQ" secondAttribute="bottom" constant="-40" id="rSf-cz-UcV"/>
+                <constraint firstItem="Qhq-ws-T0u" firstAttribute="top" secondItem="8zn-YB-rLQ" secondAttribute="bottom" constant="-25" id="rSf-cz-UcV"/>
                 <constraint firstItem="Qhq-ws-T0u" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="wKc-dt-geB"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>

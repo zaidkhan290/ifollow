@@ -8,16 +8,27 @@
 
 import UIKit
 
+protocol StoryCollectionViewCellDelegate: class {
+    func addStoryButtonTapped()
+}
+
 class StoryCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var storyImage: UIImageView!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var addIcon: UIImageView!
+    var delegate: StoryCollectionViewCellDelegate!
     
     override func awakeFromNib() {
         
         super.awakeFromNib()
         storyImage.layer.cornerRadius = 5.0
+        addIcon.isUserInteractionEnabled = true
+        addIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addStoryIconTapped)))
+    }
+    
+    @objc func addStoryIconTapped(){
+        self.delegate!.addStoryButtonTapped()
     }
 
 }

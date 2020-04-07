@@ -31,6 +31,9 @@ class HomeViewController: UIViewController {
     var userCurrentAddress = ""
     var postsArray = [HomePostsModel]()
     
+    var myStoryArray = [StoryUserModel]()
+    var followersStoriesArray = [StoryUserModel]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -198,7 +201,7 @@ class HomeViewController: UIViewController {
                 
                 if (status == .success){
                     Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-                        
+                        self.refreshHomeData()
                     }
                 }
                 else if (status == .failure){
@@ -228,6 +231,48 @@ class HomeViewController: UIViewController {
                     
                     let realm = try! Realm()
                     try! realm.safeWrite {
+                        
+                        //----------STORIES WORK START----------//
+                        realm.delete(realm.objects(StoryUserModel.self))
+                        realm.delete(realm.objects(UserStoryModel.self))
+                        
+                        let myStoryModel = StoryUserModel()
+                        myStoryModel.updateModelWithJSON(json: result, isForMyStory: true)
+                        let myStories = Array(myStoryModel.userStories)
+                        if let _ = myStories.firstIndex(where: {$0.isStoryViewed == 0}){
+                            myStoryModel.isAllStoriesViewed = false
+                        }
+                        else{
+                            myStoryModel.isAllStoriesViewed = true
+                        }
+                        if let lastMyStory = myStories.last{
+                            myStoryModel.lastStoryMediaType = lastMyStory.storyMediaType
+                            myStoryModel.lastStoryPreview = lastMyStory.storyURL
+                        }
+                        realm.add(myStoryModel)
+                        
+                        let followersStories = result["user_stories"].arrayValue
+                        for followerStory in followersStories{
+                            let followerStoryModel = StoryUserModel()
+                            followerStoryModel.updateModelWithJSON(json: followerStory, isForMyStory: false)
+                            let followerStories = Array(followerStoryModel.userStories)
+                            if let _ = followerStories.firstIndex(where: {$0.isStoryViewed == 0}){
+                                followerStoryModel.isAllStoriesViewed = false
+                            }
+                            else{
+                                followerStoryModel.isAllStoriesViewed = true
+                            }
+                            if let lastFollowerStory = followerStories.last{
+                                followerStoryModel.lastStoryMediaType = lastFollowerStory.storyMediaType
+                                followerStoryModel.lastStoryPreview = lastFollowerStory.storyURL
+                            }
+                            realm.add(followerStoryModel)
+                        }
+                        
+                        //----------STORIES WORK END----------//
+                        
+                        
+                        //----------POSTS WORK START----------//
                         realm.delete(realm.objects(HomePostsModel.self))
                         let posts = result["posts"].arrayValue
                         for post in posts{
@@ -235,7 +280,12 @@ class HomeViewController: UIViewController {
                             model.updateModelWithJSON(json: post)
                             realm.add(model)
                         }
+                        //----------POSTS WORK END----------//
+                        
+                        self.myStoryArray = StoryUserModel.getMyStory()
+                        self.followersStoriesArray = StoryUserModel.getFollowersUsersStories()
                         self.postsArray = HomePostsModel.getAllHomePosts()
+                        self.storyCollectionView.reloadData()
                         self.carouselView.reloadData()
                     }
                     
@@ -244,7 +294,10 @@ class HomeViewController: UIViewController {
                     
                     Utility.showOrHideLoader(shouldShow: false)
                     Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        self.myStoryArray = StoryUserModel.getMyStory()
+                        self.followersStoriesArray = StoryUserModel.getFollowersUsersStories()
                         self.postsArray = HomePostsModel.getAllHomePosts()
+                        self.storyCollectionView.reloadData()
                         self.carouselView.reloadData()
                     }
                     
@@ -267,38 +320,44 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return followersStoriesArray.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StoryCell", for: indexPath) as! StoryCollectionViewCell
+        cell.delegate = self
+        cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
+        cell.userImage.layer.borderWidth = 2
         
         if (indexPath.row == 0){
             cell.userImage.isHidden = true
             cell.addIcon.isHidden = false
-            cell.storyImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+            
+            if (myStoryArray.count == 1){
+                cell.storyImage.sd_setImage(with: URL(string: myStoryArray[indexPath.row].lastStoryPreview))
+            }
+            else{
+                cell.storyImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()))
+            }
         }
         else{
+            let storyUser = followersStoriesArray[indexPath.row - 1]
+            
             cell.userImage.isHidden = false
             cell.addIcon.isHidden = true
+            cell.userImage.layer.borderColor = storyUser.isAllStoriesViewed ? UIColor.white.cgColor : Theme.profileLabelsYellowColor.cgColor
+            cell.userImage.sd_setImage(with: URL(string: storyUser.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+            cell.storyImage.sd_setImage(with: URL(string: storyUser.lastStoryPreview))
         }
-        if(indexPath.row % 2 == 0){
-            cell.storyImage.image = UIImage(named: "Rectangle 10")
-        }
-        else{
-            cell.storyImage.image = UIImage(named: "Rectangle 11")
-        }
+        
         return cell
        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.row == 0){
-            self.openCamera()
-        }
-        else{
-            
+        
+        if (myStoryArray.count > 0){
             var storiesArray = [StoryModel]()
             
             let model1 = StoryModel()
@@ -335,8 +394,15 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             navVC.isNavigationBarHidden = true
             self.present(navVC, animated: true, completion: nil)
         }
+        
     }
     
+}
+
+extension HomeViewController: StoryCollectionViewCellDelegate{
+    func addStoryButtonTapped() {
+        self.openCamera()
+    }
 }
 
 extension HomeViewController: iCarouselDataSource, iCarouselDelegate{

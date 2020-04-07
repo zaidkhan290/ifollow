@@ -630,7 +630,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         if (isPrivateChat){
             let messageTime = ServerValue.timestamp()
             let currentTime = Int64(Date().timeIntervalSince1970 * 1000)
-            let messageExpireTime = currentTime + 300000//43200000
+            let messageExpireTime = currentTime + 43200000//300000
             chatRef.childByAutoId().updateChildValues(["senderName":displayName!,
                                                        "senderId":sender!,
                                                        "message":text!,
