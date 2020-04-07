@@ -35,6 +35,7 @@ enum EndPoint: String {
     case likePost = "post_like"
     case getPostTrends = "post_likes"
     case updateUserSettings = "user_settings"
+    case viewStory = "story_view"
 }
 
 enum StatusCodes {

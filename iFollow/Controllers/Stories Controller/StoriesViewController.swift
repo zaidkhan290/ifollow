@@ -30,9 +30,11 @@ class StoriesViewController: UIViewController {
     @IBOutlet weak var prevStoryView: UIView!
     
     var videoPlayer: AVPlayer!
-    var storiesArray = [StoryModel]()
+    var storiesUsersArray = [StoryUserModel]()
     var isVideoPlaying = false
     var startIndex = 0
+    var storyUserIndex = 0
+    var isForMyStory = false
     
     var spb: SegmentedProgressBar!
     
@@ -61,9 +63,15 @@ class StoriesViewController: UIViewController {
 //        for i in 0..<storiesDict.count{
 //            durationArray.append(15)
 //        }
+        storiesUsersArray = isForMyStory ? StoryUserModel.getMyStory() : StoryUserModel.getFollowersUsersStories()
         
+        lblUsername.text = storiesUsersArray[storyUserIndex].userName
+        userImage.layer.cornerRadius = userImage.frame.height / 2
+        userImage.layer.borderWidth = 2
+        userImage.layer.borderColor = UIColor.white.cgColor
+        userImage.sd_setImage(with: URL(string: storiesUsersArray[storyUserIndex].userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         
-        spb = SegmentedProgressBar(numberOfSegments: storiesArray.count, duration: 15)
+        spb = SegmentedProgressBar(numberOfSegments: storiesUsersArray[storyUserIndex].userStories.count, duration: 15)
         spb.frame = CGRect(x: 15, y: view.safeAreaInsets.top + 20, width: view.frame.width - 30, height: 4)
         view.addSubview(spb)
         
@@ -71,7 +79,10 @@ class StoriesViewController: UIViewController {
         spb.topColor = UIColor.white
         spb.bottomColor = UIColor.gray
         spb.padding = 2
-        startIndex = self.storiesArray.firstIndex{$0.isWatched == false}!
+        let storiesArray = Array(storiesUsersArray[storyUserIndex].userStories)
+        if (!isForMyStory){
+            startIndex = storiesArray.firstIndex{$0.isStoryViewed == 0}!
+        }
         self.setStory(storyModel: storiesArray[startIndex], isFirstStory: true)
     }
     
@@ -82,7 +93,7 @@ class StoriesViewController: UIViewController {
     
     //MARK:- Methods and Actions
     
-    func setStory(storyModel: StoryModel, isFirstStory: Bool){
+    func setStory(storyModel: UserStoryModel, isFirstStory: Bool){
         if (storyModel.storyMediaType == "video"){
             self.downloadVideo(storyModel: storyModel, isFirstStory: isFirstStory)
         }
@@ -91,7 +102,7 @@ class StoriesViewController: UIViewController {
         }
     }
     
-    func downloadVideo(storyModel: StoryModel, isFirstStory: Bool){
+    func downloadVideo(storyModel: UserStoryModel, isFirstStory: Bool){
         
         if (!isFirstStory){
             self.spb.isPaused = true
@@ -163,7 +174,7 @@ class StoriesViewController: UIViewController {
         
     }
     
-    func downloadPhoto(storyModel: StoryModel, isFirstStory: Bool){
+    func downloadPhoto(storyModel: UserStoryModel, isFirstStory: Bool){
         
         if (!isFirstStory){
             self.spb.isPaused = true
@@ -314,33 +325,26 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
         self.imageView.isHidden = false
         self.imageView.image = nil
         self.imageView.backgroundColor = .black
-        let story = self.storiesArray[index]
-        self.setStory(storyModel: story, isFirstStory: false)
+        let storiesArray = Array(storiesUsersArray[storyUserIndex].userStories)
+        self.setStory(storyModel: storiesArray[index], isFirstStory: false)
     }
     
     func segmentedProgressBarFinished() {
         
-        if (storiesArray.count == 2){
+        if (isForMyStory){
             self.dismissStory()
         }
         else{
-            var nextUserStories = [StoryModel]()
-            let model1 = StoryModel()
-            model1.storyId = 5
-            model1.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FImages%2FStoryImage1585831533.jgp?alt=media&token=a13e40f2-b5a6-4e4f-a807-f8d0ceb53982"
-            model1.storyMediaType = "image"
-            model1.isWatched = false
-            nextUserStories.append(model1)
-            
-            let model2 = StoryModel()
-            model2.storyId = 6
-            model2.storyURL = "https://firebasestorage.googleapis.com/v0/b/ifollow-13644.appspot.com/o/Media%2FiOS%2FVideos%2FStoryVideo1585831670.mov?alt=media&token=a41d8357-b412-44a5-993c-bb8504c17835"
-            model2.storyMediaType = "video"
-            model2.isWatched = false
-            nextUserStories.append(model2)
-            let vc = Utility.getStoriesViewController()
-            vc.storiesArray = nextUserStories
-            self.animateToNextUserStory(vc: vc)
+            let nextUserIndex = storyUserIndex + 1
+            if (self.storiesUsersArray.count - nextUserIndex == 0){
+               self.dismissStory()
+            }
+            else{
+                let vc = Utility.getStoriesViewController()
+                vc.isForMyStory = false
+                vc.storyUserIndex = nextUserIndex
+                self.animateToNextUserStory(vc: vc)
+            }
         }
         
     }
