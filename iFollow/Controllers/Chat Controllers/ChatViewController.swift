@@ -58,18 +58,23 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         if (isPrivateChat){
             chatRef = chatRef.child("PrivateChats").child(chatId)
             self.collectionView.backgroundColor = Theme.privateChatBackgroundColor
+            self.inputToolbar.contentView.backgroundColor = Theme.privateChatBackgroundColor
             self.inputToolbar.contentView.textView.textColor = .white
+            self.inputToolbar.contentView.textView.backgroundColor = Theme.privateChatBackgroundColor
+            
         }
         else{
             chatRef = chatRef.child("NormalChats").child(chatId)
+            self.inputToolbar.contentView.backgroundColor = .white
+            self.inputToolbar.contentView.textView.textColor = .black
+            self.inputToolbar.contentView.textView.backgroundColor = .clear
         }
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         self.setup()
         self.messageAdded()
         self.inputToolbar.contentView.textView.placeHolder = "Type a message..."
-        self.inputToolbar.contentView.backgroundColor = .white
         self.inputToolbar.contentView.textView.layer.borderColor = UIColor.clear.cgColor
-        self.inputToolbar.contentView.textView.backgroundColor = .clear
+        
         
         let rightContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 130, height: 42))
         
@@ -184,21 +189,47 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         
         chatRef.observe(.childAdded, with: { (snapshot) in
             
-            let type = snapshot.childSnapshot(forPath: "type").value as! Int
-            let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
-            let message = snapshot.childSnapshot(forPath: "message").value as! String
-            let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
-            let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
-            let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
-            
-            if(type == 1){
-                self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
-            }else if (type == 2){
-                self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
+            if (self.isPrivateChat){
+                let type = snapshot.childSnapshot(forPath: "type").value as! Int
+                let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
+                let message = snapshot.childSnapshot(forPath: "message").value as! String
+                let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
+                let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
+                let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
+                let expireTime = snapshot.childSnapshot(forPath: "expireTime").value as! Double
+                
+                let currentTime = Int64(Date().timeIntervalSince1970 * 1000)
+                
+                if (Int64(expireTime) > currentTime){
+                    if(type == 1){
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
+                    }else if (type == 2){
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
+                    }
+                    else{
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
+                        
+                    }
+                }
+                
             }
             else{
-                self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
+                let type = snapshot.childSnapshot(forPath: "type").value as! Int
+                let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
+                let message = snapshot.childSnapshot(forPath: "message").value as! String
+                let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
+                let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
+                let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
                 
+                if(type == 1){
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
+                }else if (type == 2){
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
+                }
+                else{
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
+                    
+                }
             }
             
         })
@@ -596,12 +627,26 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     
     func sendMsgToFireBase(sender: String!, displayName : String!, text: String!, type: Int?=1){
         
-        chatRef.childByAutoId().updateChildValues(["senderName":displayName!,
-                                                   "senderId":sender!,
-                                                   "message":text!,
-                                                   "type":type!,
-                                                   "isRead": false,
-                                                   "timestamp" : ServerValue.timestamp()])
+        if (isPrivateChat){
+            let messageTime = ServerValue.timestamp()
+            let currentTime = Int64(Date().timeIntervalSince1970 * 1000)
+            let messageExpireTime = currentTime + 300000//43200000
+            chatRef.childByAutoId().updateChildValues(["senderName":displayName!,
+                                                       "senderId":sender!,
+                                                       "message":text!,
+                                                       "type":type!,
+                                                       "isRead": false,
+                                                       "timestamp": messageTime,
+                                                       "expireTime": messageExpireTime])
+        }
+        else{
+            chatRef.childByAutoId().updateChildValues(["senderName":displayName!,
+                                                       "senderId":sender!,
+                                                       "message":text!,
+                                                       "type":type!,
+                                                       "isRead": false,
+                                                       "timestamp" : ServerValue.timestamp()])
+        }
         
         sendPushNotification()
         
