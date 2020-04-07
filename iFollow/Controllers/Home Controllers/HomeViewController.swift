@@ -59,6 +59,7 @@ class HomeViewController: UIViewController {
             self.getHomeData()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(refreshHomeData), name: NSNotification.Name(rawValue: "refreshHomeData"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshHomeData), name: NSNotification.Name(rawValue: "refreshHomeDataAfterViewedStory"), object: nil)
         
     }
     
@@ -400,7 +401,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         let post = postsArray[index]
         
         itemView.lblUsername.text = post.postUserFullName
-        itemView.userImage.sd_setImage(with: URL(string: post.postUserName), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+        itemView.userImage.sd_setImage(with: URL(string: post.postUserImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
         itemView.lblUserAddress.text = post.postLocation
         itemView.userImage.layer.cornerRadius = 25

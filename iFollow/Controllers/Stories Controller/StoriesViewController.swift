@@ -35,6 +35,7 @@ class StoriesViewController: UIViewController {
     var startIndex = 0
     var storyUserIndex = 0
     var isForMyStory = false
+    var isForSkip = false // If we are skip segment index for showing the first index as unviewed index
     
     var spb: SegmentedProgressBar!
     
@@ -58,7 +59,7 @@ class StoriesViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        IQKeyboardManager.shared.enable = false
+       // IQKeyboardManager.shared.enable = false
         var durationArray = [Double]()
 //        for i in 0..<storiesDict.count{
 //            durationArray.append(15)
@@ -81,7 +82,9 @@ class StoriesViewController: UIViewController {
         spb.padding = 2
         let storiesArray = Array(storiesUsersArray[storyUserIndex].userStories)
         if (!isForMyStory){
-            startIndex = storiesArray.firstIndex{$0.isStoryViewed == 0}!
+            if (!storiesUsersArray[storyUserIndex].isAllStoriesViewed){
+                startIndex = storiesArray.firstIndex{$0.isStoryViewed == 0}!
+            }
         }
         self.setStory(storyModel: storiesArray[startIndex], isFirstStory: true)
     }
@@ -118,13 +121,29 @@ class StoriesViewController: UIViewController {
             playerLayer.frame = self.videoView.frame
             self.videoView.layer.addSublayer(playerLayer)
             Utility.showOrHideLoader(shouldShow: false)
+            
+            if (!self.isForMyStory){
+                API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId], completion: { (status, result, message) in
+                    DispatchQueue.main.async {
+                        if (status == .authError){
+                            Utility.showOrHideLoader(shouldShow: false)
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                Utility.logoutUser()
+                            }
+                        }
+                    }
+                })
+            }
+            
             self.videoPlayer.play()
             self.isVideoPlaying = true
             if (isFirstStory){
                 self.spb.startAnimation()
                 for i in 0..<self.startIndex{
+                    self.isForSkip = true
                     self.spb.skip()
                 }
+                self.isForSkip = false
                 self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
                 self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
             }
@@ -149,7 +168,20 @@ class StoriesViewController: UIViewController {
                             self.dismissStory()
                         })
                     }
-                    print(videoURL)
+
+                    if (!self.isForMyStory){
+                        API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId], completion: { (status, result, message) in
+                            DispatchQueue.main.async {
+                                if (status == .authError){
+                                    Utility.showOrHideLoader(shouldShow: false)
+                                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                        Utility.logoutUser()
+                                    }
+                                }
+                            }
+                        })
+                    }
+
                     self.videoView.isHidden = false
                     self.imageView.isHidden = true
                     self.videoPlayer = AVPlayer(url: videoURL)
@@ -162,8 +194,10 @@ class StoriesViewController: UIViewController {
                     if (isFirstStory){
                         self.spb.startAnimation()
                         for i in 0..<self.startIndex{
+                            self.isForSkip = true
                             self.spb.skip()
                         }
+                        self.isForSkip = false
                         self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
                         self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
                     }
@@ -188,11 +222,27 @@ class StoriesViewController: UIViewController {
                 let downloadedImage = UIImage(data: downloadedImageData)
                 self.imageView.image = downloadedImage
                 self.isVideoPlaying = false
+                
+                if (!self.isForMyStory){
+                    API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId], completion: { (status, result, message) in
+                        DispatchQueue.main.async {
+                            if (status == .authError){
+                                Utility.showOrHideLoader(shouldShow: false)
+                                Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                    Utility.logoutUser()
+                                }
+                            }
+                        }
+                    })
+                }
+                
                 if (isFirstStory){
                     self.spb.startAnimation()
                     for i in 0..<self.startIndex{
+                        self.isForSkip = true
                         self.spb.skip()
                     }
+                    self.isForSkip = false
                     self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
                     self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
                 }
@@ -214,7 +264,19 @@ class StoriesViewController: UIViewController {
                             self.dismissStory()
                         })
                     }
-                    print(photoURL)
+                    
+                    if (!self.isForMyStory){
+                        API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId], completion: { (status, result, message) in
+                            DispatchQueue.main.async {
+                                if (status == .authError){
+                                    Utility.showOrHideLoader(shouldShow: false)
+                                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                        Utility.logoutUser()
+                                    }
+                                }
+                            }
+                        })
+                    }
                     
                     Utility.showOrHideLoader(shouldShow: false)
                     self.videoView.isHidden = true
@@ -224,8 +286,10 @@ class StoriesViewController: UIViewController {
                     if (isFirstStory){
                         self.spb.startAnimation()
                         for i in 0..<self.startIndex{
+                            self.isForSkip = true
                             self.spb.skip()
                         }
+                        self.isForSkip = false
                         self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
                         self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
                     }
@@ -268,6 +332,7 @@ class StoriesViewController: UIViewController {
    
     @objc func dismissStory(){
         self.dismiss(animated: true, completion: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshHomeDataAfterViewedStory"), object: nil)
     }
     
     @objc func nextStory(){
@@ -277,6 +342,7 @@ class StoriesViewController: UIViewController {
             self.imageView.isHidden = false
             self.videoPlayer.pause()
         }
+        isForSkip = false
         self.spb.skip()
     }
     
@@ -287,6 +353,7 @@ class StoriesViewController: UIViewController {
             self.imageView.isHidden = false
             self.videoPlayer.pause()
         }
+        isForSkip = false
         self.spb.rewind()
     }
     
@@ -320,13 +387,17 @@ class StoriesViewController: UIViewController {
 extension StoriesViewController: SegmentedProgressBarDelegate{
     
     func segmentedProgressBarChangedIndex(index: Int) {
-        self.videoView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
-        self.videoView.isHidden = true
-        self.imageView.isHidden = false
-        self.imageView.image = nil
-        self.imageView.backgroundColor = .black
-        let storiesArray = Array(storiesUsersArray[storyUserIndex].userStories)
-        self.setStory(storyModel: storiesArray[index], isFirstStory: false)
+        
+        if (!isForSkip){
+            self.videoView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+            self.videoView.isHidden = true
+            self.imageView.isHidden = false
+            self.imageView.image = nil
+            self.imageView.backgroundColor = .black
+            let storiesArray = Array(storiesUsersArray[storyUserIndex].userStories)
+            self.setStory(storyModel: storiesArray[index], isFirstStory: false)
+        }
+        
     }
     
     func segmentedProgressBarFinished() {
