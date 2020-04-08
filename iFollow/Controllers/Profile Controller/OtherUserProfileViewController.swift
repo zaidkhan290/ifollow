@@ -458,12 +458,17 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
         itemView.lblUserAddress.text = post.postLocation
         itemView.userImage.layer.cornerRadius = 25
-        itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "iFollow-white-logo-1"))
+        if (post.postMediaType == "image"){
+            itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "iFollow-white-logo-1"))
+        }
+        else{
+            itemView.feedImage.image = UIImage(named: "post_video")
+        }
+        itemView.playIcon.isHidden = true
         itemView.lblLikeComments.text = "\(post.postLikes)"
         itemView.feedImage.clipsToBounds = true
         itemView.feedImage.contentMode = .scaleAspectFill
         itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
-        itemView.playIcon.isHidden = post.postMediaType == "image"
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
         itemView.likeView.isUserInteractionEnabled = true

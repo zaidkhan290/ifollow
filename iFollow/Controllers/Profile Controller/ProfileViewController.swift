@@ -286,10 +286,15 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
         itemView.lblLikeComments.text = "\(post.postLikes)"
         itemView.feedImage.clipsToBounds = true
-        itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "iFollow-white-logo-1"))
+        if (post.postMediaType == "image"){
+            itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "iFollow-white-logo-1"))
+        }
+        else{
+            itemView.feedImage.image = UIImage(named: "post_video")
+        }
+        itemView.playIcon.isHidden = true
         itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
         itemView.feedImage.contentMode = .scaleAspectFill
-        itemView.playIcon.isHidden = post.postMediaType == "image"
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
         itemView.likeView.isUserInteractionEnabled = true
