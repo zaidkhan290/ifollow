@@ -233,20 +233,22 @@ class HomeViewController: UIViewController {
                         realm.delete(realm.objects(StoryUserModel.self))
                         realm.delete(realm.objects(UserStoryModel.self))
                         
-                        let myStoryModel = StoryUserModel()
-                        myStoryModel.updateModelWithJSON(json: result, isForMyStory: true)
-                        let myStories = Array(myStoryModel.userStories)
-                        if let _ = myStories.firstIndex(where: {$0.isStoryViewed == 0}){
-                            myStoryModel.isAllStoriesViewed = false
+                        if (result["my_stories"].arrayValue).count > 0{
+                            let myStoryModel = StoryUserModel()
+                            myStoryModel.updateModelWithJSON(json: result, isForMyStory: true)
+                            let myStories = Array(myStoryModel.userStories)
+                            if let _ = myStories.firstIndex(where: {$0.isStoryViewed == 0}){
+                                myStoryModel.isAllStoriesViewed = false
+                            }
+                            else{
+                                myStoryModel.isAllStoriesViewed = true
+                            }
+                            if let lastMyStory = myStories.last{
+                                myStoryModel.lastStoryMediaType = lastMyStory.storyMediaType
+                                myStoryModel.lastStoryPreview = lastMyStory.storyURL
+                            }
+                            realm.add(myStoryModel)
                         }
-                        else{
-                            myStoryModel.isAllStoriesViewed = true
-                        }
-                        if let lastMyStory = myStories.last{
-                            myStoryModel.lastStoryMediaType = lastMyStory.storyMediaType
-                            myStoryModel.lastStoryPreview = lastMyStory.storyURL
-                        }
-                        realm.add(myStoryModel)
                         
                         let followersStories = result["user_stories"].arrayValue
                         for followerStory in followersStories{
@@ -327,7 +329,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             }
         }
         else{
-            return 0
+            return 1
         }
     }
     
@@ -365,13 +367,15 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if (indexPath.row == 0 && myStoryArray.count > 0){
-            let vc = Utility.getStoriesViewController()
-            vc.isForMyStory = true
-            vc.storyUserIndex = 0
-            let navVC = UINavigationController(rootViewController: vc)
-            navVC.isNavigationBarHidden = true
-            self.present(navVC, animated: true, completion: nil)
+        if (indexPath.row == 0){
+            if (myStoryArray.count > 0){
+                let vc = Utility.getStoriesViewController()
+                vc.isForMyStory = true
+                vc.storyUserIndex = 0
+                let navVC = UINavigationController(rootViewController: vc)
+                navVC.isNavigationBarHidden = true
+                self.present(navVC, animated: true, completion: nil)
+            }
         }
         else{
             let vc = Utility.getStoriesViewController()
