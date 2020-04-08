@@ -254,7 +254,17 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
     
     func numberOfItems(in carousel: iCarousel) -> Int {
         emptyDataView.isHidden = (userPosts.count > 0)
-        return userPosts.count
+        if (userPosts.count > 0){
+            if (userPosts.first!.isInvalidated || userPosts.last!.isInvalidated){
+                return 0
+            }
+            else{
+                return userPosts.count
+            }
+        }
+        else{
+            return 0
+        }
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
@@ -380,7 +390,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
             vc.delegate = self
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
-            self.present(vc, animated: true, completion: nil)
+            self.present(vc, animated: false, completion: nil)
         }
         if let video = info[UIImagePickerController.InfoKey.mediaURL] as? URL{
             DispatchQueue.main.async {

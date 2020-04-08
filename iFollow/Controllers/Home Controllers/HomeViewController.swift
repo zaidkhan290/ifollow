@@ -55,18 +55,14 @@ class HomeViewController: UIViewController {
         
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.getHomeData()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(refreshHomeData), name: NSNotification.Name(rawValue: "refreshHomeData"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshHomeData), name: NSNotification.Name(rawValue: "refreshHomeDataAfterViewedStory"), object: nil)
         
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
     }
     
     //MARK:- Methods
@@ -321,7 +317,18 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return followersStoriesArray.count + 1
+        
+        if (followersStoriesArray.count > 0){
+            if (followersStoriesArray.first!.isInvalidated || followersStoriesArray.last!.isInvalidated){
+                return 0
+            }
+            else{
+                return followersStoriesArray.count + 1
+            }
+        }
+        else{
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -389,7 +396,18 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     
     func numberOfItems(in carousel: iCarousel) -> Int {
         emptyStateView.isHidden = (postsArray.count > 0)
-        return postsArray.count
+        if (postsArray.count > 0){
+            if (postsArray.first!.isInvalidated || postsArray.last!.isInvalidated){
+                return 0
+            }
+            else{
+                return postsArray.count
+            }
+        }
+        else{
+            return 0
+        }
+        
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
@@ -417,6 +435,9 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped(_:))))
         itemView.feedBackView.isUserInteractionEnabled = true
         itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped)))
+        itemView.postlikeView.isHidden = post.shouldShowPostTrends == 1
+        itemView.lblLikeComments.isHidden = post.shouldShowPostTrends == 1
+        itemView.postTrendLikeIcon.isHidden = post.shouldShowPostTrends == 1
         itemView.postlikeView.isUserInteractionEnabled = true
         itemView.postlikeView.tag = index
         itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))

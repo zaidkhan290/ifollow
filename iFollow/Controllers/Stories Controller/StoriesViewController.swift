@@ -25,9 +25,11 @@ class StoriesViewController: UIViewController {
     @IBOutlet weak var txtFieldMessage: UITextField!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var lblUsername: UILabel!
+    @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var btnOptions: UIButton!
     @IBOutlet weak var nextStoryView: UIView!
     @IBOutlet weak var prevStoryView: UIView!
+    @IBOutlet weak var btnViewWidthConstraint: NSLayoutConstraint!
     
     var videoPlayer: AVPlayer!
     var storiesUsersArray = [StoryUserModel]()
@@ -97,6 +99,11 @@ class StoriesViewController: UIViewController {
     //MARK:- Methods and Actions
     
     func setStory(storyModel: UserStoryModel, isFirstStory: Bool){
+        lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: storyModel.storyTime))
+        btnView.isHidden = storyModel.shouldShowStoryViews == 1
+        btnViewWidthConstraint.constant = storyModel.shouldShowStoryViews == 1 ? 0 : 35
+        self.view.updateConstraintsIfNeeded()
+        self.view.layoutSubviews()
         if (storyModel.storyMediaType == "video"){
             self.downloadVideo(storyModel: storyModel, isFirstStory: isFirstStory)
         }
@@ -150,6 +157,19 @@ class StoriesViewController: UIViewController {
             self.spb.isPaused = false
         }
         else{
+            
+            if (isFirstStory){
+                self.spb.startAnimation()
+                for i in 0..<self.startIndex{
+                    self.isForSkip = true
+                    self.spb.skip()
+                }
+                self.spb.isPaused = true
+                self.isForSkip = false
+                self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
+                self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
+            }
+            
             Alamofire.request(storyModel.storyURL).downloadProgress(closure : { (progress) in
                 print(progress.fractionCompleted)
                 Utility.showOrHideLoader(shouldShow: true)
@@ -191,16 +211,6 @@ class StoriesViewController: UIViewController {
                     Utility.showOrHideLoader(shouldShow: false)
                     self.videoPlayer.play()
                     self.isVideoPlaying = true
-                    if (isFirstStory){
-                        self.spb.startAnimation()
-                        for i in 0..<self.startIndex{
-                            self.isForSkip = true
-                            self.spb.skip()
-                        }
-                        self.isForSkip = false
-                        self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
-                        self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
-                    }
                     self.spb.isPaused = false
                 }
             }
@@ -251,7 +261,21 @@ class StoriesViewController: UIViewController {
             
         }
         else{
+            
+            if (isFirstStory){
+                self.spb.startAnimation()
+                for i in 0..<self.startIndex{
+                    self.isForSkip = true
+                    self.spb.skip()
+                }
+                self.spb.isPaused = true
+                self.isForSkip = false
+                self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
+                self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
+            }
+            
             Utility.showOrHideLoader(shouldShow: true)
+            
             SDWebImageDownloader.shared.downloadImage(with: URL(string: storyModel.storyURL)) { (image, data, error, success) in
                 
                 if (error == nil){
@@ -283,16 +307,6 @@ class StoriesViewController: UIViewController {
                     self.imageView.isHidden = false
                     self.imageView.image = image
                     self.isVideoPlaying = false
-                    if (isFirstStory){
-                        self.spb.startAnimation()
-                        for i in 0..<self.startIndex{
-                            self.isForSkip = true
-                            self.spb.skip()
-                        }
-                        self.isForSkip = false
-                        self.nextStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.nextStory)))
-                        self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
-                    }
                     self.spb.isPaused = false
                     
                 }

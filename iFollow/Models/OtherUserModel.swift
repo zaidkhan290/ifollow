@@ -55,6 +55,7 @@ class OtherUserPostModel: NSObject{
     var postLikes: Int = 0
     var postComments: Int = 0
     var isPostLike: Int = 0
+    var shouldShowPostTrends: Int = 0
     
     func updateModelWithJSON(json: JSON){
         postId = json["post_id"].intValue
@@ -66,6 +67,7 @@ class OtherUserPostModel: NSObject{
         postLikes = json["post_likes"].intValue
         postComments = json["post_comments"].intValue
         isPostLike = json["isLiked"].intValue
+        shouldShowPostTrends = json["post_view_settings"].intValue
     }
     
 }

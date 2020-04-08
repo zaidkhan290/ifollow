@@ -469,6 +469,9 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.likeView.isUserInteractionEnabled = true
         itemView.likeView.tag = index
         itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
+        itemView.postlikeView.isHidden = post.shouldShowPostTrends == 1
+        itemView.lblLikeComments.isHidden = post.shouldShowPostTrends == 1
+        itemView.postTrendLikeIcon.isHidden = post.shouldShowPostTrends == 1
         itemView.postlikeView.isUserInteractionEnabled = true
         itemView.postlikeView.tag = index
         itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))

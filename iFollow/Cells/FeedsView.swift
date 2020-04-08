@@ -28,6 +28,7 @@ class FeedsView: UIView {
     @IBOutlet weak var likeImage: UIImageView!
     @IBOutlet weak var postlikeView: UIView!
     @IBOutlet weak var playIcon: UIImageView!
+    @IBOutlet weak var postTrendLikeIcon: UIImageView!
     
     var index: Int!
     var delegate: FeedsViewDelegate!

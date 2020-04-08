@@ -206,6 +206,7 @@
                 <outlet property="likeView" destination="E6Y-uX-OOE" id="FH6-VX-Dnw"/>
                 <outlet property="mainView" destination="g0t-Ra-yTE" id="8aY-Xe-GGU"/>
                 <outlet property="playIcon" destination="Jf1-8q-ctc" id="Sti-oW-0DA"/>
+                <outlet property="postTrendLikeIcon" destination="qsY-B6-WiC" id="R40-Cw-4xj"/>
                 <outlet property="postlikeView" destination="TYm-a8-VUl" id="CSP-DH-EHI"/>
                 <outlet property="userImage" destination="K99-P7-8ug" id="d1T-zx-Emx"/>
             </connections>

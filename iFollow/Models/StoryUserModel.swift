@@ -66,12 +66,15 @@ class UserStoryModel: Object {
     @objc dynamic var storyURL: String = ""
     @objc dynamic var isStoryViewed: Int = 0
     @objc dynamic var storyTime: String = ""
+    @objc dynamic var shouldShowStoryViews: Int = 0
     
     func updateModelWithJSON(json: JSON){
         storyId = json["story_id"].intValue
         storyMediaType = json["media_type"].stringValue
         storyURL = json["media"].stringValue
         isStoryViewed = json["isViewed"].intValue
+        storyTime = json["created_at"].stringValue
+        shouldShowStoryViews = json["story_view_settings"].intValue
     }
     
 }
