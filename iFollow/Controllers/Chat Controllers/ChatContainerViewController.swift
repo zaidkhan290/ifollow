@@ -25,7 +25,7 @@ class ChatContainerViewController: UIViewController {
     var isFromGroupChat = false
     var isFromProfile = false
     var chatId = ""
-    var userId = ""
+    var userId = 0
     var userName = ""
     var chatUserImage = ""
     
@@ -40,6 +40,7 @@ class ChatContainerViewController: UIViewController {
         lblUsername.text = isFromGroupChat ? "Family Group" : userName
         lblOnlineStatus.text = isFromGroupChat ? "Watson, Poland, Kane..(+15 others)" : "Online"
         userImage.layer.cornerRadius = userImage.frame.height / 2
+        userImage.contentMode = .scaleAspectFill
        
         if (isFromGroupChat){
             userImage.image = UIImage(named: "family")

@@ -39,6 +39,7 @@ enum EndPoint: String {
     case hidePost = "post_hide"
     case deletePost = "delete_post"
     case searchUsers = "search_users"
+    case createChatRoom = "create_chat_room"
 }
 
 enum StatusCodes {

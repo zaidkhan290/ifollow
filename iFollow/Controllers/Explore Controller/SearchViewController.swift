@@ -63,7 +63,9 @@ class SearchViewController: UIViewController {
                     for user in users{
                         let model = SearchUserModel()
                         model.updateModelWithJSON(json: user)
-                        self.searchUsersArray.append(model)
+                        if (model.userId != Utility.getLoginUserId()){
+                            self.searchUsersArray.append(model)
+                        }
                     }
                     self.searchTableView.reloadData()
                 }

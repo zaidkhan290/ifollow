@@ -36,7 +36,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     var chatId = ""
     var userImage = ""
     var userName = ""
-    var otherUserId = ""
+    var otherUserId = 0
     var timer = Timer()
     var seconds = 1
     var recordingState: RecordingEnum!

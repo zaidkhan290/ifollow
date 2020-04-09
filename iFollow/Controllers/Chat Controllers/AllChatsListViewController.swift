@@ -21,7 +21,7 @@ class AllChatsListViewController: UIViewController {
         super.viewDidLoad()
 
         if (isPrivateChat){
-            lblAlert.text = "Messages will be deleted if not read in 12 hours"
+            lblAlert.text = "Messages will be deleted in 12 hours"
             searchView.dropShadow(color: Theme.privateChatBoxSearchBarColor)
             searchView.layer.cornerRadius = 25
             Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: .white)
@@ -57,14 +57,14 @@ extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = Utility.getChatContainerViewController()
-        vc.isFromGroupChat = false
-        vc.isPrivateChat = isPrivateChat
-        vc.chatId = "4-8"
-        vc.userId = Utility.getLoginUserId() == 4 ? "8" : "4"
-        vc.userName = Utility.getLoginUserId() == 4 ? "Mou Navi" : "Murtaza Fatani"
-        vc.chatUserImage = Utility.getLoginUserId() == 4 ? "https://res.cloudinary.com/bsqp-tech/image/upload/v1584639782/a4xneb8gkmsieplcrted.jpg" : "https://res.cloudinary.com/bsqp-tech/image/upload/v1584616817/sbptfu6nsl4i14ftm0nj.jpg"
-        self.pushToVC(vc: vc)
+//        let vc = Utility.getChatContainerViewController()
+//        vc.isFromGroupChat = false
+//        vc.isPrivateChat = isPrivateChat
+//        vc.chatId = "4-8"
+//        vc.userId = Utility.getLoginUserId() == 4 ? "8" : "4"
+//        vc.userName = Utility.getLoginUserId() == 4 ? "Mou Navi" : "Murtaza Fatani"
+//        vc.chatUserImage = Utility.getLoginUserId() == 4 ? "https://res.cloudinary.com/bsqp-tech/image/upload/v1584639782/a4xneb8gkmsieplcrted.jpg" : "https://res.cloudinary.com/bsqp-tech/image/upload/v1584616817/sbptfu6nsl4i14ftm0nj.jpg"
+//        self.pushToVC(vc: vc)
     }
     
 }

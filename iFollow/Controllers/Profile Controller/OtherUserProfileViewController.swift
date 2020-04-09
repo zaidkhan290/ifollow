@@ -37,6 +37,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     var options = [String]()
     var userId = 0
     var optionsPopupIndex = 0
+    var chatId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -181,9 +182,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     @objc func privateTalkTapped(){
-        let vc = Utility.getChatContainerViewController()
-        vc.isFromProfile = true
-        self.present(vc, animated: true, completion: nil)
+        showTalkPopup()
     }
     
     @objc func trendesTapped(){
@@ -209,6 +208,65 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         else{
             showUnTrendPopup()
         }
+    }
+    
+    func showTalkPopup(){
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let normalTalk = UIAlertAction(title: "Normal Talk", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.createChatRoom(isPrivate: false)
+            }
+        }
+        let privateTalk = UIAlertAction(title: "Private Talk", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.createChatRoom(isPrivate: true)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(normalTalk)
+        alertVC.addAction(privateTalk)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    func createChatRoom(isPrivate: Bool){
+        
+        let params = ["user_id": userId,
+                      "is_private": isPrivate ? 1 : 0]
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        API.sharedInstance.executeAPI(type: .createChatRoom, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    self.chatId = result["chat_room_id"].stringValue
+                    let vc = Utility.getChatContainerViewController()
+                    vc.isFromProfile = true
+                    vc.isPrivateChat = isPrivate
+                    vc.chatId = self.chatId
+                    vc.userId = self.userId
+                    vc.userName = self.otherUserProfile.userFullName
+                    vc.chatUserImage = self.otherUserProfile.userImage
+                    self.present(vc, animated: true, completion: nil)
+                }
+                else if (status == .failure){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                    }
+                }
+                else if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+        
     }
     
     func showBlockUserPopup(){
