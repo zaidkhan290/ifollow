@@ -36,6 +36,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     var isTrending = false
     var options = [String]()
     var userId = 0
+    var optionsPopupIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,8 +160,10 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     
     @objc func showFeedsOptionsPopup(sender: UIButton){
         
+        optionsPopupIndex = sender.tag
         let vc = Utility.getOptionsViewController()
         vc.options = ["Hide", "Share"]
+        vc.delegate = self
         vc.isFromPostView = true
         vc.modalPresentationStyle = .popover
         vc.preferredContentSize = CGSize(width: 100, height: 100)
@@ -428,6 +431,33 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         }
     }
     
+    func showHidePostPopup(){
+        let alertVC = UIAlertController(title: "Hide Post", message: "Are you sure you want to hide this post?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+                let params = ["post_id": self.otherUserProfile.userPosts[self.optionsPopupIndex].postId]
+                self.otherUserProfile.userPosts.remove(at: self.optionsPopupIndex)
+                self.carouselView.removeItem(at: self.optionsPopupIndex, animated: true)
+                Loaf("Post Hide", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+                    
+                }
+                API.sharedInstance.executeAPI(type: .hidePost, method: .post, params: params, completion: { (status, result, message) in
+                    DispatchQueue.main.async {
+                        if (status == .authError){
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                Utility.logoutUser()
+                            }
+                        }
+                    }
+                })
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        alertVC.addAction(yesAction)
+        alertVC.addAction(noAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.none
     }
@@ -533,6 +563,9 @@ extension OtherUserProfileViewController: OptionsViewControllerDelegate{
         }
         else if (option == "Report"){
             self.showReportUserPopup()
+        }
+        else if (option == "Hide"){
+            self.showHidePostPopup()
         }
     }
 }
