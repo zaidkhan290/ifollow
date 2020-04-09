@@ -36,6 +36,7 @@ class ProfileViewController: UIViewController {
     var imagePicker = UIImagePickerController()
     var isFullScreen = false
     var videoURL: URL!
+    var optionsPopupIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -203,8 +204,10 @@ class ProfileViewController: UIViewController {
     
     @objc func showFeedsOptionsPopup(sender: UIButton){
         
+        optionsPopupIndex = sender.tag
         let vc = Utility.getOptionsViewController()
         vc.options = ["Edit", "Delete"]
+        vc.delegate = self
         vc.isFromPostView = true
         vc.modalPresentationStyle = .popover
         vc.preferredContentSize = CGSize(width: 100, height: 100)
@@ -248,6 +251,41 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    func showDeletePostPopup(){
+        let alertVC = UIAlertController(title: "Delete Post", message: "Are you sure you want to delete this post?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+                let params = ["post_id": self.userPosts[self.optionsPopupIndex].postId]
+                self.userPosts.remove(at: self.optionsPopupIndex)
+                self.carouselView.removeItem(at: self.optionsPopupIndex, animated: true)
+                Loaf("Post Deleted", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+                    
+                }
+                API.sharedInstance.executeAPI(type: .deletePost, method: .post, params: params, completion: { (status, result, message) in
+                    DispatchQueue.main.async {
+                        if (status == .authError){
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                Utility.logoutUser()
+                            }
+                        }
+                    }
+                })
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        alertVC.addAction(yesAction)
+        alertVC.addAction(noAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
+}
+
+extension ProfileViewController: OptionsViewControllerDelegate{
+    func didTapOnOptions(option: String) {
+        if (option == "Delete"){
+            self.showDeletePostPopup()
+        }
+    }
 }
 
 extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{

@@ -45,10 +45,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2If-Pd-LEb">
-                            <rect key="frame" x="328" y="20" width="25" height="25"/>
+                            <rect key="frame" x="318" y="20" width="35" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="25" id="QW1-Cc-i25"/>
-                                <constraint firstAttribute="width" constant="25" id="Zq6-R3-zXz"/>
+                                <constraint firstAttribute="width" constant="35" id="Zq6-R3-zXz"/>
                             </constraints>
                             <state key="normal" image="Group 6969"/>
                         </button>
