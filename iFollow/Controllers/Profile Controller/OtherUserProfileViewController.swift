@@ -243,14 +243,21 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
                 
                 if (status == .success){
                     self.chatId = result["chat_room_id"].stringValue
-                    let vc = Utility.getChatContainerViewController()
-                    vc.isFromProfile = true
-                    vc.isPrivateChat = isPrivate
-                    vc.chatId = self.chatId
-                    vc.userId = self.userId
-                    vc.userName = self.otherUserProfile.userFullName
-                    vc.chatUserImage = self.otherUserProfile.userImage
-                    self.present(vc, animated: true, completion: nil)
+                    if (self.chatId != ""){
+                        let vc = Utility.getChatContainerViewController()
+                        vc.isFromProfile = true
+                        vc.isPrivateChat = isPrivate
+                        vc.chatId = self.chatId
+                        vc.userId = self.userId
+                        vc.userName = self.otherUserProfile.userFullName
+                        vc.chatUserImage = self.otherUserProfile.userImage
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                    else{
+                        Loaf("Failed to create chat room", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        }
+                    }
+                    
                 }
                 else if (status == .failure){
                     Utility.showOrHideLoader(shouldShow: false)

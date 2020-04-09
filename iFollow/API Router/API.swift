@@ -38,6 +38,7 @@ enum EndPoint: String {
     case viewStory = "story_view"
     case hidePost = "post_hide"
     case deletePost = "delete_post"
+    case deleteStory = "delete_story"
     case searchUsers = "search_users"
     case createChatRoom = "create_chat_room"
     case getNormalChatsList = "chat_record_list"

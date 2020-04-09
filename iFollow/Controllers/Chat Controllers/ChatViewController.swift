@@ -285,6 +285,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             if(sender_Id == self.senderId){
                 if (!self.shouldShowLocalAudioMessage){
                     let audioData = JSQAudioMediaItem()
+                    audioData.mediaView()?.tintColor = isPrivateChat ? Theme.privateChatOutgoingMessage : Theme.privateChatBoxSearchBarColor
                     audioData.delegate = self
                     audioData.audioData = nil
                     let dateFromTimeStamp : NSDate = NSDate(timeIntervalSince1970: Double(date/1000))
@@ -295,6 +296,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             }
             else{
                 let audioData = JSQAudioMediaItem()
+                audioData.mediaView()?.tintColor = isPrivateChat ? Theme.privateChatIncomingMessage : Theme.profileLabelsYellowColor
                 audioData.delegate = self
                 audioData.audioData = nil
                 audioData.appliesMediaViewMaskAsOutgoing = false
@@ -339,6 +341,12 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         
         DispatchQueue.global().async {
             let audioData = JSQAudioMediaItem()
+            if (appliesMediaViewMaskAsOutgoing){
+                audioData.mediaView()?.tintColor = self.isPrivateChat ? Theme.privateChatOutgoingMessage : Theme.privateChatBoxSearchBarColor
+            }
+            else{
+                audioData.mediaView()?.tintColor = self.isPrivateChat ? Theme.privateChatIncomingMessage : Theme.profileLabelsYellowColor
+            }
             do {
                 let data = try Data(contentsOf: URL(string: audioUrl)!)
                 audioData.audioData = data

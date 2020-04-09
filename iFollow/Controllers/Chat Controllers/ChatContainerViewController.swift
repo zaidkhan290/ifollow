@@ -124,6 +124,7 @@ class ChatContainerViewController: UIViewController {
         }
         else{
             let vc = Utility.getOtherUserProfileViewController()
+            vc.userId = self.userId
             self.present(vc, animated: true, completion: nil)
         }
         

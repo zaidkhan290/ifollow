@@ -22,8 +22,8 @@ let kOldPasswordError = "Please enter your old password"
 let kTermsAndConditionError = "In order to continue, you need to accept to our Terms & Conditions and Privacy Policy. Kindly tap on provided check box in order to do that"
 
 //Others
-//let BASEURL = "http://apis.ifollowinc.com:5000/users/"
-let BASEURL = "https://ifollowinc.herokuapp.com/users/"
+let BASEURL = "http://apis.ifollowinc.com:5000/users/"
+//let BASEURL = "https://ifollowinc.herokuapp.com/users/"
 let UIWINDOW = UIApplication.shared.delegate!.window!
 let GOOGLECLIENTID = "977065173099-0sl42r8u3v6hh91nkfhbl2qkb4v3mtgh.apps.googleusercontent.com"
 let rootRef = Database.database().reference()

@@ -38,6 +38,7 @@ class StoriesViewController: UIViewController {
     var storyUserIndex = 0
     var isForMyStory = false
     var isForSkip = false // If we are skip segment index for showing the first index as unviewed index
+    var currentStoryId = 0
     
     var spb: SegmentedProgressBar!
     
@@ -47,6 +48,7 @@ class StoriesViewController: UIViewController {
         messageInputView.layer.cornerRadius = 20
         txtFieldMessage.delegate = self
         txtFieldMessage.returnKeyType = .send
+        btnOptions.isHidden = !isForMyStory
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(tapOnView(recognizer:)))
         longPressGesture.minimumPressDuration = 0.1
@@ -100,6 +102,7 @@ class StoriesViewController: UIViewController {
     
     func setStory(storyModel: UserStoryModel, isFirstStory: Bool){
         lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: storyModel.storyTime))
+        currentStoryId = storyModel.storyId
         btnView.isHidden = storyModel.shouldShowStoryViews == 1
         btnViewWidthConstraint.constant = storyModel.shouldShowStoryViews == 1 ? 0 : 35
         self.view.updateConstraintsIfNeeded()
@@ -342,6 +345,84 @@ class StoriesViewController: UIViewController {
     }
     
     @IBAction func btnOptionsTapped(_ sender: UIButton) {
+        showOptionsPopup()
+    }
+    
+    func showOptionsPopup(){
+        
+        spb.isPaused = true
+        if (isVideoPlaying){
+            videoPlayer.pause()
+        }
+        
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let deleteStoryAction = UIAlertAction(title: "Delete Story", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.showDeleteStoryPopup()
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            DispatchQueue.main.async {
+                self.spb.isPaused = false
+                if (self.isVideoPlaying){
+                    self.videoPlayer.play()
+                }
+            }
+        }
+        alertVC.addAction(deleteStoryAction)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    func showDeleteStoryPopup(){
+        let alertVC = UIAlertController(title: "Delete Story", message: "Are you sure you want to delete this story?", preferredStyle: .alert)
+        let deleteStoryAction = UIAlertAction(title: "Delete Story", style: .default) { (action) in
+            DispatchQueue.main.async {
+                
+                let params = ["story_id": self.currentStoryId]
+                Utility.showOrHideLoader(shouldShow: true)
+                API.sharedInstance.executeAPI(type: .deleteStory, method: .post, params: params, completion: { (status, result, message) in
+                    
+                    DispatchQueue.main.async {
+                        Utility.showOrHideLoader(shouldShow: false)
+                        
+                        if (status == .success){
+                            Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                self.dismissStory()
+                            }
+                            
+                        }
+                        else if (status == .failure){
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                
+                            }
+                            self.spb.isPaused = false
+                            if (self.isVideoPlaying){
+                                self.videoPlayer.play()
+                            }
+                        }
+                        else if (status == .authError){
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                Utility.logoutUser()
+                            }
+                        }
+                    }
+                    
+                })
+                
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            DispatchQueue.main.async {
+                self.spb.isPaused = false
+                if (self.isVideoPlaying){
+                    self.videoPlayer.play()
+                }
+            }
+        }
+        alertVC.addAction(deleteStoryAction)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
     }
    
     @objc func dismissStory(){
