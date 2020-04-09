@@ -325,7 +325,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.lblLikeComments.text = "\(post.postLikes)"
         itemView.feedImage.clipsToBounds = true
         if (post.postMediaType == "image"){
-            itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "iFollow-white-logo-1"))
+            itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
         }
         else{
             itemView.feedImage.image = UIImage(named: "post_video")

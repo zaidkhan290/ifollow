@@ -66,6 +66,12 @@ class HomeViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
+        usersRef.updateChildValues(["isActive" : true])
+    }
+    
     //MARK:- Methods
     
     func openCamera(){
@@ -458,7 +464,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.lblUserAddress.text = post.postLocation
         itemView.userImage.layer.cornerRadius = 25
         if (post.postMediaType == "image"){
-            itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "iFollow-white-logo-1"))
+            itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
         }
         else{
             itemView.feedImage.image = UIImage(named: "post_video")

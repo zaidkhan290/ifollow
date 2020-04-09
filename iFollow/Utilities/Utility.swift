@@ -368,6 +368,9 @@ struct Utility {
     }
     
     static func logoutUser(){
+        var usersRef = rootRef.child("Users")
+        usersRef = usersRef.child("\(Utility.getLoginUserId())")
+        usersRef.updateChildValues(["isActive" : false])
         let realm = try! Realm()
         try! realm.safeWrite {
             realm.deleteAll()

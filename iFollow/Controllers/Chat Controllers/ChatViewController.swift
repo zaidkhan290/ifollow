@@ -43,7 +43,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     var shouldShowLocalImageMessage = false
     var shouldShowLocalAudioMessage = false
     var isRecordingCancel = false
-    var shouldSendNotification = false
+    var shouldSendNotification = true
     var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -178,15 +178,24 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     
     func messageAdded(){
         
-//        let userRef = rootRef.child("users").child(otherUserId)
-//        userRef.observe(.value) { (snapshot) in
-//            if (snapshot.hasChild("isOnChat")){
-//                let isOnChat = snapshot.childSnapshot(forPath: "isOnChat").value as! Bool
-//                self.shouldSendNotification = !isOnChat
-//            }
-//
-//        }
+        let userRef = rootRef.child("Users").child("\(otherUserId)")
+        userRef.observe(.value) { (snapshot) in
+            if (snapshot.hasChild("isOnChat")){
+                let isOnChat = snapshot.childSnapshot(forPath: "isOnChat").value as! Bool
+                self.shouldSendNotification = !isOnChat
+            }
+
+        }
         
+        chatRef.queryLimited(toLast: 1).observe(.childAdded) { (snapshot) in
+            let chatNode = snapshot.key
+            let userId = (snapshot.childSnapshot(forPath: "senderId").value as! String)
+            if (userId != "\(Utility.getLoginUserId())"){
+                let chatToUpdate = self.chatRef.child(chatNode)
+                chatToUpdate.updateChildValues(["isRead": true])
+            }
+        }
+       
         chatRef.observe(.childAdded, with: { (snapshot) in
             
             if (self.isPrivateChat){
@@ -635,7 +644,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                                                        "senderId":sender!,
                                                        "message":text!,
                                                        "type":type!,
-                                                       "isRead": false,
+                                                       "isRead": !shouldSendNotification,
                                                        "timestamp": messageTime,
                                                        "expireTime": messageExpireTime])
         }
@@ -644,7 +653,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                                                        "senderId":sender!,
                                                        "message":text!,
                                                        "type":type!,
-                                                       "isRead": false,
+                                                       "isRead": !shouldSendNotification,
                                                        "timestamp" : ServerValue.timestamp()])
         }
         

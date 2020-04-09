@@ -28,6 +28,7 @@ class ChatContainerViewController: UIViewController {
     var userId = 0
     var userName = ""
     var chatUserImage = ""
+    var isUserOnline = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +37,9 @@ class ChatContainerViewController: UIViewController {
 
         lblMessage.layer.masksToBounds = true
         lblMessage.layer.cornerRadius = 5
+        onlineIcon.layer.cornerRadius = onlineIcon.frame.height / 2
         
         lblUsername.text = isFromGroupChat ? "Family Group" : userName
-        lblOnlineStatus.text = isFromGroupChat ? "Watson, Poland, Kane..(+15 others)" : "Online"
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.contentMode = .scaleAspectFill
        
@@ -65,7 +66,6 @@ class ChatContainerViewController: UIViewController {
             self.alertView.backgroundColor = Theme.privateChatBackgroundColor
             self.alertViewHeightConstraint.constant = 40
             self.lblMessage.isHidden = false
-            
         }
         else{
             self.alertViewHeightConstraint.constant = 0
@@ -73,6 +73,26 @@ class ChatContainerViewController: UIViewController {
         }
         self.view.updateConstraintsIfNeeded()
         self.view.layoutSubviews()
+        
+        let userRef = rootRef.child("Users").child("\(userId)")
+        userRef.observe(.value) { (snapshot) in
+            if (snapshot.hasChildren()){
+                let isOnline = snapshot.childSnapshot(forPath: "isActive").value as! Bool
+                self.isUserOnline = isOnline
+                self.changeOnlineStatus()
+            }
+            
+        }
+        
+        let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
+        usersRef.updateChildValues(["isOnChat": true])
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        let userRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
+        userRef.updateChildValues(["isOnChat": false])
     }
     
     //MARK:- Actions
@@ -85,6 +105,11 @@ class ChatContainerViewController: UIViewController {
            self.goBack()
         }
         
+    }
+    
+    func changeOnlineStatus(){
+        onlineIcon.backgroundColor = UIColor(named: isUserOnline ? "ActiveColor" : "AwayColor")
+        lblOnlineStatus.text = isUserOnline ? "Online" : "Away"
     }
     
     @IBAction func btnImageTapped(_ sender: UIButton) {

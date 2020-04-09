@@ -358,6 +358,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         let image = UIImage(data: imageData)
         cameraView.isHidden = false
         selectedImage = image!
+        cameraView.contentMode = .scaleAspectFill
         cameraView.image = image!
         filterView.isHidden = false
 //        filterSwipeView.isPlayingLibraryVideo = true
@@ -495,9 +496,11 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
     func changeImageFilter(){
         if (selectedFilter == 0){
+            cameraView.contentMode = .scaleAspectFill
             cameraView.image = selectedImage
         }
         else{
+            cameraView.contentMode = .scaleAspectFill
             let image = selectedImage
             let filteredImage = image.addFilter(filter: filters[selectedFilter])
             cameraView.image = filteredImage
@@ -818,6 +821,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             isPictureCaptured = true
+            cameraView.contentMode = .scaleAspectFill
             cameraView.isHidden = false
             selectedImage = image
             cameraView.image = image
@@ -845,6 +849,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
                     self.videoURL = video
                     self.isPictureCaptured = true
                     self.cameraView.isHidden = false
+                    self.cameraView.contentMode = .scaleAspectFit
                     self.selectedImage = videoScreenShot
                     self.cameraView.image = videoScreenShot
                     self.filterView.isHidden = false

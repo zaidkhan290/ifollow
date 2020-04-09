@@ -56,7 +56,7 @@
                             <rect key="frame" x="20" y="90.5" width="333" height="204"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </imageView>
-                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="send" translatesAutoresizingMaskIntoConstraints="NO" id="Jf1-8q-ctc">
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Jf1-8q-ctc">
                             <rect key="frame" x="178.5" y="184.5" width="16" height="16"/>
                         </imageView>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="like-2" translatesAutoresizingMaskIntoConstraints="NO" id="qsY-B6-WiC">
@@ -219,6 +219,6 @@
         <image name="Layer 6 copy" width="73.5" height="49"/>
         <image name="Rectangle 15" width="307.5" height="329"/>
         <image name="like-2" width="11" height="10.5"/>
-        <image name="send" width="36" height="36"/>
+        <image name="play_Icon" width="96" height="96"/>
     </resources>
 </document>

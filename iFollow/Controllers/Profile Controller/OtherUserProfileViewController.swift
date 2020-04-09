@@ -547,7 +547,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.lblUserAddress.text = post.postLocation
         itemView.userImage.layer.cornerRadius = 25
         if (post.postMediaType == "image"){
-            itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "iFollow-white-logo-1"))
+            itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
         }
         else{
             itemView.feedImage.image = UIImage(named: "post_video")
