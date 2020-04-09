@@ -15,6 +15,7 @@ class ChatListTableViewCell: UITableViewCell {
     @IBOutlet weak var lblUserMessage: UILabel!
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var lblMessageCounter: UILabel!
+    @IBOutlet weak var messageCounterIcon: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -117,6 +117,8 @@
 		18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D81237184E2005C739F /* ExploreViewController.swift */; };
 		18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */; };
 		18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */; };
+		18C89E08243F267A0032A663 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C89E07243F267A0032A663 /* SearchViewController.swift */; };
+		18C89E0A243F2DD40032A663 /* SearchUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C89E09243F2DD40032A663 /* SearchUserModel.swift */; };
 		18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD2D8B237EE167007A2C3B /* CommentViewController.swift */; };
 		18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */; };
 		18D6BBD424375749004D90EB /* AudioRecorderSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6BBD324375749004D90EB /* AudioRecorderSingleton.swift */; };
@@ -238,6 +240,8 @@
 		18C88D81237184E2005C739F /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStoriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllStoriesCollectionViewCell.xib; sourceTree = "<group>"; };
+		18C89E07243F267A0032A663 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		18C89E09243F2DD40032A663 /* SearchUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserModel.swift; sourceTree = "<group>"; };
 		18CD2D8B237EE167007A2C3B /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		18D6BBD324375749004D90EB /* AudioRecorderSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderSingleton.swift; sourceTree = "<group>"; };
@@ -476,6 +480,7 @@
 				18E198F0243B140900511296 /* HomePostsModel.swift */,
 				18E198F2243B5BDD00511296 /* PostLikesUserModel.swift */,
 				18A1F329243C9C2A002E542A /* StoryUserModel.swift */,
+				18C89E09243F2DD40032A663 /* SearchUserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -589,6 +594,7 @@
 			isa = PBXGroup;
 			children = (
 				18C88D81237184E2005C739F /* ExploreViewController.swift */,
+				18C89E07243F267A0032A663 /* SearchViewController.swift */,
 			);
 			path = "Explore Controller";
 			sourceTree = "<group>";
@@ -836,6 +842,7 @@
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
 				18A32627240FBCE800CF329E /* DSSwipableFilterView.swift in Sources */,
 				1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */,
+				18C89E0A243F2DD40032A663 /* SearchUserModel.swift in Sources */,
 				1825A52A237AEA50002811E7 /* TrendesViewController.swift in Sources */,
 				18E198F1243B140900511296 /* HomePostsModel.swift in Sources */,
 				189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */,
@@ -879,6 +886,7 @@
 				18B14CC123758086005E5CE4 /* SignupDetail1ViewController.swift in Sources */,
 				18847A55237C21F1004D500A /* GroupDetailViewController.swift in Sources */,
 				18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */,
+				18C89E08243F267A0032A663 /* SearchViewController.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				1855081C23799422008EAC2E /* HalfSizePresentation.swift in Sources */,
 				18E198F3243B5BDD00511296 /* PostLikesUserModel.swift in Sources */,
