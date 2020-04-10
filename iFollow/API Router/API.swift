@@ -43,6 +43,8 @@ enum EndPoint: String {
     case createChatRoom = "create_chat_room"
     case getNormalChatsList = "chat_record_list"
     case getPrivateChatsList = "private_chat_record_list"
+    case getBlockUsers = "blocked_users_list"
+    case unblockUser = "unblock_user"
 }
 
 enum StatusCodes {

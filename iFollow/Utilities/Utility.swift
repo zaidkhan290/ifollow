@@ -95,6 +95,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "PrivacyViewController") as! PrivacyViewController
     }
     
+    static func getBlockUsersViewController() -> BlockUsersViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "BlockUsersViewController") as! BlockUsersViewController
+    }
+    
     static func getPrivateChatBoxViewControllers() -> PrivateChatBoxViewController{
         return storyBoard.instantiateViewController(withIdentifier: "PrivateChatBoxViewController") as! PrivateChatBoxViewController
     }

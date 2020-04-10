@@ -75,24 +75,52 @@ class AllChatsListViewController: UIViewController {
                                 let lastMessageTime = (snapshot.childSnapshot(forPath: "timestamp").value as! Double)
                                 let lastMessageIsRead = (snapshot.childSnapshot(forPath: "isRead").value as! Bool)
                                 
-                                recentChat.lastMessageTime = lastMessageTime
-                                if (userId == "\(Utility.getLoginUserId())"){
-                                    recentChat.isRead = true
+                                if (self.isPrivateChat){
+                                    
+                                    let expireTime = snapshot.childSnapshot(forPath: "expireTime").value as! Double
+                                    
+                                    let currentTime = Int64(Date().timeIntervalSince1970 * 1000)
+                                    
+                                    if (Int64(expireTime) > currentTime){
+                                        recentChat.lastMessageTime = lastMessageTime
+                                        if (userId == "\(Utility.getLoginUserId())"){
+                                            recentChat.isRead = true
+                                        }
+                                        else{
+                                            recentChat.isRead = lastMessageIsRead
+                                        }
+                                        
+                                        if (type == 1){
+                                            recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: \(message)" : message)
+                                        }
+                                        else if (type == 2){
+                                            recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Image" : "Image")
+                                        }
+                                        else if (type == 3){
+                                            recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Audio" : "Audio")
+                                        }
+                                    }
                                 }
                                 else{
-                                    recentChat.isRead = lastMessageIsRead
+                                    recentChat.lastMessageTime = lastMessageTime
+                                    if (userId == "\(Utility.getLoginUserId())"){
+                                        recentChat.isRead = true
+                                    }
+                                    else{
+                                        recentChat.isRead = lastMessageIsRead
+                                    }
+                                    
+                                    if (type == 1){
+                                        recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: \(message)" : message)
+                                    }
+                                    else if (type == 2){
+                                        recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Image" : "Image")
+                                    }
+                                    else if (type == 3){
+                                        recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Audio" : "Audio")
+                                    }
                                 }
-                                
-                                if (type == 1){
-                                    recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: \(message)" : message)
-                                }
-                                else if (type == 2){
-                                    recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Image" : "Image")
-                                }
-                                else if (type == 3){
-                                    recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Audio" : "Audio")
-                                }
-                                
+                               
                                 Utility.showOrHideLoader(shouldShow: false)
                                 self.chatsArray = self.allChatsArray.filter({$0.lastMessage != ""})
                                 self.chatsArray.sort(by: { (model1, model2) -> Bool in
@@ -136,6 +164,7 @@ extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as! ChatListTableViewCell
         cell.backgroundColor = isPrivateChat ? .clear : .white
+        cell.lblUsername.font = Theme.getLatoBoldFontOfSize(size: 18)
         let chat = chatsArray[indexPath.row]
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
         cell.userImage.contentMode = .scaleAspectFill
@@ -146,7 +175,7 @@ extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate
         cell.messageCounterIcon.isHidden = chat.isRead
         let lastMessageDate = Date(timeIntervalSince1970: (chat.lastMessageTime / 1000))
         cell.lblTime.text = Utility.getNotificationTime(date: lastMessageDate)
-        cell.lblUserMessage.font = chat.isRead ? Theme.getLatoRegularFontOfSize(size: 12) : Theme.getLatoBoldFontOfSize(size: 12)
+        cell.lblUserMessage.font = chat.isRead ? Theme.getLatoRegularFontOfSize(size: 13) : Theme.getLatoBoldFontOfSize(size: 13)
         return cell
         
     }

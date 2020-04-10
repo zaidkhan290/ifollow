@@ -112,6 +112,7 @@
 		18B82A312371CBDB00693F7F /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B82A302371CBDB00693F7F /* NotificationViewController.swift */; };
 		18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */; };
 		18B82A352371D05A00693F7F /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */; };
+		18B92DD6244080F20099272D /* BlockUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B92DD5244080F20099272D /* BlockUsersViewController.swift */; };
 		18BDABB82431D8DE003B772C /* ExtensionOfTapGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BDABB72431D8DE003B772C /* ExtensionOfTapGestures.swift */; };
 		18BDABBA24322510003B772C /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BDABB924322510003B772C /* PrivacyPolicyViewController.swift */; };
 		18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D81237184E2005C739F /* ExploreViewController.swift */; };
@@ -236,6 +237,7 @@
 		18B82A302371CBDB00693F7F /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
+		18B92DD5244080F20099272D /* BlockUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockUsersViewController.swift; sourceTree = "<group>"; };
 		18BDABB72431D8DE003B772C /* ExtensionOfTapGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionOfTapGestures.swift; sourceTree = "<group>"; };
 		18BDABB924322510003B772C /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		18C88D81237184E2005C739F /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 			children = (
 				185640DF23741B7800CC2777 /* MenuViewController.swift */,
 				185AFE2E242A462500AC38FB /* PrivacyViewController.swift */,
+				18B92DD5244080F20099272D /* BlockUsersViewController.swift */,
 			);
 			path = "Menu Controller";
 			sourceTree = "<group>";
@@ -890,6 +893,7 @@
 				18B14CC123758086005E5CE4 /* SignupDetail1ViewController.swift in Sources */,
 				18847A55237C21F1004D500A /* GroupDetailViewController.swift in Sources */,
 				18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */,
+				18B92DD6244080F20099272D /* BlockUsersViewController.swift in Sources */,
 				18C89E08243F267A0032A663 /* SearchViewController.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				1855081C23799422008EAC2E /* HalfSizePresentation.swift in Sources */,

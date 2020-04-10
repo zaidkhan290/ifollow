@@ -5296,6 +5296,81 @@
             </objects>
             <point key="canvasLocation" x="5129" y="2773"/>
         </scene>
+        <!--Block Users View Controller-->
+        <scene sceneID="jZV-yh-oxT">
+            <objects>
+                <viewController storyboardIdentifier="BlockUsersViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="83B-0M-gOm" customClass="BlockUsersViewController" customModule="iFollow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uoh-na-BJb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Bg" translatesAutoresizingMaskIntoConstraints="NO" id="zag-Lk-BJl">
+                                <rect key="frame" x="-2" y="-3" width="420" height="739"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Tz-hg-IPM">
+                                <rect key="frame" x="20" y="40" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="RQp-Qd-BJV"/>
+                                    <constraint firstAttribute="height" constant="25" id="d6u-5N-Kz2"/>
+                                </constraints>
+                                <state key="normal" image="back"/>
+                                <connections>
+                                    <action selector="btnBackTapped:" destination="83B-0M-gOm" eventType="touchUpInside" id="E3w-b8-fLh"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blocked Users" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q7o-jV-NLM">
+                                <rect key="frame" x="125.33333333333333" y="40" width="163.66666666666669" height="30"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TNe-bk-DDm">
+                                <rect key="frame" x="0.0" y="110" width="414" height="626"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xrr-cJ-eDQ">
+                                        <rect key="frame" x="0.0" y="20" width="414" height="606"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="83B-0M-gOm" id="XFH-WN-Kbz"/>
+                                            <outlet property="delegate" destination="83B-0M-gOm" id="V8O-US-3gw"/>
+                                        </connections>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="xrr-cJ-eDQ" firstAttribute="leading" secondItem="TNe-bk-DDm" secondAttribute="leading" id="CQp-ay-FDI"/>
+                                    <constraint firstAttribute="bottom" secondItem="xrr-cJ-eDQ" secondAttribute="bottom" id="PfA-qI-hgy"/>
+                                    <constraint firstAttribute="trailing" secondItem="xrr-cJ-eDQ" secondAttribute="trailing" id="REU-a4-HS0"/>
+                                    <constraint firstItem="xrr-cJ-eDQ" firstAttribute="top" secondItem="TNe-bk-DDm" secondAttribute="top" constant="20" id="tiE-VZ-e6K"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zag-Lk-BJl" firstAttribute="top" secondItem="uoh-na-BJb" secondAttribute="top" constant="-3" id="Jrs-eQ-Ick"/>
+                            <constraint firstItem="TNe-bk-DDm" firstAttribute="top" secondItem="q7o-jV-NLM" secondAttribute="bottom" constant="40" id="KD8-Kd-5FC"/>
+                            <constraint firstItem="eHS-N2-tUl" firstAttribute="trailing" secondItem="TNe-bk-DDm" secondAttribute="trailing" id="Oxh-oN-gxI"/>
+                            <constraint firstItem="q7o-jV-NLM" firstAttribute="centerX" secondItem="uoh-na-BJb" secondAttribute="centerX" id="QPw-PA-ePH"/>
+                            <constraint firstItem="5Tz-hg-IPM" firstAttribute="top" secondItem="eHS-N2-tUl" secondAttribute="top" constant="20" id="aEB-ej-gel"/>
+                            <constraint firstItem="TNe-bk-DDm" firstAttribute="leading" secondItem="eHS-N2-tUl" secondAttribute="leading" id="c6S-hz-Eet"/>
+                            <constraint firstItem="q7o-jV-NLM" firstAttribute="top" secondItem="eHS-N2-tUl" secondAttribute="top" constant="20" id="dna-Ws-D8X"/>
+                            <constraint firstItem="eHS-N2-tUl" firstAttribute="trailing" secondItem="zag-Lk-BJl" secondAttribute="trailing" constant="-4" id="loU-gN-GPZ"/>
+                            <constraint firstItem="eHS-N2-tUl" firstAttribute="bottom" secondItem="zag-Lk-BJl" secondAttribute="bottom" id="ttx-MY-O0Q"/>
+                            <constraint firstItem="zag-Lk-BJl" firstAttribute="leading" secondItem="eHS-N2-tUl" secondAttribute="leading" constant="-2" id="vkv-54-CTg"/>
+                            <constraint firstItem="5Tz-hg-IPM" firstAttribute="leading" secondItem="eHS-N2-tUl" secondAttribute="leading" constant="20" id="zDW-XM-EOn"/>
+                            <constraint firstItem="eHS-N2-tUl" firstAttribute="bottom" secondItem="TNe-bk-DDm" secondAttribute="bottom" id="zxZ-r3-4mg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="eHS-N2-tUl"/>
+                    </view>
+                    <connections>
+                        <outlet property="blockedUsersTableView" destination="xrr-cJ-eDQ" id="RfJ-kd-9sX"/>
+                        <outlet property="mainView" destination="TNe-bk-DDm" id="ePr-e6-Zf6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pwK-am-Myg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1045" y="3457"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Bg" width="380" height="815"/>

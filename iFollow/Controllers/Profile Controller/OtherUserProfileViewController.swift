@@ -285,7 +285,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
                 let params = ["user_id": self.userId]
                 API.sharedInstance.executeAPI(type: .blockUser, method: .post, params: params, completion: { (status, result, message) in
                     DispatchQueue.main.async {
-                        Utility.showOrHideLoader(shouldShow: true)
+                        Utility.showOrHideLoader(shouldShow: false)
                         if (status == .success){
                             Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                                 self.dismiss(animated: true, completion: nil)

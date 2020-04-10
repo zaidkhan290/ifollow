@@ -34,13 +34,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emma Watson" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9a-ay-fBs">
-                        <rect key="frame" x="85" y="43" width="103" height="20"/>
+                        <rect key="frame" x="85" y="39.5" width="103" height="20"/>
                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                         <color key="textColor" red="0.36470588235294116" green="0.36470588235294116" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your words are still in my memory words are still in my memory memory m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rGu-fW-f5x">
-                        <rect key="frame" x="85" y="68" width="326" height="15"/>
+                        <rect key="frame" x="85" y="64.5" width="326" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" red="0.36470588240000001" green="0.36470588240000001" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -70,7 +70,7 @@
                     <constraint firstAttribute="trailing" secondItem="tt3-dz-LUb" secondAttribute="trailing" constant="20" id="2g2-VC-g11"/>
                     <constraint firstItem="rGu-fW-f5x" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.6" id="49c-X9-fq2"/>
                     <constraint firstItem="Wis-ba-Ip2" firstAttribute="centerX" secondItem="tt3-dz-LUb" secondAttribute="centerX" id="53M-Gv-mx3"/>
-                    <constraint firstItem="K9a-ay-fBs" firstAttribute="centerY" secondItem="ygh-Iv-aIe" secondAttribute="centerY" multiplier="0.8" id="75O-7o-W4M"/>
+                    <constraint firstItem="K9a-ay-fBs" firstAttribute="centerY" secondItem="ygh-Iv-aIe" secondAttribute="centerY" multiplier="0.75" id="75O-7o-W4M"/>
                     <constraint firstItem="lQk-Np-DFZ" firstAttribute="centerX" secondItem="tt3-dz-LUb" secondAttribute="centerX" id="IrE-iJ-Be6"/>
                     <constraint firstItem="K9a-ay-fBs" firstAttribute="leading" secondItem="ygh-Iv-aIe" secondAttribute="trailing" constant="15" id="MEf-eu-vY3"/>
                     <constraint firstItem="ygh-Iv-aIe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="VHg-AB-rSf"/>
