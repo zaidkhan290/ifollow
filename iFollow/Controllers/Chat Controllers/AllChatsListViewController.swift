@@ -99,6 +99,9 @@ class AllChatsListViewController: UIViewController {
                                         else if (type == 3){
                                             recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Audio" : "Audio")
                                         }
+                                        else if (type == 4){
+                                            recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Video" : "Video")
+                                        }
                                     }
                                 }
                                 else{
@@ -118,6 +121,9 @@ class AllChatsListViewController: UIViewController {
                                     }
                                     else if (type == 3){
                                         recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Audio" : "Audio")
+                                    }
+                                    else if (type == 4){
+                                        recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Video" : "Video")
                                     }
                                 }
                                

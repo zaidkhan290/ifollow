@@ -15,6 +15,8 @@ import FirebaseStorage
 import SDWebImage
 import Loaf
 import DTPhotoViewerController
+import AVFoundation
+import AVKit
 
 enum RecordingEnum {
     case startRecording
@@ -42,15 +44,19 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     var recordingState: RecordingEnum!
     var shouldShowLocalImageMessage = false
     var shouldShowLocalAudioMessage = false
+    var shouldShowLocalVideoMessage = false
     var isRecordingCancel = false
     var shouldSendNotification = true
+    var videoURL: URL!
     var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
-        imagePicker.mediaTypes = ["public.image"]
+        imagePicker.mediaTypes = ["public.image", "public.movie"]
+        imagePicker.videoMaximumDuration = 15
+        imagePicker.videoQuality = .type640x480
         
         incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: isPrivateChat ? Theme.privateChatIncomingMessage : Theme.profileLabelsYellowColor)
         outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: isPrivateChat ? Theme.privateChatOutgoingMessage : Theme.privateChatBoxSearchBarColor)
@@ -215,9 +221,12 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     }else if (type == 2){
                         self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
                     }
-                    else{
+                    else if (type == 3){
                         self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
                         
+                    }
+                    else {
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date)
                     }
                 }
                 
@@ -235,9 +244,12 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 }else if (type == 2){
                     self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
                 }
-                else{
+                else if (type == 3){
                     self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
                     
+                }
+                else{
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date)
                 }
             }
             
@@ -245,7 +257,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         
     }
     
-    func addDemoMessages(sender_Id : String, senderName : String, textMsg : String, isImage :Bool?=false, isAudio:Bool?=false, date:Double) {
+    func addDemoMessages(sender_Id : String, senderName : String, textMsg : String, isImage :Bool?=false, isAudio:Bool?=false, isVideo:Bool?=false, date:Double) {
         
         if(isImage)!{
             
@@ -279,6 +291,24 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             }
             Utility.showOrHideLoader(shouldShow: false)
             //            self.picker.dismiss(animated:true, completion: nil)
+        }
+        else if(isVideo)!{
+            if(sender_Id == self.senderId){
+                if (!self.shouldShowLocalVideoMessage){
+                    let videoData = JSQVideoMediaItem(fileURL: URL(string: textMsg)!, isReadyToPlay: true)
+                    videoData?.appliesMediaViewMaskAsOutgoing = true
+                    let dateFromTimeStamp : NSDate = NSDate(timeIntervalSince1970: Double(date/1000))
+                    let message = JSQMessage(senderId: sender_Id, senderDisplayName: senderName, date: dateFromTimeStamp as Date?, media: videoData)
+                    self.messages.append(message!)
+                }
+            }
+            else{
+                let videoData = JSQVideoMediaItem(fileURL: URL(string: textMsg)!, isReadyToPlay: true)
+                videoData?.appliesMediaViewMaskAsOutgoing = false
+                let dateFromTimeStamp : NSDate = NSDate(timeIntervalSince1970: Double(date/1000))
+                let message = JSQMessage(senderId: sender_Id, senderDisplayName: senderName, date: dateFromTimeStamp as Date?, media: videoData)
+                self.messages.append(message!)
+            }
         }
         else if (isAudio)!{
             
@@ -359,6 +389,28 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             DispatchQueue.main.async {
                 let dateFromTimeStamp : NSDate = NSDate(timeIntervalSince1970: Double(date/1000))
                 let message = JSQMessage(senderId: self.messages[indexPath.row].senderId, senderDisplayName: self.messages[indexPath.row].senderDisplayName, date: dateFromTimeStamp as Date?, media: audioData)
+                self.messages[indexPath.row] = message!
+                self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
+            }
+            
+        }
+        
+    }
+    
+    func handleVideoForIndexPath(indexPath: NSIndexPath, videoUrl: String, appliesMediaViewMaskAsOutgoing: Bool, date: Double){
+        
+        DispatchQueue.global().async {
+            let videoData = JSQVideoMediaItem(fileURL: self.videoURL!, isReadyToPlay: true)
+            do {
+               // videoData.fileURL = URL(string: videoUrl)
+                videoData!.appliesMediaViewMaskAsOutgoing = appliesMediaViewMaskAsOutgoing
+                
+            } catch {
+                print(error.localizedDescription)
+            }
+            DispatchQueue.main.async {
+                let dateFromTimeStamp : NSDate = NSDate(timeIntervalSince1970: Double(date/1000))
+                let message = JSQMessage(senderId: self.messages[indexPath.row].senderId, senderDisplayName: self.messages[indexPath.row].senderDisplayName, date: dateFromTimeStamp as Date?, media: videoData)
                 self.messages[indexPath.row] = message!
                 self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
             }
@@ -560,6 +612,16 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 viewController.delegate = self
                 self.present(viewController, animated: true, completion: nil)
             }
+            else if let videoItem = mediaItem as? JSQVideoMediaItem{
+                let player = AVPlayer(url: videoItem.fileURL)
+                
+                let playerViewController = AVPlayerViewController()
+                playerViewController.player = player
+                self.present(playerViewController, animated: true) {
+                    playerViewController.player!.play()
+                }
+                self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
+            }
             else{
                 self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
             }
@@ -752,6 +814,62 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         }
     }
     
+    func saveVideoToFireBaseStorage(){
+        
+        let timeStemp = Int(Date().timeIntervalSince1970)
+        let mediaRef = storageRef?.child("/Media")
+        let iosRef = mediaRef?.child("/iOS").child("/Videos")
+        let videoRef = iosRef?.child("/ChatVideo\(timeStemp).mov")
+        
+        if let videoData = try? Data(contentsOf: self.videoURL){
+            
+            var uploadingIndexPath : NSIndexPath?
+            
+            let uploadTask = videoRef?.putData(videoData, metadata: nil, completion: { (metaData, error) in
+                if(error != nil){
+                    Loaf(error!.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+                        
+                    }
+                }else{
+                    
+                    videoRef?.downloadURL(completion: { (url, error) in
+                        if let imageURL = url{
+                            // self.messages.remove(at: uploadingIndexPath!.row)
+                            self.shouldShowLocalVideoMessage = true
+                            self.sendMsgToFireBase(sender: self.senderId, displayName: self.senderDisplayName, text: imageURL.absoluteString, type: 4)
+                        }
+                    })
+                    
+                    
+                }
+            })
+            uploadTask?.resume()
+            
+            var i = 0
+            uploadTask?.observe(.progress, handler: { (snapshot) in
+                if(i == 0){
+                    
+                    let img2 = JSQVideoMediaItem(fileURL: self.videoURL!, isReadyToPlay: true)
+                    let mes5 = JSQMessage(senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: Date(), media: img2)
+                    uploadingIndexPath = NSIndexPath.init(row: self.messages.count, section: 0)
+                    self.shouldShowLocalVideoMessage = true
+                    self.messages.append(mes5!)
+                    self.collectionView?.reloadData()
+                    self.finishSendingMessage()
+                    
+                }
+                i += 1
+                
+            })
+            
+            uploadTask?.observe(.success, handler: { (snapshot) in
+                
+            })
+
+        }
+        
+    }
+    
     @objc func showImagePicker(){
         
         let alertVC = UIAlertController(title: "Select Action", message: "", preferredStyle: .actionSheet)
@@ -783,6 +901,10 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
         
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
             self.saveImageToFireBaseStorage(image: image)
+        }
+        if let video = info[UIImagePickerController.InfoKey.mediaURL] as? URL{
+            self.videoURL = video
+            self.saveVideoToFireBaseStorage()
         }
         picker.dismiss(animated: true, completion: nil)
         

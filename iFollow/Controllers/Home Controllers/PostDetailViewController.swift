@@ -65,7 +65,7 @@ class PostDetailViewController: UIViewController {
                         self.carouselView.reloadData()
                     }
                     else{
-                        Loaf("No Post found", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Loaf("Post has been expired", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                             self.dismiss(animated: true, completion: nil)
                         }
                     }
