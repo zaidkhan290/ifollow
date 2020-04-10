@@ -47,6 +47,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
     }
     
+    static func getPostDetailViewController() -> PostDetailViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "PostDetailViewController") as! PostDetailViewController
+    }
+    
     static func getExploreViewController() -> ExploreViewController{
         return storyBoard.instantiateViewController(withIdentifier: "ExploreViewController") as! ExploreViewController
     }

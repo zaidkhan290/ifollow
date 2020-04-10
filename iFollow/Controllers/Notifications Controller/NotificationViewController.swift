@@ -156,11 +156,20 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let notification = notifications[indexPath.row]
-        if notification.notificationFriendId != 0{
-            let vc = Utility.getOtherUserProfileViewController()
-            vc.userId = notification.notificationFriendId
+        
+        if (notification.notificationTag == "3"){
+            let vc = Utility.getPostDetailViewController()
+            vc.postId = notification.notificationRequestId
             self.present(vc, animated: true, completion: nil)
         }
+        else{
+            if notification.notificationFriendId != 0{
+                let vc = Utility.getOtherUserProfileViewController()
+                vc.userId = notification.notificationFriendId
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

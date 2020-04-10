@@ -45,6 +45,7 @@ enum EndPoint: String {
     case getPrivateChatsList = "private_chat_record_list"
     case getBlockUsers = "blocked_users_list"
     case unblockUser = "unblock_user"
+    case getPostDetail = "post"
 }
 
 enum StatusCodes {

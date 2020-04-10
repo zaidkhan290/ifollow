@@ -93,6 +93,7 @@
 		189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329D2237061A70067077F /* StoryCollectionViewCell.swift */; };
 		189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189329D3237061A70067077F /* StoryCollectionViewCell.xib */; };
 		1895C31524358036006F3CE7 /* StoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1895C31424358036006F3CE7 /* StoryModel.swift */; };
+		189E3F8F24408F5800244BCD /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E3F8E24408F5800244BCD /* PostDetailViewController.swift */; };
 		18A1F32A243C9C2A002E542A /* StoryUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1F329243C9C2A002E542A /* StoryUserModel.swift */; };
 		18A32622240FBCD900CF329E /* UIImage+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A32621240FBCD800CF329E /* UIImage+Transform.swift */; };
 		18A32627240FBCE800CF329E /* DSSwipableFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A32623240FBCE700CF329E /* DSSwipableFilterView.swift */; };
@@ -217,6 +218,7 @@
 		189329D2237061A70067077F /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		189329D3237061A70067077F /* StoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoryCollectionViewCell.xib; sourceTree = "<group>"; };
 		1895C31424358036006F3CE7 /* StoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModel.swift; sourceTree = "<group>"; };
+		189E3F8E24408F5800244BCD /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		18A1F329243C9C2A002E542A /* StoryUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryUserModel.swift; sourceTree = "<group>"; };
 		18A32621240FBCD800CF329E /* UIImage+Transform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Transform.swift"; sourceTree = "<group>"; };
 		18A32623240FBCE700CF329E /* DSSwipableFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSSwipableFilterView.swift; sourceTree = "<group>"; };
@@ -518,6 +520,7 @@
 			isa = PBXGroup;
 			children = (
 				189329CF23705E510067077F /* HomeViewController.swift */,
+				189E3F8E24408F5800244BCD /* PostDetailViewController.swift */,
 			);
 			path = "Home Controllers";
 			sourceTree = "<group>";
@@ -900,6 +903,7 @@
 				18E198F3243B5BDD00511296 /* PostLikesUserModel.swift in Sources */,
 				18706FFD23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift in Sources */,
 				18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */,
+				189E3F8F24408F5800244BCD /* PostDetailViewController.swift in Sources */,
 				1855080F23795352008EAC2E /* SegmentProgressBar.swift in Sources */,
 				18A3262A240FBCE800CF329E /* DSFilter.swift in Sources */,
 				188073B1242BA1040005CAE4 /* NotificationModel.swift in Sources */,
