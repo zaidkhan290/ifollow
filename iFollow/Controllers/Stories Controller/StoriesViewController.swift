@@ -59,6 +59,11 @@ class StoriesViewController: UIViewController {
         swipeDownGesture.direction = .down
         self.hiddenView.addGestureRecognizer(swipeDownGesture)
         
+        lblUsername.isUserInteractionEnabled = true
+        lblUsername.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userNameTapped)))
+        userImage.isUserInteractionEnabled = true
+        userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userNameTapped)))
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -482,6 +487,10 @@ class StoriesViewController: UIViewController {
             }
             
         }
+    }
+    
+    @objc func userNameTapped(){
+        
     }
     
     func animateToNextUserStory(vc: UIViewController){

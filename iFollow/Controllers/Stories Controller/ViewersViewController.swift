@@ -154,15 +154,13 @@ extension ViewersViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if (isForLike){
-            let user = trendUsers[indexPath.row]
-            if (user.userId != Utility.getLoginUserId()){
-                let vc = Utility.getOtherUserProfileViewController()
-                vc.userId = user.userId
-                self.present(vc, animated: true, completion: nil)
-                
-            }
+       
+        let user = trendUsers[indexPath.row]
+        if (user.userId != Utility.getLoginUserId()){
+            let vc = Utility.getOtherUserProfileViewController()
+            vc.userId = user.userId
+            self.present(vc, animated: true, completion: nil)
+            
         }
         
     }
