@@ -46,6 +46,7 @@ enum EndPoint: String {
     case getBlockUsers = "blocked_users_list"
     case unblockUser = "unblock_user"
     case getPostDetail = "post"
+    case getStoryViews = "story_views"
 }
 
 enum StatusCodes {

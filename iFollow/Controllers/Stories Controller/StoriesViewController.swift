@@ -49,6 +49,7 @@ class StoriesViewController: UIViewController {
         txtFieldMessage.delegate = self
         txtFieldMessage.returnKeyType = .send
         btnOptions.isHidden = !isForMyStory
+        imageView.contentMode = .scaleAspectFill
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(tapOnView(recognizer:)))
         longPressGesture.minimumPressDuration = 0.1
@@ -103,7 +104,7 @@ class StoriesViewController: UIViewController {
     func setStory(storyModel: UserStoryModel, isFirstStory: Bool){
         lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: storyModel.storyTime))
         currentStoryId = storyModel.storyId
-        btnView.isHidden = storyModel.shouldShowStoryViews == 1
+        btnView.isHidden = isForMyStory ? false : storyModel.shouldShowStoryViews == 1
         btnViewWidthConstraint.constant = storyModel.shouldShowStoryViews == 1 ? 0 : 35
         self.view.updateConstraintsIfNeeded()
         self.view.layoutSubviews()
@@ -335,13 +336,16 @@ class StoriesViewController: UIViewController {
     }
     
     @IBAction func btnViewTapped(_ sender: UIButton) {
-//        spb.isPaused = true
-//        videoPlayer.pause()
-//        let vc = Utility.getViewersViewController()
-//        vc.delegate = self
-//        vc.modalPresentationStyle = .custom
-//        vc.transitioningDelegate = self
-//        self.present(vc, animated: true, completion: nil)
+        spb.isPaused = true
+        if (isVideoPlaying){
+            videoPlayer.pause()
+        }
+        let vc = Utility.getViewersViewController()
+        vc.postId = currentStoryId
+        vc.delegate = self
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func btnOptionsTapped(_ sender: UIButton) {
@@ -520,7 +524,7 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
 extension StoriesViewController: UIViewControllerTransitioningDelegate {
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+        return FullSizePresentationController(presentedViewController: presented, presenting: presenting)
     }
     
 }

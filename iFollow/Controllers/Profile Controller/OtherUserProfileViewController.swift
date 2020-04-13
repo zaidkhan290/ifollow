@@ -182,7 +182,13 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     @objc func privateTalkTapped(){
-        showTalkPopup()
+        if (otherUserProfile.userRequestStatus == "success"){
+            showTalkPopup()
+        }
+        else{
+            Loaf("You must be trending this person in order to chat.", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+            }
+        }
     }
     
     @objc func trendesTapped(){
@@ -537,8 +543,14 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
 extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate{
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-        emptyStateView.isHidden = (otherUserProfile.userPosts.count > 0)
-        return otherUserProfile.userPosts.count
+        if (otherUserProfile.userRequestStatus == "success"){
+            emptyStateView.isHidden = (otherUserProfile.userPosts.count > 0)
+            return otherUserProfile.userPosts.count
+        }
+        else{
+            emptyStateView.isHidden = false
+            return 0
+        }
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {

@@ -39,6 +39,7 @@ class ChatBoxContainerViewController: UIViewController {
         
         changeTab()
         
+        
 //        let items = ["All", "Groups"]
 //        let carbonTabSwipeNavigation = CarbonTabSwipeNavigation(items: items, delegate: self)
 //        carbonTabSwipeNavigation.insert(intoRootViewController: self, andTargetView: containerView)
@@ -86,7 +87,7 @@ class ChatBoxContainerViewController: UIViewController {
         else{
             allSelectedView.isHidden = true
             groupSelectedView.isHidden = false
-            btnAddGroup.isHidden = false
+            btnAddGroup.isHidden = true
             remove(asChildViewController: [allChatsController])
             add(asChildViewController: groupsChatController)
         }

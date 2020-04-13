@@ -667,10 +667,12 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             if let input = currentCameraInput as? AVCaptureDeviceInput {
                 if (input.device.position == .back) {
                     newCamera = cameraWithPosition(position: .front)
+                    session.sessionPreset = .medium
                     isFrontCamera = true
                     btnFlash.isEnabled = false
                 } else {
                     newCamera = cameraWithPosition(position: .back)
+                    session.sessionPreset = .hd4K3840x2160
                     isFrontCamera = false
                     btnFlash.isEnabled = true
                 }
