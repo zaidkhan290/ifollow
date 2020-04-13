@@ -38,6 +38,7 @@ class StoriesViewController: UIViewController {
     var storyUserIndex = 0
     var isForMyStory = false
     var isForSkip = false // If we are skip segment index for showing the first index as unviewed index
+    var currentUserId = 0
     var currentStoryId = 0
     
     var spb: SegmentedProgressBar!
@@ -64,39 +65,44 @@ class StoriesViewController: UIViewController {
         userImage.isUserInteractionEnabled = true
         userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userNameTapped)))
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.20) {
+            var durationArray = [Double]()
+            //        for i in 0..<storiesDict.count{
+            //            durationArray.append(15)
+            //        }
+            self.storiesUsersArray = self.isForMyStory ? StoryUserModel.getMyStory() : StoryUserModel.getFollowersUsersStories()
+            
+            self.currentUserId = self.storiesUsersArray[self.storyUserIndex].userId
+            self.lblUsername.text = self.storiesUsersArray[self.storyUserIndex].userName
+            self.userImage.layer.cornerRadius = self.userImage.frame.height / 2
+            self.userImage.layer.borderWidth = 2
+            self.userImage.layer.borderColor = UIColor.white.cgColor
+            self.userImage.sd_setImage(with: URL(string: self.storiesUsersArray[self.storyUserIndex].userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+            
+            self.spb = SegmentedProgressBar(numberOfSegments: self.storiesUsersArray[self.storyUserIndex].userStories.count, duration: 15)
+            self.spb.frame = CGRect(x: 15, y: self.view.safeAreaInsets.top + 20, width: self.view.frame.width - 30, height: 4)
+            self.view.addSubview(self.spb)
+            
+            self.spb.delegate = self
+            self.spb.topColor = UIColor.white
+            self.spb.bottomColor = UIColor.gray
+            self.spb.padding = 2
+            let storiesArray = Array(self.storiesUsersArray[self.storyUserIndex].userStories)
+            if (!self.isForMyStory){
+                if (!self.storiesUsersArray[self.storyUserIndex].isAllStoriesViewed){
+                    self.startIndex = storiesArray.firstIndex{$0.isStoryViewed == 0}!
+                }
+            }
+            self.setStory(storyModel: storiesArray[self.startIndex], isFirstStory: true)
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(userProfileDismissed), name: NSNotification.Name(rawValue: "userProfileDismissed"), object: nil)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-       // IQKeyboardManager.shared.enable = false
-        var durationArray = [Double]()
-//        for i in 0..<storiesDict.count{
-//            durationArray.append(15)
-//        }
-        storiesUsersArray = isForMyStory ? StoryUserModel.getMyStory() : StoryUserModel.getFollowersUsersStories()
-        
-        lblUsername.text = storiesUsersArray[storyUserIndex].userName
-        userImage.layer.cornerRadius = userImage.frame.height / 2
-        userImage.layer.borderWidth = 2
-        userImage.layer.borderColor = UIColor.white.cgColor
-        userImage.sd_setImage(with: URL(string: storiesUsersArray[storyUserIndex].userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
-        
-        spb = SegmentedProgressBar(numberOfSegments: storiesUsersArray[storyUserIndex].userStories.count, duration: 15)
-        spb.frame = CGRect(x: 15, y: view.safeAreaInsets.top + 20, width: view.frame.width - 30, height: 4)
-        view.addSubview(spb)
-        
-        spb.delegate = self
-        spb.topColor = UIColor.white
-        spb.bottomColor = UIColor.gray
-        spb.padding = 2
-        let storiesArray = Array(storiesUsersArray[storyUserIndex].userStories)
-        if (!isForMyStory){
-            if (!storiesUsersArray[storyUserIndex].isAllStoriesViewed){
-                startIndex = storiesArray.firstIndex{$0.isStoryViewed == 0}!
-            }
-        }
-        self.setStory(storyModel: storiesArray[startIndex], isFirstStory: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -490,7 +496,25 @@ class StoriesViewController: UIViewController {
     }
     
     @objc func userNameTapped(){
-        
+        if (!isForMyStory){
+            spb.isPaused = true
+            if (isVideoPlaying){
+                videoPlayer.pause()
+            }
+            let vc = Utility.getOtherUserProfileViewController()
+            vc.userId = currentUserId
+            vc.isFromStory = true
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func userProfileDismissed() {
+        if (isVideoPlaying){
+            videoPlayer.play()
+        }
+        spb.isPaused = false
     }
     
     func animateToNextUserStory(vc: UIViewController){

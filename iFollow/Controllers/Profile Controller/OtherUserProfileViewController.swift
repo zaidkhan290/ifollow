@@ -38,6 +38,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     var userId = 0
     var optionsPopupIndex = 0
     var chatId = ""
+    var isFromStory = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -163,7 +164,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         
         optionsPopupIndex = sender.tag
         let vc = Utility.getOptionsViewController()
-        vc.options = ["Hide", "Share"]
+        vc.options = ["Report ", "Share"]
         vc.delegate = self
         vc.isFromPostView = true
         vc.modalPresentationStyle = .popover
@@ -179,6 +180,9 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     
     @IBAction func btnBackTapped(_ sender: UIButton){
         self.dismiss(animated: true, completion: nil)
+        if (isFromStory){
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userProfileDismissed"), object: nil)
+        }
     }
     
     @objc func privateTalkTapped(){
@@ -503,13 +507,13 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     func showHidePostPopup(){
-        let alertVC = UIAlertController(title: "Hide Post", message: "Are you sure you want to hide this post?", preferredStyle: .alert)
+        let alertVC = UIAlertController(title: "Report Post", message: "Are you sure you want to report this post?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
             DispatchQueue.main.async {
                 let params = ["post_id": self.otherUserProfile.userPosts[self.optionsPopupIndex].postId]
                 self.otherUserProfile.userPosts.remove(at: self.optionsPopupIndex)
                 self.carouselView.removeItem(at: self.optionsPopupIndex, animated: true)
-                Loaf("Post Hide", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+                Loaf("Post Reported", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
                     
                 }
                 API.sharedInstance.executeAPI(type: .hidePost, method: .post, params: params, completion: { (status, result, message) in
@@ -641,7 +645,7 @@ extension OtherUserProfileViewController: OptionsViewControllerDelegate{
         else if (option == "Report"){
             self.showReportUserPopup()
         }
-        else if (option == "Hide"){
+        else if (option == "Report "){
             self.showHidePostPopup()
         }
     }
