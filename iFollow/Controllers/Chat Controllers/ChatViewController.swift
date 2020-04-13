@@ -80,7 +80,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         self.messageAdded()
         self.inputToolbar.contentView.textView.placeHolder = "Type a message..."
         self.inputToolbar.contentView.textView.layer.borderColor = UIColor.clear.cgColor
-        
+        self.inputToolbar.contentView.textView.autocorrectionType = .no
         
         let rightContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 130, height: 42))
         
@@ -116,6 +116,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         self.inputToolbar.contentView.leftBarButtonItem.setImage(nil, for: .normal)
         self.inputToolbar.contentView.leftBarButtonItem.setImage(nil, for: .selected)
         self.inputToolbar.contentView.leftBarButtonItem.setImage(nil, for: .highlighted)
+        
         
         //        self.inputToolbar.contentView.rightBarButtonItem.setTitle("", for: .normal)
         //        self.inputToolbar.contentView.rightBarButtonItem.setTitle("", for: .selected)

@@ -147,6 +147,12 @@ class StoriesViewController: UIViewController {
             }
             
             self.videoPlayer.play()
+            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                                                   object: nil,
+                                                   queue: nil) { [weak self] note in
+                                                    self?.videoPlayer.seek(to: CMTime.zero)
+                                                    self?.videoPlayer.play()
+            }
             self.isVideoPlaying = true
             if (isFirstStory){
                 self.spb.startAnimation()
@@ -214,6 +220,12 @@ class StoriesViewController: UIViewController {
                     self.videoView.layer.addSublayer(playerLayer)
                     Utility.showOrHideLoader(shouldShow: false)
                     self.videoPlayer.play()
+                    NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                                                           object: nil,
+                                                           queue: nil) { [weak self] note in
+                                                            self?.videoPlayer.seek(to: CMTime.zero)
+                                                            self?.videoPlayer.play()
+                    }
                     self.isVideoPlaying = true
                     self.spb.isPaused = false
                 }
@@ -488,6 +500,9 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
     func segmentedProgressBarChangedIndex(index: Int) {
         
         if (!isForSkip){
+            if (isVideoPlaying){
+                self.videoPlayer.pause()
+            }
             self.videoView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
             self.videoView.isHidden = true
             self.imageView.isHidden = false
