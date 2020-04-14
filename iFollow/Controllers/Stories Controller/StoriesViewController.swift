@@ -158,6 +158,7 @@ class StoriesViewController: UIViewController {
             }
             
             self.videoPlayer.play()
+            self.videoPlayer.isMuted = false
             NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
                                                    object: nil,
                                                    queue: nil) { [weak self] note in
@@ -231,6 +232,7 @@ class StoriesViewController: UIViewController {
                     self.videoView.layer.addSublayer(playerLayer)
                     Utility.showOrHideLoader(shouldShow: false)
                     self.videoPlayer.play()
+                    self.videoPlayer.isMuted = false
                     NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
                                                            object: nil,
                                                            queue: nil) { [weak self] note in

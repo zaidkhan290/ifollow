@@ -565,6 +565,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
         itemView.frame = view.frame
         itemView.lblUsername.text = otherUserProfile.userFullName
+        itemView.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: post.postCreatedAt))
         itemView.userImage.sd_setImage(with: URL(string: otherUserProfile.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
         itemView.lblUserAddress.text = post.postLocation

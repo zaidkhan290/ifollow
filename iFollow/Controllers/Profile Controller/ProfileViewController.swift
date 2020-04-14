@@ -315,6 +315,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.userImage.layer.cornerRadius = 25
         itemView.userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         itemView.lblUsername.text = Utility.getLoginUserFullName()
+        itemView.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: post.postCreatedAt))
         itemView.lblUserAddress.text = post.postLocation
         itemView.feedBackView.isUserInteractionEnabled = true
         itemView.feedBackView.tag = index

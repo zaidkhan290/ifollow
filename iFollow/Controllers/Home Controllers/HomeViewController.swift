@@ -459,6 +459,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         let post = postsArray[index]
         
         itemView.lblUsername.text = post.postUserFullName
+        itemView.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: post.postTime))
         itemView.userImage.sd_setImage(with: URL(string: post.postUserImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
         itemView.lblUserAddress.text = post.postLocation

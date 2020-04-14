@@ -62,7 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         if (Utility.getLoginUserId() != 0){
             let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
-            usersRef.updateChildValues(["isActive" : false])
+            usersRef.updateChildValues(["isActive" : false,
+                                        "isOnChat": false])
         }
     }
     

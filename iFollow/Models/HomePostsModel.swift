@@ -25,6 +25,7 @@ class HomePostsModel: Object{
     @objc dynamic var postLocation: String = ""
     @objc dynamic var postDescription: String = ""
     @objc dynamic var postMediaType: String = ""
+    @objc dynamic var postTime: String = ""
     @objc dynamic var shouldShowPostTrends: Int = 0
     
     func updateModelWithJSON(json: JSON){
@@ -41,6 +42,7 @@ class HomePostsModel: Object{
         postLocation = json["location"].stringValue
         postDescription = json["description"].stringValue
         postMediaType = json["media_type"].stringValue
+        postTime = json["created_at"].stringValue
         shouldShowPostTrends = json["post_view_settings"].intValue
     }
     
