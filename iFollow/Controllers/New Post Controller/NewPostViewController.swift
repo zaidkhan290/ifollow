@@ -99,6 +99,7 @@ class NewPostViewController: UIViewController {
         postImage.isUserInteractionEnabled = true
         postImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postImageTapped)))
         postView.addShadow()
+        txtFieldStatus.delegate = self
         
     }
     
@@ -375,4 +376,22 @@ extension NewPostViewController: GMSAutocompleteViewControllerDelegate{
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
         dismiss(animated: true, completion: nil)
     }
+}
+
+extension NewPostViewController: UITextFieldDelegate{
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if (isVideo){
+            let maxLength = 35
+            let currentString: NSString = textField.text! as NSString
+            let newString: NSString =
+                currentString.replacingCharacters(in: range, with: string) as NSString
+            return newString.length <= maxLength
+        }
+        else{
+            return true
+        }
+    }
+
 }

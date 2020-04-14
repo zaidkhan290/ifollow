@@ -14,6 +14,7 @@ import RealmSwift
 import Loaf
 import AVKit
 import AVFoundation
+import MobilePlayer
 
 class ProfileViewController: UIViewController {
 
@@ -362,13 +363,10 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
             self.present(vc, animated: true, completion: nil)
         }
         else{
-            let player = AVPlayer(url: URL(string: post.postMedia)!)
-            
-            let playerViewController = AVPlayerViewController()
-            playerViewController.player = player
-            self.present(playerViewController, animated: true) {
-                playerViewController.player!.play()
-            }
+            let playerVC = MobilePlayerViewController(contentURL: URL(string: post.postMedia)!)
+            playerVC.title = post.postDescription
+            playerVC.activityItems = [URL(string: post.postMedia)!]
+            self.present(playerVC, animated: true, completion: nil)
         }
         
     }
