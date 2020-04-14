@@ -122,6 +122,8 @@
 		18C89E08243F267A0032A663 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C89E07243F267A0032A663 /* SearchViewController.swift */; };
 		18C89E0A243F2DD40032A663 /* SearchUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C89E09243F2DD40032A663 /* SearchUserModel.swift */; };
 		18C89E0C243F3F120032A663 /* RecentChatsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C89E0B243F3F120032A663 /* RecentChatsModel.swift */; };
+		18C970F12445B69300C4F7C4 /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C970F02445B69200C4F7C4 /* GroupChatViewController.swift */; };
+		18C970F32445CE5000C4F7C4 /* ChatMediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C970F22445CE5000C4F7C4 /* ChatMediaModel.swift */; };
 		18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD2D8B237EE167007A2C3B /* CommentViewController.swift */; };
 		18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */; };
 		18D6BBD424375749004D90EB /* AudioRecorderSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6BBD324375749004D90EB /* AudioRecorderSingleton.swift */; };
@@ -248,6 +250,8 @@
 		18C89E07243F267A0032A663 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		18C89E09243F2DD40032A663 /* SearchUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserModel.swift; sourceTree = "<group>"; };
 		18C89E0B243F3F120032A663 /* RecentChatsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentChatsModel.swift; sourceTree = "<group>"; };
+		18C970F02445B69200C4F7C4 /* GroupChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatViewController.swift; sourceTree = "<group>"; };
+		18C970F22445CE5000C4F7C4 /* ChatMediaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMediaModel.swift; sourceTree = "<group>"; };
 		18CD2D8B237EE167007A2C3B /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		18D6BBD324375749004D90EB /* AudioRecorderSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderSingleton.swift; sourceTree = "<group>"; };
@@ -299,6 +303,7 @@
 				185640E92374444D00CC2777 /* PrivateChatBoxViewController.swift */,
 				1825A52E237AFDEF002811E7 /* ChatContainerViewController.swift */,
 				18847A52237BF2FA004D500A /* ChatViewController.swift */,
+				18C970F02445B69200C4F7C4 /* GroupChatViewController.swift */,
 			);
 			path = "Chat Controllers";
 			sourceTree = "<group>";
@@ -489,6 +494,7 @@
 				18A1F329243C9C2A002E542A /* StoryUserModel.swift */,
 				18C89E09243F2DD40032A663 /* SearchUserModel.swift */,
 				18C89E0B243F3F120032A663 /* RecentChatsModel.swift */,
+				18C970F22445CE5000C4F7C4 /* ChatMediaModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -884,6 +890,7 @@
 				18A32622240FBCD900CF329E /* UIImage+Transform.swift in Sources */,
 				18BDABB82431D8DE003B772C /* ExtensionOfTapGestures.swift in Sources */,
 				18DC8813242127FE00494FAD /* Constant.swift in Sources */,
+				18C970F32445CE5000C4F7C4 /* ChatMediaModel.swift in Sources */,
 				188073AF242B73810005CAE4 /* OtherUserModel.swift in Sources */,
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
 				18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */,
@@ -909,6 +916,7 @@
 				188073B1242BA1040005CAE4 /* NotificationModel.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
 				185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */,
+				18C970F12445B69300C4F7C4 /* GroupChatViewController.swift in Sources */,
 				181709472424D8AB00EE5753 /* StickersModel.swift in Sources */,
 				188073AB242B41EF0005CAE4 /* UserPostsModel.swift in Sources */,
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,

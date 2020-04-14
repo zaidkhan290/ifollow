@@ -163,6 +163,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
     }
     
+    static func getGroupChatViewController() -> GroupChatViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "GroupChatViewController") as! GroupChatViewController
+    }
+    
     static func getGroupDetailViewController() -> GroupDetailViewController{
         return storyBoard.instantiateViewController(withIdentifier: "GroupDetailViewController") as! GroupDetailViewController
     }

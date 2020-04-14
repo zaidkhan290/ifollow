@@ -8,6 +8,10 @@
 
 import UIKit
 import AppImageViewer
+import DTPhotoViewerController
+import AVKit
+import AVFoundation
+import Firebase
 
 class GroupDetailViewController: UIViewController {
 
@@ -22,9 +26,11 @@ class GroupDetailViewController: UIViewController {
     @IBOutlet weak var mediaAndMemberViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var deactivateGroupView: UIView!
     
-    var mediaImages = [String]()
+    var mediaArray = [ChatMediaModel]()
     var imagePicker = UIImagePickerController()
     var isGroupNameEditable = false
+    var groupChatId = ""
+    var groupMediaRef = rootRef
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,8 +54,6 @@ class GroupDetailViewController: UIViewController {
         txtFieldGroupName.isUserInteractionEnabled = isGroupNameEditable
         txtFieldGroupName.delegate = self
         
-        mediaImages = ["Rectangle 117", "Rectangle 118", "Rectangle 121", "Rectangle 122", "Rectangle 117", "Rectangle 118", "Rectangle 121", "Rectangle 122"]
-        
         let mediaCellNib = UINib(nibName: "MediaCollectionViewCell", bundle: nil)
         mediaCollectionView.register(mediaCellNib, forCellWithReuseIdentifier: "MediaCell")
         
@@ -65,6 +69,20 @@ class GroupDetailViewController: UIViewController {
         membersTableView.register(memberCellNib, forCellReuseIdentifier: "FriendsTableViewCell")
         membersTableView.rowHeight = 60
         membersTableView.isScrollEnabled = false
+        
+        groupMediaRef = groupMediaRef.child("GroupMedia").child(groupChatId)
+        groupMediaRef.observe(.childAdded) { (snapshot) in
+            let mediaType = snapshot.childSnapshot(forPath: "mediaType").value as! Int
+            let mediaUrl = snapshot.childSnapshot(forPath: "mediaUrl").value as! String
+            let mediaTimestamp = snapshot.childSnapshot(forPath: "mediaTimestamp").value as! Double
+            
+            let model = ChatMediaModel()
+            model.mediaUrl = mediaUrl
+            model.mediaType = mediaType
+            model.mediaTimestamp = mediaTimestamp
+            self.mediaArray.append(model)
+            self.mediaCollectionView.reloadData()
+        }
         
     }
     
@@ -97,6 +115,7 @@ class GroupDetailViewController: UIViewController {
     
     @IBAction func btnAllMediaTapped(_ sender: UIButton) {
         let vc = Utility.getMediaViewController()
+        vc.mediaArray = mediaArray
         self.pushToVC(vc: vc)
     }
     
@@ -148,26 +167,55 @@ extension GroupDetailViewController: UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mediaImages.count
+        return mediaArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaCell", for: indexPath) as! MediaCollectionViewCell
-        cell.mediaImage.image = UIImage(named: mediaImages[indexPath.row])
+        let media = mediaArray[indexPath.row]
         cell.mediaImage.contentMode = .scaleAspectFill
+        cell.mediaImage.layer.cornerRadius = 8
+        
+        if (media.mediaType == 2){
+            cell.mediaImage.sd_setImage(with: URL(string: media.mediaUrl))
+        }
+        else if (media.mediaType == 3){
+            cell.mediaImage.image = UIImage(named: "audio_icon")
+        }
+        else if (media.mediaType == 4){
+            cell.mediaImage.image = UIImage(named: "video_icon")
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let cell = collectionView.cellForItem(at: indexPath) as! MediaCollectionViewCell
-        let mediaImage = ViewerImage.appImage(forImage: UIImage(named: mediaImages[indexPath.row])!)
-        let viewer = AppImageViewer(originImage: UIImage(named: mediaImages[indexPath.row])!, photos: [mediaImage], animatedFromView: cell)
-        viewer.delegate = self
-        
-        self.present(viewer, animated: true, completion: nil)
-        
+        let media = mediaArray[indexPath.row]
+        if (media.mediaType == 2){
+            let viewController = DTPhotoViewerController(referencedView: cell.mediaImage, image: cell.mediaImage.image)
+            viewController.delegate = self
+            self.present(viewController, animated: true, completion: nil)
+        }
+        else if (media.mediaType == 3){
+            let player = AVPlayer(url: URL(string: media.mediaUrl)!)
+            
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+                playerViewController.player!.play()
+            }
+        }
+        else if (media.mediaType == 4){
+            let player = AVPlayer(url: URL(string: media.mediaUrl)!)
+            
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+                playerViewController.player!.play()
+            }
+        }
     }
     
 }
@@ -225,6 +273,6 @@ extension GroupDetailViewController: UITextFieldDelegate{
     
 }
 
-extension GroupDetailViewController: AppImageViewerDelegate{
+extension GroupDetailViewController: DTPhotoViewerControllerDelegate{
     
 }

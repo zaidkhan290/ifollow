@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ChatContainerViewController: UIViewController {
 
@@ -22,6 +23,7 @@ class ChatContainerViewController: UIViewController {
     var isPrivateChat = false
     
     var chatController = UIViewController()
+    var groupChatController = UIViewController()
     var isFromGroupChat = false
     var isFromProfile = false
     var chatId = ""
@@ -45,19 +47,25 @@ class ChatContainerViewController: UIViewController {
        
         if (isFromGroupChat){
             userImage.image = UIImage(named: "family")
+            groupChatController = Utility.getGroupChatViewController()
+            (groupChatController as! GroupChatViewController).chatId = self.chatId
+//            (groupChatController as! GroupChatViewController).otherUserId = self.userId
+//            (groupChatController as! GroupChatViewController).userImage = self.chatUserImage
+//            (groupChatController as! GroupChatViewController).userName = self.userName
+            add(asChildViewController: groupChatController)
         }
         else{
+            chatController = Utility.getChatViewController()
+            (chatController as! ChatViewController).isPrivateChat = isPrivateChat
+            (chatController as! ChatViewController).chatId = self.chatId
+            (chatController as! ChatViewController).otherUserId = self.userId
+            (chatController as! ChatViewController).userImage = self.chatUserImage
+            (chatController as! ChatViewController).userName = self.userName
+            add(asChildViewController: chatController)
             userImage.sd_setImage(with: URL(string: chatUserImage), placeholderImage: UIImage(named: "img_placeholder"))
         }
         topView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(topViewTapped)))
         
-        chatController = Utility.getChatViewController()
-        (chatController as! ChatViewController).isPrivateChat = isPrivateChat
-        (chatController as! ChatViewController).chatId = self.chatId
-        (chatController as! ChatViewController).otherUserId = self.userId
-        (chatController as! ChatViewController).userImage = self.chatUserImage
-        (chatController as! ChatViewController).userName = self.userName
-        add(asChildViewController: chatController)
         
         if (isPrivateChat){
             self.lblMessage.backgroundColor = .clear
@@ -74,25 +82,31 @@ class ChatContainerViewController: UIViewController {
         self.view.updateConstraintsIfNeeded()
         self.view.layoutSubviews()
         
-        let userRef = rootRef.child("Users").child("\(userId)")
-        userRef.observe(.value) { (snapshot) in
-            if (snapshot.hasChildren()){
-                let isOnline = snapshot.childSnapshot(forPath: "isActive").value as! Bool
-                self.isUserOnline = isOnline
-                self.changeOnlineStatus()
+        if (!isFromGroupChat){
+            let userRef = rootRef.child("Users").child("\(userId)")
+            userRef.observe(.value) { (snapshot) in
+                if (snapshot.hasChildren()){
+                    let isOnline = snapshot.childSnapshot(forPath: "isActive").value as! Bool
+                    self.isUserOnline = isOnline
+                    self.changeOnlineStatus()
+                }
+                
             }
             
+            let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
+            usersRef.updateChildValues(["isOnChat": true])
         }
-        
-        let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
-        usersRef.updateChildValues(["isOnChat": true])
-        
+        else{
+            onlineIcon.isHidden = true
+            lblOnlineStatus.isHidden = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         let userRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
-        userRef.updateChildValues(["isOnChat": false])
+        userRef.updateChildValues(["lastSeen": ServerValue.timestamp(),
+                                   "isOnChat": false])
     }
     
     //MARK:- Actions
@@ -120,6 +134,7 @@ class ChatContainerViewController: UIViewController {
         
         if (isFromGroupChat){
             let vc = Utility.getGroupDetailViewController()
+            vc.groupChatId = chatId
             self.pushToVC(vc: vc)
         }
         else{

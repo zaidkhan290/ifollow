@@ -16,6 +16,7 @@ class AllGroupsListViewController: UIViewController {
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var txtFieldSearch: UITextField!
     @IBOutlet weak var chatListTableView: UITableView!
+    var userLastSeen: Double = 0.0
     
     var isPrivateChat = false
     
@@ -63,10 +64,14 @@ extension AllGroupsListViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let vc = Utility.getChatContainerViewController()
-//        vc.isFromGroupChat = true
-//        vc.isPrivateChat = isPrivateChat
-//        self.pushToVC(vc: vc)
+        let vc = Utility.getChatContainerViewController()
+        vc.isFromGroupChat = true
+        vc.isPrivateChat = isPrivateChat
+        vc.chatId = "GroupChat1"
+        vc.userId = 0
+        vc.userName = ""
+        vc.chatUserImage = ""
+        self.pushToVC(vc: vc)
     }
     
 }

@@ -8,21 +8,21 @@
 
 import UIKit
 import AppImageViewer
+import DTPhotoViewerController
+import AVKit
+import AVFoundation
 
 class MediaViewController: UIViewController {
 
     @IBOutlet weak var mediaView: UIView!
     @IBOutlet weak var mediaCollectionView: UICollectionView!
-    
-    var mediaImages = [String]()
+    var mediaArray = [ChatMediaModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let mediaCellNib = UINib(nibName: "MediaCollectionViewCell", bundle: nil)
         mediaCollectionView.register(mediaCellNib, forCellWithReuseIdentifier: "MediaCell")
-        
-        mediaImages = ["Rectangle 15", "Layer 6 copy", "Rectangle 15", "Layer 6 copy", "Rectangle 15", "Layer 6 copy", "Rectangle 15", "Layer 6 copy", "Rectangle 15", "Layer 6 copy", "Rectangle 15", "Layer 6 copy", "Rectangle 15", "Layer 6 copy", "Rectangle 15", "Layer 6 copy"]
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -51,31 +51,59 @@ extension MediaViewController: UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mediaImages.count
+        return mediaArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaCell", for: indexPath) as! MediaCollectionViewCell
-        cell.mediaImage.image = UIImage(named: mediaImages[indexPath.row])
+        let media = mediaArray[indexPath.row]
         cell.mediaImage.contentMode = .scaleAspectFill
-        cell.mediaImage.clipsToBounds = true
+        cell.mediaImage.layer.cornerRadius = 8
+        
+        if (media.mediaType == 2){
+            cell.mediaImage.sd_setImage(with: URL(string: media.mediaUrl))
+        }
+        else if (media.mediaType == 3){
+            cell.mediaImage.image = UIImage(named: "audio_icon")
+        }
+        else if (media.mediaType == 4){
+            cell.mediaImage.image = UIImage(named: "video_icon")
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let cell = collectionView.cellForItem(at: indexPath) as! MediaCollectionViewCell
-        let mediaImage = ViewerImage.appImage(forImage: UIImage(named: mediaImages[indexPath.row])!)
-        let viewer = AppImageViewer(originImage: UIImage(named: mediaImages[indexPath.row])!, photos: [mediaImage], animatedFromView: cell)
-        viewer.delegate = self
-
-        self.present(viewer, animated: true, completion: nil)
-        
+        let media = mediaArray[indexPath.row]
+        if (media.mediaType == 2){
+            let viewController = DTPhotoViewerController(referencedView: cell.mediaImage, image: cell.mediaImage.image)
+            viewController.delegate = self
+            self.present(viewController, animated: true, completion: nil)
+        }
+        else if (media.mediaType == 3){
+            let player = AVPlayer(url: URL(string: media.mediaUrl)!)
+            
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+                playerViewController.player!.play()
+            }
+        }
+        else if (media.mediaType == 4){
+            let player = AVPlayer(url: URL(string: media.mediaUrl)!)
+            
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+                playerViewController.player!.play()
+            }
+        }
     }
     
 }
 
-extension MediaViewController: AppImageViewerDelegate{
+extension MediaViewController: DTPhotoViewerControllerDelegate{
     
 }

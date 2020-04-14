@@ -563,6 +563,9 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
                 let vc = Utility.getStoriesViewController()
                 vc.isForMyStory = false
                 vc.storyUserIndex = nextUserIndex
+                if (isVideoPlaying){
+                    self.videoPlayer.pause()
+                }
                 self.animateToNextUserStory(vc: vc)
             }
         }
