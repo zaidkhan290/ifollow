@@ -47,6 +47,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var locationIcon: UIImageView!
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var btnPlay: UIButton!
+    @IBOutlet weak var txtFieldCaption: UITextField!
     
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
@@ -105,11 +106,16 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         imagePicker.videoQuality = .type640x480
         
         editableTextField.delegate = self
+        txtFieldCaption.layer.cornerRadius = 10
+        txtFieldCaption.setLeftPaddingPoints(10)
+        txtFieldCaption.setRightPaddingPoints(10)
+        Utility.setTextFieldPlaceholder(textField: txtFieldCaption, placeholder: "Add caption...", color: .white)
         
         btnEmoji.isEnabled = false
         btnLocation.isHidden = true
         btnText.isHidden = true
         btnClock.isHidden = true
+        txtFieldCaption.isHidden = true
         
         lblLive.isUserInteractionEnabled = true
         lblLive.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(lblLiveTapped)))
@@ -203,6 +209,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         btnFlash.isHidden = isVideoSelected
         btnRotate.isHidden = isVideoSelected
         btnPlay.isHidden = !isVideoSelected
+        txtFieldCaption.isHidden = false
     }
     
     @objc func colorSliderValueChanged(_ slider: ColorSlider) {
@@ -365,6 +372,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         btnEmoji.isEnabled = true
         btnLocation.isHidden = false
         btnText.isHidden = false
+        txtFieldCaption.isHidden = false
         btnClock.isHidden = false
         lblLive.isHidden = true
         lblNormal.isHidden = true
@@ -522,6 +530,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             btnFlash.isEnabled = true
             btnLocation.isHidden = true
             btnText.isHidden = true
+            txtFieldCaption.isHidden = true
             btnClock.isHidden = true
             btnEmoji.isEnabled = false
             timeView.isHidden = true
@@ -536,6 +545,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             btnRotate.isHidden = false
             btnFlash.isHidden = false
             editableTextField.text = ""
+            colorSlider.isHidden = true
+            fontSlider.isHidden = true
+            lblFont.isHidden = true
             lblNormalTapped()
             for subView in filterView.subviews{
                 if (subView == cameraView || subView == timeView || subView == editableTextField || subView == locationView){
@@ -833,6 +845,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
             btnEmoji.isEnabled = true
             btnLocation.isHidden = false
             btnText.isHidden = false
+            txtFieldCaption.isHidden = false
             btnClock.isHidden = false
             btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
             btnGallery.setImage(UIImage(named: "filter"), for: .normal)
