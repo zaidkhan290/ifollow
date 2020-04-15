@@ -16,6 +16,7 @@ class PostLikesUserModel: NSObject{
     var username: String = ""
     var userCountry: String = ""
     var userImage: String = ""
+    var userRequestStatus = ""
     
     func updateModelWithJSON(json: JSON){
         userId = json["user_id"].intValue
@@ -23,6 +24,7 @@ class PostLikesUserModel: NSObject{
         username = json["username"].stringValue
         userCountry = json["country"].stringValue
         userImage = json["user_image"].stringValue.replacingOccurrences(of: "\\", with: "")
+        userRequestStatus = json["request_status"].stringValue
     }
     
 }

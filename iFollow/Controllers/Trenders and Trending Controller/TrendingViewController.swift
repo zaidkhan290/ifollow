@@ -12,7 +12,7 @@ import Loaf
 class TrendingViewController: UIViewController {
 
     @IBOutlet weak var trendingTableView: UITableView!
-    var selectedIndex = [Int]()
+    var selectedIndex = 0
     var trendingArray = [PostLikesUserModel]()
     var userId = 0
     
@@ -64,6 +64,81 @@ class TrendingViewController: UIViewController {
         }
     }
     
+    func sendTrendRequest(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["user_id": trendingArray[selectedIndex].userId]
+        API.sharedInstance.executeAPI(type: .trendRequest, method: .post, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                    self.trendingArray[self.selectedIndex].userRequestStatus = "pending"
+                    self.trendingTableView.reloadData()
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    func showUnTrendPopup(){
+        let vc = UIAlertController(title: "Untrend", message: "Are you sure you want to untrend \(trendingArray[selectedIndex].userFullName)?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.untrendUser()
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        vc.addAction(yesAction)
+        vc.addAction(noAction)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func untrendUser(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["user_id": trendingArray[selectedIndex].userId]
+        API.sharedInstance.executeAPI(type: .untrendUser, method: .post, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                    self.trendingArray[self.selectedIndex].userRequestStatus = ""
+                    if (self.userId == Utility.getLoginUserId()){
+                        self.trendingArray.remove(at: self.selectedIndex)
+                        self.trendingTableView.deleteRows(at: [IndexPath(row: self.selectedIndex, section: 0)], with: .left)
+                    }
+                    self.trendingTableView.reloadData()
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+        }
+        
+    }
+    
 }
 
 extension TrendingViewController: UITableViewDataSource, UITableViewDelegate{
@@ -94,20 +169,28 @@ extension TrendingViewController: UITableViewDataSource, UITableViewDelegate{
         }
         else{
             cell.btnSend.isHidden = false
+            if (user.userRequestStatus == ""){
+                cell.btnSend.setTitle("Trend", for: .normal)
+                cell.btnSend.backgroundColor = .white
+                cell.btnSend.layer.borderWidth = 1
+                cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+                cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
+            }
+            else if (user.userRequestStatus == "success"){
+                cell.btnSend.setTitle("Trending", for: .normal)
+                cell.btnSend.backgroundColor = Theme.profileLabelsYellowColor
+                cell.btnSend.setTitleColor(.white, for: .normal)
+            }
+            else{
+                cell.btnSend.setTitle("Untrend", for: .normal)
+                cell.btnSend.backgroundColor = .white
+                cell.btnSend.layer.borderWidth = 1
+                cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+                cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
+            }
         }
+
         
-        //        if (selectedIndex.contains(indexPath.row)){
-//                    cell.btnSend.setTitle("Following", for: .normal)
-//                    cell.btnSend.backgroundColor = Theme.profileLabelsYellowColor
-//                    cell.btnSend.setTitleColor(.white, for: .normal)
-        //        }
-        //        else{
-        //            cell.btnSend.setTitle("Follow", for: .normal)
-        //            cell.btnSend.backgroundColor = .white
-        //            cell.btnSend.layer.borderWidth = 1
-        //            cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
-        //            cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
-        //        }
         return cell
     }
     
@@ -126,14 +209,13 @@ extension TrendingViewController: UITableViewDataSource, UITableViewDelegate{
 extension TrendingViewController: FriendsTableViewCellDelegate{
     
     func btnSendTapped(indexPath: IndexPath) {
-        if !(selectedIndex.contains(indexPath.row)){
-            selectedIndex.append(indexPath.row)
+        selectedIndex = indexPath.row
+        if (trendingArray[indexPath.row].userRequestStatus == ""){
+            sendTrendRequest()
         }
         else{
-            let indexToRemove = selectedIndex.firstIndex(of: indexPath.row)!
-            selectedIndex.remove(at: indexToRemove)
+            showUnTrendPopup()
         }
-        self.trendingTableView.reloadData()
     }
     
 }

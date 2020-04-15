@@ -26,6 +26,7 @@ class TrendersContainerViewController: UIViewController {
     var firstTabTitle = ""
     var secondTabTitle = ""
     var userId = 0
+    var username = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,7 @@ class TrendersContainerViewController: UIViewController {
         (trendesController as! TrendesViewController).userId = userId
         trendingController = Utility.getTrendingViewController()
         (trendingController as! TrendingViewController).userId = userId
+        lblUsername.text = username
         lblTrenders.text = firstTabTitle
         lblTrending.text = secondTabTitle
         

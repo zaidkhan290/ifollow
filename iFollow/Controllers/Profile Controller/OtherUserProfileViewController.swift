@@ -201,6 +201,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     @objc func trendesTapped(){
         let vc = Utility.getTrendersContainerViewController()
         vc.userId = userId
+        vc.username = self.otherUserProfile.userFullName
         vc.selectedIndex = 0
         vc.firstTabTitle = "TRENDERS"
         vc.secondTabTitle = "TRENDES"
@@ -210,6 +211,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     @objc func trendersTapped(){
         let vc = Utility.getTrendersContainerViewController()
         vc.userId = userId
+        vc.username = self.otherUserProfile.userFullName
         vc.selectedIndex = 1
         vc.firstTabTitle = "TRENDERS"
         vc.secondTabTitle = "TRENDES"
