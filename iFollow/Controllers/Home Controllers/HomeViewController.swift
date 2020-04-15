@@ -130,7 +130,7 @@ class HomeViewController: UIViewController {
         self.present(alertVC, animated: true, completion: nil)
     }
     
-    func saveStoryImageToFirebase(image: UIImage){
+    func saveStoryImageToFirebase(image: UIImage, caption: String){
         
         let timeStemp = Int(Date().timeIntervalSince1970)
         let mediaRef = storageRef?.child("/Media")
@@ -155,7 +155,7 @@ class HomeViewController: UIViewController {
                     
                     picRef?.downloadURL(completion: { (url, error) in
                         if let imageURL = url{
-                            self.postStory(mediaUrl: imageURL.absoluteString, postType: "image")
+                            self.postStory(mediaUrl: imageURL.absoluteString, postType: "image", caption: caption)
                         }
                     })
                     
@@ -179,7 +179,7 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func saveStoryVideoToFirebase(videoURL: URL){
+    func saveStoryVideoToFirebase(videoURL: URL, caption: String){
         let timeStemp = Int(Date().timeIntervalSince1970)
         let mediaRef = storageRef?.child("/Media")
         let iosRef = mediaRef?.child("/iOS").child("/Videos")
@@ -199,7 +199,7 @@ class HomeViewController: UIViewController {
                     
                     videoRef?.downloadURL(completion: { (url, error) in
                         if let videoURL = url{
-                            self.postStory(mediaUrl: videoURL.absoluteString, postType: "video")
+                            self.postStory(mediaUrl: videoURL.absoluteString, postType: "video", caption: caption)
                         }
                     })
                     
@@ -223,10 +223,11 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func postStory(mediaUrl: String, postType: String){
+    func postStory(mediaUrl: String, postType: String, caption: String){
         let params = ["media": mediaUrl,
                       "expire_hours": Utility.getLoginUserStoryExpireHours(),
-            "media_type": postType] as [String : Any]
+                      "caption":caption,
+                      "media_type": postType] as [String : Any]
         
         API.sharedInstance.executeAPI(type: .createStory, method: .post, params: params) { (status, result, message) in
             
@@ -663,13 +664,13 @@ extension HomeViewController: UIAdaptivePresentationControllerDelegate, UIPopove
 }
 
 extension HomeViewController: CameraViewControllerDelegate{
-    func getStoryImage(image: UIImage) {
+    func getStoryImage(image: UIImage, caption: String) {
         storyImage = image
-        saveStoryImageToFirebase(image: storyImage)
+        saveStoryImageToFirebase(image: storyImage, caption: caption)
     }
     
-    func getStoryVideo(videoURL: URL) {
-        saveStoryVideoToFirebase(videoURL: videoURL)
+    func getStoryVideo(videoURL: URL, caption: String) {
+        saveStoryVideoToFirebase(videoURL: videoURL, caption: caption)
     }
 }
 

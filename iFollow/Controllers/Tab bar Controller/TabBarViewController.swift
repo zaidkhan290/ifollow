@@ -192,7 +192,7 @@ class TabBarViewController: UIViewController {
         
     }
     
-    func saveStoryImageToFirebase(image: UIImage){
+    func saveStoryImageToFirebase(image: UIImage, caption: String){
         
         let timeStemp = Int(Date().timeIntervalSince1970)
         let mediaRef = storageRef?.child("/Media")
@@ -217,7 +217,7 @@ class TabBarViewController: UIViewController {
                     
                     picRef?.downloadURL(completion: { (url, error) in
                         if let imageURL = url{
-                            self.postStory(mediaUrl: imageURL.absoluteString, postType: "image")
+                            self.postStory(mediaUrl: imageURL.absoluteString, postType: "image", caption: caption)
                         }
                     })
                     
@@ -241,7 +241,7 @@ class TabBarViewController: UIViewController {
         }
     }
     
-    func saveStoryVideoToFirebase(videoURL: URL){
+    func saveStoryVideoToFirebase(videoURL: URL, caption: String){
         let timeStemp = Int(Date().timeIntervalSince1970)
         let mediaRef = storageRef?.child("/Media")
         let iosRef = mediaRef?.child("/iOS").child("/Videos")
@@ -261,7 +261,7 @@ class TabBarViewController: UIViewController {
                     
                     videoRef?.downloadURL(completion: { (url, error) in
                         if let videoURL = url{
-                            self.postStory(mediaUrl: videoURL.absoluteString, postType: "video")
+                            self.postStory(mediaUrl: videoURL.absoluteString, postType: "video", caption: caption)
                         }
                     })
                     
@@ -285,10 +285,11 @@ class TabBarViewController: UIViewController {
         }
     }
     
-    func postStory(mediaUrl: String, postType: String){
+    func postStory(mediaUrl: String, postType: String, caption: String){
         let params = ["media": mediaUrl,
                       "expire_hours": Utility.getLoginUserStoryExpireHours(),
-            "media_type": postType] as [String : Any]
+                      "caption": caption,
+                      "media_type": postType] as [String : Any]
         
         API.sharedInstance.executeAPI(type: .createStory, method: .post, params: params) { (status, result, message) in
             
@@ -317,12 +318,12 @@ class TabBarViewController: UIViewController {
 }
 
 extension TabBarViewController: CameraViewControllerDelegate{
-    func getStoryImage(image: UIImage) {
+    func getStoryImage(image: UIImage, caption: String) {
         storyImage = image
-        self.saveStoryImageToFirebase(image: storyImage)
+        self.saveStoryImageToFirebase(image: storyImage, caption: caption)
     }
     
-    func getStoryVideo(videoURL: URL) {
-        self.saveStoryVideoToFirebase(videoURL: videoURL)
+    func getStoryVideo(videoURL: URL, caption: String) {
+        self.saveStoryVideoToFirebase(videoURL: videoURL, caption: caption)
     }
 }

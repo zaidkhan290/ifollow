@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import Loaf
 
 class TrendingViewController: UIViewController {
 
     @IBOutlet weak var trendingTableView: UITableView!
     var selectedIndex = [Int]()
+    var trendingArray = [PostLikesUserModel]()
+    var userId = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +22,46 @@ class TrendingViewController: UIViewController {
         let cellNib = UINib(nibName: "FriendsTableViewCell", bundle: nil)
         trendingTableView.register(cellNib, forCellReuseIdentifier: "FriendsTableViewCell")
         trendingTableView.rowHeight = 60
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        getTrendings()
+    }
+    
+    func getTrendings(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["id": userId == 0 ? Utility.getLoginUserId() : userId]
+        
+        API.sharedInstance.executeAPI(type: .getTrendersAndTrendings, method: .get, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                
+                Utility.showOrHideLoader(shouldShow: false)
+                DispatchQueue.main.async {
+                    if (status == .success){
+                        let users = result["trendings"].arrayValue
+                        self.trendingArray.removeAll()
+                        for user in users{
+                            let model = PostLikesUserModel()
+                            model.updateModelWithJSON(json: user)
+                            self.trendingArray.append(model)
+                        }
+                        self.trendingTableView.reloadData()
+                    }
+                    else if (status == .failure){
+                        Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        }
+                    }
+                    else if (status == .authError){
+                        Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            Utility.logoutUser()
+                        }
+                    }
+                }
+            }
+        }
     }
     
 }
@@ -26,27 +69,56 @@ class TrendingViewController: UIViewController {
 extension TrendingViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return trendingArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsTableViewCell", for: indexPath) as! FriendsTableViewCell
+        let user = trendingArray[indexPath.row]
+        
         cell.indexPath = indexPath
         cell.delegate = self
         
-        if (selectedIndex.contains(indexPath.row)){
-            cell.btnSend.setTitle("Following", for: .normal)
-            cell.btnSend.backgroundColor = Theme.profileLabelsYellowColor
-            cell.btnSend.setTitleColor(.white, for: .normal)
+        cell.btnSend.setTitle("Trending", for: .normal)
+        cell.btnSend.backgroundColor = Theme.profileLabelsYellowColor
+        cell.btnSend.setTitleColor(.white, for: .normal)
+        
+        cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
+        cell.userImage.contentMode = .scaleAspectFill
+        cell.userImage.sd_setImage(with: URL(string: user.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+        cell.lblUsername.text = user.userFullName
+        cell.lblLastSeen.text = user.userCountry
+        
+        if (user.userId == Utility.getLoginUserId()){
+            cell.btnSend.isHidden = true
         }
         else{
-            cell.btnSend.setTitle("Follow", for: .normal)
-            cell.btnSend.backgroundColor = .white
-            cell.btnSend.layer.borderWidth = 1
-            cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
-            cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
+            cell.btnSend.isHidden = false
         }
+        
+        //        if (selectedIndex.contains(indexPath.row)){
+//                    cell.btnSend.setTitle("Following", for: .normal)
+//                    cell.btnSend.backgroundColor = Theme.profileLabelsYellowColor
+//                    cell.btnSend.setTitleColor(.white, for: .normal)
+        //        }
+        //        else{
+        //            cell.btnSend.setTitle("Follow", for: .normal)
+        //            cell.btnSend.backgroundColor = .white
+        //            cell.btnSend.layer.borderWidth = 1
+        //            cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+        //            cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
+        //        }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if (trendingArray[indexPath.row].userId != Utility.getLoginUserId()){
+            let vc = Utility.getOtherUserProfileViewController()
+            vc.userId = trendingArray[indexPath.row].userId
+            self.present(vc, animated: true, completion: nil)
+        }
+        
     }
     
 }

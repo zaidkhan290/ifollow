@@ -25,6 +25,7 @@ class TrendersContainerViewController: UIViewController {
     var trendingController = UIViewController()
     var firstTabTitle = ""
     var secondTabTitle = ""
+    var userId = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,9 @@ class TrendersContainerViewController: UIViewController {
         mainView.roundTopCorners(radius: 30)
         
         trendesController = Utility.getTrendesViewController()
+        (trendesController as! TrendesViewController).userId = userId
         trendingController = Utility.getTrendingViewController()
+        (trendingController as! TrendingViewController).userId = userId
         lblTrenders.text = firstTabTitle
         lblTrending.text = secondTabTitle
         

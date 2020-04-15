@@ -173,6 +173,7 @@ class ProfileViewController: UIViewController {
     
     @objc func trendesTapped(){
         let vc = Utility.getTrendersContainerViewController()
+        vc.userId = Utility.getLoginUserId()
         vc.selectedIndex = 0
         vc.firstTabTitle = "TRENDS"
         vc.secondTabTitle = "TRENDING"
@@ -181,6 +182,7 @@ class ProfileViewController: UIViewController {
     
     @objc func trendingTapped(){
         let vc = Utility.getTrendersContainerViewController()
+        vc.userId = Utility.getLoginUserId()
         vc.selectedIndex = 1
         vc.firstTabTitle = "TRENDS"
         vc.secondTabTitle = "TRENDING"

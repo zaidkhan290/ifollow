@@ -12,6 +12,7 @@ import DTPhotoViewerController
 import AVKit
 import AVFoundation
 import Firebase
+import Loaf
 
 class GroupDetailViewController: UIViewController {
 
@@ -31,6 +32,7 @@ class GroupDetailViewController: UIViewController {
     var isGroupNameEditable = false
     var groupChatId = ""
     var groupMediaRef = rootRef
+    var optionsPopupIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -158,6 +160,51 @@ class GroupDetailViewController: UIViewController {
         self.present(alertVC, animated: true, completion: nil)
         
     }
+    
+    @objc func showOptionsPopup(sender: UIButton){
+        
+        optionsPopupIndex = sender.tag
+        let vc = Utility.getOptionsViewController()
+        vc.options = ["Remove"]
+        vc.delegate = self
+        vc.isFromPostView = true
+        vc.modalPresentationStyle = .popover
+        vc.preferredContentSize = CGSize(width: 100, height: 50)
+        
+        let popup = vc.popoverPresentationController
+        popup?.permittedArrowDirections = UIPopoverArrowDirection.up
+        popup?.sourceView = sender
+        popup?.delegate = self
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
+    func showRemoveMemberPopup(){
+        let alertVC = UIAlertController(title: "Remove", message: "Are you sure you want to remove this member?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+//                let params = ["post_id": self.postsArray[self.optionsPopupIndex].postId]
+//                self.postsArray.remove(at: self.optionsPopupIndex)
+//                self.carouselView.removeItem(at: self.optionsPopupIndex, animated: true)
+//                Loaf("Post Hide", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+//
+//                }
+//                API.sharedInstance.executeAPI(type: .hidePost, method: .post, params: params, completion: { (status, result, message) in
+//                    DispatchQueue.main.async {
+//                        if (status == .authError){
+//                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+//                                Utility.logoutUser()
+//                            }
+//                        }
+//                    }
+//                })
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        alertVC.addAction(yesAction)
+        alertVC.addAction(noAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
 }
 
 extension GroupDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate{
@@ -233,6 +280,8 @@ extension GroupDetailViewController: UITableViewDataSource, UITableViewDelegate{
         cell.lblUsername.textColor = Theme.memberNameColor
         cell.lblUsername.text = "Emma Watson"
         cell.lblLastSeen.text = "Sed ut perpicaiatics unde omnis iste"
+        cell.btnOption.tag = indexPath.row
+        cell.btnOption.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
         return cell
     }
     
@@ -274,5 +323,25 @@ extension GroupDetailViewController: UITextFieldDelegate{
 }
 
 extension GroupDetailViewController: DTPhotoViewerControllerDelegate{
+    
+}
+
+extension GroupDetailViewController: OptionsViewControllerDelegate{
+    func didTapOnOptions(option: String) {
+        if (option == "Remove"){
+            self.showRemoveMemberPopup()
+        }
+    }
+}
+
+extension GroupDetailViewController: UIAdaptivePresentationControllerDelegate, UIPopoverPresentationControllerDelegate{
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
     
 }

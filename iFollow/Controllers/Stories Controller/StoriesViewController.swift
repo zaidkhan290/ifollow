@@ -115,7 +115,7 @@ class StoriesViewController: UIViewController {
     
     func setStory(storyModel: UserStoryModel, isFirstStory: Bool){
         lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: storyModel.storyTime))
-        lblStoryCaption.text = ""
+        lblStoryCaption.text = storyModel.storyCaption
         currentStoryId = storyModel.storyId
         btnView.isHidden = isForMyStory ? false : storyModel.shouldShowStoryViews == 1
         btnViewWidthConstraint.constant = storyModel.shouldShowStoryViews == 1 ? 0 : 35

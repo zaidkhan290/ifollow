@@ -14,8 +14,8 @@ import GooglePlaces
 import AVKit
 
 protocol CameraViewControllerDelegate: class {
-    func getStoryImage(image: UIImage)
-    func getStoryVideo(videoURL: URL)
+    func getStoryImage(image: UIImage, caption: String)
+    func getStoryVideo(videoURL: URL, caption: String)
 }
 
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
@@ -109,7 +109,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         txtFieldCaption.layer.cornerRadius = 10
         txtFieldCaption.setLeftPaddingPoints(10)
         txtFieldCaption.setRightPaddingPoints(10)
-        Utility.setTextFieldPlaceholder(textField: txtFieldCaption, placeholder: "Add caption...", color: .white)
+        Utility.setTextFieldPlaceholder(textField: txtFieldCaption, placeholder: "Add a caption...", color: .white)
         
         btnEmoji.isEnabled = false
         btnLocation.isHidden = true
@@ -579,10 +579,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         else{
             if (self.videoURL == nil){
                 let image = self.filterView.screenshot()
-                self.delegate.getStoryImage(image: image)
+                self.delegate.getStoryImage(image: image, caption: txtFieldCaption.text!)
             }
             else{
-                self.delegate.getStoryVideo(videoURL: self.videoURL)
+                self.delegate.getStoryVideo(videoURL: self.videoURL, caption: txtFieldCaption.text!)
             }
             self.dismiss(animated: true, completion: nil)
         }
