@@ -102,7 +102,7 @@ class GroupDetailViewController: UIViewController {
         lblDate.text = "Created by \(groupModel.groupAdminName)"
         groupImage.sd_setImage(with: URL(string: groupModel.groupImage)!)
         lblDeactivateGroup.text = groupModel.groupAdminId == Utility.getLoginUserId() ? "Deactivate Group" : "Leave Group"
-        lblDeactivateMessage.text = groupModel.groupAdminId == Utility.getLoginUserId() ? "If you deactivate this group all media and messages will be deleted" : "If you leave this group all media and messages will be deleted"
+        lblDeactivateMessage.text = groupModel.groupAdminId == Utility.getLoginUserId() ? "If you deactivate this group all media and messages associated with this group will be removed from all the participants." : "If you leave this group all media and messages associated with this group will be removed."
         btnEdit.isHidden = groupModel.groupAdminId != Utility.getLoginUserId()
         btnSave.isHidden = groupModel.groupAdminId != Utility.getLoginUserId()
         btnAddMember.isHidden = groupModel.groupAdminId != Utility.getLoginUserId()

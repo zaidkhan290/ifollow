@@ -21,6 +21,7 @@ class AddMembersViewController: UIViewController {
     @IBOutlet weak var membersTableView: UITableView!
     
     var trendingArray = [PostLikesUserModel]()
+    var searchTrendingArray = [PostLikesUserModel]()
     var selectedUsersIds = [Int]()
     var delegate: AddMembersViewControllerDelegate?
     
@@ -35,6 +36,7 @@ class AddMembersViewController: UIViewController {
         let cellNib = UINib(nibName: "FriendsTableViewCell", bundle: nil)
         membersTableView.register(cellNib, forCellReuseIdentifier: "FriendsTableViewCell")
         membersTableView.rowHeight = 60
+        txtFieldSearch.addTarget(self, action: #selector(searchTextFieldTextChanged), for: .editingChanged)
         getTrendings()
         
     }
@@ -96,18 +98,27 @@ class AddMembersViewController: UIViewController {
         }
     }
     
+    @objc func searchTextFieldTextChanged(){
+        if (txtFieldSearch.text == ""){
+            self.searchTrendingArray.removeAll()
+        }
+        else{
+            self.searchTrendingArray = self.trendingArray.filter{$0.userFullName.localizedCaseInsensitiveContains(txtFieldSearch.text!)}
+        }
+        self.membersTableView.reloadData()
+    }
+    
 }
 
 extension AddMembersViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return trendingArray.count
+        return txtFieldSearch.text == "" ? trendingArray.count : searchTrendingArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsTableViewCell", for: indexPath) as! FriendsTableViewCell
-        let user = trendingArray[indexPath.row]
-        
+        let user = txtFieldSearch.text == "" ? trendingArray[indexPath.row] : searchTrendingArray[indexPath.row]
         cell.indexPath = indexPath
         cell.delegate = self
         cell.btnSend.isHidden = true
@@ -129,10 +140,19 @@ extension AddMembersViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if (trendingArray[indexPath.row].userId != Utility.getLoginUserId()){
-            let vc = Utility.getOtherUserProfileViewController()
-            vc.userId = trendingArray[indexPath.row].userId
-            self.present(vc, animated: true, completion: nil)
+        if (txtFieldSearch.text == ""){
+            if (trendingArray[indexPath.row].userId != Utility.getLoginUserId()){
+                let vc = Utility.getOtherUserProfileViewController()
+                vc.userId = trendingArray[indexPath.row].userId
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+        else{
+            if (searchTrendingArray[indexPath.row].userId != Utility.getLoginUserId()){
+                let vc = Utility.getOtherUserProfileViewController()
+                vc.userId = searchTrendingArray[indexPath.row].userId
+                self.present(vc, animated: true, completion: nil)
+            }
         }
         
     }
@@ -141,7 +161,13 @@ extension AddMembersViewController: UITableViewDataSource, UITableViewDelegate{
 
 extension AddMembersViewController: FriendsTableViewCellDelegate{
     func btnSendTapped(indexPath: IndexPath) {
-        trendingArray[indexPath.row].userSelected = !trendingArray[indexPath.row].userSelected
+        
+        if (txtFieldSearch.text == ""){
+            trendingArray[indexPath.row].userSelected = !trendingArray[indexPath.row].userSelected
+        }
+        else{
+            searchTrendingArray[indexPath.row].userSelected = !searchTrendingArray[indexPath.row].userSelected
+        }
         self.membersTableView.reloadData()
     }
 }

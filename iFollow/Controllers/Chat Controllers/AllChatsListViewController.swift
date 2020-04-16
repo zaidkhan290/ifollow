@@ -19,6 +19,7 @@ class AllChatsListViewController: UIViewController {
     var chatRef = rootRef
     var allChatsArray = [RecentChatsModel]()
     var chatsArray = [RecentChatsModel]()
+    var searchChatsArray = [RecentChatsModel]()
     var isPrivateChat = false
     
     override func viewDidLoad() {
@@ -43,6 +44,7 @@ class AllChatsListViewController: UIViewController {
         let cellNib = UINib(nibName: "ChatListTableViewCell", bundle: nil)
         chatListTableView.register(cellNib, forCellReuseIdentifier: "ChatListCell")
         chatListTableView.rowHeight = 80
+        txtFieldSearch.addTarget(self, action: #selector(searchTextFieldTextChanged), for: .editingChanged)
         getChatList()
         
     }
@@ -157,13 +159,23 @@ class AllChatsListViewController: UIViewController {
         }
         
     }
+    
+    @objc func searchTextFieldTextChanged(){
+        if (txtFieldSearch.text == ""){
+            self.searchChatsArray.removeAll()
+        }
+        else{
+            self.searchChatsArray = self.chatsArray.filter{$0.chatUserName.localizedCaseInsensitiveContains(txtFieldSearch.text!)}
+        }
+        self.chatListTableView.reloadData()
+    }
 
 }
 
 extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chatsArray.count
+        return txtFieldSearch.text == "" ? chatsArray.count : searchChatsArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -171,7 +183,8 @@ extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as! ChatListTableViewCell
         cell.backgroundColor = isPrivateChat ? .clear : .white
         cell.lblUsername.font = Theme.getLatoBoldFontOfSize(size: 18)
-        let chat = chatsArray[indexPath.row]
+        
+        let chat = txtFieldSearch.text == "" ? chatsArray[indexPath.row] : searchChatsArray[indexPath.row]
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.sd_setImage(with: URL(string: chat.chatUserImage), placeholderImage: UIImage(named: "img_placeholder"))
@@ -188,7 +201,7 @@ extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = Utility.getChatContainerViewController()
-        let chat = chatsArray[indexPath.row]
+        let chat = txtFieldSearch.text == "" ? chatsArray[indexPath.row] : searchChatsArray[indexPath.row]
         chat.isRead = true
         vc.isFromGroupChat = false
         vc.isPrivateChat = isPrivateChat

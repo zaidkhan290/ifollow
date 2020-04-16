@@ -897,7 +897,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you deactivate this group all media and messages will be deleted" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E0F-eZ-4jb">
-                                                        <rect key="frame" x="20" y="45" width="354" height="45"/>
+                                                        <rect key="frame" x="20" y="42" width="354" height="48"/>
                                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                                         <color key="textColor" red="0.64313725490196072" green="0.64313725490196072" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -910,7 +910,7 @@
                                                     <constraint firstItem="E0F-eZ-4jb" firstAttribute="leading" secondItem="zJb-i0-Uv5" secondAttribute="leading" constant="20" id="P7H-Z1-lk4"/>
                                                     <constraint firstAttribute="bottom" secondItem="E0F-eZ-4jb" secondAttribute="bottom" constant="10" id="Tob-MA-qup"/>
                                                     <constraint firstItem="cww-7E-1lv" firstAttribute="leading" secondItem="zJb-i0-Uv5" secondAttribute="leading" constant="20" id="Vft-Hr-hLJ"/>
-                                                    <constraint firstItem="E0F-eZ-4jb" firstAttribute="top" secondItem="cww-7E-1lv" secondAttribute="bottom" constant="5" id="b6x-rO-G3Q"/>
+                                                    <constraint firstItem="E0F-eZ-4jb" firstAttribute="top" secondItem="cww-7E-1lv" secondAttribute="bottom" constant="2" id="b6x-rO-G3Q"/>
                                                     <constraint firstItem="cww-7E-1lv" firstAttribute="top" secondItem="zJb-i0-Uv5" secondAttribute="top" constant="20" id="qDB-Xg-YVm"/>
                                                 </constraints>
                                             </view>

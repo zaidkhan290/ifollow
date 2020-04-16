@@ -20,6 +20,7 @@ class AllGroupsListViewController: UIViewController {
     var chatRef = rootRef
     var isPrivateChat = false
     var groupsList = [GroupChatModel]()
+    var searchGroupArray = [GroupChatModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,7 @@ class AllGroupsListViewController: UIViewController {
         let cellNib = UINib(nibName: "ChatListTableViewCell", bundle: nil)
         chatListTableView.register(cellNib, forCellReuseIdentifier: "ChatListCell")
         chatListTableView.rowHeight = 80
+        txtFieldSearch.addTarget(self, action: #selector(searchTextFieldTextChanged), for: .editingChanged)
         getGroupsList()
         NotificationCenter.default.addObserver(self, selector: #selector(getGroupsList), name: NSNotification.Name(rawValue: "RefreshGroupsList"), object: nil)
     }
@@ -131,18 +133,28 @@ class AllGroupsListViewController: UIViewController {
         }
     }
     
+    @objc func searchTextFieldTextChanged(){
+        if (txtFieldSearch.text == ""){
+            self.searchGroupArray.removeAll()
+        }
+        else{
+            self.searchGroupArray = self.groupsList.filter{$0.groupName.localizedCaseInsensitiveContains(txtFieldSearch.text!)}
+        }
+        self.chatListTableView.reloadData()
+    }
+    
 }
 
 extension AllGroupsListViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groupsList.count
+        return txtFieldSearch.text == "" ? groupsList.count : searchGroupArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as! ChatListTableViewCell
-        let group = groupsList[indexPath.row]
+        let group = txtFieldSearch.text == "" ? groupsList[indexPath.row] : searchGroupArray[indexPath.row]
         
         cell.backgroundColor = isPrivateChat ? .clear : .white
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
@@ -166,8 +178,8 @@ extension AllGroupsListViewController: UITableViewDataSource, UITableViewDelegat
         let vc = Utility.getChatContainerViewController()
         vc.isFromGroupChat = true
         vc.isPrivateChat = isPrivateChat
-        vc.chatId = groupsList[indexPath.row].groupChatId
-        vc.groupChatModel = groupsList[indexPath.row]
+        vc.chatId = txtFieldSearch.text == "" ? groupsList[indexPath.row].groupChatId : searchGroupArray[indexPath.row].groupChatId
+        vc.groupChatModel = txtFieldSearch.text == "" ? groupsList[indexPath.row] : searchGroupArray[indexPath.row]
         self.pushToVC(vc: vc)
     }
     
