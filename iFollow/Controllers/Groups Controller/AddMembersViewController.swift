@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import Loaf
+
+protocol AddMembersViewControllerDelegate: class {
+    func membersAdded(membersArray: [PostLikesUserModel])
+}
 
 class AddMembersViewController: UIViewController {
 
@@ -15,7 +20,9 @@ class AddMembersViewController: UIViewController {
     @IBOutlet weak var txtFieldSearch: UITextField!
     @IBOutlet weak var membersTableView: UITableView!
     
-    var selectedIndex = [Int]()
+    var trendingArray = [PostLikesUserModel]()
+    var selectedUsersIds = [Int]()
+    var delegate: AddMembersViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +35,7 @@ class AddMembersViewController: UIViewController {
         let cellNib = UINib(nibName: "FriendsTableViewCell", bundle: nil)
         membersTableView.register(cellNib, forCellReuseIdentifier: "FriendsTableViewCell")
         membersTableView.rowHeight = 60
+        getTrendings()
         
     }
     
@@ -38,9 +46,53 @@ class AddMembersViewController: UIViewController {
     }
     
     @IBAction func btnAddTapped(_ sender: UIButton) {
-        self.view.makeToast("Members Added")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        if (trendingArray.filter{$0.userSelected == true}.count > 0){
             self.goBack()
+            if (delegate != nil){
+                self.delegate!.membersAdded(membersArray: trendingArray.filter{$0.userSelected == true})
+            }
+        }
+        else{
+            Loaf("Please select atleast 1 member", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+            }
+        }
+    }
+    
+    func getTrendings(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["id": Utility.getLoginUserId()]
+        
+        API.sharedInstance.executeAPI(type: .getTrendersAndTrendings, method: .get, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                
+                Utility.showOrHideLoader(shouldShow: false)
+                DispatchQueue.main.async {
+                    if (status == .success){
+                        let users = result["trendings"].arrayValue
+                        self.trendingArray.removeAll()
+                        for user in users{
+                            let model = PostLikesUserModel()
+                            model.updateModelWithJSON(json: user)
+                            if (self.selectedUsersIds.contains(model.userId)){
+                                model.userSelected = true
+                            }
+                            self.trendingArray.append(model)
+                        }
+                        
+                        self.membersTableView.reloadData()
+                    }
+                    else if (status == .failure){
+                        Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        }
+                    }
+                    else if (status == .authError){
+                        Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            Utility.logoutUser()
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -49,16 +101,24 @@ class AddMembersViewController: UIViewController {
 extension AddMembersViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return trendingArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsTableViewCell", for: indexPath) as! FriendsTableViewCell
+        let user = trendingArray[indexPath.row]
         
+        cell.indexPath = indexPath
+        cell.delegate = self
         cell.btnSend.isHidden = true
         cell.selectImage.isHidden = false
+        cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
+        cell.userImage.contentMode = .scaleAspectFill
+        cell.userImage.sd_setImage(with: URL(string: user.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+        cell.lblUsername.text = user.userFullName
+        cell.lblLastSeen.text = user.userCountry
         
-        if (selectedIndex.contains(indexPath.row)){
+        if (user.userSelected){
             cell.selectImage.image = UIImage(named: "select")
         }
         else{
@@ -69,15 +129,19 @@ extension AddMembersViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if !(selectedIndex.contains(indexPath.row)){
-            selectedIndex.append(indexPath.row)
+        if (trendingArray[indexPath.row].userId != Utility.getLoginUserId()){
+            let vc = Utility.getOtherUserProfileViewController()
+            vc.userId = trendingArray[indexPath.row].userId
+            self.present(vc, animated: true, completion: nil)
         }
-        else{
-            let indexToRemove = selectedIndex.firstIndex(of: indexPath.row)!
-            selectedIndex.remove(at: indexToRemove)
-        }
-        self.membersTableView.reloadData()
         
     }
     
+}
+
+extension AddMembersViewController: FriendsTableViewCellDelegate{
+    func btnSendTapped(indexPath: IndexPath) {
+        trendingArray[indexPath.row].userSelected = !trendingArray[indexPath.row].userSelected
+        self.membersTableView.reloadData()
+    }
 }

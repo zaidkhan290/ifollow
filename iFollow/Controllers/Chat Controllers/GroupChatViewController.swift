@@ -30,6 +30,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
     var storageRef : StorageReference?
     var recordingSession: AVAudioSession!
     var chatId = ""
+    var groupModel = GroupChatModel()
 //    var userImage = ""
 //    var userName = ""
 //    var otherUserId = 0
@@ -605,7 +606,15 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         DispatchQueue.main.async {
             
             cell.avatarContainerView.layer.cornerRadius = cell.avatarContainerView.frame.height / 2
-            cell.avatarImageView.sd_setImage(with: URL(string: data.senderId == self.senderId ? Utility.getLoginUserImage() : ""), placeholderImage: UIImage(named: "img_placeholder"))
+            
+            if (data.senderId == "\(Utility.getLoginUserId())"){
+                cell.avatarImageView.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "img_placeholder"))
+            }
+            else{
+                let model = self.groupModel.groupUsers.filter{$0.userId == Int(data.senderId)}.first!
+                cell.avatarImageView.sd_setImage(with: URL(string: model.userImage), placeholderImage: UIImage(named: "img_placeholder"))
+            }
+            
             cell.avatarImageView.layer.cornerRadius = cell.avatarImageView.frame.height / 2
             cell.avatarImageView.clipsToBounds = true
             cell.cellBottomLabel.font = Theme.getLatoRegularFontOfSize(size: 11)

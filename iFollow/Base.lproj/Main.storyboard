@@ -678,6 +678,16 @@
                                                     <action selector="btnBackTapped:" destination="vEm-od-Vet" eventType="touchUpInside" id="SaL-Qc-hY9"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5pE-x0-vaq">
+                                                <rect key="frame" x="360" y="37.666666666666664" width="34" height="29.999999999999993"/>
+                                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                                                <state key="normal" title="Save">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="btnSaveTapped:" destination="vEm-od-Vet" eventType="touchUpInside" id="ViH-vn-8kj"/>
+                                                </connections>
+                                            </button>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Family Group" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XQq-Rs-rGQ">
                                                 <rect key="frame" x="20" y="172" width="100" height="19"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -875,13 +885,16 @@
                                                 <rect key="frame" x="10" y="870" width="394" height="100"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deactivate Group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cww-7E-1lv">
-                                                        <rect key="frame" x="19.999999999999993" y="20" width="118.33333333333331" height="18"/>
+                                                        <rect key="frame" x="19.999999999999993" y="20" width="118.33333333333331" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="20" id="UfU-Tl-4XY"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
                                                         <color key="textColor" red="1" green="0.1215686275" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you deactivate this group all media and messages will be deleted" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E0F-eZ-4jb">
-                                                        <rect key="frame" x="20" y="43" width="354" height="14"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you deactivate this group all media and messages will be deleted" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E0F-eZ-4jb">
+                                                        <rect key="frame" x="20" y="45" width="354" height="45"/>
                                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                                         <color key="textColor" red="0.64313725490196072" green="0.64313725490196072" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -892,6 +905,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="E0F-eZ-4jb" secondAttribute="trailing" constant="20" id="8zS-vz-tJ4"/>
                                                     <constraint firstAttribute="height" constant="100" id="Bdv-kn-dpC"/>
                                                     <constraint firstItem="E0F-eZ-4jb" firstAttribute="leading" secondItem="zJb-i0-Uv5" secondAttribute="leading" constant="20" id="P7H-Z1-lk4"/>
+                                                    <constraint firstAttribute="bottom" secondItem="E0F-eZ-4jb" secondAttribute="bottom" constant="10" id="Tob-MA-qup"/>
                                                     <constraint firstItem="cww-7E-1lv" firstAttribute="leading" secondItem="zJb-i0-Uv5" secondAttribute="leading" constant="20" id="Vft-Hr-hLJ"/>
                                                     <constraint firstItem="E0F-eZ-4jb" firstAttribute="top" secondItem="cww-7E-1lv" secondAttribute="bottom" constant="5" id="b6x-rO-G3Q"/>
                                                     <constraint firstItem="cww-7E-1lv" firstAttribute="top" secondItem="zJb-i0-Uv5" secondAttribute="top" constant="20" id="qDB-Xg-YVm"/>
@@ -902,6 +916,7 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="yPZ-xw-2zK" secondAttribute="trailing" constant="20" id="3vV-xC-YQz"/>
                                             <constraint firstItem="cok-tu-NvA" firstAttribute="leading" secondItem="syB-83-kE2" secondAttribute="leading" constant="20" id="5ks-TF-om9"/>
+                                            <constraint firstItem="5pE-x0-vaq" firstAttribute="centerY" secondItem="t38-dF-pjH" secondAttribute="centerY" id="5lL-sc-FU4"/>
                                             <constraint firstItem="t38-dF-pjH" firstAttribute="leading" secondItem="syB-83-kE2" secondAttribute="leading" constant="20" id="5pw-Up-HAY"/>
                                             <constraint firstItem="XQq-Rs-rGQ" firstAttribute="leading" secondItem="syB-83-kE2" secondAttribute="leading" constant="20" id="B6v-MN-Pka"/>
                                             <constraint firstAttribute="trailing" secondItem="b8h-LQ-9py" secondAttribute="trailing" id="Boj-Yh-skH"/>
@@ -912,6 +927,7 @@
                                             <constraint firstItem="b8h-LQ-9py" firstAttribute="top" secondItem="syB-83-kE2" secondAttribute="top" id="R8Z-4I-nSv"/>
                                             <constraint firstItem="80E-GI-Is3" firstAttribute="top" secondItem="b8h-LQ-9py" secondAttribute="bottom" constant="20" id="XNa-Wn-7mJ"/>
                                             <constraint firstItem="zJb-i0-Uv5" firstAttribute="leading" secondItem="syB-83-kE2" secondAttribute="leading" constant="10" id="a1H-th-917"/>
+                                            <constraint firstAttribute="trailing" secondItem="5pE-x0-vaq" secondAttribute="trailing" constant="20" id="aPU-JB-U9J"/>
                                             <constraint firstAttribute="trailing" secondItem="80E-GI-Is3" secondAttribute="trailing" constant="10" id="ftY-l5-Mrr"/>
                                             <constraint firstItem="yPZ-xw-2zK" firstAttribute="bottom" secondItem="cok-tu-NvA" secondAttribute="bottom" id="i9p-DY-tp9"/>
                                             <constraint firstItem="cok-tu-NvA" firstAttribute="top" secondItem="XQq-Rs-rGQ" secondAttribute="bottom" constant="5" id="iwW-GF-1rx"/>
@@ -940,9 +956,13 @@
                         <viewLayoutGuide key="safeArea" id="leo-ku-kLa"/>
                     </view>
                     <connections>
+                        <outlet property="btnEdit" destination="yPZ-xw-2zK" id="j7K-1z-Sdt"/>
+                        <outlet property="btnSave" destination="5pE-x0-vaq" id="rYI-YO-L3e"/>
                         <outlet property="deactivateGroupView" destination="zJb-i0-Uv5" id="IK0-ET-15T"/>
                         <outlet property="groupImage" destination="b8h-LQ-9py" id="vVh-fg-NSU"/>
                         <outlet property="lblDate" destination="cok-tu-NvA" id="Mp0-Sc-nDd"/>
+                        <outlet property="lblDeactivateGroup" destination="cww-7E-1lv" id="oHf-4m-iQk"/>
+                        <outlet property="lblDeactivateMessage" destination="E0F-eZ-4jb" id="N5r-Ef-Ow9"/>
                         <outlet property="mainViewHeightConstraint" destination="tA3-5D-7lo" id="k4Y-eU-tfE"/>
                         <outlet property="mediaAndMemberViewHeightConstraint" destination="k08-XZ-g4V" id="LGP-W3-YhK"/>
                         <outlet property="mediaAndMembersView" destination="80E-GI-Is3" id="gpD-dT-Iht"/>
@@ -1872,6 +1892,16 @@
                                     <action selector="btnBackTapped:" destination="Btt-hR-L32" eventType="touchUpInside" id="qXf-xv-RF2"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gq0-2i-DXm">
+                                <rect key="frame" x="349" y="37.666666666666664" width="45" height="29.999999999999993"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                                <state key="normal" title="Create">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnCreateTapped:" destination="Btt-hR-L32" eventType="touchUpInside" id="iSJ-2c-qcY"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kGX-We-Mgw">
                                 <rect key="frame" x="199" y="104" width="16" height="22"/>
                                 <state key="normal" image="upload_photo-1"/>
@@ -1894,7 +1924,7 @@
                                 <rect key="frame" x="20" y="171" width="141" height="19"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created by Bella Nova 17/6/2019" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bH-n5-Qiz">
                                 <rect key="frame" x="20" y="195" width="178.33333333333334" height="14"/>
@@ -1989,8 +2019,8 @@
                                                 <color key="textColor" red="0.3803921569" green="0.3803921569" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This group doesn't have any member yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="92b-e9-eSO">
-                                                <rect key="frame" x="20" y="34" width="201" height="13"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This group doesn't have any member yet" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="92b-e9-eSO">
+                                                <rect key="frame" x="20" y="34" width="332.66666666666669" height="23"/>
                                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="11"/>
                                                 <color key="textColor" red="0.64313725489999995" green="0.64313725489999995" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -2027,9 +2057,11 @@
                                             <constraint firstAttribute="trailing" secondItem="8vs-nP-2qc" secondAttribute="trailing" constant="20" id="CFv-dD-zZK"/>
                                             <constraint firstItem="8vs-nP-2qc" firstAttribute="centerY" secondItem="Efy-jA-gEc" secondAttribute="centerY" id="Crz-hT-egS"/>
                                             <constraint firstAttribute="trailing" secondItem="Cme-Ia-DCh" secondAttribute="trailing" constant="20" id="QJy-Gh-g0D"/>
+                                            <constraint firstAttribute="trailing" secondItem="92b-e9-eSO" secondAttribute="trailing" constant="20" id="Utl-Ru-kEC"/>
                                             <constraint firstItem="Cme-Ia-DCh" firstAttribute="centerY" secondItem="Efy-jA-gEc" secondAttribute="centerY" id="Uy0-8x-Q5X"/>
                                             <constraint firstItem="YRN-GR-NB6" firstAttribute="leading" secondItem="Efy-jA-gEc" secondAttribute="leading" constant="20" id="ZfT-el-EEz"/>
                                             <constraint firstItem="92b-e9-eSO" firstAttribute="top" secondItem="YRN-GR-NB6" secondAttribute="bottom" constant="2" id="cNc-Nl-bnW"/>
+                                            <constraint firstItem="8Uo-g4-SP1" firstAttribute="top" secondItem="92b-e9-eSO" secondAttribute="bottom" constant="2" id="sK1-yb-Jde"/>
                                             <constraint firstItem="92b-e9-eSO" firstAttribute="leading" secondItem="Efy-jA-gEc" secondAttribute="leading" constant="20" id="vft-Ld-AGd"/>
                                             <constraint firstAttribute="trailing" secondItem="8Uo-g4-SP1" secondAttribute="trailing" constant="15" id="vrS-Ij-5G7"/>
                                             <constraint firstItem="YRN-GR-NB6" firstAttribute="centerY" secondItem="Efy-jA-gEc" secondAttribute="centerY" multiplier="0.8" id="wO9-g5-INL"/>
@@ -2070,6 +2102,8 @@
                             <constraint firstItem="0bH-n5-Qiz" firstAttribute="top" secondItem="ltQ-E6-QLu" secondAttribute="bottom" constant="5" id="qQV-6j-8ty"/>
                             <constraint firstItem="ndc-A3-Lus" firstAttribute="top" secondItem="C4r-zb-IwG" secondAttribute="top" constant="20" id="r8U-ua-VfX"/>
                             <constraint firstItem="osW-jw-KYV" firstAttribute="centerX" secondItem="chV-SK-1zA" secondAttribute="centerX" id="tre-KQ-ma2"/>
+                            <constraint firstItem="gq0-2i-DXm" firstAttribute="centerY" secondItem="ndc-A3-Lus" secondAttribute="centerY" id="u56-Yf-26s"/>
+                            <constraint firstItem="C4r-zb-IwG" firstAttribute="trailing" secondItem="gq0-2i-DXm" secondAttribute="trailing" constant="20" id="ueD-xe-K5t"/>
                             <constraint firstItem="C4r-zb-IwG" firstAttribute="trailing" secondItem="ayE-1G-8Fs" secondAttribute="trailing" id="xas-ER-3P3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="C4r-zb-IwG"/>
@@ -2078,6 +2112,7 @@
                         <outlet property="bottomView" destination="osW-jw-KYV" id="XEj-s6-oXC"/>
                         <outlet property="groupImage" destination="ayE-1G-8Fs" id="onX-CV-uvo"/>
                         <outlet property="lblDate" destination="0bH-n5-Qiz" id="0pc-pY-Bpo"/>
+                        <outlet property="lblMembers" destination="92b-e9-eSO" id="DUN-58-zTL"/>
                         <outlet property="notificationSwitch" destination="250-zX-3mb" id="tmw-bY-VPw"/>
                         <outlet property="txtFieldGroupName" destination="ltQ-E6-QLu" id="Ex3-UK-VPd"/>
                     </connections>
@@ -4663,7 +4698,7 @@
                             <constraint firstItem="Vz9-Hq-VaC" firstAttribute="trailing" secondItem="Qyz-20-cbk" secondAttribute="trailing" constant="150" id="8aY-wN-MT4"/>
                             <constraint firstItem="Qyz-20-cbk" firstAttribute="leading" secondItem="Vz9-Hq-VaC" secondAttribute="leading" constant="60" id="ADW-wv-6t4"/>
                             <constraint firstItem="mdm-cz-610" firstAttribute="centerY" secondItem="HoF-IS-tvd" secondAttribute="centerY" id="FUy-1u-KH0"/>
-                            <constraint firstItem="ViJ-fP-v12" firstAttribute="leading" secondItem="ouL-rX-3wa" secondAttribute="trailing" constant="5" id="GKA-Mg-9YT"/>
+                            <constraint firstItem="ViJ-fP-v12" firstAttribute="leading" secondItem="HoF-IS-tvd" secondAttribute="trailing" constant="27" id="HMU-uD-R4k"/>
                             <constraint firstItem="M8g-ZK-Ooy" firstAttribute="top" secondItem="Q0u-NY-vcG" secondAttribute="bottom" id="ICN-GX-EnL"/>
                             <constraint firstItem="C0C-wQ-VMx" firstAttribute="centerY" secondItem="HoF-IS-tvd" secondAttribute="centerY" multiplier="0.9" id="IEX-3M-pPx"/>
                             <constraint firstItem="HoF-IS-tvd" firstAttribute="leading" secondItem="Vz9-Hq-VaC" secondAttribute="leading" constant="65" id="MXo-T6-hYH"/>
@@ -4688,6 +4723,7 @@
                         <outlet property="containerView" destination="M8g-ZK-Ooy" id="VbJ-mF-9TP"/>
                         <outlet property="lblMessage" destination="ipZ-d1-LMu" id="AZO-Uz-7ha"/>
                         <outlet property="lblOnlineStatus" destination="ViJ-fP-v12" id="pkJ-XX-rGz"/>
+                        <outlet property="lblOnlineStatusLeadingConstraint" destination="HMU-uD-R4k" id="loV-3G-Yf4"/>
                         <outlet property="lblUsername" destination="C0C-wQ-VMx" id="ym7-wA-HEV"/>
                         <outlet property="onlineIcon" destination="ouL-rX-3wa" id="Ihg-AS-6U0"/>
                         <outlet property="topView" destination="Qyz-20-cbk" id="X3E-Td-ioW"/>

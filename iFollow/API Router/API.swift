@@ -48,6 +48,10 @@ enum EndPoint: String {
     case getPostDetail = "post"
     case getStoryViews = "story_views"
     case getTrendersAndTrendings = "getTrendsAndTrenders"
+    case createGroup = "create_group_chat_room"
+    case getAllGroups = "group_chat_record_list"
+    case leaveGroup = "leave_group_chat_room"
+    case deactivateGroup = "delete_group_chat_room"
 }
 
 enum StatusCodes {

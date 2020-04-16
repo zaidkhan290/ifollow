@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Loaf
+import FirebaseStorage
 
 class CreateGroupViewController: UIViewController {
 
@@ -15,13 +17,17 @@ class CreateGroupViewController: UIViewController {
     @IBOutlet weak var txtFieldGroupName: UITextField!
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var notificationSwitch: UISwitch!
+    @IBOutlet weak var lblMembers: UILabel!
     
     var imagePicker = UIImagePickerController()
     var isGroupNameEditable = false
+    var membersArray = [PostLikesUserModel]()
+    var storageRef: StorageReference?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         bottomView.layer.cornerRadius = 10
         bottomView.dropShadow(color: .white)
         groupImage.roundBottomCorners(radius: 20)
@@ -33,6 +39,7 @@ class CreateGroupViewController: UIViewController {
         
         txtFieldGroupName.isUserInteractionEnabled = isGroupNameEditable
         txtFieldGroupName.delegate = self
+        lblDate.isHidden = true
         
     }
     
@@ -58,7 +65,107 @@ class CreateGroupViewController: UIViewController {
     
     @IBAction func btnAddTapped(_ sender: UIButton) {
         let vc = Utility.getAddMembersViewController()
+        vc.delegate = self
+        vc.selectedUsersIds = self.membersArray.map{$0.userId}
         self.pushToVC(vc: vc)
+    }
+    
+    @IBAction func btnCreateTapped(_ sender: UIButton){
+        if (txtFieldGroupName.text == "Name of the Group"){
+            Loaf("Please enter group name", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+            }
+            return
+        }
+        else if (membersArray.count == 0){
+            Loaf("Please add atleast 1 member", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+            }
+            return
+        }
+        uploadGroupImageToFirebase()
+    }
+    
+    func uploadGroupImageToFirebase(){
+        let timeStemp = Int(Date().timeIntervalSince1970)
+        let mediaRef = storageRef?.child("/Media")
+        let iosRef = mediaRef?.child("/iOS").child("/Images")
+        let picRef = iosRef?.child("/GroupImage\(timeStemp).jgp")
+        
+        //        let imageData2 = UIImagePNGRepresentation(image)
+        if let imageData2 = groupImage.image!.jpegData(compressionQuality: 0.75) {
+            // Create file metadata including the content type
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            
+            Utility.showOrHideLoader(shouldShow: true)
+            
+            let uploadTask = picRef?.putData(imageData2, metadata: metadata, completion: { (metaData, error) in
+                if(error != nil){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(error!.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+                        
+                    }
+                }else{
+                    
+                    picRef?.downloadURL(completion: { (url, error) in
+                        if let imageURL = url{
+                            self.createGroupWithRequest(groupImage: imageURL.absoluteString)
+                        }
+                    })
+                    
+                    
+                }
+            })
+            uploadTask?.resume()
+            
+            var i = 0
+            uploadTask?.observe(.progress, handler: { (snapshot) in
+                if(i == 0){
+                    
+                }
+                i += 1
+                
+            })
+            
+            uploadTask?.observe(.success, handler: { (snapshot) in
+                
+            })
+        }
+    }
+    
+    func createGroupWithRequest(groupImage: String){
+        
+        var groupMembersIds = [Int]()
+        groupMembersIds = membersArray.map{$0.userId}
+        groupMembersIds.append(Utility.getLoginUserId())
+        
+        let params = ["name": txtFieldGroupName.text!,
+                      "image": groupImage,
+                      "notification": notificationSwitch.isOn ? 0 : 1,
+                      "member_ids": groupMembersIds] as [String : Any]
+        
+        API.sharedInstance.executeAPI(type: .createGroup, method: .post, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(2)) { (handler) in
+                        self.goBack()
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RefreshGroupsList"), object: nil)
+                    }
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+                
+            }
+        }
+        
     }
     
     func openImagePicker(){
@@ -114,4 +221,35 @@ extension CreateGroupViewController: UITextFieldDelegate{
         
     }
     
+}
+
+extension CreateGroupViewController: AddMembersViewControllerDelegate{
+    func membersAdded(membersArray: [PostLikesUserModel]) {
+        self.membersArray = membersArray
+        if (self.membersArray.count == 0){
+            lblMembers.text = "This group doesn't have any member yet"
+        }
+        else{
+            if (self.membersArray.count <= 3){
+                lblMembers.text = self.membersArray.map{$0.userFullName}.joined(separator: ", ")
+              //  ([0,1,1,0].map{String($0)}).joined(separator: ",")
+            }
+            else{
+                var membersString = ""
+                var members = [PostLikesUserModel]()
+                for i in 0..<3{
+                    members.append(self.membersArray[i])
+                }
+                membersString = members.map{$0.userFullName}.joined(separator: ", ")
+                let remainingCount = self.membersArray.count - 3
+                if (remainingCount == 1){
+                    membersString = membersString + " and \(remainingCount) other"
+                }
+                else{
+                    membersString = membersString + " and \(remainingCount) others"
+                }
+                lblMembers.text = membersString
+            }
+        }
+    }
 }

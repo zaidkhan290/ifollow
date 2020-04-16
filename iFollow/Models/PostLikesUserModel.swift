@@ -17,6 +17,7 @@ class PostLikesUserModel: NSObject{
     var userCountry: String = ""
     var userImage: String = ""
     var userRequestStatus = ""
+    var userSelected = false
     
     func updateModelWithJSON(json: JSON){
         userId = json["user_id"].intValue

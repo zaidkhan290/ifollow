@@ -26,7 +26,8 @@ class FriendsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        selectImage.isUserInteractionEnabled = true
+        selectImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectImageTapped)))
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -44,5 +45,10 @@ class FriendsTableViewCell: UITableViewCell {
     @IBAction func btnOptionsTapped(_ sender: UIButton) {
     }
     
+    @objc func selectImageTapped(){
+        if (delegate != nil){
+            self.delegate.btnSendTapped(indexPath: indexPath)
+        }
+    }
     
 }

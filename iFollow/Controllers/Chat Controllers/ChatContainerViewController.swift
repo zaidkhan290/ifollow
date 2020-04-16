@@ -20,6 +20,7 @@ class ChatContainerViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var lblMessage: UILabel!
     @IBOutlet weak var alertViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var lblOnlineStatusLeadingConstraint: NSLayoutConstraint!
     var isPrivateChat = false
     
     var chatController = UIViewController()
@@ -27,6 +28,7 @@ class ChatContainerViewController: UIViewController {
     var isFromGroupChat = false
     var isFromProfile = false
     var chatId = ""
+    var groupChatModel = GroupChatModel()
     var userId = 0
     var userName = ""
     var chatUserImage = ""
@@ -41,17 +43,19 @@ class ChatContainerViewController: UIViewController {
         lblMessage.layer.cornerRadius = 5
         onlineIcon.layer.cornerRadius = onlineIcon.frame.height / 2
         
-        lblUsername.text = isFromGroupChat ? "Family Group" : userName
+        lblUsername.text = isFromGroupChat ? groupChatModel.groupName : userName
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.contentMode = .scaleAspectFill
        
         if (isFromGroupChat){
-            userImage.image = UIImage(named: "family")
+            userImage.sd_setImage(with: URL(string: groupChatModel.groupImage)!)
+            lblOnlineStatus.text = groupChatModel.groupUsers.map{$0.userFullName}.joined(separator: ", ")
+            lblOnlineStatusLeadingConstraint.constant = 10
+            self.view.updateConstraintsIfNeeded()
+            self.view.layoutSubviews()
             groupChatController = Utility.getGroupChatViewController()
             (groupChatController as! GroupChatViewController).chatId = self.chatId
-//            (groupChatController as! GroupChatViewController).otherUserId = self.userId
-//            (groupChatController as! GroupChatViewController).userImage = self.chatUserImage
-//            (groupChatController as! GroupChatViewController).userName = self.userName
+            (groupChatController as! GroupChatViewController).groupModel = self.groupChatModel
             add(asChildViewController: groupChatController)
         }
         else{
@@ -98,7 +102,7 @@ class ChatContainerViewController: UIViewController {
         }
         else{
             onlineIcon.isHidden = true
-            lblOnlineStatus.isHidden = true
+            //lblOnlineStatus.isHidden = true
         }
     }
     
@@ -135,6 +139,7 @@ class ChatContainerViewController: UIViewController {
         if (isFromGroupChat){
             let vc = Utility.getGroupDetailViewController()
             vc.groupChatId = chatId
+            vc.groupModel = self.groupChatModel
             self.pushToVC(vc: vc)
         }
         else{

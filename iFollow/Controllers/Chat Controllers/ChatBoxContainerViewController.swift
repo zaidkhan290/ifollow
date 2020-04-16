@@ -87,7 +87,7 @@ class ChatBoxContainerViewController: UIViewController {
         else{
             allSelectedView.isHidden = true
             groupSelectedView.isHidden = false
-            btnAddGroup.isHidden = true
+            btnAddGroup.isHidden = false
             remove(asChildViewController: [allChatsController])
             add(asChildViewController: groupsChatController)
         }

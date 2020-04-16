@@ -26,11 +26,16 @@ class GroupDetailViewController: UIViewController {
     @IBOutlet weak var mainViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var mediaAndMemberViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var deactivateGroupView: UIView!
+    @IBOutlet weak var lblDeactivateGroup: UILabel!
+    @IBOutlet weak var lblDeactivateMessage: UILabel!
+    @IBOutlet weak var btnEdit: UIButton!
+    @IBOutlet weak var btnSave: UIButton!
     
     var mediaArray = [ChatMediaModel]()
     var imagePicker = UIImagePickerController()
     var isGroupNameEditable = false
     var groupChatId = ""
+    var groupModel = GroupChatModel()
     var groupMediaRef = rootRef
     var optionsPopupIndex = 0
     
@@ -86,6 +91,16 @@ class GroupDetailViewController: UIViewController {
             self.mediaCollectionView.reloadData()
         }
         
+        txtFieldGroupName.text = groupModel.groupName
+        lblDate.text = "Created by \(groupModel.groupAdminName)"
+        groupImage.sd_setImage(with: URL(string: groupModel.groupImage)!)
+        lblDeactivateGroup.text = groupModel.groupAdminId == Utility.getLoginUserId() ? "Deactivate Group" : "Leave Group"
+        lblDeactivateMessage.text = groupModel.groupAdminId == Utility.getLoginUserId() ? "If you deactivate this group all media and messages will be deleted" : "If you leave this group all media and messages will be deleted"
+        btnEdit.isHidden = groupModel.groupAdminId != Utility.getLoginUserId()
+        btnSave.isHidden = groupModel.groupAdminId != Utility.getLoginUserId()
+        
+        let model = self.groupModel.groupUsers.filter{$0.userId == Utility.getLoginUserId()}.first!
+        notificationSwitch.isOn = model.userAllowNotification == 0
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -124,6 +139,9 @@ class GroupDetailViewController: UIViewController {
     @IBAction func btnAddMembersTapped(_ sender: UIButton) {
     }
     
+    @IBAction func btnSaveTapped(_ sender: UIButton) {
+    }
+    
     func openImagePicker(){
         
         let alertVC = UIAlertController(title: "Select Action", message: "", preferredStyle: .actionSheet)
@@ -143,14 +161,19 @@ class GroupDetailViewController: UIViewController {
     }
     
     @objc func groupImageTapped(){
-        openImagePicker()
+        if (groupModel.groupAdminId == Utility.getLoginUserId()){
+            openImagePicker()
+        }
     }
     
     @objc func deactivateGroupTapped(){
         
-        let alertVC = UIAlertController(title: "Leave from Group", message: "are you sure you want to leave this group?", preferredStyle: .alert)
-        let yesAction = UIAlertAction(title: "Yes Leave", style: .destructive) { (action) in
-            
+        let alertVC = UIAlertController(title: groupModel.groupAdminId == Utility.getLoginUserId() ? "Deactivate Group" : "Leave From Group", message: groupModel.groupAdminId == Utility.getLoginUserId() ? "are you sure you want to deactivate this group?" : "are you sure you want to leave this group?", preferredStyle: .alert)
+        
+        let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
+            DispatchQueue.main.async {
+                self.deleteOrLeaveGroup()
+            }
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action) in
             
@@ -183,21 +206,7 @@ class GroupDetailViewController: UIViewController {
         let alertVC = UIAlertController(title: "Remove", message: "Are you sure you want to remove this member?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
             DispatchQueue.main.async {
-//                let params = ["post_id": self.postsArray[self.optionsPopupIndex].postId]
-//                self.postsArray.remove(at: self.optionsPopupIndex)
-//                self.carouselView.removeItem(at: self.optionsPopupIndex, animated: true)
-//                Loaf("Post Hide", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
-//
-//                }
-//                API.sharedInstance.executeAPI(type: .hidePost, method: .post, params: params, completion: { (status, result, message) in
-//                    DispatchQueue.main.async {
-//                        if (status == .authError){
-//                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-//                                Utility.logoutUser()
-//                            }
-//                        }
-//                    }
-//                })
+
             }
         }
         let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
@@ -205,6 +214,36 @@ class GroupDetailViewController: UIViewController {
         alertVC.addAction(noAction)
         self.present(alertVC, animated: true, completion: nil)
     }
+    
+    func deleteOrLeaveGroup(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["chat_room_id": groupChatId]
+        
+        API.sharedInstance.executeAPI(type: groupModel.groupAdminId == Utility.getLoginUserId() ? .deactivateGroup : .leaveGroup, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+        
+    }
+    
 }
 
 extension GroupDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate{
@@ -270,19 +309,38 @@ extension GroupDetailViewController: UICollectionViewDataSource, UICollectionVie
 extension GroupDetailViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return groupModel.groupUsers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsTableViewCell", for: indexPath) as! FriendsTableViewCell
+        
+        let user = groupModel.groupUsers[indexPath.row]
         cell.btnSend.isHidden = true
         cell.btnOption.isHidden = false
         cell.lblUsername.textColor = Theme.memberNameColor
-        cell.lblUsername.text = "Emma Watson"
-        cell.lblLastSeen.text = "Sed ut perpicaiatics unde omnis iste"
+        cell.lblUsername.text = user.userFullName
+        cell.lblLastSeen.text = groupModel.groupAdminId == user.userId ? "Admin" : ""
+        cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
+        cell.userImage.contentMode = .scaleAspectFill
+        cell.userImage.sd_setImage(with: URL(string: user.userImage)!, placeholderImage: UIImage(named: "img_placeholder"))
+        if (groupModel.groupAdminId == Utility.getLoginUserId()){
+            cell.btnOption.isHidden = user.userId == Utility.getLoginUserId()
+        }
+        else{
+            cell.btnOption.isHidden = true
+        }
         cell.btnOption.tag = indexPath.row
         cell.btnOption.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (groupModel.groupUsers[indexPath.row].userId != Utility.getLoginUserId()){
+            let vc = Utility.getOtherUserProfileViewController()
+            vc.userId = groupModel.groupUsers[indexPath.row].userId
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
 }

@@ -103,6 +103,7 @@
 		18A3262C241010AE00CF329E /* EmojisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3262B241010AE00CF329E /* EmojisViewController.swift */; };
 		18A3262F241010D300CF329E /* EmojisCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3262D241010D300CF329E /* EmojisCollectionViewCell.swift */; };
 		18A32630241010D300CF329E /* EmojisCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A3262E241010D300CF329E /* EmojisCollectionViewCell.xib */; };
+		18A4C33D244859AB00893D9D /* GroupChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4C33C244859AB00893D9D /* GroupChatModel.swift */; };
 		18AC39A5237ED0A40044136B /* AddMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AC39A4237ED0A40044136B /* AddMembersViewController.swift */; };
 		18B086432371AA71002D773E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B086422371AA71002D773E /* TabBarViewController.swift */; };
 		18B14CC123758086005E5CE4 /* SignupDetail1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC023758086005E5CE4 /* SignupDetail1ViewController.swift */; };
@@ -230,6 +231,7 @@
 		18A3262B241010AE00CF329E /* EmojisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojisViewController.swift; sourceTree = "<group>"; };
 		18A3262D241010D300CF329E /* EmojisCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojisCollectionViewCell.swift; sourceTree = "<group>"; };
 		18A3262E241010D300CF329E /* EmojisCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojisCollectionViewCell.xib; sourceTree = "<group>"; };
+		18A4C33C244859AB00893D9D /* GroupChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatModel.swift; sourceTree = "<group>"; };
 		18AC39A4237ED0A40044136B /* AddMembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMembersViewController.swift; sourceTree = "<group>"; };
 		18B086422371AA71002D773E /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		18B14CC023758086005E5CE4 /* SignupDetail1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupDetail1ViewController.swift; sourceTree = "<group>"; };
@@ -495,6 +497,7 @@
 				18C89E09243F2DD40032A663 /* SearchUserModel.swift */,
 				18C89E0B243F3F120032A663 /* RecentChatsModel.swift */,
 				18C970F22445CE5000C4F7C4 /* ChatMediaModel.swift */,
+				18A4C33C244859AB00893D9D /* GroupChatModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -924,6 +927,7 @@
 				18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */,
 				185AFE2F242A462500AC38FB /* PrivacyViewController.swift in Sources */,
 				185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */,
+				18A4C33D244859AB00893D9D /* GroupChatModel.swift in Sources */,
 				1889F2DE23DF41100079DB72 /* ViewersViewController.swift in Sources */,
 				1834832A2422313A00200F8C /* API.swift in Sources */,
 				18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */,
