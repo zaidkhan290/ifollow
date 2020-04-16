@@ -142,6 +142,23 @@ class GroupDetailViewController: UIViewController {
     @IBAction func btnSaveTapped(_ sender: UIButton) {
     }
     
+    @IBAction func notificationSwitchChanged(_ sender: UISwitch) {
+        let params = ["group_id": groupChatId,
+        "status": sender.isOn ? 0 : 1] as [String:Any]
+        API.sharedInstance.executeAPI(type: .updateGroupNotificationSetting, method: .post, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RefreshGroupsList"), object: nil)
+            }
+        }
+        
+    }
+    
+    
     func openImagePicker(){
         
         let alertVC = UIAlertController(title: "Select Action", message: "", preferredStyle: .actionSheet)

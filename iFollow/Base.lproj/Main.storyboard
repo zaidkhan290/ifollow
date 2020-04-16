@@ -725,6 +725,9 @@
                                                             </label>
                                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hKT-u5-EJr">
                                                                 <rect key="frame" x="325" y="4.6666666666666856" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="notificationSwitchChanged:" destination="vEm-od-Vet" eventType="valueChanged" id="yzn-Wz-yd9"/>
+                                                                </connections>
                                                             </switch>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="12H-gy-s1z">
                                                                 <rect key="frame" x="15" y="39" width="364" height="1"/>

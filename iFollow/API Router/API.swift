@@ -52,6 +52,7 @@ enum EndPoint: String {
     case getAllGroups = "group_chat_record_list"
     case leaveGroup = "leave_group_chat_room"
     case deactivateGroup = "delete_group_chat_room"
+    case updateGroupNotificationSetting = "notification_settings"
 }
 
 enum StatusCodes {
