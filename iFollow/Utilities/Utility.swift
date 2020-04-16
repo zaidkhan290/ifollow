@@ -289,6 +289,13 @@ struct Utility {
         return 0
     }
     
+    static func getLoginUserProfileType() -> String{
+        if let user = UserModel.getCurrentUser(){
+            return user.userProfileStatus
+        }
+        return ""
+    }
+    
     static var storyTimeFormatter: DateFormatter{
         get{
             if (timeFormatter == nil){

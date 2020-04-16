@@ -18,6 +18,7 @@ class OtherUserModel: NSObject{
     var userCountry: String = ""
     var userImage: String = ""
     var userRequestStatus: String = ""
+    var userProfileStatus: String = ""
     var userTrendersCount: Int = 0
     var userTrendingsCount: Int = 0
     var userPostsCount: Int = 0
@@ -31,6 +32,7 @@ class OtherUserModel: NSObject{
         userBio = userData["short_bio"].stringValue
         userCountry = userData["country"].stringValue
         userRequestStatus = userData["request_status"].stringValue
+        userProfileStatus = userData["profile_status"].stringValue
         userImage = userData["image"].stringValue.replacingOccurrences(of: "\\", with: "")
         userTrendersCount = userData["trenders"].intValue
         userTrendingsCount = userData["trendings"].intValue

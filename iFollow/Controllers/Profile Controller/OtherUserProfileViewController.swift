@@ -42,6 +42,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     var optionsPopupIndex = 0
     var chatId = ""
     var isFromStory = false
+    var isPrivateProfile = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,6 +115,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     func setOtherUserData(){
+        isPrivateProfile = otherUserProfile.userProfileStatus == "private"
         profileImage.sd_setImage(with: URL(string: otherUserProfile.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
         lblUsername.text = otherUserProfile.userFullName
@@ -189,34 +191,73 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     @objc func privateTalkTapped(){
-//        if (otherUserProfile.userRequestStatus == "success"){
-//            showTalkPopup()
-//        }
-//        else{
-//            Loaf("You must be trending this person in order to chat.", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-//            }
-//        }
-        showTalkPopup()
+        if (isPrivateProfile){
+            if (otherUserProfile.userRequestStatus == "success"){
+                showTalkPopup()
+            }
+            else{
+                showPrivateProfileError()
+            }
+        }
+        else{
+            showTalkPopup()
+        }
     }
     
     @objc func trendesTapped(){
-        let vc = Utility.getTrendersContainerViewController()
-        vc.userId = userId
-        vc.username = self.otherUserProfile.userFullName
-        vc.selectedIndex = 0
-        vc.firstTabTitle = "TRENDERS"
-        vc.secondTabTitle = "TRENDES"
-        self.present(vc, animated: true, completion: nil)
+        
+        if (isPrivateProfile){
+            if (otherUserProfile.userRequestStatus == "success"){
+                let vc = Utility.getTrendersContainerViewController()
+                vc.userId = userId
+                vc.username = self.otherUserProfile.userFullName
+                vc.selectedIndex = 0
+                vc.firstTabTitle = "TRENDERS"
+                vc.secondTabTitle = "TRENDES"
+                self.present(vc, animated: true, completion: nil)
+            }
+            else{
+                showPrivateProfileError()
+            }
+        }
+        else{
+            let vc = Utility.getTrendersContainerViewController()
+            vc.userId = userId
+            vc.username = self.otherUserProfile.userFullName
+            vc.selectedIndex = 0
+            vc.firstTabTitle = "TRENDERS"
+            vc.secondTabTitle = "TRENDES"
+            self.present(vc, animated: true, completion: nil)
+        }
+        
     }
     
     @objc func trendersTapped(){
-        let vc = Utility.getTrendersContainerViewController()
-        vc.userId = userId
-        vc.username = self.otherUserProfile.userFullName
-        vc.selectedIndex = 1
-        vc.firstTabTitle = "TRENDERS"
-        vc.secondTabTitle = "TRENDES"
-        self.present(vc, animated: true, completion: nil)
+        
+        if (isPrivateProfile){
+            if (otherUserProfile.userRequestStatus == "success"){
+                let vc = Utility.getTrendersContainerViewController()
+                vc.userId = userId
+                vc.username = self.otherUserProfile.userFullName
+                vc.selectedIndex = 1
+                vc.firstTabTitle = "TRENDERS"
+                vc.secondTabTitle = "TRENDES"
+                self.present(vc, animated: true, completion: nil)
+            }
+            else{
+                showPrivateProfileError()
+            }
+        }
+        else{
+            let vc = Utility.getTrendersContainerViewController()
+            vc.userId = userId
+            vc.username = self.otherUserProfile.userFullName
+            vc.selectedIndex = 1
+            vc.firstTabTitle = "TRENDERS"
+            vc.secondTabTitle = "TRENDES"
+            self.present(vc, animated: true, completion: nil)
+        }
+        
     }
     
     @objc func trendViewTapped(){
@@ -541,6 +582,12 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         self.present(alertVC, animated: true, completion: nil)
     }
     
+    func showPrivateProfileError(){
+        Loaf("This account is private. You must trend \(otherUserProfile.userFullName) first.", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+            
+        }
+    }
+    
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.none
     }
@@ -555,13 +602,20 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
 extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate{
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-        if (otherUserProfile.userRequestStatus == "success"){
-            emptyStateView.isHidden = (otherUserProfile.userPosts.count > 0)
-            return otherUserProfile.userPosts.count
+        
+        if (isPrivateProfile){
+            if (otherUserProfile.userRequestStatus == "success"){
+                emptyStateView.isHidden = (otherUserProfile.userPosts.count > 0)
+                return otherUserProfile.userPosts.count
+            }
+            else{
+                emptyStateView.isHidden = false
+                return 0
+            }
         }
         else{
-            emptyStateView.isHidden = false
-            return 0
+            emptyStateView.isHidden = (otherUserProfile.userPosts.count > 0)
+            return otherUserProfile.userPosts.count
         }
     }
     
