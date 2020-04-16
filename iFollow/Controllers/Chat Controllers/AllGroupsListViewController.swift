@@ -47,12 +47,15 @@ class AllGroupsListViewController: UIViewController {
     }
     
     @objc func getGroupsList(){
-        Utility.showOrHideLoader(shouldShow: true)
+        if (groupsList.count == 0){
+            Utility.showOrHideLoader(shouldShow: true)
+        }
         
         API.sharedInstance.executeAPI(type: .getAllGroups, method: .get, params: nil) { (status, result, message) in
             
             DispatchQueue.main.async {
                 if (status == .success){
+                    self.view.isUserInteractionEnabled = false
                     self.groupsList.removeAll()
                     let groupArray = result["chat_room_list"].arrayValue
                     for group in groupArray{
@@ -99,21 +102,25 @@ class AllGroupsListViewController: UIViewController {
                                 self.groupsList.sort(by: { (model1, model2) -> Bool in
                                     return model1.groupLastMessageTime > model2.groupLastMessageTime
                                 })
+                                self.view.isUserInteractionEnabled = true
                                 self.chatListTableView.reloadData()
                             })
                         }
                         
                     }
+                    self.view.isUserInteractionEnabled = true
                     Utility.showOrHideLoader(shouldShow: false)
                     
                 }
                 else if (status == .failure){
+                    self.view.isUserInteractionEnabled = true
                     Utility.showOrHideLoader(shouldShow: false)
                     Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
                         
                     }
                 }
                 else if (status == .authError){
+                    self.view.isUserInteractionEnabled = true
                     Utility.showOrHideLoader(shouldShow: false)
                     Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
                         Utility.logoutUser()

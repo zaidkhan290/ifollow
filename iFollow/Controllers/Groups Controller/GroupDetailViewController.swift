@@ -12,6 +12,7 @@ import DTPhotoViewerController
 import AVKit
 import AVFoundation
 import Firebase
+import FirebaseStorage
 import Loaf
 
 class GroupDetailViewController: UIViewController {
@@ -30,18 +31,24 @@ class GroupDetailViewController: UIViewController {
     @IBOutlet weak var lblDeactivateMessage: UILabel!
     @IBOutlet weak var btnEdit: UIButton!
     @IBOutlet weak var btnSave: UIButton!
+    @IBOutlet weak var btnAddMember: UIButton!
+    @IBOutlet weak var addMemberIcon: UIImageView!
     
     var mediaArray = [ChatMediaModel]()
+    var groupMembersArray = [GroupMembersModel]()
     var imagePicker = UIImagePickerController()
     var isGroupNameEditable = false
     var groupChatId = ""
     var groupModel = GroupChatModel()
     var groupMediaRef = rootRef
     var optionsPopupIndex = 0
+    var updatedGroupImage: UIImage?
+    var storageRef: StorageReference?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         groupImage.roundBottomCorners(radius: 20)
         groupImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(groupImageTapped)))
         
@@ -98,9 +105,13 @@ class GroupDetailViewController: UIViewController {
         lblDeactivateMessage.text = groupModel.groupAdminId == Utility.getLoginUserId() ? "If you deactivate this group all media and messages will be deleted" : "If you leave this group all media and messages will be deleted"
         btnEdit.isHidden = groupModel.groupAdminId != Utility.getLoginUserId()
         btnSave.isHidden = groupModel.groupAdminId != Utility.getLoginUserId()
+        btnAddMember.isHidden = groupModel.groupAdminId != Utility.getLoginUserId()
+        addMemberIcon.isHidden = groupModel.groupAdminId != Utility.getLoginUserId()
         
         let model = self.groupModel.groupUsers.filter{$0.userId == Utility.getLoginUserId()}.first!
         notificationSwitch.isOn = model.userAllowNotification == 0
+        groupMembersArray = groupModel.groupUsers
+        self.membersTableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -137,9 +148,20 @@ class GroupDetailViewController: UIViewController {
     }
     
     @IBAction func btnAddMembersTapped(_ sender: UIButton) {
+        let vc = Utility.getAddMembersViewController()
+        vc.delegate = self
+        vc.selectedUsersIds = self.groupMembersArray.map{$0.userId}
+        self.pushToVC(vc: vc)
     }
     
     @IBAction func btnSaveTapped(_ sender: UIButton) {
+        if (updatedGroupImage == nil){
+            Utility.showOrHideLoader(shouldShow: true)
+            self.updateGroupWithRequest(groupImage: groupModel.groupImage)
+        }
+        else{
+            self.uploadGroupImageToFirebase()
+        }
     }
     
     @IBAction func notificationSwitchChanged(_ sender: UISwitch) {
@@ -223,7 +245,16 @@ class GroupDetailViewController: UIViewController {
         let alertVC = UIAlertController(title: "Remove", message: "Are you sure you want to remove this member?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
             DispatchQueue.main.async {
-
+                self.groupMembersArray.remove(at: self.optionsPopupIndex)
+                self.membersTableView.deleteRows(at: [IndexPath(row: self.optionsPopupIndex, section: 0)], with: .left)
+                self.membersTableView.reloadData()
+                let membersTableViewHeight = self.membersTableView.contentSize.height
+                self.mediaAndMemberViewHeightConstraint.constant = membersTableViewHeight + 250
+                self.mainViewHeightConstraint.constant = self.mediaAndMemberViewHeightConstraint.constant + 390
+                self.view.updateConstraintsIfNeeded()
+                self.view.layoutSubviews()
+                Loaf("Member removed. Please tap save for apply changes", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                }
             }
         }
         let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
@@ -257,6 +288,89 @@ class GroupDetailViewController: UIViewController {
                 }
             }
             
+        }
+        
+    }
+    
+    func uploadGroupImageToFirebase(){
+        let timeStemp = Int(Date().timeIntervalSince1970)
+        let mediaRef = storageRef?.child("/Media")
+        let iosRef = mediaRef?.child("/iOS").child("/Images")
+        let picRef = iosRef?.child("/GroupImage\(timeStemp).jgp")
+        
+        //        let imageData2 = UIImagePNGRepresentation(image)
+        if let imageData2 = updatedGroupImage!.jpegData(compressionQuality: 0.75) {
+            // Create file metadata including the content type
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            
+            Utility.showOrHideLoader(shouldShow: true)
+            
+            let uploadTask = picRef?.putData(imageData2, metadata: metadata, completion: { (metaData, error) in
+                if(error != nil){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(error!.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+                        
+                    }
+                }else{
+                    
+                    picRef?.downloadURL(completion: { (url, error) in
+                        if let imageURL = url{
+                            self.updateGroupWithRequest(groupImage: imageURL.absoluteString)
+                        }
+                    })
+                    
+                    
+                }
+            })
+            uploadTask?.resume()
+            
+            var i = 0
+            uploadTask?.observe(.progress, handler: { (snapshot) in
+                if(i == 0){
+                    
+                }
+                i += 1
+                
+            })
+            
+            uploadTask?.observe(.success, handler: { (snapshot) in
+                
+            })
+        }
+    }
+    
+    func updateGroupWithRequest(groupImage: String){
+        
+        var groupMembersIds = [Int]()
+        groupMembersIds = groupMembersArray.map{$0.userId}
+        
+        let params = ["chat_room_id": groupChatId,
+                      "name": txtFieldGroupName.text!,
+                      "image": groupImage,
+                      "member_ids": groupMembersIds] as [String : Any]
+        
+        API.sharedInstance.executeAPI(type: .updateGroup, method: .post, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(2)) { (handler) in
+                        self.navigationController?.popToRootViewController(animated: true)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RefreshGroupsList"), object: nil)
+                    }
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+                
+            }
         }
         
     }
@@ -326,13 +440,13 @@ extension GroupDetailViewController: UICollectionViewDataSource, UICollectionVie
 extension GroupDetailViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groupModel.groupUsers.count
+        return groupMembersArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsTableViewCell", for: indexPath) as! FriendsTableViewCell
         
-        let user = groupModel.groupUsers[indexPath.row]
+        let user = groupMembersArray[indexPath.row]
         cell.btnSend.isHidden = true
         cell.btnOption.isHidden = false
         cell.lblUsername.textColor = Theme.memberNameColor
@@ -353,9 +467,9 @@ extension GroupDetailViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (groupModel.groupUsers[indexPath.row].userId != Utility.getLoginUserId()){
+        if (groupMembersArray[indexPath.row].userId != Utility.getLoginUserId()){
             let vc = Utility.getOtherUserProfileViewController()
-            vc.userId = groupModel.groupUsers[indexPath.row].userId
+            vc.userId = groupMembersArray[indexPath.row].userId
             self.present(vc, animated: true, completion: nil)
         }
     }
@@ -367,6 +481,7 @@ extension GroupDetailViewController: UIImagePickerControllerDelegate, UINavigati
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
+            self.updatedGroupImage = image
             groupImage.clipsToBounds = true
             groupImage.contentMode = .scaleAspectFill
             groupImage.image = image
@@ -419,4 +534,19 @@ extension GroupDetailViewController: UIAdaptivePresentationControllerDelegate, U
         return UIModalPresentationStyle.none
     }
     
+}
+
+extension GroupDetailViewController: AddMembersViewControllerDelegate{
+    func membersAdded(membersArray: [PostLikesUserModel]) {
+        self.groupMembersArray.removeAll{$0.userId != Utility.getLoginUserId()}
+        for member in membersArray{
+            let model = GroupMembersModel()
+            model.userId = member.userId
+            model.userFullName = member.userFullName
+            model.userImage = member.userImage
+            model.userAllowNotification = 1
+            self.groupMembersArray.append(model)
+        }
+        self.membersTableView.reloadData()
+    }
 }

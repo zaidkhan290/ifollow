@@ -604,45 +604,49 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         let data = self.messages[indexPath.row]
         
         DispatchQueue.main.async {
-            
-            cell.avatarContainerView.layer.cornerRadius = cell.avatarContainerView.frame.height / 2
-            
-            if (data.senderId == "\(Utility.getLoginUserId())"){
-                cell.avatarImageView.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "img_placeholder"))
-            }
-            else{
+            cell.avatarImageView.layer.cornerRadius = cell.avatarImageView.frame.height / 2
+            cell.avatarImageView.clipsToBounds = true
+        }
+        
+        cell.avatarContainerView.layer.cornerRadius = cell.avatarContainerView.frame.height / 2
+        
+        if (data.senderId == "\(Utility.getLoginUserId())"){
+            cell.avatarImageView.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "img_placeholder"))
+        }
+        else{
+            if (self.groupModel.groupUsers.filter{$0.userId == Int(data.senderId)}.first != nil){
                 let model = self.groupModel.groupUsers.filter{$0.userId == Int(data.senderId)}.first!
                 cell.avatarImageView.sd_setImage(with: URL(string: model.userImage), placeholderImage: UIImage(named: "img_placeholder"))
             }
-            
-            cell.avatarImageView.layer.cornerRadius = cell.avatarImageView.frame.height / 2
-            cell.avatarImageView.clipsToBounds = true
-            cell.cellBottomLabel.font = Theme.getLatoRegularFontOfSize(size: 11)
-            cell.cellTopLabel.font = Theme.getLatoRegularFontOfSize(size: 12)
-            
-            if cell.textView != nil{
-                cell.textView.font = Theme.getLatoRegularFontOfSize(size: 15)
-                cell.textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
-                
-                if data.senderId == self.senderId{
-                    cell.textView.textColor = UIColor.white
-                }
-                else{
-                    cell.textView.textColor = UIColor.white
-                }
+            else{
+                cell.avatarImageView.image = UIImage(named: "img_placeholder")
             }
+        }
+       
+        cell.cellBottomLabel.font = Theme.getLatoRegularFontOfSize(size: 11)
+        cell.cellTopLabel.font = Theme.getLatoRegularFontOfSize(size: 12)
+        
+        if cell.textView != nil{
+            cell.textView.font = Theme.getLatoRegularFontOfSize(size: 15)
+            cell.textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
             
             if data.senderId == self.senderId{
-                cell.cellTopLabel.text = "You"
-                cell.cellTopLabel.textAlignment = .right
-                cell.cellBottomLabel.text = "\(Utility.getNotificationTime(date: data.date))"
+                cell.textView.textColor = UIColor.white
             }
             else{
-                cell.cellTopLabel.text = data.senderDisplayName
-                cell.cellTopLabel.textAlignment = .left
-                cell.cellBottomLabel.text = "\(Utility.getNotificationTime(date: data.date))"
+                cell.textView.textColor = UIColor.white
             }
-            
+        }
+        
+        if data.senderId == self.senderId{
+            cell.cellTopLabel.text = "You"
+            cell.cellTopLabel.textAlignment = .right
+            cell.cellBottomLabel.text = "\(Utility.getNotificationTime(date: data.date))"
+        }
+        else{
+            cell.cellTopLabel.text = data.senderDisplayName
+            cell.cellTopLabel.textAlignment = .left
+            cell.cellBottomLabel.text = "\(Utility.getNotificationTime(date: data.date))"
         }
         
         return cell

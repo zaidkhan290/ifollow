@@ -189,13 +189,14 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     @objc func privateTalkTapped(){
-        if (otherUserProfile.userRequestStatus == "success"){
-            showTalkPopup()
-        }
-        else{
-            Loaf("You must be trending this person in order to chat.", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-            }
-        }
+//        if (otherUserProfile.userRequestStatus == "success"){
+//            showTalkPopup()
+//        }
+//        else{
+//            Loaf("You must be trending this person in order to chat.", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+//            }
+//        }
+        showTalkPopup()
     }
     
     @objc func trendesTapped(){

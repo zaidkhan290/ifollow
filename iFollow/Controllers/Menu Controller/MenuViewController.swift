@@ -33,8 +33,8 @@ class MenuViewController: UIViewController {
         menuTableView.register(menuItemCellNib, forCellReuseIdentifier: "MenuCell")
         menuTableView.register(menuSeperatorCellNib, forCellReuseIdentifier: "MenuSeperatorTableViewCell")
         
-        menuItems = ["Account Settings", "Privacy Settings", "Blocked Users", "Payments", "Geo Tagging", "", "Create Group", "Office", "High School", "Family", "", "Change Password", "Invite Friends", "Sign Out"]
-        menuIcons = ["setting", "privacy", "friends", "credit-card", "map-location (1)", "", "create-group-button", "groupIcon", "groupIcon", "groupIcon", "", "password", "friends", "logout"]
+        menuItems = ["Account Settings", "Privacy Settings", "Blocked Users", "Payments", "Geo Tagging", "", "Change Password", "Invite Friends", "Sign Out"]
+        menuIcons = ["setting", "privacy", "friends", "credit-card", "map-location (1)", "", "password", "friends", "logout"]
         
     }
     
@@ -81,12 +81,12 @@ class MenuViewController: UIViewController {
 extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 14
+        return 9
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if (indexPath.row == 5 || indexPath.row == 10){
+        if (indexPath.row == 5){
             let cell = tableView.dequeueReusableCell(withIdentifier: "MenuSeperatorTableViewCell", for: indexPath) as! MenuSeperatorTableViewCell
             return cell
         }
@@ -100,7 +100,7 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath.row == 5 || indexPath.row == 10){
+        if (indexPath.row == 5){
             return 20
         }
         return 50
@@ -116,15 +116,11 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
             let vc = Utility.getBlockUsersViewController()
             self.pushToVC(vc: vc)
         }
-        else if (indexPath.row == 11){
+        else if (indexPath.row == 6){
             let vc = Utility.getSetPasswordViewController()
             self.pushToVC(vc: vc)
         }
-        else if (indexPath.row == 6){
-            let vc = Utility.getCreateGroupViewController()
-            self.pushToVC(vc: vc)
-        }
-        else if (indexPath.row == 13){
+        else if (indexPath.row == 8){
             showLogoutPopup()
         }
         
