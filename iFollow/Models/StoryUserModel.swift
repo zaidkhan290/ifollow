@@ -18,9 +18,10 @@ class StoryUserModel: Object {
     @objc dynamic var isAllStoriesViewed: Bool = false
     @objc dynamic var lastStoryMediaType: String = ""
     @objc dynamic var lastStoryPreview: String = ""
+    @objc dynamic var isForPublicStory: Bool = false
     dynamic var userStories = List<UserStoryModel>()
     
-    func updateModelWithJSON(json: JSON, isForMyStory: Bool){
+    func updateModelWithJSON(json: JSON, isForMyStory: Bool, isPublicStory: Bool){
         
         if (isForMyStory){
             userId = Utility.getLoginUserId()
@@ -37,6 +38,7 @@ class StoryUserModel: Object {
             userId = json["user_id"].intValue
             userName = json["user_name"].stringValue
             userImage = json["user_image"].stringValue.replacingOccurrences(of: "\\", with: "")
+            isForPublicStory = isPublicStory
             let stories = json["stories"].arrayValue
             for story in stories{
                 let model = UserStoryModel()
@@ -54,7 +56,12 @@ class StoryUserModel: Object {
     
     static func getFollowersUsersStories() -> [StoryUserModel]{
         let realm = try! Realm()
-        return Array(realm.objects(StoryUserModel.self).filter("userId != \(Utility.getLoginUserId())"))
+        return Array(realm.objects(StoryUserModel.self).filter("userId != \(Utility.getLoginUserId())").filter("isForPublicStory = false"))
+    }
+    
+    static func getPublicUsersStories() -> [StoryUserModel]{
+        let realm = try! Realm()
+        return Array(realm.objects(StoryUserModel.self).filter("userId != \(Utility.getLoginUserId())").filter("isForPublicStory = true"))
     }
     
 }

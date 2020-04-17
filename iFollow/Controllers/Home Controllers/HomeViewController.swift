@@ -273,7 +273,7 @@ class HomeViewController: UIViewController {
                         
                         if (result["my_stories"].arrayValue).count > 0{
                             let myStoryModel = StoryUserModel()
-                            myStoryModel.updateModelWithJSON(json: result, isForMyStory: true)
+                            myStoryModel.updateModelWithJSON(json: result, isForMyStory: true, isPublicStory: false)
                             let myStories = Array(myStoryModel.userStories)
                             if let _ = myStories.firstIndex(where: {$0.isStoryViewed == 0}){
                                 myStoryModel.isAllStoriesViewed = false
@@ -291,7 +291,7 @@ class HomeViewController: UIViewController {
                         let followersStories = result["user_stories"].arrayValue
                         for followerStory in followersStories{
                             let followerStoryModel = StoryUserModel()
-                            followerStoryModel.updateModelWithJSON(json: followerStory, isForMyStory: false)
+                            followerStoryModel.updateModelWithJSON(json: followerStory, isForMyStory: false, isPublicStory: false)
                             let followerStories = Array(followerStoryModel.userStories)
                             if let _ = followerStories.firstIndex(where: {$0.isStoryViewed == 0}){
                                 followerStoryModel.isAllStoriesViewed = false
@@ -318,13 +318,12 @@ class HomeViewController: UIViewController {
                             realm.add(model)
                         }
                         //----------POSTS WORK END----------//
-                        
-                        self.myStoryArray = StoryUserModel.getMyStory()
-                        self.followersStoriesArray = StoryUserModel.getFollowersUsersStories()
-                        self.postsArray = HomePostsModel.getAllHomePosts()
-                        self.storyCollectionView.reloadData()
-                        self.carouselView.reloadData()
                     }
+                    self.myStoryArray = StoryUserModel.getMyStory()
+                    self.followersStoriesArray = StoryUserModel.getFollowersUsersStories()
+                    self.postsArray = HomePostsModel.getAllHomePosts()
+                    self.storyCollectionView.reloadData()
+                    self.carouselView.reloadData()
                     
                 }
                 else if (status == .failure){
@@ -409,6 +408,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             if (myStoryArray.count > 0){
                 let vc = Utility.getStoriesViewController()
                 vc.isForMyStory = true
+                vc.isForPublicStory = false
                 vc.storyUserIndex = 0
                 let navVC = UINavigationController(rootViewController: vc)
                 navVC.isNavigationBarHidden = true
@@ -418,6 +418,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         else{
             let vc = Utility.getStoriesViewController()
             vc.isForMyStory = false
+            vc.isForPublicStory = false
             vc.storyUserIndex = indexPath.row - 1
             let navVC = UINavigationController(rootViewController: vc)
             navVC.isNavigationBarHidden = true
@@ -632,6 +633,12 @@ extension HomeViewController: OptionsViewControllerDelegate{
     func didTapOnOptions(option: String) {
         if (option == "Hide"){
             self.showHidePostPopup()
+        }
+        else if (option == "Share"){
+            let vc = Utility.getShareViewController()
+            vc.postId = self.postsArray[optionsPopupIndex].postId
+            vc.postUserId = self.postsArray[optionsPopupIndex].postUserId
+            self.present(vc, animated: true, completion: nil)
         }
     }
 }

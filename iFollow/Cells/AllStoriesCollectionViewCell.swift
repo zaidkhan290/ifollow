@@ -18,8 +18,8 @@ class AllStoriesCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         storyImage.layer.cornerRadius = 5.0
-        storyImage.dropShadow(color: .clear)
-        userImage.layer.cornerRadius = 25.0
+        //storyImage.dropShadow(color: .clear)
+       // userImage.layer.cornerRadius = 25.0
     }
 
 }

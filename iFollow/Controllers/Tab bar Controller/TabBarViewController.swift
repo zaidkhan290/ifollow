@@ -134,6 +134,7 @@ class TabBarViewController: UIViewController {
             
             remove(asChildViewController: [homeController, notificationController, profileController])
             add(asChildViewController: exploreController)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshDiscoverData"), object: nil)
             
         }
         else if (selectedIndex == 2){

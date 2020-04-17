@@ -290,6 +290,21 @@ extension ProfileViewController: OptionsViewControllerDelegate{
         if (option == "Delete"){
             self.showDeletePostPopup()
         }
+        else if (option == "Edit"){
+            let post = self.userPosts[optionsPopupIndex]
+            let vc = Utility.getNewPostViewController()
+            isFullScreen = true
+            vc.isForEdit = true
+            vc.editablePostId = post.postId
+            vc.editablePostText = post.postDescription
+            vc.editablePostImage = post.postMedia
+            vc.editablePostMediaType = post.postMediaType
+            vc.delegate = self
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            self.present(vc, animated: false, completion: nil)
+
+        }
     }
 }
 

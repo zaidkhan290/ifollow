@@ -191,6 +191,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "PrivacyPolicyViewController") as! PrivacyPolicyViewController
     }
     
+    static func getShareViewController() -> ShareViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "ShareViewController") as! ShareViewController
+    }
+    
     static func getLoginUserId() -> Int{
         if let user = UserModel.getCurrentUser(){
             return user.userId

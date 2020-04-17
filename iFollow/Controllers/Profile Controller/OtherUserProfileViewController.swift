@@ -724,6 +724,12 @@ extension OtherUserProfileViewController: OptionsViewControllerDelegate{
         else if (option == "Report "){
             self.showHidePostPopup()
         }
+        else if (option == "Share"){
+            let vc = Utility.getShareViewController()
+            vc.postId = self.otherUserProfile.userPosts[optionsPopupIndex].postId
+            vc.postUserId = self.userId
+            self.present(vc, animated: true, completion: nil)
+        }
     }
 }
 

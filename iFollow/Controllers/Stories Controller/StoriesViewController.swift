@@ -38,6 +38,7 @@ class StoriesViewController: UIViewController {
     var startIndex = 0
     var storyUserIndex = 0
     var isForMyStory = false
+    var isForPublicStory = false
     var isForSkip = false // If we are skip segment index for showing the first index as unviewed index
     var currentUserId = 0
     var currentStoryId = 0
@@ -71,7 +72,12 @@ class StoriesViewController: UIViewController {
             //        for i in 0..<storiesDict.count{
             //            durationArray.append(15)
             //        }
-            self.storiesUsersArray = self.isForMyStory ? StoryUserModel.getMyStory() : StoryUserModel.getFollowersUsersStories()
+            if (self.isForMyStory){
+                self.storiesUsersArray = StoryUserModel.getMyStory()
+            }
+            else{
+                self.storiesUsersArray = self.isForPublicStory ? StoryUserModel.getPublicUsersStories() : StoryUserModel.getFollowersUsersStories()
+            }
             
             self.currentUserId = self.storiesUsersArray[self.storyUserIndex].userId
             self.lblUsername.text = self.storiesUsersArray[self.storyUserIndex].userName
@@ -349,7 +355,9 @@ class StoriesViewController: UIViewController {
     @IBAction func btnSendTapped(_ sender: UIButton) {
         
         spb.isPaused = true
-        videoPlayer.pause()
+        if (isVideoPlaying){
+            videoPlayer.pause()
+        }
         let vc = Utility.getSendStoryViewController()
         vc.delegate = self
         vc.modalPresentationStyle = .custom
@@ -459,6 +467,8 @@ class StoriesViewController: UIViewController {
     @objc func dismissStory(){
         self.dismiss(animated: true, completion: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshHomeDataAfterViewedStory"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshDiscoverDataAfterViewedStory"), object: nil)
+        
     }
     
     @objc func nextStory(){
@@ -564,6 +574,7 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
             else{
                 let vc = Utility.getStoriesViewController()
                 vc.isForMyStory = false
+                vc.isForPublicStory = isForPublicStory
                 vc.storyUserIndex = nextUserIndex
                 if (isVideoPlaying){
                     self.videoPlayer.pause()

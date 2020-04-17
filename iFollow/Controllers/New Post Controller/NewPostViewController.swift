@@ -51,6 +51,11 @@ class NewPostViewController: UIViewController {
     var days = 1
     var userAddress = ""
     var budget: Float = 5.0
+    var isForEdit = false
+    var editablePostId = 0
+    var editablePostText = ""
+    var editablePostImage = ""
+    var editablePostMediaType = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +64,18 @@ class NewPostViewController: UIViewController {
         
         postView.layer.cornerRadius = 20
         postView.dropShadow(color: .white)
-        postImage.image = postSelectedImage
+        if (isForEdit){
+            txtFieldStatus.text = editablePostText
+            if (editablePostMediaType == "image"){
+                postImage.sd_setImage(with: URL(string: editablePostImage))
+            }
+            else{
+                postImage.image = UIImage(named: "post_video")
+            }
+        }
+        else{
+            postImage.image = postSelectedImage
+        }
         
         let peopleText = "10k - 20k People will saw this post"
         let range1 = peopleText.range(of: "10k - 20k")
@@ -96,7 +112,7 @@ class NewPostViewController: UIViewController {
         lblAddBudget.text = "Add Budget ($5)"
         budgetSlider.addTarget(self, action: #selector(budgetSliderValueChange), for: .valueChanged)
         
-        postImage.isUserInteractionEnabled = true
+        postImage.isUserInteractionEnabled = !isForEdit
         postImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postImageTapped)))
         postView.addShadow()
         txtFieldStatus.delegate = self
@@ -119,15 +135,21 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnImageTapped(_ sender: UIButton) {
-        if (delegate != nil){
-            self.delegate.imageTapped(postView: self)
+        if (!isForEdit){
+            if (delegate != nil){
+                self.delegate.imageTapped(postView: self)
+            }
         }
+        
     }
     
     @IBAction func btnLocationTapped(_ sender: UIButton) {
-        let autocompleteController = GMSAutocompleteViewController()
-        autocompleteController.delegate = self
-        present(autocompleteController, animated: true, completion: nil)
+        if (!isForEdit){
+            let autocompleteController = GMSAutocompleteViewController()
+            autocompleteController.delegate = self
+            present(autocompleteController, animated: true, completion: nil)
+        }
+        
     }
     
     @objc func budgetSliderValueChange(){
@@ -137,11 +159,19 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnBoostTapped(_ sender: UIButton) {
-        changePostViewSize()
+        if (!isForEdit){
+            changePostViewSize()
+        }
     }
     
     @IBAction func btnPostTapped(_ sender: UIButton){
-        self.savePostMediaToFirebase(image: postSelectedImage)
+        if (isForEdit){
+            self.editPostWithRequest()
+        }
+        else{
+            self.savePostMediaToFirebase(image: postSelectedImage)
+        }
+        
     }
     
     @IBAction func btnMinusTapped(_ sender: UIButton) {
@@ -353,6 +383,37 @@ class NewPostViewController: UIViewController {
             
         }
         
+    }
+    
+    func editPostWithRequest(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["post_id": editablePostId,
+                      "description": txtFieldStatus.text!] as [String : Any]
+        
+        API.sharedInstance.executeAPI(type: .editPost, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        self.delegate.postTapped(postView: self)
+                    }
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
     }
 }
 
