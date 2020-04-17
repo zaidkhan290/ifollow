@@ -24,7 +24,7 @@ class OptionsViewController: UIViewController, UITableViewDataSource, UITableVie
         
         optionTableView.rowHeight = 50
         if !(isFromPostView){
-            options = ["Block", "Report", "Copy User Url", "Private Talk"]
+            options = ["Block", "Report"]
         }
         
     }

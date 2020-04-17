@@ -157,7 +157,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         let vc = Utility.getOptionsViewController()
         vc.delegate = self
         vc.modalPresentationStyle = .popover
-        vc.preferredContentSize = CGSize(width: 150, height: 200)
+        vc.preferredContentSize = CGSize(width: 150, height: 100)
         
         let popup = vc.popoverPresentationController
         popup?.permittedArrowDirections = UIPopoverArrowDirection.up
@@ -449,13 +449,24 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
                     Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                         
                     }
-                    self.otherUserProfile.userRequestStatus = "pending"
-                    self.trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
-                    self.trendView.backgroundColor = .clear
-                    self.trendView.alpha = 1
-                    self.lblTrend.text = "Untrend"
-                    self.lblTrend.textColor = Theme.profileLabelsYellowColor
-                    self.trendView.isUserInteractionEnabled = true
+                    if (self.isPrivateProfile){
+                        self.otherUserProfile.userRequestStatus = "pending"
+                        self.trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+                        self.trendView.backgroundColor = .clear
+                        self.trendView.alpha = 1
+                        self.lblTrend.text = "Untrend"
+                        self.lblTrend.textColor = Theme.profileLabelsYellowColor
+                        self.trendView.isUserInteractionEnabled = true
+                    }
+                    else{
+                        self.otherUserProfile.userRequestStatus = "success"
+                        self.trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+                        self.lblTrend.text = "Trending"
+                        self.lblTrend.textColor = .white
+                        self.trendView.backgroundColor = Theme.profileLabelsYellowColor
+                        self.trendView.alpha = 1
+                        self.trendView.isUserInteractionEnabled = true
+                    }
                 }
                 else if (status == .failure){
                     Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
