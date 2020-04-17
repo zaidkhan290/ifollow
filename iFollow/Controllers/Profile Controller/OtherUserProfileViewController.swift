@@ -34,6 +34,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     @IBOutlet weak var emptyStateView: UIView!
     @IBOutlet weak var trendsView: UIView!
     @IBOutlet weak var trendingsView: UIView!
+    @IBOutlet weak var lblEmptyStateDescription: UILabel!
     
     var otherUserProfile = OtherUserModel()
     var isTrending = false
@@ -67,7 +68,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         self.carouselView.dataSource = self
         self.carouselView.delegate = self
         
-        options = ["Block", "Report", "Copy User Url", "Private Talk"]
+        options = ["Block", "Report"]
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.getOtherUserDetail()
         }
@@ -116,6 +117,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     
     func setOtherUserData(){
         isPrivateProfile = otherUserProfile.userProfileStatus == "private"
+        lblEmptyStateDescription.text = "This account is private. You must trend \(otherUserProfile.userFullName) first."
         profileImage.sd_setImage(with: URL(string: otherUserProfile.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
         lblUsername.text = otherUserProfile.userFullName
@@ -213,7 +215,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
                 vc.username = self.otherUserProfile.userFullName
                 vc.selectedIndex = 0
                 vc.firstTabTitle = "TRENDERS"
-                vc.secondTabTitle = "TRENDES"
+                vc.secondTabTitle = "TRENDEES"
                 self.present(vc, animated: true, completion: nil)
             }
             else{
@@ -226,7 +228,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
             vc.username = self.otherUserProfile.userFullName
             vc.selectedIndex = 0
             vc.firstTabTitle = "TRENDERS"
-            vc.secondTabTitle = "TRENDES"
+            vc.secondTabTitle = "TRENDEES"
             self.present(vc, animated: true, completion: nil)
         }
         
@@ -241,7 +243,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
                 vc.username = self.otherUserProfile.userFullName
                 vc.selectedIndex = 1
                 vc.firstTabTitle = "TRENDERS"
-                vc.secondTabTitle = "TRENDES"
+                vc.secondTabTitle = "TRENDEES"
                 self.present(vc, animated: true, completion: nil)
             }
             else{
@@ -254,7 +256,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
             vc.username = self.otherUserProfile.userFullName
             vc.selectedIndex = 1
             vc.firstTabTitle = "TRENDERS"
-            vc.secondTabTitle = "TRENDES"
+            vc.secondTabTitle = "TRENDEES"
             self.present(vc, animated: true, completion: nil)
         }
         
@@ -606,15 +608,18 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         if (isPrivateProfile){
             if (otherUserProfile.userRequestStatus == "success"){
                 emptyStateView.isHidden = (otherUserProfile.userPosts.count > 0)
+                lblEmptyStateDescription.isHidden = true
                 return otherUserProfile.userPosts.count
             }
             else{
                 emptyStateView.isHidden = false
+                lblEmptyStateDescription.isHidden = false
                 return 0
             }
         }
         else{
             emptyStateView.isHidden = (otherUserProfile.userPosts.count > 0)
+            lblEmptyStateDescription.isHidden = true
             return otherUserProfile.userPosts.count
         }
     }

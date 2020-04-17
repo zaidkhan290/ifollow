@@ -176,8 +176,8 @@ class ProfileViewController: UIViewController {
         vc.userId = Utility.getLoginUserId()
         vc.username = Utility.getLoginUserFullName()
         vc.selectedIndex = 0
-        vc.firstTabTitle = "TRENDS"
-        vc.secondTabTitle = "TRENDING"
+        vc.firstTabTitle = "TRENDERS"
+        vc.secondTabTitle = "TRENDEES"
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -186,8 +186,8 @@ class ProfileViewController: UIViewController {
         vc.userId = Utility.getLoginUserId()
         vc.username = Utility.getLoginUserFullName()
         vc.selectedIndex = 1
-        vc.firstTabTitle = "TRENDS"
-        vc.secondTabTitle = "TRENDING"
+        vc.firstTabTitle = "TRENDERS"
+        vc.secondTabTitle = "TRENDEES"
         self.present(vc, animated: true, completion: nil)
     }
     

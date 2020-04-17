@@ -32,6 +32,7 @@ class SearchViewController: UIViewController {
         
         searchIcon.isUserInteractionEnabled = true
         searchIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchUsers)))
+        txtfieldSearch.becomeFirstResponder()
         
     }
     
