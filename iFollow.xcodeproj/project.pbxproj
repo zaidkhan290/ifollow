@@ -78,6 +78,7 @@
 		18847A5B237C5A52004D500A /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A5A237C5A52004D500A /* MediaViewController.swift */; };
 		1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885744A2372B91900985AC8 /* CameraViewController.swift */; };
 		1889F2DE23DF41100079DB72 /* ViewersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1889F2DD23DF41100079DB72 /* ViewersViewController.swift */; };
+		188CB374244DA57200B0C2B9 /* MessagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB373244DA57200B0C2B9 /* MessagesModel.swift */; };
 		1890CB81242136060096044E /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1890CB80242136060096044E /* UserModel.swift */; };
 		189329BA237014E90067077F /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329B9237014E90067077F /* Utility.swift */; };
 		189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189329BB237015D80067077F /* ViewControllerExtension.swift */; };
@@ -207,6 +208,7 @@
 		18847A5A237C5A52004D500A /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		1885744A2372B91900985AC8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		1889F2DD23DF41100079DB72 /* ViewersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewersViewController.swift; sourceTree = "<group>"; };
+		188CB373244DA57200B0C2B9 /* MessagesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesModel.swift; sourceTree = "<group>"; };
 		1890CB80242136060096044E /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		189329B9237014E90067077F /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		189329BB237015D80067077F /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 				18C89E0B243F3F120032A663 /* RecentChatsModel.swift */,
 				18C970F22445CE5000C4F7C4 /* ChatMediaModel.swift */,
 				18A4C33C244859AB00893D9D /* GroupChatModel.swift */,
+				188CB373244DA57200B0C2B9 /* MessagesModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -912,6 +915,7 @@
 				18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */,
 				18B92DD6244080F20099272D /* BlockUsersViewController.swift in Sources */,
 				18C89E08243F267A0032A663 /* SearchViewController.swift in Sources */,
+				188CB374244DA57200B0C2B9 /* MessagesModel.swift in Sources */,
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				1855081C23799422008EAC2E /* HalfSizePresentation.swift in Sources */,
 				18E198F3243B5BDD00511296 /* PostLikesUserModel.swift in Sources */,

@@ -483,7 +483,8 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.userImage.tag = index
         itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped(_:))))
         itemView.feedBackView.isUserInteractionEnabled = true
-        itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped)))
+        itemView.feedBackView.tag = index
+        itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
         itemView.postlikeView.isHidden = post.shouldShowPostTrends == 1
         itemView.lblLikeComments.isHidden = post.shouldShowPostTrends == 1
         itemView.postTrendLikeIcon.isHidden = post.shouldShowPostTrends == 1
@@ -540,8 +541,16 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         self.present(vc, animated: true, completion: nil)
     }
     
-    @objc func feedbackViewTapped(){
+    @objc func feedbackViewTapped(_ sender: UITapGestureRecognizer){
+        let post = postsArray[sender.view!.tag]
         let vc = Utility.getCommentViewController()
+        vc.postId = post.postId
+        vc.postUserId = post.postUserId
+        vc.postUserImage = post.postUserImage
+        vc.postUserName = post.postUserFullName
+        vc.postUserLocation = post.postLocation
+        vc.postUserMedia = post.postMedia
+        vc.postType = post.postMediaType
         isFullScreen = true
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self

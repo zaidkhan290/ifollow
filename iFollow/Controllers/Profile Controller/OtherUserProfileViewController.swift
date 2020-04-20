@@ -540,6 +540,21 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         self.present(vc, animated: true, completion: nil)
     }
     
+    @objc func feedbackViewTapped(_ sender: UITapGestureRecognizer){
+        let post = otherUserProfile.userPosts[sender.view!.tag]
+        let vc = Utility.getCommentViewController()
+        vc.postId = post.postId
+        vc.postUserId = self.userId
+        vc.postUserImage = self.otherUserProfile.userImage
+        vc.postUserName = self.otherUserProfile.userFullName
+        vc.postUserLocation = post.postLocation
+        vc.postUserMedia = post.postMedia
+        vc.postType = post.postMediaType
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     @objc func likeViewTapped(_ sender: UITapGestureRecognizer){
         
         let postId = otherUserProfile.userPosts[sender.view!.tag].postId
@@ -670,6 +685,9 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.postlikeView.isUserInteractionEnabled = true
         itemView.postlikeView.tag = index
         itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
+        itemView.feedBackView.isUserInteractionEnabled = true
+        itemView.feedBackView.tag = index
+        itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
         itemView.btnOptions.tag = index
         itemView.btnOptions.addTarget(self, action: #selector(showFeedsOptionsPopup(sender:)), for: .touchUpInside)
         view.backgroundColor = .white

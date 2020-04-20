@@ -49,6 +49,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     var shouldSendNotification = true
     var videoURL: URL!
     var imagePicker = UIImagePickerController()
+    var messagesModel = [MessagesModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -239,6 +240,20 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
                 let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
                 let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
+                
+                var postId = 0
+                if (snapshot.hasChild("postId")){
+                    postId = snapshot.childSnapshot(forPath: "postId").value as! Int
+                }
+                
+                let model = MessagesModel()
+                model.senderId = sender
+                model.senderDisplayName = user_name
+                model.messageType = type
+                model.messageTimeStamp = date
+                model.message = message
+                model.postId = postId
+                self.messagesModel.append(model)
                 
                 if(type == 1){
                     self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
@@ -554,6 +569,16 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                                 let message = JSQMessage(senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: Date(), media: audioMessage)
                                 uploadingIndexPath = NSIndexPath.init(row: self.messages.count, section: 0)
                                 self.messages.append(message!)
+                                
+                                let model = MessagesModel()
+                                model.senderId = self.senderId
+                                model.senderDisplayName = self.senderDisplayName
+                                model.messageType = 3
+                                model.messageTimeStamp = 0
+                                model.message = ""
+                                model.postId = 0
+                                self.messagesModel.append(model)
+                                
                                 self.collectionView?.reloadData()
                                 self.collectionView.scrollToItem(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
                                 self.finishSendingMessage()
@@ -606,26 +631,36 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
         let message = self.messages[indexPath.row]
         if message.isMediaMessage{
-            weak var mediaItem: JSQMessageMediaData? = message.media
-            let photoItem = mediaItem as? JSQPhotoMediaItem
-            if let image = photoItem?.image{
-                let viewController = DTPhotoViewerController(referencedView: cell.messageBubbleImageView, image: image)
-                viewController.delegate = self
-                self.present(viewController, animated: true, completion: nil)
-            }
-            else if let videoItem = mediaItem as? JSQVideoMediaItem{
-                let player = AVPlayer(url: videoItem.fileURL)
-                
-                let playerViewController = AVPlayerViewController()
-                playerViewController.player = player
-                self.present(playerViewController, animated: true) {
-                    playerViewController.player!.play()
-                }
+            
+            if (self.messagesModel[indexPath.row].postId != 0){
+                let vc = Utility.getPostDetailViewController()
+                vc.postId = self.messagesModel[indexPath.row].postId
+                self.present(vc, animated: true, completion: nil)
                 self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
             }
             else{
-                self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
+                weak var mediaItem: JSQMessageMediaData? = message.media
+                let photoItem = mediaItem as? JSQPhotoMediaItem
+                if let image = photoItem?.image{
+                    let viewController = DTPhotoViewerController(referencedView: cell.messageBubbleImageView, image: image)
+                    viewController.delegate = self
+                    self.present(viewController, animated: true, completion: nil)
+                }
+                else if let videoItem = mediaItem as? JSQVideoMediaItem{
+                    let player = AVPlayer(url: videoItem.fileURL)
+                    
+                    let playerViewController = AVPlayerViewController()
+                    playerViewController.player = player
+                    self.present(playerViewController, animated: true) {
+                        playerViewController.player!.play()
+                    }
+                    self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
+                }
+                else{
+                    self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
+                }
             }
+            
         }
     }
     
@@ -801,6 +836,16 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     uploadingIndexPath = NSIndexPath.init(row: self.messages.count, section: 0)
                     self.shouldShowLocalImageMessage = true
                     self.messages.append(mes5!)
+                    
+                    let model = MessagesModel()
+                    model.senderId = self.senderId
+                    model.senderDisplayName = self.senderDisplayName
+                    model.messageType = 2
+                    model.messageTimeStamp = 0
+                    model.message = ""
+                    model.postId = 0
+                    self.messagesModel.append(model)
+                    
                     self.collectionView?.reloadData()
                     self.finishSendingMessage()
                     
@@ -855,6 +900,16 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     uploadingIndexPath = NSIndexPath.init(row: self.messages.count, section: 0)
                     self.shouldShowLocalVideoMessage = true
                     self.messages.append(mes5!)
+                    
+                    let model = MessagesModel()
+                    model.senderId = self.senderId
+                    model.senderDisplayName = self.senderDisplayName
+                    model.messageType = 4
+                    model.messageTimeStamp = 0
+                    model.message = ""
+                    model.postId = 0
+                    self.messagesModel.append(model)
+                    
                     self.collectionView?.reloadData()
                     self.finishSendingMessage()
                     
