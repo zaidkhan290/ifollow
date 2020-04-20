@@ -70,7 +70,6 @@ class ProfileViewController: UIViewController {
         self.carouselView.dataSource = self
         self.carouselView.delegate = self
         
-        imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
         imagePicker.mediaTypes = ["public.image", "public.movie"]
         imagePicker.videoMaximumDuration = 60
@@ -197,7 +196,22 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func searchViewTapped(){
-        self.present(imagePicker, animated: true, completion: nil)
+        
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
+            self.imagePicker.sourceType = .camera
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
+        let galleryAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(cameraAction)
+        alertVC.addAction(galleryAction)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
+        
     }
     
     @IBAction func btnMenuTapped(_ sender: UIButton) {

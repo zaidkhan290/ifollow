@@ -632,13 +632,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         let message = self.messages[indexPath.row]
         if message.isMediaMessage{
             
-            if (self.messagesModel[indexPath.row].postId != 0){
-                let vc = Utility.getPostDetailViewController()
-                vc.postId = self.messagesModel[indexPath.row].postId
-                self.present(vc, animated: true, completion: nil)
-                self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
-            }
-            else{
+            if (isPrivateChat){
                 weak var mediaItem: JSQMessageMediaData? = message.media
                 let photoItem = mediaItem as? JSQPhotoMediaItem
                 if let image = photoItem?.image{
@@ -658,6 +652,36 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 }
                 else{
                     self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
+                }
+            }
+            else{
+                if (self.messagesModel[indexPath.row].postId != 0){
+                    let vc = Utility.getPostDetailViewController()
+                    vc.postId = self.messagesModel[indexPath.row].postId
+                    self.present(vc, animated: true, completion: nil)
+                    self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
+                }
+                else{
+                    weak var mediaItem: JSQMessageMediaData? = message.media
+                    let photoItem = mediaItem as? JSQPhotoMediaItem
+                    if let image = photoItem?.image{
+                        let viewController = DTPhotoViewerController(referencedView: cell.messageBubbleImageView, image: image)
+                        viewController.delegate = self
+                        self.present(viewController, animated: true, completion: nil)
+                    }
+                    else if let videoItem = mediaItem as? JSQVideoMediaItem{
+                        let player = AVPlayer(url: videoItem.fileURL)
+                        
+                        let playerViewController = AVPlayerViewController()
+                        playerViewController.player = player
+                        self.present(playerViewController, animated: true) {
+                            playerViewController.player!.play()
+                        }
+                        self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
+                    }
+                    else{
+                        self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
+                    }
                 }
             }
             
