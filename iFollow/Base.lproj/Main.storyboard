@@ -505,7 +505,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.6470588235294118" green="0.64313725490196072" blue="0.65490196078431373" alpha="1" colorSpace="calibratedRGB"/>

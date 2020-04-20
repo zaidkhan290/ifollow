@@ -12,6 +12,7 @@ import IQKeyboardManagerSwift
 import Alamofire
 import SDWebImage
 import Loaf
+import Firebase
 
 class StoriesViewController: UIViewController {
 
@@ -42,6 +43,9 @@ class StoriesViewController: UIViewController {
     var isForSkip = false // If we are skip segment index for showing the first index as unviewed index
     var currentUserId = 0
     var currentStoryId = 0
+    var currentStoryMedia = ""
+    var currentStoryMediaType = ""
+    var chatRef = rootRef
     
     var spb: SegmentedProgressBar!
     
@@ -123,6 +127,8 @@ class StoriesViewController: UIViewController {
         lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: storyModel.storyTime))
         lblStoryCaption.text = storyModel.storyCaption
         currentStoryId = storyModel.storyId
+        currentStoryMedia = storyModel.storyURL
+        currentStoryMediaType = storyModel.storyMediaType
         btnView.isHidden = isForMyStory ? false : storyModel.shouldShowStoryViews == 1
         btnViewWidthConstraint.constant = storyModel.shouldShowStoryViews == 1 ? 0 : 35
         self.view.updateConstraintsIfNeeded()
@@ -531,6 +537,68 @@ class StoriesViewController: UIViewController {
         spb.isPaused = false
     }
     
+    func sendCommentOnStory(){
+        if (txtFieldMessage.text != ""){
+            
+            Utility.showOrHideLoader(shouldShow: true)
+            let params = ["user_id": currentUserId,
+                          "is_private": 0]
+            
+            API.sharedInstance.executeAPI(type: .createChatRoom, method: .post, params: params) { (status, result, message) in
+                
+                DispatchQueue.main.async {
+                    Utility.showOrHideLoader(shouldShow: false)
+                    
+                    if (status == .success){
+                        let chatId = result["chat_room_id"].stringValue
+                        if (chatId != ""){
+                            
+                            self.chatRef = self.chatRef.child("NormalChats").child(chatId)
+                            
+                            let timeStamp = ServerValue.timestamp()
+                            
+                            self.chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                            "senderId": "\(Utility.getLoginUserId())",
+                                "message": self.currentStoryMedia,
+                                "type": self.currentStoryMediaType == "image" ? 2 : 4,
+                                "isRead": false,
+                                "timestamp" : timeStamp])
+                            
+                            self.chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                            "senderId": "\(Utility.getLoginUserId())",
+                                "message": "\(Utility.getLoginUserFullName()) commented on your story: \(self.txtFieldMessage.text!)",
+                                "type": 1,
+                                "isRead": false,
+                                "timestamp" : timeStamp])
+                            
+                            Loaf("Comment sent", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                self.txtFieldMessage.text = ""
+                            }
+                            
+                        }
+                        else{
+                            Loaf("Failed to add comment", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            }
+                        }
+                        
+                    }
+                    else if (status == .failure){
+                        Utility.showOrHideLoader(shouldShow: false)
+                        Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        }
+                    }
+                    else if (status == .authError){
+                        Utility.showOrHideLoader(shouldShow: false)
+                        Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            Utility.logoutUser()
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+    
     func animateToNextUserStory(vc: UIViewController){
         UIView.beginAnimations("", context: nil)
         UIView.setAnimationDuration(1.0)
@@ -632,6 +700,7 @@ extension StoriesViewController: UITextFieldDelegate{
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        sendCommentOnStory()
         return false
     }
     
