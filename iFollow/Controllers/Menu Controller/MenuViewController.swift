@@ -33,8 +33,8 @@ class MenuViewController: UIViewController {
         menuTableView.register(menuItemCellNib, forCellReuseIdentifier: "MenuCell")
         menuTableView.register(menuSeperatorCellNib, forCellReuseIdentifier: "MenuSeperatorTableViewCell")
         
-        menuItems = ["Privacy Settings", "Blocked Users", "Payments", "Geo Tagging", "", "Change Password", "Invite Friends", "Sign Out"]
-        menuIcons = ["privacy", "friends", "credit-card", "map-location (1)", "", "password", "friends", "logout"]
+        menuItems = ["Privacy Settings", "Blocked Users", "Payments", "Geo Tagging", "", "Change Password", "Terms And Conditions", "Privacy Policy", "Invite Friends", "Sign Out"]
+        menuIcons = ["privacy", "friends", "credit-card", "map-location (1)", "", "password", "privacy", "privacy", "friends", "logout"]
         
     }
     
@@ -81,7 +81,7 @@ class MenuViewController: UIViewController {
 extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,7 +120,17 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
             let vc = Utility.getSetPasswordViewController()
             self.pushToVC(vc: vc)
         }
+        else if (indexPath.row == 6){
+            let vc = Utility.getPrivacyPolicyViewController()
+            vc.isTerms = true
+            self.pushToVC(vc: vc)
+        }
         else if (indexPath.row == 7){
+            let vc = Utility.getPrivacyPolicyViewController()
+            vc.isTerms = false
+            self.pushToVC(vc: vc)
+        }
+        else if (indexPath.row == 9){
             showLogoutPopup()
         }
         
