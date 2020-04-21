@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         navigateTOInitialViewController()
         GMSPlacesClient.provideAPIKey(GoogleAPIKey)
         registerForPushNotifications()
+        UIApplication.shared.applicationIconBadgeNumber = 0
         return true
     }
 

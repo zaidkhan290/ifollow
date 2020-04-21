@@ -628,6 +628,7 @@
                         <outlet property="btnEmoji" destination="raR-Wp-Nl4" id="auF-6i-YTk"/>
                         <outlet property="btnOptions" destination="SRO-dB-E36" id="gTd-99-chm"/>
                         <outlet property="btnSend" destination="uXH-xU-ISL" id="ubz-U1-Ioy"/>
+                        <outlet property="btnSendWidthConstraint" destination="X99-u5-Kxo" id="UX4-yk-Rh5"/>
                         <outlet property="btnView" destination="4QN-V1-cgG" id="eOQ-Ie-9UY"/>
                         <outlet property="btnViewWidthConstraint" destination="i9l-Th-rGw" id="Vhg-Gc-GNq"/>
                         <outlet property="hiddenView" destination="5Ed-mZ-Sfq" id="z4I-9J-NoG"/>
@@ -1073,11 +1074,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6SO-V3-83u">
+                                <rect key="frame" x="0.0" y="294.33333333333326" width="414" height="441.66666666666674"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lv3-9D-fVc">
-                                <rect key="frame" x="20.666666666666657" y="80" width="372.66666666666674" height="50"/>
+                                <rect key="frame" x="20.666666666666657" y="331.33333333333331" width="372.66666666666674" height="0.0"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oyw-y7-a9p">
-                                        <rect key="frame" x="20" y="15" width="288.66666666666669" height="20"/>
+                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oyw-y7-a9p">
+                                        <rect key="frame" x="20" y="-10" width="288.66666666666669" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Y0K-jU-1k9"/>
                                         </constraints>
@@ -1085,8 +1090,8 @@
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchSelected" translatesAutoresizingMaskIntoConstraints="NO" id="HOS-rO-O0N">
-                                        <rect key="frame" x="328.66666666666663" y="13" width="24" height="24"/>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchSelected" translatesAutoresizingMaskIntoConstraints="NO" id="HOS-rO-O0N">
+                                        <rect key="frame" x="328.66666666666663" y="-12" width="24" height="24"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1095,12 +1100,12 @@
                                     <constraint firstItem="oyw-y7-a9p" firstAttribute="leading" secondItem="Lv3-9D-fVc" secondAttribute="leading" constant="20" id="YHC-BR-ggt"/>
                                     <constraint firstItem="HOS-rO-O0N" firstAttribute="centerY" secondItem="Lv3-9D-fVc" secondAttribute="centerY" id="ZzB-DP-ncJ"/>
                                     <constraint firstItem="oyw-y7-a9p" firstAttribute="centerY" secondItem="Lv3-9D-fVc" secondAttribute="centerY" id="dcZ-vw-C9n"/>
-                                    <constraint firstAttribute="height" constant="50" id="iX6-rw-Q9w"/>
+                                    <constraint firstAttribute="height" id="iX6-rw-Q9w"/>
                                     <constraint firstItem="HOS-rO-O0N" firstAttribute="leading" secondItem="oyw-y7-a9p" secondAttribute="trailing" constant="20" id="zLO-Yb-jzX"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vs4-nl-Qn6">
-                                <rect key="frame" x="374" y="50" width="20" height="20"/>
+                                <rect key="frame" x="374" y="321.33333333333331" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="4u1-iU-AJE"/>
                                     <constraint firstAttribute="height" constant="20" id="e6M-Ae-dHR"/>
@@ -1111,7 +1116,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kfT-ex-4Qf">
-                                <rect key="frame" x="0.0" y="150" width="414" height="586"/>
+                                <rect key="frame" x="0.0" y="351.33333333333326" width="414" height="384.66666666666674"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Si6-lp-mgx" id="f4O-Dv-cfN"/>
@@ -1119,16 +1124,20 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="4Ha-Q8-X18" firstAttribute="trailing" secondItem="Vs4-nl-Qn6" secondAttribute="trailing" constant="20" id="2hp-0f-emN"/>
                             <constraint firstItem="4Ha-Q8-X18" firstAttribute="bottom" secondItem="kfT-ex-4Qf" secondAttribute="bottom" id="EMX-1z-eCP"/>
                             <constraint firstItem="4Ha-Q8-X18" firstAttribute="trailing" secondItem="kfT-ex-4Qf" secondAttribute="trailing" id="Kvk-fw-gWT"/>
                             <constraint firstItem="Lv3-9D-fVc" firstAttribute="centerX" secondItem="9FS-ZG-2UC" secondAttribute="centerX" id="aNr-mc-eXb"/>
-                            <constraint firstItem="Vs4-nl-Qn6" firstAttribute="top" secondItem="4Ha-Q8-X18" secondAttribute="top" constant="30" id="hLr-8S-NRO"/>
+                            <constraint firstItem="Lv3-9D-fVc" firstAttribute="centerY" secondItem="9FS-ZG-2UC" secondAttribute="centerY" multiplier="0.9" id="gbn-Nb-EPo"/>
+                            <constraint firstAttribute="bottom" secondItem="6SO-V3-83u" secondAttribute="bottom" id="gtg-Wl-Kkn"/>
+                            <constraint firstItem="6SO-V3-83u" firstAttribute="height" secondItem="9FS-ZG-2UC" secondAttribute="height" multiplier="0.6" id="hOg-LC-Q8H"/>
                             <constraint firstItem="kfT-ex-4Qf" firstAttribute="leading" secondItem="4Ha-Q8-X18" secondAttribute="leading" id="mtQ-As-ETC"/>
                             <constraint firstItem="kfT-ex-4Qf" firstAttribute="top" secondItem="Lv3-9D-fVc" secondAttribute="bottom" constant="20" id="qJg-Gm-3FM"/>
-                            <constraint firstItem="Lv3-9D-fVc" firstAttribute="top" secondItem="Vs4-nl-Qn6" secondAttribute="bottom" constant="10" id="vme-pT-ME4"/>
+                            <constraint firstItem="Vs4-nl-Qn6" firstAttribute="centerY" secondItem="Lv3-9D-fVc" secondAttribute="centerY" id="qmw-vg-ODU"/>
+                            <constraint firstItem="6SO-V3-83u" firstAttribute="trailing" secondItem="4Ha-Q8-X18" secondAttribute="trailing" id="vHB-g1-VCv"/>
+                            <constraint firstItem="6SO-V3-83u" firstAttribute="leading" secondItem="4Ha-Q8-X18" secondAttribute="leading" id="yLP-Iq-1PA"/>
                             <constraint firstItem="Lv3-9D-fVc" firstAttribute="width" secondItem="4Ha-Q8-X18" secondAttribute="width" multiplier="0.9" id="z2m-wL-v9f"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4Ha-Q8-X18"/>
@@ -1136,6 +1145,7 @@
                     <connections>
                         <outlet property="btnClose" destination="Vs4-nl-Qn6" id="2AS-jE-ppC"/>
                         <outlet property="friendsTableView" destination="kfT-ex-4Qf" id="UT1-Zw-xQm"/>
+                        <outlet property="mainView" destination="6SO-V3-83u" id="l7F-u4-hje"/>
                         <outlet property="searchView" destination="Lv3-9D-fVc" id="p1f-VR-IL5"/>
                         <outlet property="txtFieldSearch" destination="oyw-y7-a9p" id="wEP-S1-NBd"/>
                     </connections>
@@ -1562,7 +1572,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages will be deleted if not read in 3 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jp6-cy-4dF">
-                                <rect key="frame" x="85.333333333333329" y="110" width="243.33333333333337" height="14"/>
+                                <rect key="frame" x="82.666666666666686" y="110" width="249" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.12156862745098039" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

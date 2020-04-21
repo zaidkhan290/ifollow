@@ -32,6 +32,7 @@ class StoriesViewController: UIViewController {
     @IBOutlet weak var prevStoryView: UIView!
     @IBOutlet weak var lblStoryCaption: UILabel!
     @IBOutlet weak var btnViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var btnSendWidthConstraint: NSLayoutConstraint!
     
     var videoPlayer: AVPlayer!
     var storiesUsersArray = [StoryUserModel]()
@@ -42,6 +43,7 @@ class StoriesViewController: UIViewController {
     var isForPublicStory = false
     var isForSkip = false // If we are skip segment index for showing the first index as unviewed index
     var currentUserId = 0
+    var currentUserName = ""
     var currentStoryId = 0
     var currentStoryMedia = ""
     var currentStoryMediaType = ""
@@ -84,6 +86,7 @@ class StoriesViewController: UIViewController {
             }
             
             self.currentUserId = self.storiesUsersArray[self.storyUserIndex].userId
+            self.currentUserName = self.storiesUsersArray[self.storyUserIndex].userName
             self.lblUsername.text = self.storiesUsersArray[self.storyUserIndex].userName
             self.userImage.layer.cornerRadius = self.userImage.frame.height / 2
             self.userImage.layer.borderWidth = 2
@@ -100,6 +103,13 @@ class StoriesViewController: UIViewController {
             self.spb.padding = 2
             let storiesArray = Array(self.storiesUsersArray[self.storyUserIndex].userStories)
             if (!self.isForMyStory){
+                if (self.storiesUsersArray[self.storyUserIndex].userProfileStatus == "private"){
+                    self.btnSend.isHidden = true
+                    self.btnSendWidthConstraint.constant = 35
+                    self.view.updateConstraintsIfNeeded()
+                    self.view.layoutSubviews()
+                    
+                }
                 if (!self.storiesUsersArray[self.storyUserIndex].isAllStoriesViewed){
                     self.startIndex = storiesArray.firstIndex{$0.isStoryViewed == 0}!
                 }
@@ -365,6 +375,11 @@ class StoriesViewController: UIViewController {
             videoPlayer.pause()
         }
         let vc = Utility.getSendStoryViewController()
+        vc.currentUserId = self.currentUserId
+        vc.currentUserName = self.currentUserName
+        vc.currentStoryId = self.currentStoryId
+        vc.currentStoryMedia = self.currentStoryMedia
+        vc.currentStoryMediaType = self.currentStoryMediaType
         vc.delegate = self
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self

@@ -15,6 +15,7 @@ class StoryUserModel: Object {
     @objc dynamic var userId: Int = 0
     @objc dynamic var userName: String = ""
     @objc dynamic var userImage: String = ""
+    @objc dynamic var userProfileStatus = ""
     @objc dynamic var isAllStoriesViewed: Bool = false
     @objc dynamic var lastStoryMediaType: String = ""
     @objc dynamic var lastStoryPreview: String = ""
@@ -27,6 +28,7 @@ class StoryUserModel: Object {
             userId = Utility.getLoginUserId()
             userName = Utility.getLoginUserFullName()
             userImage = Utility.getLoginUserImage()
+            userProfileStatus = Utility.getLoginUserProfileType()
             let stories = json["my_stories"].arrayValue
             for story in stories{
                 let model = UserStoryModel()
@@ -38,6 +40,7 @@ class StoryUserModel: Object {
             userId = json["user_id"].intValue
             userName = json["user_name"].stringValue
             userImage = json["user_image"].stringValue.replacingOccurrences(of: "\\", with: "")
+            userProfileStatus = json["profile_status"].stringValue
             isForPublicStory = isPublicStory
             let stories = json["stories"].arrayValue
             for story in stories{
