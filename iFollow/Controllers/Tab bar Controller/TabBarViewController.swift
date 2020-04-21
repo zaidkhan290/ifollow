@@ -9,6 +9,7 @@
 import UIKit
 import Loaf
 import FirebaseStorage
+import Firebase
 
 class TabBarViewController: UIViewController {
 
@@ -98,7 +99,9 @@ class TabBarViewController: UIViewController {
     func openCamera(){
         let vc = Utility.getCameraViewController()
         vc.delegate = self
-        self.present(vc, animated: true, completion: nil)
+        let navigationVC = UINavigationController(rootViewController: vc)
+        navigationVC.isNavigationBarHidden = true
+        self.present(navigationVC, animated: true, completion: nil)
     }
     
     func changeTab(){
@@ -193,7 +196,7 @@ class TabBarViewController: UIViewController {
         
     }
     
-    func saveStoryImageToFirebase(image: UIImage, caption: String){
+    func saveStoryImageToFirebase(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]){
         
         let timeStemp = Int(Date().timeIntervalSince1970)
         let mediaRef = storageRef?.child("/Media")
@@ -218,7 +221,28 @@ class TabBarViewController: UIViewController {
                     
                     picRef?.downloadURL(completion: { (url, error) in
                         if let imageURL = url{
-                            self.postStory(mediaUrl: imageURL.absoluteString, postType: "image", caption: caption)
+//
+                            if (isToSendMyStory){
+                                self.postStory(mediaUrl: imageURL.absoluteString, postType: "image", caption: caption)
+                            }
+                            for friend in friendsArray{
+                                let chatRef = rootRef.child("NormalChats").child(friend.chatId)
+                                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                           "senderId": "\(Utility.getLoginUserId())",
+                                                                           "message": imageURL.absoluteString,
+                                                                           "type": 2,
+                                                                           "isRead": false,
+                                                                           "timestamp" : ServerValue.timestamp()])
+                                
+                                Utility.showOrHideLoader(shouldShow: false)
+                                
+                            }
+                            if (friendsArray.count > 0){
+                                Loaf("Story Sent", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                    
+                                }
+                            }
+                            
                         }
                     })
                     
@@ -242,7 +266,7 @@ class TabBarViewController: UIViewController {
         }
     }
     
-    func saveStoryVideoToFirebase(videoURL: URL, caption: String){
+    func saveStoryVideoToFirebase(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]){
         let timeStemp = Int(Date().timeIntervalSince1970)
         let mediaRef = storageRef?.child("/Media")
         let iosRef = mediaRef?.child("/iOS").child("/Videos")
@@ -262,7 +286,28 @@ class TabBarViewController: UIViewController {
                     
                     videoRef?.downloadURL(completion: { (url, error) in
                         if let videoURL = url{
-                            self.postStory(mediaUrl: videoURL.absoluteString, postType: "video", caption: caption)
+                            
+                            if (isToSendMyStory){
+                                self.postStory(mediaUrl: videoURL.absoluteString, postType: "video", caption: caption)
+                            }
+                            for friend in friendsArray{
+                                let chatRef = rootRef.child("NormalChats").child(friend.chatId)
+                                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                           "senderId": "\(Utility.getLoginUserId())",
+                                                                           "message": videoURL.absoluteString,
+                                                                           "type": 4,
+                                                                           "isRead": false,
+                                                                           "timestamp" : ServerValue.timestamp()])
+                                
+                                Utility.showOrHideLoader(shouldShow: false)
+                                
+                            }
+                            if (friendsArray.count > 0){
+                                Loaf("Story Sent", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                    
+                                }
+                            }
+                            
                         }
                     })
                     
@@ -319,12 +364,12 @@ class TabBarViewController: UIViewController {
 }
 
 extension TabBarViewController: CameraViewControllerDelegate{
-    func getStoryImage(image: UIImage, caption: String) {
+    func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
         storyImage = image
-        self.saveStoryImageToFirebase(image: storyImage, caption: caption)
+        self.saveStoryImageToFirebase(image: storyImage, caption: caption, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
     }
     
-    func getStoryVideo(videoURL: URL, caption: String) {
-        self.saveStoryVideoToFirebase(videoURL: videoURL, caption: caption)
+    func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
+        self.saveStoryVideoToFirebase(videoURL: videoURL, caption: caption, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
     }
 }

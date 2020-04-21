@@ -71,6 +71,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "CameraViewController") as! CameraViewController
     }
     
+    static func getShareStoriesViewController() -> ShareStoriesViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "ShareStoriesViewController") as! ShareStoriesViewController
+    }
+    
     static func getProfileViewController() -> ProfileViewController{
         return storyBoard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
     }

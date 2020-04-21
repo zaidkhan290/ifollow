@@ -20,6 +20,7 @@ class FriendsTableViewCell: UITableViewCell {
     @IBOutlet weak var btnSend: UIButton!
     @IBOutlet weak var btnOption: UIButton!
     @IBOutlet weak var selectImage: UIImageView!
+    @IBOutlet weak var lblUsernameTopConstraint: NSLayoutConstraint!
     
     var delegate: FriendsTableViewCellDelegate!
     var indexPath: IndexPath!

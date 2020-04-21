@@ -14,8 +14,8 @@ import GooglePlaces
 import AVKit
 
 protocol CameraViewControllerDelegate: class {
-    func getStoryImage(image: UIImage, caption: String)
-    func getStoryVideo(videoURL: URL, caption: String)
+    func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel])
+    func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel])
 }
 
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
@@ -74,6 +74,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     var selectedImage = UIImage()
     var delegate: CameraViewControllerDelegate!
     var videoURL: URL!
+    
+    var storyImageToSend = UIImage()
     
   //  let filterSwipeView = DSSwipableFilterView(frame: UIScreen.main.bounds)
     
@@ -578,13 +580,11 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         }
         else{
             if (self.videoURL == nil){
-                let image = self.filterView.screenshot()
-                self.delegate.getStoryImage(image: image, caption: txtFieldCaption.text!)
+                self.storyImageToSend = self.filterView.screenshot()
             }
-            else{
-                self.delegate.getStoryVideo(videoURL: self.videoURL, caption: txtFieldCaption.text!)
-            }
-            self.dismiss(animated: true, completion: nil)
+            let vc = Utility.getShareStoriesViewController()
+            vc.delegate = self
+            self.pushToVC(vc: vc)
         }
         
     }
@@ -939,5 +939,18 @@ extension CameraViewController: GMSAutocompleteViewControllerDelegate{
     // User canceled the operation.
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension CameraViewController: ShareStoriesViewControllerDelegate{
+    func shareStoryToMyStoryAndFriends(isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
+        if (self.videoURL == nil){
+            self.delegate.getStoryImage(image: storyImageToSend, caption: self.txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
+        }
+        else{
+            self.delegate.getStoryVideo(videoURL: self.videoURL, caption: txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
+        }
+        self.dismiss(animated: true, completion: nil)
+
     }
 }
