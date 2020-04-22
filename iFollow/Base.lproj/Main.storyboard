@@ -1199,29 +1199,21 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8D-hC-OB1">
-                                        <rect key="frame" x="19.999999999999996" y="260" width="22.000000000000004" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="22" id="7B8-VE-xnE"/>
-                                            <constraint firstAttribute="width" constant="22" id="EGA-XU-sED"/>
-                                        </constraints>
-                                        <state key="normal" image="attach-1"/>
+                                        <rect key="frame" x="19.999999999999996" y="260" width="16.000000000000004" height="22"/>
+                                        <state key="normal" image="photo"/>
                                         <connections>
                                             <action selector="btnImageTapped:" destination="FIJ-nH-bWm" eventType="touchUpInside" id="9ZL-OA-bmr"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ivo-Ni-E5t">
-                                        <rect key="frame" x="52" y="260" width="22" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="22" id="IuB-kU-I7D"/>
-                                            <constraint firstAttribute="width" constant="22" id="RmH-Ox-Dxm"/>
-                                        </constraints>
-                                        <state key="normal" image="locationIcon"/>
+                                        <rect key="frame" x="46" y="260" width="16" height="22"/>
+                                        <state key="normal" image="pin"/>
                                         <connections>
                                             <action selector="btnLocationTapped:" destination="FIJ-nH-bWm" eventType="touchUpInside" id="35E-Im-TSH"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FF0-ha-8SX">
-                                        <rect key="frame" x="84" y="260" width="22" height="22"/>
+                                        <rect key="frame" x="72" y="260" width="22" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="22" id="AeN-BB-bv7"/>
                                             <constraint firstAttribute="height" constant="22" id="G6K-J8-nNZ"/>
@@ -5719,7 +5711,6 @@
         <image name="iFollow-white-logo-1" width="136" height="53"/>
         <image name="location" width="44" height="45"/>
         <image name="location-unfill" width="44" height="45"/>
-        <image name="locationIcon" width="14" height="19.666666030883789"/>
         <image name="menu" width="22.333333969116211" height="16.666666030883789"/>
         <image name="menuUserImage" width="83" height="83"/>
         <image name="minus" width="23.666666030883789" height="23.666666030883789"/>
@@ -5728,6 +5719,8 @@
         <image name="options" width="4.3333334922790527" height="16.666666030883789"/>
         <image name="password" width="17" height="19.666666030883789"/>
         <image name="pencil-striped-symbol-for-interface-edit-buttons" width="16.333333969116211" height="16.333333969116211"/>
+        <image name="photo" width="26" height="26"/>
+        <image name="pin" width="20.333333969116211" height="29"/>
         <image name="play_Icon" width="96" height="96"/>
         <image name="plus" width="23.666666030883789" height="23.666666030883789"/>
         <image name="profile" width="24" height="24"/>
