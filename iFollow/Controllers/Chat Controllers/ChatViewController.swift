@@ -639,6 +639,9 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     let viewController = DTPhotoViewerController(referencedView: cell.messageBubbleImageView, image: image)
                     viewController.delegate = self
                     self.present(viewController, animated: true, completion: nil)
+                    self.collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
+                    self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
+                    
                 }
                 else if let videoItem = mediaItem as? JSQVideoMediaItem{
                     let player = AVPlayer(url: videoItem.fileURL)
@@ -648,9 +651,11 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     self.present(playerViewController, animated: true) {
                         playerViewController.player!.play()
                     }
+                    self.collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
                     self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
                 }
                 else{
+                    self.collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
                     self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
                 }
             }
@@ -660,6 +665,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     vc.postId = self.messagesModel[indexPath.row].postId
                     self.present(vc, animated: true, completion: nil)
                     self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
+                    self.collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
                 }
                 else{
                     weak var mediaItem: JSQMessageMediaData? = message.media
@@ -668,6 +674,8 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                         let viewController = DTPhotoViewerController(referencedView: cell.messageBubbleImageView, image: image)
                         viewController.delegate = self
                         self.present(viewController, animated: true, completion: nil)
+                        self.collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
+                        self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
                     }
                     else if let videoItem = mediaItem as? JSQVideoMediaItem{
                         let player = AVPlayer(url: videoItem.fileURL)
@@ -677,11 +685,13 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                         self.present(playerViewController, animated: true) {
                             playerViewController.player!.play()
                         }
+                        self.collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
                         self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
                     }
                     else{
+                        self.collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
                         self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
-                    }
+                     }
                 }
             }
             
@@ -972,7 +982,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
 
 extension ChatViewController: DTPhotoViewerControllerDelegate{
     func photoViewerController(_ photoViewerController: DTPhotoViewerController, didEndPanGestureRecognizer gestureRecognizer: UIPanGestureRecognizer) {
-        self.collectionView.reloadData()
+      //  self.collectionView.reloadData()
     }
 }
 

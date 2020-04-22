@@ -64,7 +64,7 @@ class HomeViewController: UIViewController {
             self.getHomeData()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(refreshHomeData), name: NSNotification.Name(rawValue: "refreshHomeData"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshHomeData), name: NSNotification.Name(rawValue: "refreshHomeDataAfterViewedStory"), object: nil)
+      //  NotificationCenter.default.addObserver(self, selector: #selector(refreshHomeData), name: NSNotification.Name(rawValue: "refreshHomeDataAfterViewedStory"), object: nil)
         
     }
     
@@ -72,6 +72,7 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(true)
         let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
         usersRef.updateChildValues(["isActive" : true])
+        refreshHomeData()
     }
     
     //MARK:- Methods

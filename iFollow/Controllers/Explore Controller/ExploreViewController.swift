@@ -57,25 +57,24 @@ class ExploreViewController: UIViewController {
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshDiscoverData), name: NSNotification.Name(rawValue: "refreshDiscoverData"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshDiscoverData), name: NSNotification.Name(rawValue: "refreshDiscoverDataAfterViewedStory"), object: nil)
+     //   NotificationCenter.default.addObserver(self, selector: #selector(refreshDiscoverData), name: NSNotification.Name(rawValue: "refreshDiscoverDataAfterViewedStory"), object: nil)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        refreshDiscoverData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        
-        let allStoryCell = UINib(nibName: "AllStoriesCollectionViewCell", bundle: nil)
-        self.allStoriesCollectionView.register(allStoryCell, forCellWithReuseIdentifier: "AllStories")
-        
-        let cellHeight = (allStoriesCollectionView.bounds.height) / 2
         let layout2 = UICollectionViewFlowLayout()
         layout2.scrollDirection = .horizontal
         layout2.minimumInteritemSpacing = 1
-        layout2.itemSize = CGSize(width: 130, height: cellHeight - 5)
+        layout2.itemSize = CGSize(width: 130, height: (self.allStoriesCollectionView.bounds.height / 2) - 5)
         layout2.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         self.allStoriesCollectionView.collectionViewLayout = layout2
         self.allStoriesCollectionView.showsHorizontalScrollIndicator = false
-       
     }
     
     //MARK:- Methods
