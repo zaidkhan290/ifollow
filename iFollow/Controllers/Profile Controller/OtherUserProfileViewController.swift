@@ -552,7 +552,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         vc.postType = post.postMediaType
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
-        self.present(vc, animated: true, completion: nil)
+        self.present(vc, animated: false, completion: nil)
     }
     
     @objc func likeViewTapped(_ sender: UITapGestureRecognizer){

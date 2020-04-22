@@ -104,6 +104,7 @@ extension ShareStoriesViewController: UITableViewDataSource, UITableViewDelegate
         cell.lblLastSeen.isHidden = true
         cell.lblUsernameTopConstraint.constant = 22
         cell.selectImage.isHidden = false
+        cell.selectImage.isUserInteractionEnabled = false
         cell.updateConstraintsIfNeeded()
         cell.layoutSubviews()
         
@@ -114,6 +115,7 @@ extension ShareStoriesViewController: UITableViewDataSource, UITableViewDelegate
             cell.userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "img_placeholder"))
             cell.lblUsername.text = "My Story"
             cell.selectImage.image = UIImage(named: isSendToMyStory ? "select" : "unselect")
+            cell.backgroundColor = isSendToMyStory ? UIColor.lightGray.withAlphaComponent(0.2) : UIColor.white
         }
         else{
             let user = recentChatsArray[indexPath.row]
@@ -121,9 +123,11 @@ extension ShareStoriesViewController: UITableViewDataSource, UITableViewDelegate
             cell.lblUsername.text = user.chatUserName
             if (user.isRead){
                 cell.selectImage.image = UIImage(named: "select")
+                cell.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
             }
             else{
                 cell.selectImage.image = UIImage(named: "unselect")
+                cell.backgroundColor = .white
             }
         }
         

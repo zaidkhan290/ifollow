@@ -55,6 +55,7 @@ class StoriesViewController: UIViewController {
         super.viewDidLoad()
         
         messageInputView.layer.cornerRadius = 20
+        messageInputView.dropShadow(color: .white)
         txtFieldMessage.delegate = self
         txtFieldMessage.returnKeyType = .send
         btnOptions.isHidden = !isForMyStory
@@ -581,12 +582,12 @@ class StoriesViewController: UIViewController {
                             
                             self.chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
                                                                             "senderId": "\(Utility.getLoginUserId())",
-                                "message": "\(Utility.getLoginUserFullName()) commented on your story: \(self.txtFieldMessage.text!)",
+                                "message": "\(Utility.getLoginUserFullName()) left feedback on your story: \(self.txtFieldMessage.text!)",
                                 "type": 1,
                                 "isRead": false,
                                 "timestamp" : timeStamp])
                             
-                            Loaf("Comment sent", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            Loaf("Feedback sent", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                                 self.txtFieldMessage.text = ""
                             }
                             

@@ -97,13 +97,13 @@ class CommentViewController: UIViewController {
                             
                             self.chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
                                                                             "senderId": "\(Utility.getLoginUserId())",
-                                                                            "message": "\(Utility.getLoginUserFullName()) commented on your post: \(self.txtFieldComment.text!)",
+                                                                            "message": "\(Utility.getLoginUserFullName()) left feedback on your post: \(self.txtFieldComment.text!)",
                                                                             "type": 1,
                                                                             "isRead": false,
                                                                             "postId": self.postId,
                                                                             "timestamp" : timeStamp])
                             
-                            Loaf("Comment sent", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            Loaf("Feedback sent", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                                 self.dismiss(animated: true, completion: nil)
                             }
                             

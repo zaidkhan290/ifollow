@@ -598,7 +598,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         isFullScreen = true
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
-        self.present(vc, animated: true, completion: nil)
+        self.present(vc, animated: false, completion: nil)
     }
     
     @objc func likeViewTapped(_ sender: UITapGestureRecognizer){

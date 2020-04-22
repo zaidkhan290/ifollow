@@ -105,6 +105,11 @@ class AllChatsListViewController: UIViewController {
                                             recentChat.lastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Video" : "Video")
                                         }
                                     }
+                                    else{
+                                        recentChat.lastMessageTime = lastMessageTime
+                                        recentChat.isRead = true
+                                        recentChat.lastMessage = "Chat expired"
+                                    }
                                 }
                                 else{
                                     recentChat.lastMessageTime = lastMessageTime
