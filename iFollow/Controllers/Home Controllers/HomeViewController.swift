@@ -188,8 +188,10 @@ class HomeViewController: UIViewController {
             })
             uploadTask?.resume()
             
+            
             var i = 0
             uploadTask?.observe(.progress, handler: { (snapshot) in
+                Utility.showOrHideLoader(shouldShow: true)
                 if(i == 0){
                     
                 }
@@ -255,6 +257,7 @@ class HomeViewController: UIViewController {
             
             var i = 0
             uploadTask?.observe(.progress, handler: { (snapshot) in
+                Utility.showOrHideLoader(shouldShow: true)
                 if(i == 0){
                     
                 }
@@ -281,7 +284,9 @@ class HomeViewController: UIViewController {
                 
                 if (status == .success){
                     Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-                        self.refreshHomeData()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.10, execute: {
+                            self.refreshHomeData()
+                        })
                     }
                 }
                 else if (status == .failure){

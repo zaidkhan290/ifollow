@@ -63,6 +63,7 @@ class NewPostViewController: UIViewController {
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         
         postView.layer.cornerRadius = 20
+        btnBoost.isHidden = true
         postView.dropShadow(color: .white)
         if (isForEdit){
             txtFieldStatus.text = editablePostText
