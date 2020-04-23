@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0A3F3D9CBF999C8D04FFA0B4 /* Pods_iFollow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */; };
 		181709472424D8AB00EE5753 /* StickersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181709462424D8AB00EE5753 /* StickersModel.swift */; };
+		181A0B67245184BB00E137CB /* UnifiedNativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181A0B66245184BB00E137CB /* UnifiedNativeAdView.xib */; };
 		1825A528237AEA41002811E7 /* TrendersContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825A527237AEA41002811E7 /* TrendersContainerViewController.swift */; };
 		1825A52A237AEA50002811E7 /* TrendesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825A529237AEA50002811E7 /* TrendesViewController.swift */; };
 		1825A52C237AEA64002811E7 /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825A52B237AEA64002811E7 /* TrendingViewController.swift */; };
@@ -138,6 +139,7 @@
 
 /* Begin PBXFileReference section */
 		181709462424D8AB00EE5753 /* StickersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickersModel.swift; sourceTree = "<group>"; };
+		181A0B66245184BB00E137CB /* UnifiedNativeAdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnifiedNativeAdView.xib; sourceTree = "<group>"; };
 		1825A527237AEA41002811E7 /* TrendersContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendersContainerViewController.swift; sourceTree = "<group>"; };
 		1825A529237AEA50002811E7 /* TrendesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendesViewController.swift; sourceTree = "<group>"; };
 		1825A52B237AEA64002811E7 /* TrendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
@@ -574,6 +576,7 @@
 				18847A57237C3010004D500A /* MediaCollectionViewCell.xib */,
 				18A3262D241010D300CF329E /* EmojisCollectionViewCell.swift */,
 				18A3262E241010D300CF329E /* EmojisCollectionViewCell.xib */,
+				181A0B66245184BB00E137CB /* UnifiedNativeAdView.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -740,6 +743,7 @@
 				189329C3237020910067077F /* Lato-Bold_0.ttf in Resources */,
 				1863EB98241BC548000E5C31 /* LEMONMILK-MediumItalic.otf in Resources */,
 				1870700223732CF9007F8BF2 /* EditProfileGenderTableViewCell.xib in Resources */,
+				181A0B67245184BB00E137CB /* UnifiedNativeAdView.xib in Resources */,
 				18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */,
 				185508122379696E008EAC2E /* sampleVideo.mp4 in Resources */,
 				18A32630241010D300CF329E /* EmojisCollectionViewCell.xib in Resources */,

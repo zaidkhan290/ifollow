@@ -17,6 +17,7 @@ import AVFoundation
 import RealmSwift
 import MobilePlayer
 import Firebase
+import GoogleMobileAds
 
 class HomeViewController: UIViewController {
 
@@ -36,6 +37,10 @@ class HomeViewController: UIViewController {
     
     var myStoryArray = [StoryUserModel]()
     var followersStoriesArray = [StoryUserModel]()
+    
+    var adLoader: GADAdLoader!
+    var heightConstraint : NSLayoutConstraint?
+    var nativeAdView: GADUnifiedNativeAdView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -494,7 +499,11 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
                 return 0
             }
             else{
-                return postsArray.count
+                var addsCount = 0
+                if (postsArray.count > 5){
+                    addsCount = postsArray.count / 5
+                }
+                return postsArray.count + addsCount
             }
         }
         else{
@@ -508,82 +517,98 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         let view = UIView(frame: CGRect(x: 0, y: 0, width: carouselView.frame.width, height: carouselView.frame.height))
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
-        itemView.index = index
-        let post = postsArray[index]
+        let addView = Bundle.main.loadNibNamed("UnifiedNativeAdView", owner: self, options: nil)?.first! as! GADUnifiedNativeAdView
         
-        itemView.lblUsername.text = post.postUserFullName
-        itemView.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: post.postTime))
-        itemView.userImage.sd_setImage(with: URL(string: post.postUserImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
-        itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
-        itemView.lblUserAddress.text = post.postLocation
-        itemView.userImage.layer.cornerRadius = 25
-        if (post.postMediaType == "image"){
-            itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
+        if (index % 5 == 0 && index != 0){
+            
+            view.backgroundColor = .white
+            view.clipsToBounds = true
+            view.addSubview(addView)
+            nativeAdView = addView
+//            addView.nativeAd?.rootViewController = self
+            adLoader = GADAdLoader(adUnitID: adUnitID, rootViewController: self,
+                                   adTypes: [ .unifiedNative ], options: nil)
+            adLoader.delegate = self
+            adLoader.load(GADRequest())
+            return view
         }
         else{
-            itemView.feedImage.image = UIImage(named: "post_video")
+            itemView.index = index - (index / 5)
+            let post = postsArray[index - (index / 5)]
+            
+            itemView.lblUsername.text = post.postUserFullName
+            itemView.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: post.postTime))
+            itemView.userImage.sd_setImage(with: URL(string: post.postUserImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+            itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
+            itemView.lblUserAddress.text = post.postLocation
+            itemView.userImage.layer.cornerRadius = 25
+            if (post.postMediaType == "image"){
+                itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
+            }
+            else{
+                itemView.feedImage.image = UIImage(named: "post_video")
+            }
+            itemView.playIcon.isHidden = true
+            itemView.feedImage.clipsToBounds = true
+            itemView.feedImage.contentMode = .scaleAspectFill
+            itemView.lblLikeComments.text = "\(post.postLikes)"
+            itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
+            
+            itemView.userImage.isUserInteractionEnabled = true
+            itemView.userImage.tag = index - (index / 5)
+            itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped(_:))))
+            itemView.feedBackView.isUserInteractionEnabled = true
+            itemView.feedBackView.tag = index - (index / 5)
+            itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
+            itemView.postlikeView.isHidden = post.shouldShowPostTrends == 1
+            itemView.lblLikeComments.isHidden = post.shouldShowPostTrends == 1
+            itemView.postTrendLikeIcon.isHidden = post.shouldShowPostTrends == 1
+            itemView.postlikeView.isUserInteractionEnabled = true
+            itemView.postlikeView.tag = index - (index / 5)
+            itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
+            itemView.likeView.isUserInteractionEnabled = true
+            itemView.likeView.tag = index - (index / 5)
+            itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
+            itemView.frame = view.frame
+            itemView.userImage.layer.cornerRadius = 25
+            itemView.feedImage.clipsToBounds = true
+            itemView.mainView.dropShadow(color: .white)
+            itemView.mainView.layer.cornerRadius = 10
+            itemView.btnOptions.tag = index - (index / 5)
+            itemView.btnOptions.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
+            view.backgroundColor = .white
+            view.clipsToBounds = true
+            view.addSubview(itemView)
+            
+            return view
         }
-        itemView.playIcon.isHidden = true
-        itemView.feedImage.clipsToBounds = true
-        itemView.feedImage.contentMode = .scaleAspectFill
-        itemView.lblLikeComments.text = "\(post.postLikes)"
-        itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
-        
-        itemView.userImage.isUserInteractionEnabled = true
-        itemView.userImage.tag = index
-        itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped(_:))))
-        itemView.feedBackView.isUserInteractionEnabled = true
-        itemView.feedBackView.tag = index
-        itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
-        itemView.postlikeView.isHidden = post.shouldShowPostTrends == 1
-        itemView.lblLikeComments.isHidden = post.shouldShowPostTrends == 1
-        itemView.postTrendLikeIcon.isHidden = post.shouldShowPostTrends == 1
-        itemView.postlikeView.isUserInteractionEnabled = true
-        itemView.postlikeView.tag = index
-        itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
-        itemView.likeView.isUserInteractionEnabled = true
-        itemView.likeView.tag = index
-        itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
-        itemView.frame = view.frame
-        itemView.userImage.layer.cornerRadius = 25
-        itemView.feedImage.clipsToBounds = true
-        itemView.mainView.dropShadow(color: .white)
-        itemView.mainView.layer.cornerRadius = 10
-        itemView.btnOptions.tag = index
-        itemView.btnOptions.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
-        view.backgroundColor = .white
-        view.clipsToBounds = true
-        view.addSubview(itemView)
-        
-        return view
         
     }
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         
-        let post = postsArray[index]
-        
-        if (post.postMediaType == "image"){
-            let image = LightboxImage(imageURL: URL(string: post.postMedia)!, text: post.postDescription, videoURL: nil)
-            let vc = LightboxController(images: [image], startIndex: 0)
-            vc.pageDelegate = self
-            vc.dismissalDelegate = self
-            vc.dynamicBackground = true
-            self.present(vc, animated: true, completion: nil)
+        if (index % 5 == 0 && index != 0){
         }
         else{
-            let playerVC = MobilePlayerViewController(contentURL: URL(string: post.postMedia)!)
-            playerVC.title = post.postDescription
-            playerVC.activityItems = [URL(string: post.postMedia)!]
-            self.present(playerVC, animated: true, completion: nil)
+            let post = postsArray[index - (index / 5)]
+            
+            if (post.postMediaType == "image"){
+                let image = LightboxImage(imageURL: URL(string: post.postMedia)!, text: post.postDescription, videoURL: nil)
+                let vc = LightboxController(images: [image], startIndex: 0)
+                vc.pageDelegate = self
+                vc.dismissalDelegate = self
+                vc.dynamicBackground = true
+                self.present(vc, animated: true, completion: nil)
+            }
+            else{
+                let playerVC = MobilePlayerViewController(contentURL: URL(string: post.postMedia)!)
+                playerVC.title = post.postDescription
+                playerVC.activityItems = [URL(string: post.postMedia)!]
+                self.present(playerVC, animated: true, completion: nil)
+            }
         }
         
     }
-    
-//    func userImageTapped(index: Int) {
-//        let vc = Utility.getOtherUserProfileViewController()
-//        self.present(vc, animated: true, completion: nil)
-//    }
     
     @objc func userImageTapped(_ sender: UITapGestureRecognizer) {
         let vc = Utility.getOtherUserProfileViewController()
@@ -781,5 +806,115 @@ extension HomeViewController: LightboxControllerPageDelegate, LightboxController
     
     func lightboxControllerWillDismiss(_ controller: LightboxController) {
         
+    }
+}
+
+extension HomeViewController : GADVideoControllerDelegate {
+    func videoControllerDidEndVideoPlayback(_ videoController: GADVideoController) {
+        
+    }
+}
+
+extension HomeViewController : GADAdLoaderDelegate {
+    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: GADRequestError) {
+        
+    }
+}
+
+extension HomeViewController : GADUnifiedNativeAdLoaderDelegate {
+    
+    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
+        nativeAdView.nativeAd = nativeAd
+        
+        // Set ourselves as the native ad delegate to be notified of native ad events.
+        nativeAd.delegate = self
+        
+        // Deactivate the height constraint that was set when the previous video ad loaded.
+        heightConstraint?.isActive = false
+        
+        // Populate the native ad view with the native ad assets.
+        // The headline and mediaContent are guaranteed to be present in every native ad.
+        (nativeAdView.headlineView as? UILabel)?.text = nativeAd.headline
+        nativeAdView.mediaView?.mediaContent = nativeAd.mediaContent
+        
+        // Some native ads will include a video asset, while others do not. Apps can use the
+        // GADVideoController's hasVideoContent property to determine if one is present, and adjust their
+        // UI accordingly.
+        let mediaContent = nativeAd.mediaContent
+        if mediaContent.hasVideoContent {
+            // By acting as the delegate to the GADVideoController, this ViewController receives messages
+            // about events in the video lifecycle.
+            mediaContent.videoController.delegate = self
+            
+        }
+        else {
+            
+        }
+        
+        // This app uses a fixed width for the GADMediaView and changes its height to match the aspect
+        // ratio of the media it displays.
+        if let mediaView = nativeAdView.mediaView, nativeAd.mediaContent.aspectRatio > 0 {
+            heightConstraint = NSLayoutConstraint(item: mediaView,
+                                                  attribute: .height,
+                                                  relatedBy: .equal,
+                                                  toItem: mediaView,
+                                                  attribute: .width,
+                                                  multiplier: CGFloat(1 / nativeAd.mediaContent.aspectRatio),
+                                                  constant: 0)
+            heightConstraint?.isActive = true
+        }
+        
+        // These assets are not guaranteed to be present. Check that they are before
+        // showing or hiding them.
+        (nativeAdView.bodyView as? UILabel)?.text = nativeAd.body
+        nativeAdView.bodyView?.isHidden = nativeAd.body == nil
+        
+        (nativeAdView.callToActionView as? UIButton)?.setTitle(nativeAd.callToAction, for: .normal)
+        nativeAdView.callToActionView?.isHidden = nativeAd.callToAction == nil
+        
+        (nativeAdView.iconView as? UIImageView)?.image = nativeAd.icon?.image
+        nativeAdView.iconView?.isHidden = nativeAd.icon == nil
+        
+        nativeAdView.starRatingView?.isHidden = nativeAd.starRating == nil
+        
+        (nativeAdView.storeView as? UILabel)?.text = nativeAd.store
+        nativeAdView.storeView?.isHidden = nativeAd.store == nil
+        
+        (nativeAdView.priceView as? UILabel)?.text = nativeAd.price
+        nativeAdView.priceView?.isHidden = nativeAd.price == nil
+        
+        (nativeAdView.advertiserView as? UILabel)?.text = nativeAd.advertiser
+        nativeAdView.advertiserView?.isHidden = nativeAd.advertiser == nil
+        
+        // In order for the SDK to process touch events properly, user interaction should be disabled.
+        nativeAdView.callToActionView?.isUserInteractionEnabled = false
+    }
+}
+
+// MARK: - GADUnifiedNativeAdDelegate implementation
+extension HomeViewController : GADUnifiedNativeAdDelegate {
+    
+    func nativeAdDidRecordClick(_ nativeAd: GADUnifiedNativeAd) {
+        print("\(#function) called")
+    }
+    
+    func nativeAdDidRecordImpression(_ nativeAd: GADUnifiedNativeAd) {
+        print("\(#function) called")
+    }
+    
+    func nativeAdWillPresentScreen(_ nativeAd: GADUnifiedNativeAd) {
+        print("\(#function) called")
+    }
+    
+    func nativeAdWillDismissScreen(_ nativeAd: GADUnifiedNativeAd) {
+        print("\(#function) called")
+    }
+    
+    func nativeAdDidDismissScreen(_ nativeAd: GADUnifiedNativeAd) {
+        print("\(#function) called")
+    }
+    
+    func nativeAdWillLeaveApplication(_ nativeAd: GADUnifiedNativeAd) {
+        print("\(#function) called")
     }
 }

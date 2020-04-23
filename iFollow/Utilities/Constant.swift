@@ -29,3 +29,4 @@ let GOOGLECLIENTID = "977065173099-0sl42r8u3v6hh91nkfhbl2qkb4v3mtgh.apps.googleu
 let rootRef = Database.database().reference()
 let FireBaseStorageURL = "gs://ifollow-13644.appspot.com"
 let GoogleAPIKey = "AIzaSyA7oFL_W-gT4OG1kg-O-q_5S5-LpOPkDSQ"
+let adUnitID = "ca-app-pub-3940256099942544/3986624511"

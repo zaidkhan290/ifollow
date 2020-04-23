@@ -37,5 +37,6 @@ pod 'Lightbox'
 pod 'DateToolsSwift'
 pod 'DTPhotoViewerController', '~> 1.2.5'
 pod 'MobilePlayer'
+pod 'Google-Mobile-Ads-SDK'
 
 end

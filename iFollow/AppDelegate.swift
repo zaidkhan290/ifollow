@@ -11,6 +11,7 @@ import IQKeyboardManagerSwift
 import Firebase
 import GooglePlaces
 import UserNotificationsUI
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -26,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         GMSPlacesClient.provideAPIKey(GoogleAPIKey)
         registerForPushNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         return true
     }
 
