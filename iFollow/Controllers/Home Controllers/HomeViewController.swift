@@ -519,17 +519,20 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
         let addView = Bundle.main.loadNibNamed("UnifiedNativeAdView", owner: self, options: nil)?.first! as! GADUnifiedNativeAdView
         
+        addView.frame = view.frame
+        
         if (index % 5 == 0 && index != 0){
             
             view.backgroundColor = .white
             view.clipsToBounds = true
             view.addSubview(addView)
+            
             nativeAdView = addView
-//            addView.nativeAd?.rootViewController = self
             adLoader = GADAdLoader(adUnitID: adUnitID, rootViewController: self,
                                    adTypes: [ .unifiedNative ], options: nil)
             adLoader.delegate = self
             adLoader.load(GADRequest())
+            
             return view
         }
         else{
@@ -830,12 +833,13 @@ extension HomeViewController : GADUnifiedNativeAdLoaderDelegate {
         nativeAd.delegate = self
         
         // Deactivate the height constraint that was set when the previous video ad loaded.
-        heightConstraint?.isActive = false
+        //heightConstraint?.isActive = false
         
         // Populate the native ad view with the native ad assets.
         // The headline and mediaContent are guaranteed to be present in every native ad.
         (nativeAdView.headlineView as? UILabel)?.text = nativeAd.headline
         nativeAdView.mediaView?.mediaContent = nativeAd.mediaContent
+        nativeAdView.mediaView?.contentMode = .scaleAspectFill
         
         // Some native ads will include a video asset, while others do not. Apps can use the
         // GADVideoController's hasVideoContent property to determine if one is present, and adjust their
@@ -853,16 +857,16 @@ extension HomeViewController : GADUnifiedNativeAdLoaderDelegate {
         
         // This app uses a fixed width for the GADMediaView and changes its height to match the aspect
         // ratio of the media it displays.
-        if let mediaView = nativeAdView.mediaView, nativeAd.mediaContent.aspectRatio > 0 {
-            heightConstraint = NSLayoutConstraint(item: mediaView,
-                                                  attribute: .height,
-                                                  relatedBy: .equal,
-                                                  toItem: mediaView,
-                                                  attribute: .width,
-                                                  multiplier: CGFloat(1 / nativeAd.mediaContent.aspectRatio),
-                                                  constant: 0)
-            heightConstraint?.isActive = true
-        }
+//        if let mediaView = nativeAdView.mediaView, nativeAd.mediaContent.aspectRatio > 0 {
+//            heightConstraint = NSLayoutConstraint(item: mediaView,
+//                                                  attribute: .height,
+//                                                  relatedBy: .equal,
+//                                                  toItem: mediaView,
+//                                                  attribute: .width,
+//                                                  multiplier: CGFloat(1 / nativeAd.mediaContent.aspectRatio),
+//                                                  constant: 0)
+//            heightConstraint?.isActive = true
+//        }
         
         // These assets are not guaranteed to be present. Check that they are before
         // showing or hiding them.
