@@ -69,6 +69,10 @@ class StoriesViewController: UIViewController {
         swipeDownGesture.direction = .down
         self.hiddenView.addGestureRecognizer(swipeDownGesture)
         
+        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUpForKeyboard))
+        swipeUpGesture.direction = .up
+        self.hiddenView.addGestureRecognizer(swipeUpGesture)
+        
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(backToPrevUserStory))
         swipeRightGesture.direction = .right
         self.hiddenView.addGestureRecognizer(swipeRightGesture)
@@ -91,9 +95,13 @@ class StoriesViewController: UIViewController {
             //        }
             if (self.isForMyStory){
                 self.storiesUsersArray = StoryUserModel.getMyStory()
+                self.messageInputView.isHidden = true
+                self.txtFieldMessage.isHidden = true
             }
             else{
                 self.storiesUsersArray = self.isForPublicStory ? StoryUserModel.getPublicUsersStories() : StoryUserModel.getFollowersUsersStories()
+                self.messageInputView.isHidden = false
+                self.txtFieldMessage.isHidden = false
             }
             
             self.currentUserId = self.storiesUsersArray[self.storyUserIndex].userId
@@ -501,6 +509,12 @@ class StoriesViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshHomeDataAfterViewedStory"), object: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshDiscoverDataAfterViewedStory"), object: nil)
         
+    }
+    
+    @objc func swipeUpForKeyboard(){
+        if (!isForMyStory){
+            txtFieldMessage.becomeFirstResponder()
+        }
     }
     
     @objc func nextStory(){
