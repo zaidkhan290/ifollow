@@ -37,7 +37,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var lblNormal: UILabel!
     @IBOutlet weak var lblVideo: UILabel!
     @IBOutlet weak var filterView: UIView!
-    @IBOutlet weak var editableTextField: UITextField!
+    @IBOutlet weak var editableTextField: UITextView!
     @IBOutlet weak var fontSlider: UISlider!
     @IBOutlet weak var lblFont: UILabel!
     @IBOutlet weak var timeView: UIView!
@@ -394,7 +394,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             deleteIcon.isHidden = true
         }
         
-        if (sender.view!.isKind(of: UITextField.self)){
+        if (sender.view!.isKind(of: UITextView.self)){
             fontSlider.isHidden = true
             colorSlider.isHidden = true
             lblFont.isHidden = true
@@ -442,7 +442,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
                 deleteIcon.image = UIImage(named: "delete-selected")
                 sender.view?.alpha = 0.6
                 if (sender.state == .ended){
-                    if (sender.view!.isKind(of: UITextField.self)){
+                    if (sender.view!.isKind(of: UITextView.self)){
                         editableTextField.text = ""
                         editableTextField.isHidden = true
                         editableTextField.alpha = 1
@@ -888,10 +888,11 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
 }
 
-extension CameraViewController: UITextFieldDelegate{
-    func textFieldDidEndEditing(_ textField: UITextField) {
+extension CameraViewController: UITextViewDelegate{
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
         
-        if (textField.text == ""){
+        if (textView.text == ""){
             fontSlider.isHidden = true
             colorSlider.isHidden = true
             lblFont.isHidden = true
