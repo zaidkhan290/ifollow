@@ -313,6 +313,7 @@ extension ProfileViewController: OptionsViewControllerDelegate{
             vc.editablePostText = post.postDescription
             vc.editablePostImage = post.postMedia
             vc.editablePostMediaType = post.postMediaType
+            vc.editablePostUserLocation = post.postLocation
             vc.delegate = self
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self

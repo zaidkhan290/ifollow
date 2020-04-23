@@ -56,6 +56,7 @@ class NewPostViewController: UIViewController {
     var editablePostText = ""
     var editablePostImage = ""
     var editablePostMediaType = ""
+    var editablePostUserLocation = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +65,7 @@ class NewPostViewController: UIViewController {
         
         postView.layer.cornerRadius = 20
         btnBoost.isHidden = true
+        btnPic.isHidden = isForEdit
         postView.dropShadow(color: .white)
         if (isForEdit){
             txtFieldStatus.text = editablePostText
@@ -145,12 +147,9 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnLocationTapped(_ sender: UIButton) {
-        if (!isForEdit){
-            let autocompleteController = GMSAutocompleteViewController()
-            autocompleteController.delegate = self
-            present(autocompleteController, animated: true, completion: nil)
-        }
-        
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
     }
     
     @objc func budgetSliderValueChange(){
@@ -390,6 +389,7 @@ class NewPostViewController: UIViewController {
         
         Utility.showOrHideLoader(shouldShow: true)
         let params = ["post_id": editablePostId,
+                      "location": self.userAddress == "" ? self.editablePostUserLocation : self.userAddress,
                       "description": txtFieldStatus.text!] as [String : Any]
         
         API.sharedInstance.executeAPI(type: .editPost, method: .post, params: params) { (status, result, message) in

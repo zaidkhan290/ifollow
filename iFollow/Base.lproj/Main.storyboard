@@ -565,17 +565,17 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ckG-Yj-E0Q">
-                                <rect key="frame" x="324" y="75.666666666666686" width="90" height="600.33333333333326"/>
+                                <rect key="frame" x="304" y="75.666666666666686" width="110" height="600.33333333333326"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="90" id="jrf-9f-ikC"/>
+                                    <constraint firstAttribute="width" constant="110" id="jrf-9f-ikC"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uqr-hH-4hI">
-                                <rect key="frame" x="0.0" y="75.666666666666686" width="90" height="600.33333333333326"/>
+                                <rect key="frame" x="0.0" y="75.666666666666686" width="110" height="600.33333333333326"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="90" id="cH5-jO-aJM"/>
+                                    <constraint firstAttribute="width" constant="110" id="cH5-jO-aJM"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -3683,7 +3683,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages will be deleted if not read in 3 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iey-Xz-Ghm">
-                                <rect key="frame" x="85.333333333333329" y="110" width="243.33333333333337" height="14"/>
+                                <rect key="frame" x="82.666666666666686" y="110" width="249" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.1215686275" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

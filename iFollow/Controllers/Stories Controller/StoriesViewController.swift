@@ -69,6 +69,16 @@ class StoriesViewController: UIViewController {
         swipeDownGesture.direction = .down
         self.hiddenView.addGestureRecognizer(swipeDownGesture)
         
+        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(backToPrevUserStory))
+        swipeRightGesture.direction = .right
+        self.hiddenView.addGestureRecognizer(swipeRightGesture)
+        self.prevStoryView.addGestureRecognizer(swipeRightGesture)
+        
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(goToNextUserStory))
+        swipeLeftGesture.direction = .left
+        self.hiddenView.addGestureRecognizer(swipeLeftGesture)
+        self.nextStoryView.addGestureRecognizer(swipeLeftGesture)
+        
         lblUsername.isUserInteractionEnabled = true
         lblUsername.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userNameTapped)))
         userImage.isUserInteractionEnabled = true
@@ -624,6 +634,61 @@ class StoriesViewController: UIViewController {
         UIView.commitAnimations()
     }
     
+    @objc func goToNextUserStory(){
+        
+        if (!isForMyStory){
+            let nextUserIndex = storyUserIndex + 1
+            if (self.storiesUsersArray.count - nextUserIndex == 0){
+                self.dismissStory()
+            }
+            else{
+                let vc = Utility.getStoriesViewController()
+                vc.isForMyStory = false
+                vc.isForPublicStory = isForPublicStory
+                vc.storyUserIndex = nextUserIndex
+                if (isVideoPlaying){
+                    self.videoPlayer.pause()
+                }
+                self.animateToNextUserStory(vc: vc)
+            }
+        }
+    }
+    
+    @objc func backToPrevUserStory(){
+        
+        if (!isForMyStory){
+           
+            if (storyUserIndex > 0){
+                let prevUserIndex = storyUserIndex - 1
+                if (self.storiesUsersArray.count - prevUserIndex == 0){
+                    self.dismissStory()
+                }
+                else{
+                    let vc = Utility.getStoriesViewController()
+                    vc.isForMyStory = false
+                    vc.isForPublicStory = isForPublicStory
+                    vc.storyUserIndex = prevUserIndex
+                    if (isVideoPlaying){
+                        self.videoPlayer.pause()
+                    }
+                    UIView.beginAnimations("", context: nil)
+                    UIView.setAnimationDuration(1.0)
+                    UIView.setAnimationCurve(UIView.AnimationCurve.easeInOut)
+                    UIView.setAnimationTransition(UIView.AnimationTransition.flipFromLeft, for: (self.navigationController?.view)!, cache: false)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                    UIView.commitAnimations()
+                }
+            }
+            else{
+                self.dismissStory()
+            }
+        }
+        else{
+            self.dismissStory()
+        }
+        
+    }
+    
 }
 
 extension StoriesViewController: SegmentedProgressBarDelegate{
@@ -651,20 +716,7 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
             self.dismissStory()
         }
         else{
-            let nextUserIndex = storyUserIndex + 1
-            if (self.storiesUsersArray.count - nextUserIndex == 0){
-               self.dismissStory()
-            }
-            else{
-                let vc = Utility.getStoriesViewController()
-                vc.isForMyStory = false
-                vc.isForPublicStory = isForPublicStory
-                vc.storyUserIndex = nextUserIndex
-                if (isVideoPlaying){
-                    self.videoPlayer.pause()
-                }
-                self.animateToNextUserStory(vc: vc)
-            }
+            goToNextUserStory()
         }
         
     }
