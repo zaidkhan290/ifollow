@@ -611,6 +611,8 @@ class StoriesViewController: UIViewController {
                                 "isRead": false,
                                 "timestamp" : timeStamp])
                             
+                            self.sendPushNotification(chatId: chatId)
+                            
                             Loaf("Feedback sent", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                                 self.txtFieldMessage.text = ""
                             }
@@ -636,6 +638,18 @@ class StoriesViewController: UIViewController {
                 }
                 
             }
+        }
+    }
+    
+    func sendPushNotification(chatId: String){
+        let params = ["user_id": self.currentUserId,
+                      "alert": "\(Utility.getLoginUserFullName()) left feedback on your story",
+            "name": Utility.getLoginUserFullName(),
+            "data": "",
+            "tag": 12,
+            "chat_room_id": chatId] as [String: Any]
+        API.sharedInstance.executeAPI(type: .sendPushNotification, method: .post, params: params) { (status, result, message) in
+            
         }
     }
     

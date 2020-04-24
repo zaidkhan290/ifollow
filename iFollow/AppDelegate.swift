@@ -12,6 +12,8 @@ import Firebase
 import GooglePlaces
 import UserNotificationsUI
 import GoogleMobileAds
+import Siren
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -28,6 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         registerForPushNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
+        let notificationOption = launchOptions?[.remoteNotification]
+        if notificationOption != nil{
+            let notificationJSON = JSON(notificationOption as! [AnyHashable : Any])
+            self.handlePushNotification(json: notificationJSON)
+        }
+        
         return true
     }
 
@@ -55,6 +64,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        let siren = Siren.shared
+        siren.rulesManager = RulesManager(globalRules: .critical, showAlertAfterCurrentVersionHasBeenReleasedForDays: 0)
+        siren.wail()
+        
         if (Utility.getLoginUserId() != 0){
             let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
             usersRef.updateChildValues(["isActive" : true])
@@ -120,13 +133,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
-//        let notificationJSON = JSON(response.notification.request.content.userInfo)
-//        if (notificationJSON["custom_data"]["node_id"].stringValue != ""){
-//            navigateToChat(json: notificationJSON)
-//        }
-//        else{
-//            navigateToNotifications()
-//        }
+        let notificationJSON = JSON(response.notification.request.content.userInfo)
+        self.handlePushNotification(json: notificationJSON)
         
     }
     
@@ -134,5 +142,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         completionHandler([.alert, .badge, .sound])
     }
 
+    func handlePushNotification(json: JSON){
+        
+        if (UserModel.getCurrentUser() != nil){
+            if (json["tag"].intValue == 3){
+                let vc = Utility.getPostDetailViewController()
+                vc.postId = json["request_id"].intValue
+                vc.isFromPush = true
+                UIWINDOW!.rootViewController = vc
+            }
+            else if (json["tag"].intValue == 11){
+                let vc = Utility.getChatContainerViewController()
+                vc.isFromGroupChat = true
+                vc.isFromPush = true
+                let model = GroupChatModel()
+                model.updateModelWithJSON(json: json["request_id"])
+                vc.chatId = model.groupChatId
+                vc.groupChatModel = model
+                let navVC = UINavigationController(rootViewController: vc)
+                navVC.isNavigationBarHidden = true
+                UIWINDOW!.rootViewController = navVC
+            }
+            else if (json["tag"].intValue == 12){
+                let vc = Utility.getChatContainerViewController()
+                vc.isPrivateChat = false
+                vc.isFromPush = true
+                vc.chatId = json["request_id"]["chat_room_id"].stringValue
+                vc.userId = json["request_id"]["user_id"].intValue
+                vc.userName = json["request_id"]["user_name"].stringValue
+                vc.chatUserImage = json["request_id"]["image"].stringValue.replacingOccurrences(of: "\\", with: "")
+                UIWINDOW!.rootViewController = vc
+            }
+            else if (json["tag"].intValue == 13){
+                let vc = Utility.getChatContainerViewController()
+                vc.isPrivateChat = true
+                vc.isFromPush = true
+                vc.chatId = json["request_id"]["chat_room_id"].stringValue
+                vc.userId = json["request_id"]["user_id"].intValue
+                vc.userName = json["request_id"]["user_name"].stringValue
+                vc.chatUserImage = json["request_id"]["image"].stringValue.replacingOccurrences(of: "\\", with: "")
+                UIWINDOW!.rootViewController = vc
+            }
+            else{
+                let vc = Utility.getTabBarViewController()
+                vc.selectedIndex = 3
+                UIWINDOW!.rootViewController = vc
+            }
+        }
+        
+    }
+    
 }
 

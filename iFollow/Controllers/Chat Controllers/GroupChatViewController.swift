@@ -692,13 +692,15 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
     }
     
     func sendPushNotification(){
-        //        if (shouldSendNotification){
-        //            let params = ["node_id": chatId,
-        //                          "receiver_id": otherUserId]
-        //            API.sharedInstance.executeAPI(type: .sendChatNotification, method: .post, params: params) { (status, result, message) in
-        //
-        //            }
-        //        }
+        let params = ["user_id": "",
+                      "alert": "\(self.groupModel.groupName): \(Utility.getLoginUserFullName()) sent a message",
+            "name": Utility.getLoginUserFullName(),
+            "data": "",
+            "tag": 11,
+            "chat_room_id": self.chatId] as [String: Any]
+        API.sharedInstance.executeAPI(type: .sendPushNotification, method: .post, params: params) { (status, result, message) in
+            
+        }
     }
     
     func saveImageToFireBaseStorage(image: UIImage){

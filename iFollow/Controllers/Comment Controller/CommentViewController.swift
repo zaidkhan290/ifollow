@@ -102,6 +102,7 @@ class CommentViewController: UIViewController {
                                                                             "isRead": false,
                                                                             "postId": self.postId,
                                                                             "timestamp" : timeStamp])
+                            self.sendPushNotification()
                             
                             Loaf("Feedback sent", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                                 self.dismiss(animated: true, completion: nil)
@@ -131,6 +132,18 @@ class CommentViewController: UIViewController {
             
         }
         
+    }
+    
+    func sendPushNotification(){
+        let params = ["user_id": postUserId,
+                      "alert": "\(Utility.getLoginUserFullName()) left feedback on your post",
+            "name": Utility.getLoginUserFullName(),
+            "data": "",
+            "tag": 12,
+            "chat_room_id": self.chatId] as [String: Any]
+        API.sharedInstance.executeAPI(type: .sendPushNotification, method: .post, params: params) { (status, result, message) in
+            
+        }
     }
     
     @objc func swipeDownGesture(){

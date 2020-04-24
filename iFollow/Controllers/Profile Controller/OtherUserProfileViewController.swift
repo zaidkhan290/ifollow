@@ -45,6 +45,8 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     var isFromStory = false
     var isPrivateProfile = false
     
+    var isFromPush = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -186,10 +188,18 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     @IBAction func btnBackTapped(_ sender: UIButton){
-        self.dismiss(animated: true, completion: nil)
-        if (isFromStory){
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userProfileDismissed"), object: nil)
+        
+        if (isFromPush){
+            let vc = Utility.getTabBarViewController()
+            UIWINDOW!.rootViewController = vc
         }
+        else{
+            self.dismiss(animated: true, completion: nil)
+            if (isFromStory){
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userProfileDismissed"), object: nil)
+            }
+        }
+        
     }
     
     @objc func privateTalkTapped(){

@@ -70,6 +70,7 @@ class HomeViewController: UIViewController {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(refreshHomeData), name: NSNotification.Name(rawValue: "refreshHomeData"), object: nil)
       //  NotificationCenter.default.addObserver(self, selector: #selector(refreshHomeData), name: NSNotification.Name(rawValue: "refreshHomeDataAfterViewedStory"), object: nil)
+        updateDeviceToken()
         
     }
     
@@ -404,6 +405,23 @@ class HomeViewController: UIViewController {
                 
             }
         }
+    }
+    
+    func updateDeviceToken(){
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            
+            var deviceToken = ""
+            if let token = UserDefaults.standard.value(forKey: "DeviceToken"){
+                deviceToken = token as! String
+                
+                let params = ["mobile_id": deviceToken]
+                API.sharedInstance.executeAPI(type: .updateDeviceToken, method: .post, params: params, completion: { (success, result, message) in
+                    print(success)
+                })
+            }
+        }
+        
     }
     
 }

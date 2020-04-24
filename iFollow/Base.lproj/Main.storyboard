@@ -3685,7 +3685,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages will be deleted if not read in 3 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iey-Xz-Ghm">
-                                <rect key="frame" x="85.333333333333329" y="110" width="243.33333333333337" height="14"/>
+                                <rect key="frame" x="82.666666666666686" y="110" width="249" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.1215686275" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -4668,6 +4668,17 @@
                                     <action selector="btnImageTapped:" destination="umN-9q-Xkt" eventType="touchUpInside" id="SXO-bd-p5V"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NAN-UC-4C2">
+                                <rect key="frame" x="329" y="49.666666666666664" width="25" height="24.999999999999993"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="0lW-yf-cWY"/>
+                                    <constraint firstAttribute="height" constant="25" id="79p-U3-c0V"/>
+                                </constraints>
+                                <state key="normal" image="block"/>
+                                <connections>
+                                    <action selector="btnBlockTapped:" destination="umN-9q-Xkt" eventType="touchUpInside" id="i67-Io-AH8"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0u-NY-vcG">
                                 <rect key="frame" x="0.0" y="104" width="414" height="40"/>
                                 <subviews>
@@ -4703,6 +4714,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="HoF-IS-tvd" firstAttribute="top" secondItem="Vz9-Hq-VaC" secondAttribute="top" constant="20" id="1q4-aK-7nB"/>
+                            <constraint firstItem="Q2i-rC-rSe" firstAttribute="leading" secondItem="NAN-UC-4C2" secondAttribute="trailing" constant="10" id="3SA-tr-9k0"/>
                             <constraint firstItem="C0C-wQ-VMx" firstAttribute="leading" secondItem="HoF-IS-tvd" secondAttribute="trailing" constant="10" id="3ge-N4-4r6"/>
                             <constraint firstItem="Q2i-rC-rSe" firstAttribute="centerY" secondItem="mdm-cz-610" secondAttribute="centerY" id="5o7-jc-ulJ"/>
                             <constraint firstItem="Vz9-Hq-VaC" firstAttribute="bottom" secondItem="M8g-ZK-Ooy" secondAttribute="bottom" id="78B-DZ-E56"/>
@@ -4718,6 +4730,7 @@
                             <constraint firstItem="Q0u-NY-vcG" firstAttribute="top" secondItem="Qyz-20-cbk" secondAttribute="bottom" constant="1" id="OpQ-ht-GlC"/>
                             <constraint firstItem="Vz9-Hq-VaC" firstAttribute="trailing" secondItem="M8g-ZK-Ooy" secondAttribute="trailing" id="Qvb-wr-gS2"/>
                             <constraint firstItem="Q0u-NY-vcG" firstAttribute="leading" secondItem="Vz9-Hq-VaC" secondAttribute="leading" id="R5U-hB-oAc"/>
+                            <constraint firstItem="NAN-UC-4C2" firstAttribute="centerY" secondItem="Q2i-rC-rSe" secondAttribute="centerY" id="bq2-Q9-KbX"/>
                             <constraint firstItem="Q0u-NY-vcG" firstAttribute="top" secondItem="HoF-IS-tvd" secondAttribute="bottom" constant="20" id="fSS-GI-BV3"/>
                             <constraint firstItem="ViJ-fP-v12" firstAttribute="centerY" secondItem="ouL-rX-3wa" secondAttribute="centerY" id="ipy-lG-XDK"/>
                             <constraint firstItem="ouL-rX-3wa" firstAttribute="top" secondItem="C0C-wQ-VMx" secondAttribute="bottom" constant="5" id="qYo-2e-r6h"/>
@@ -4732,6 +4745,7 @@
                     <connections>
                         <outlet property="alertView" destination="Q0u-NY-vcG" id="Maq-y5-kVc"/>
                         <outlet property="alertViewHeightConstraint" destination="XHj-3B-RuH" id="UzI-gD-fFg"/>
+                        <outlet property="btnBlock" destination="NAN-UC-4C2" id="1Lq-dH-Kh1"/>
                         <outlet property="containerView" destination="M8g-ZK-Ooy" id="VbJ-mF-9TP"/>
                         <outlet property="lblMessage" destination="ipZ-d1-LMu" id="AZO-Uz-7ha"/>
                         <outlet property="lblOnlineStatus" destination="ViJ-fP-v12" id="pkJ-XX-rGz"/>
@@ -5692,6 +5706,7 @@
         <image name="attach" width="17.666666030883789" height="17.666666030883789"/>
         <image name="attach-1" width="25" height="25"/>
         <image name="back" width="18.666666030883789" height="15.333333015441895"/>
+        <image name="block" width="20.666666030883789" height="20.666666030883789"/>
         <image name="capture" width="55" height="55"/>
         <image name="chatBackIcon" width="18.666666030883789" height="15.333333015441895"/>
         <image name="chatUserIcon" width="44" height="44"/>

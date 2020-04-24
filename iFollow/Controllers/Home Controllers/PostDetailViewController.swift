@@ -23,6 +23,8 @@ class PostDetailViewController: UIViewController {
     var optionsPopupIndex = 0
     var isFullScreen = false
     
+    var isFromPush = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,7 +38,13 @@ class PostDetailViewController: UIViewController {
     //MARK:- Actions and Methods
     
     @IBAction func btnBackTapped(_ sender: UIButton){
-        self.dismiss(animated: true, completion: nil)
+        if (isFromPush){
+            let vc = Utility.getTabBarViewController()
+            UIWINDOW!.rootViewController = vc
+        }
+        else{
+           self.dismiss(animated: true, completion: nil)
+        }
     }
     
     func getPostDetail(){

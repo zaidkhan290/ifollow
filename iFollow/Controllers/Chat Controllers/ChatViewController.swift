@@ -802,13 +802,17 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     }
     
     func sendPushNotification(){
-//        if (shouldSendNotification){
-//            let params = ["node_id": chatId,
-//                          "receiver_id": otherUserId]
-//            API.sharedInstance.executeAPI(type: .sendChatNotification, method: .post, params: params) { (status, result, message) in
-//
-//            }
-//        }
+        if (shouldSendNotification){
+            let params = ["user_id": self.otherUserId,
+                          "alert": isPrivateChat ? "\(Utility.getLoginUserFullName()) sent you a private message" : "\(Utility.getLoginUserFullName()) sent you a message",
+                          "name": Utility.getLoginUserFullName(),
+                          "data": "",
+                          "tag": isPrivateChat ? 13 : 12,
+            "chat_room_id": self.chatId] as [String: Any]
+            API.sharedInstance.executeAPI(type: .sendPushNotification, method: .post, params: params) { (status, result, message) in
+
+            }
+        }
     }
     
     func saveImageToFireBaseStorage(image: UIImage){

@@ -57,6 +57,8 @@ enum EndPoint: String {
     case getDiscover = "discover"
     case editPost = "update_post"
     case sharePost = "share_post"
+    case updateDeviceToken = "update_mobile_id"
+    case sendPushNotification = "send_notification"
 }
 
 enum StatusCodes {
