@@ -21,15 +21,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires camera permission for sharing your stories</string>
+	<string>iFollow will only upload and share photos you choose.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app requires your location to show you geo filters</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This app requires photo library permission for saving screenshot</string>
+	<string>iFollow uses to make some features work, personalize content, help people find places and more. You can always change this later in your phone&apos;s settings</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app requires photo library permission for sharing your stories</string>
+	<string>iFollow will only upload and share photos you choose.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app requires microphone to record your audio</string>
+	<string>iFollow would like to access your microphone in order to record voice messages and start sharing videos with background sound.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Bold_0.ttf</string>
@@ -74,7 +72,7 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-    <key>GADApplicationIdentifier</key>
-    <string>ca-app-pub-3940256099942544~1458002511</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
 </dict>
 </plist>

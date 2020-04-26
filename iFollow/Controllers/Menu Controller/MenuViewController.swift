@@ -33,8 +33,8 @@ class MenuViewController: UIViewController {
         menuTableView.register(menuItemCellNib, forCellReuseIdentifier: "MenuCell")
         menuTableView.register(menuSeperatorCellNib, forCellReuseIdentifier: "MenuSeperatorTableViewCell")
         
-        menuItems = ["Privacy Settings", "Blocked Users", "Payments", "Geo Tagging", "", "Change Password", "Terms And Conditions", "Privacy Policy", "Invite Friends", "Sign Out"]
-        menuIcons = ["privacy", "friends", "credit-card", "map-location (1)", "", "password", "privacy", "privacy", "friends", "logout"]
+        menuItems = ["Privacy Settings", "Blocked Users", /*"Payments", "Geo Tagging",*/ "", "Change Password", "Terms And Conditions", "Privacy Policy", "Invite Friends", "Sign Out"]
+        menuIcons = ["privacy", "friends", /*"credit-card", "map-location (1)",*/ "", "password", "privacy", "privacy", "friends", "logout"]
         
     }
     
@@ -81,12 +81,12 @@ class MenuViewController: UIViewController {
 extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 8
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if (indexPath.row == 4){
+        if (indexPath.row == 2){
             let cell = tableView.dequeueReusableCell(withIdentifier: "MenuSeperatorTableViewCell", for: indexPath) as! MenuSeperatorTableViewCell
             return cell
         }
@@ -100,7 +100,7 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath.row == 4){
+        if (indexPath.row == 2){
             return 20
         }
         return 50
@@ -116,21 +116,25 @@ extension MenuViewController: UITableViewDataSource, UITableViewDelegate{
             let vc = Utility.getBlockUsersViewController()
             self.pushToVC(vc: vc)
         }
-        else if (indexPath.row == 5){
+        else if (indexPath.row == 3){
             let vc = Utility.getSetPasswordViewController()
             self.pushToVC(vc: vc)
         }
-        else if (indexPath.row == 6){
+        else if (indexPath.row == 4){
             let vc = Utility.getPrivacyPolicyViewController()
             vc.isTerms = true
             self.pushToVC(vc: vc)
         }
-        else if (indexPath.row == 7){
+        else if (indexPath.row == 5){
             let vc = Utility.getPrivacyPolicyViewController()
             vc.isTerms = false
             self.pushToVC(vc: vc)
         }
-        else if (indexPath.row == 9){
+        else if (indexPath.row == 6){
+            let activityVC = UIActivityViewController(activityItems: ["Download iFollow now!: https://ifollowinc.com/invite.html"], applicationActivities: nil)
+            self.present(activityVC, animated: true, completion: nil)
+        }
+        else if (indexPath.row == 7){
             showLogoutPopup()
         }
         
