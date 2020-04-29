@@ -25,6 +25,7 @@ class ViewersViewController: UIViewController {
     var numberOfTrends = 0
     var postId = 0
     var trendUsers = [PostLikesUserModel]()
+    var selectedIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,6 +125,77 @@ class ViewersViewController: UIViewController {
         }
     }
     
+    func sendTrendRequest(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["user_id": trendUsers[selectedIndex].userId]
+        API.sharedInstance.executeAPI(type: .trendRequest, method: .post, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                    self.trendUsers[self.selectedIndex].userRequestStatus = result["status"].stringValue
+                    self.friendsTableView.reloadData()
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    func showUnTrendPopup(){
+        let vc = UIAlertController(title: "Untrend", message: "Are you sure you want to untrend \(trendUsers[selectedIndex].userFullName)?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.untrendUser()
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        vc.addAction(yesAction)
+        vc.addAction(noAction)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func untrendUser(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["user_id": trendUsers[selectedIndex].userId]
+        API.sharedInstance.executeAPI(type: .untrendUser, method: .post, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                    self.trendUsers[self.selectedIndex].userRequestStatus = ""
+                    self.friendsTableView.reloadData()
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+        }
+        
+    }
+    
     @IBAction func btnCloseTapped(_ sender: UIButton){
         self.dismiss(animated: true, completion: nil)
         if (delegate != nil){
@@ -148,8 +220,42 @@ extension ViewersViewController: UITableViewDataSource, UITableViewDelegate{
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.sd_setImage(with: URL(string: user.userImage), placeholderImage: UIImage(named: "img_placeholder"))
-        cell.btnSend.isHidden = true
         cell.lblLastSeen.isHidden = true
+        
+        if (isForLike){
+            cell.btnSend.isHidden = true
+        }
+        else{
+            cell.indexPath = indexPath
+            cell.delegate = self
+            if (user.userId == Utility.getLoginUserId()){
+                cell.btnSend.isHidden = true
+            }
+            else{
+                cell.btnSend.isHidden = false
+                if (user.userRequestStatus == ""){
+                    cell.btnSend.setTitle("Trend", for: .normal)
+                    cell.btnSend.backgroundColor = .white
+                    cell.btnSend.layer.borderWidth = 1
+                    cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+                    cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
+                }
+                else if (user.userRequestStatus == "success"){
+                    cell.btnSend.setTitle("Trending", for: .normal)
+                    cell.btnSend.backgroundColor = Theme.profileLabelsYellowColor
+                    cell.btnSend.setTitleColor(.white, for: .normal)
+                }
+                else{
+                    cell.btnSend.setTitle("Untrend", for: .normal)
+                    cell.btnSend.backgroundColor = .white
+                    cell.btnSend.layer.borderWidth = 1
+                    cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+                    cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
+                }
+            }
+        }
+        
+        
         return cell
     }
     
@@ -164,4 +270,18 @@ extension ViewersViewController: UITableViewDataSource, UITableViewDelegate{
         }
         
     }
+}
+
+extension ViewersViewController: FriendsTableViewCellDelegate{
+    
+    func btnSendTapped(indexPath: IndexPath) {
+        selectedIndex = indexPath.row
+        if (trendUsers[indexPath.row].userRequestStatus == ""){
+            sendTrendRequest()
+        }
+        else{
+            showUnTrendPopup()
+        }
+    }
+    
 }

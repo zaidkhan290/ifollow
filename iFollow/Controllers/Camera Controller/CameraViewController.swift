@@ -506,11 +506,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
     func changeImageFilter(){
         if (selectedFilter == 0){
-            cameraView.contentMode = .scaleAspectFill
             cameraView.image = selectedImage
         }
         else{
-            cameraView.contentMode = .scaleAspectFill
             let image = selectedImage
             let filteredImage = image.addFilter(filter: filters[selectedFilter])
             cameraView.image = filteredImage
@@ -835,7 +833,13 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             isPictureCaptured = true
-            cameraView.contentMode = .scaleAspectFill
+            
+            if (image.size.width > image.size.height){
+                cameraView.contentMode = .scaleAspectFit
+            }
+            else{
+                cameraView.contentMode = .scaleAspectFill
+            }
             cameraView.isHidden = false
             selectedImage = image
             cameraView.image = image

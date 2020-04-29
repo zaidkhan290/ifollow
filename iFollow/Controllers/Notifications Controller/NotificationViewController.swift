@@ -10,6 +10,7 @@ import UIKit
 import Loaf
 import RealmSwift
 import EmptyDataSet_Swift
+import PullToRefresh
 
 class NotificationViewController: UIViewController {
 
@@ -17,6 +18,7 @@ class NotificationViewController: UIViewController {
     @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var notificationTableView: UITableView!
     var notifications = [NotificationModel]()
+    let refresher = PullToRefresh()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,17 +30,23 @@ class NotificationViewController: UIViewController {
         notificationTableView.register(cellNib, forCellReuseIdentifier: "NotificationCell")
         notificationTableView.emptyDataSetSource = self
         notificationTableView.emptyDataSetDelegate = self
+        self.notificationTableView.addPullToRefresh(refresher) {
+            self.getNotifications(isForRefresh: true)
+        }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        getNotifications()
+        getNotifications(isForRefresh: false)
     }
     
-    func getNotifications(){
+    func getNotifications(isForRefresh: Bool){
         
-        Utility.showOrHideLoader(shouldShow: true)
+        if (!isForRefresh){
+            Utility.showOrHideLoader(shouldShow: true)
+        }
+        self.notificationTableView.isUserInteractionEnabled = false
         
         API.sharedInstance.executeAPI(type: .getNotifications, method: .get, params: nil) { (status, result, message) in
             
@@ -78,6 +86,8 @@ class NotificationViewController: UIViewController {
     
     func setNotifications(){
         notifications = NotificationModel.getAllNotifications()
+        self.notificationTableView.endRefreshing(at: .top)
+        self.notificationTableView.isUserInteractionEnabled = true
         self.notificationTableView.reloadData()
     }
     
@@ -92,7 +102,7 @@ class NotificationViewController: UIViewController {
                     Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                         
                     }
-                    self.getNotifications()
+                    self.getNotifications(isForRefresh: false)
                 }
                 else if (status == .failure){
                     Utility.showOrHideLoader(shouldShow: false)

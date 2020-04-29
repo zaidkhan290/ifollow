@@ -39,5 +39,6 @@ pod 'DTPhotoViewerController', '~> 1.2.5'
 pod 'MobilePlayer'
 pod 'Google-Mobile-Ads-SDK'
 pod 'Siren', :git => 'https://github.com/ArtSabintsev/Siren.git', :branch => 'swift4.2'
+pod 'PullToRefresher', '3.1'
 
 end
