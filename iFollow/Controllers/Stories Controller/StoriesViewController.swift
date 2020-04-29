@@ -47,7 +47,6 @@ class StoriesViewController: UIViewController {
     var currentStoryId = 0
     var currentStoryMedia = ""
     var currentStoryMediaType = ""
-    var chatRef = rootRef
     
     var spb: SegmentedProgressBar!
     
@@ -593,18 +592,18 @@ class StoriesViewController: UIViewController {
                         let chatId = result["chat_room_id"].stringValue
                         if (chatId != ""){
                             
-                            self.chatRef = self.chatRef.child("NormalChats").child(chatId)
+                            let chatRef = rootRef.child("NormalChats").child(chatId)
                             
                             let timeStamp = ServerValue.timestamp()
                             
-                            self.chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                            chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
                                                                             "senderId": "\(Utility.getLoginUserId())",
                                 "message": self.currentStoryMedia,
                                 "type": self.currentStoryMediaType == "image" ? 2 : 4,
                                 "isRead": false,
                                 "timestamp" : timeStamp])
                             
-                            self.chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                            chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
                                                                             "senderId": "\(Utility.getLoginUserId())",
                                 "message": "\(Utility.getLoginUserFullName()) left feedback on your story: \(self.txtFieldMessage.text!)",
                                 "type": 1,

@@ -50,7 +50,7 @@ class PostDetailViewController: UIViewController {
     func getPostDetail(){
         let params = ["post_id": postId]
         Utility.showOrHideLoader(shouldShow: true)
-        API.sharedInstance.executeAPI(type: .getPostDetail, method: .get, params: params) { (status, result, message) in
+        API.sharedInstance.executeAPI(type: .getPostFromNotification, method: .get, params: params) { (status, result, message) in
             
             DispatchQueue.main.async {
                 Utility.showOrHideLoader(shouldShow: false)

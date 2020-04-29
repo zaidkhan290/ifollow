@@ -8,6 +8,7 @@
 
 import UIKit
 import Loaf
+import Firebase
 
 class AllChatsListViewController: UIViewController {
 
@@ -108,7 +109,7 @@ class AllChatsListViewController: UIViewController {
                                     else{
                                         recentChat.lastMessageTime = lastMessageTime
                                         recentChat.isRead = true
-                                        recentChat.lastMessage = "Chat expired"
+                                        recentChat.lastMessage = "  "
                                     }
                                 }
                                 else{
@@ -174,6 +175,33 @@ class AllChatsListViewController: UIViewController {
         }
         self.chatListTableView.reloadData()
     }
+    
+    func showDeleteChatPopup(indexPath: IndexPath){
+        let vc = UIAlertController(title: "Delete Chat", message: "Are you sure you want to delete this chat?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+                
+                if (self.txtFieldSearch.text == ""){
+                    self.chatRef.child(self.chatsArray[indexPath.row].chatId).removeValue()
+                    self.chatsArray.remove(at: indexPath.row)
+                }
+                else{
+                    self.chatRef.child(self.searchChatsArray[indexPath.row].chatId).removeValue()
+                    self.chatsArray.removeAll{$0.chatId == self.searchChatsArray[indexPath.row].chatId}
+                    self.searchChatsArray.remove(at: indexPath.row)
+                }
+                Loaf("Chat deleted", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+                    
+                }
+                self.chatListTableView.deleteRows(at: [indexPath], with: .left)
+                self.chatListTableView.reloadData()
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        vc.addAction(yesAction)
+        vc.addAction(noAction)
+        self.present(vc, animated: true, completion: nil)
+    }
 
 }
 
@@ -216,6 +244,18 @@ extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate
         vc.chatUserImage = chat.chatUserImage
         self.chatListTableView.reloadData()
         self.pushToVC(vc: vc)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+            self.showDeleteChatPopup(indexPath: indexPath)
+        }
+        return [deleteAction]
     }
     
 }

@@ -17,17 +17,24 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.1</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>iFollow will only upload and share photos you choose.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>iFollow uses to make some features work, personalize content, help people find places and more. You can always change this later in your phone&apos;s settings</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>iFollow will only upload and share photos you choose.</string>
+	<string>iFollow uses to make some features work, personalize content, help people find places and more. You can always change this later in your phone's settings</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>iFollow would like to access your microphone in order to record voice messages and start sharing videos with background sound.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>iFollow will only upload and share photos you choose.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Bold_0.ttf</string>
@@ -67,12 +74,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
-	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3940256099942544~1458002511</string>
 </dict>
 </plist>

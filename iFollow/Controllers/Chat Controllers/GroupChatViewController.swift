@@ -67,7 +67,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         self.messageAdded()
         self.inputToolbar.contentView.textView.placeHolder = "Type a message..."
         self.inputToolbar.contentView.textView.layer.borderColor = UIColor.clear.cgColor
-        self.inputToolbar.contentView.textView.autocorrectionType = .no
+        self.inputToolbar.contentView.textView.autocorrectionType = .yes
         
         let rightContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 130, height: 42))
         

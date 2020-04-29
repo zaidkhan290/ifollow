@@ -2499,7 +2499,7 @@
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4177,6 +4177,7 @@
                         <outlet property="editView" destination="uwx-yt-Ojs" id="SDC-6f-tO7"/>
                         <outlet property="emptyStateView" destination="qBV-LZ-uoG" id="PqT-mv-fg1"/>
                         <outlet property="lblEmptyStateDescription" destination="4kq-J3-a0d" id="zIJ-z7-b5f"/>
+                        <outlet property="lblNoPosts" destination="kAw-kM-PcH" id="AbA-le-dRk"/>
                         <outlet property="lblPosts" destination="BnA-rP-7XE" id="5hN-P3-b5x"/>
                         <outlet property="lblTrend" destination="WXI-HC-2CE" id="Rn3-26-dTA"/>
                         <outlet property="lblTrending" destination="nJL-e4-tD0" id="cBH-XR-O4v"/>

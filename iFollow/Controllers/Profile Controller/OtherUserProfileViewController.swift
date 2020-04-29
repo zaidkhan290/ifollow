@@ -35,6 +35,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     @IBOutlet weak var trendsView: UIView!
     @IBOutlet weak var trendingsView: UIView!
     @IBOutlet weak var lblEmptyStateDescription: UILabel!
+    @IBOutlet weak var lblNoPosts: UILabel!
     
     var otherUserProfile = OtherUserModel()
     var isTrending = false
@@ -649,6 +650,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
             }
             else{
                 emptyStateView.isHidden = false
+                lblNoPosts.isHidden = true
                 lblEmptyStateDescription.isHidden = false
                 return 0
             }
