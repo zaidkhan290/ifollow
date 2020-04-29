@@ -178,6 +178,13 @@ class HomeViewController: UIViewController {
                                                                            "isRead": false,
                                                                            "timestamp" : ServerValue.timestamp()])
                                 
+                                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                           "senderId": "\(Utility.getLoginUserId())",
+                                                                           "message": "\(Utility.getLoginUserFullName()) shared a story with you",
+                                                                           "type": 1,
+                                                                           "isRead": false,
+                                                                           "timestamp" : ServerValue.timestamp()])
+                                
                                 Utility.showOrHideLoader(shouldShow: false)
                                 
                             }
@@ -241,6 +248,13 @@ class HomeViewController: UIViewController {
                                                                            "senderId": "\(Utility.getLoginUserId())",
                                                                            "message": videoURL.absoluteString,
                                                                            "type": 4,
+                                                                           "isRead": false,
+                                                                           "timestamp" : ServerValue.timestamp()])
+                                
+                                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                           "senderId": "\(Utility.getLoginUserId())",
+                                                                           "message": "\(Utility.getLoginUserFullName()) shared a story with you",
+                                                                           "type": 1,
                                                                            "isRead": false,
                                                                            "timestamp" : ServerValue.timestamp()])
                                 

@@ -2250,7 +2250,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
                                     <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="X8Y-OA-kLg">
-                                        <rect key="frame" x="20" y="378.66666666666669" width="374" height="52"/>
+                                        <rect key="frame" x="202" y="378.66666666666669" width="10" height="52"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="30"/>
@@ -2322,10 +2322,9 @@
                                     <constraint firstItem="MSi-1I-SUf" firstAttribute="centerY" secondItem="XDX-CZ-y98" secondAttribute="centerY" multiplier="1.1" id="GSN-Cd-wKG"/>
                                     <constraint firstItem="MSi-1I-SUf" firstAttribute="centerX" secondItem="XDX-CZ-y98" secondAttribute="centerX" id="NWV-fz-VlE"/>
                                     <constraint firstItem="E7w-Dh-cgK" firstAttribute="top" secondItem="XDX-CZ-y98" secondAttribute="top" id="U53-La-vyY"/>
-                                    <constraint firstAttribute="trailing" secondItem="X8Y-OA-kLg" secondAttribute="trailing" constant="20" id="VOR-Cd-WwN"/>
                                     <constraint firstItem="X8Y-OA-kLg" firstAttribute="centerY" secondItem="XDX-CZ-y98" secondAttribute="centerY" multiplier="1.1" id="j9U-rY-nAP"/>
                                     <constraint firstItem="E7w-Dh-cgK" firstAttribute="leading" secondItem="XDX-CZ-y98" secondAttribute="leading" id="osC-Aw-00w"/>
-                                    <constraint firstItem="X8Y-OA-kLg" firstAttribute="leading" secondItem="XDX-CZ-y98" secondAttribute="leading" constant="20" id="xrx-g5-uEc"/>
+                                    <constraint firstItem="X8Y-OA-kLg" firstAttribute="centerX" secondItem="XDX-CZ-y98" secondAttribute="centerX" id="p7B-el-hap"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zcm-Q6-Kfl">
