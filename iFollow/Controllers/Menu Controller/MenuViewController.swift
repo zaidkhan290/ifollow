@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import Loaf
 
 class MenuViewController: UIViewController {
 
@@ -64,10 +65,26 @@ class MenuViewController: UIViewController {
     }
     
     func showLogoutPopup(){
+        
         let vc = UIAlertController(title: "Sign Out", message: "Are you sure you want to sign out?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
             DispatchQueue.main.async {
-                Utility.logoutUser()
+                Utility.showOrHideLoader(shouldShow: true)
+                API.sharedInstance.executeAPI(type: .logout, method: .get, params: nil, completion: { (status, result, message) in
+                    DispatchQueue.main.async {
+                        Utility.showOrHideLoader(shouldShow: false)
+                        if (status == .success){
+                            Utility.logoutUser()
+                        }
+                        else{
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                
+                            }
+                        }
+                    }
+                    
+                })
+                
             }
         }
         let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)

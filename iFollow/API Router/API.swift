@@ -62,6 +62,7 @@ enum EndPoint: String {
     case termsConditions = "tnc"
     case privacyPolicy = "privacy"
     case getPostFromNotification = "post_for_notifications"
+    case logout = "logout"
 }
 
 enum StatusCodes {
