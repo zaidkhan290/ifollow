@@ -128,7 +128,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         recordingSession = AVAudioSession.sharedInstance()
         
         do {
-            try recordingSession.setCategory(AVAudioSession.Category.playAndRecord, mode: .default, options: .defaultToSpeaker)
+            try recordingSession.setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
             try recordingSession.setActive(true)
             recordingSession.requestRecordPermission() { [unowned self] allowed in
                 DispatchQueue.main.async {
@@ -459,7 +459,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             recordingSession = AVAudioSession.sharedInstance()
             
             do {
-                try recordingSession.setCategory(AVAudioSession.Category.playAndRecord, mode: .default, options: .defaultToSpeaker)
+                try recordingSession.setCategory(AVAudioSession.Category.playAndRecord, mode: .default, options: .mixWithOthers)
                 try recordingSession.setActive(true)
                 recordingSession.requestRecordPermission() { [unowned self] allowed in
                     DispatchQueue.main.async {
