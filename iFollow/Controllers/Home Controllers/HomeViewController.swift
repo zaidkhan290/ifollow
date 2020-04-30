@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let storyCell = UINib(nibName: "StoryCollectionViewCell", bundle: nil)
         self.storyCollectionView.register(storyCell, forCellWithReuseIdentifier: "StoryCell")
         
@@ -76,6 +76,14 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print(error)
+        }
+        
         let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
         usersRef.updateChildValues(["isActive" : true])
         refreshHomeData()

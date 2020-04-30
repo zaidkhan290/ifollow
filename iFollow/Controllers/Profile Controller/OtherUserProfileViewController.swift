@@ -77,6 +77,16 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print(error)
+        }
+    }
+    
     //MARK:- Actions and Methods
     
     @IBAction func optionsTapped(_ sender: Any) {

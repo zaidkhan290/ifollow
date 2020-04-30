@@ -53,6 +53,13 @@ class StoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print(error)
+        }
+        
         messageInputView.layer.cornerRadius = 20
         messageInputView.dropShadow(color: .white)
         txtFieldMessage.delegate = self
