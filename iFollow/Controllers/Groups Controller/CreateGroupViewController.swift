@@ -148,6 +148,9 @@ class CreateGroupViewController: UIViewController {
                 Utility.showOrHideLoader(shouldShow: false)
                 
                 if (status == .success){
+                    
+                    let groupID = result["chat_room_id"].stringValue
+                    self.sendPushNotification(groupId: groupID)
                     Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(2)) { (handler) in
                         self.goBack()
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RefreshGroupsList"), object: nil)
@@ -186,6 +189,17 @@ class CreateGroupViewController: UIViewController {
         self.present(alertVC, animated: true, completion: nil)
     }
     
+    func sendPushNotification(groupId: String){
+        let params = ["user_id": "",
+                      "alert": "\(txtFieldGroupName.text!): \(Utility.getLoginUserFullName()) created a new group",
+            "name": Utility.getLoginUserFullName(),
+            "data": "",
+            "tag": 11,
+            "chat_room_id": groupId] as [String: Any]
+        API.sharedInstance.executeAPI(type: .sendPushNotification, method: .post, params: params) { (status, result, message) in
+            
+        }
+    }
 }
 
 extension CreateGroupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{

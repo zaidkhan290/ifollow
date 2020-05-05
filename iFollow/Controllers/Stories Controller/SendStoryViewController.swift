@@ -29,6 +29,8 @@ class SendStoryViewController: UIViewController {
     var currentStoryId = 0
     var currentStoryMedia = ""
     var currentStoryMediaType = ""
+    var isForOthersStory = false
+    var isSendToMyStory = false
    
     var delegate: SendStoryViewControllerDelegate!
     var selectedIndex = 0
@@ -133,14 +135,13 @@ class SendStoryViewController: UIViewController {
 extension SendStoryViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recentChatsArray.count
+        return isForOthersStory ? recentChatsArray.count + 1 : recentChatsArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsTableViewCell", for: indexPath) as! FriendsTableViewCell
-        let user = recentChatsArray[indexPath.row]
-        let sendImage = UIImage(named: "storySend")?.withRenderingMode(.alwaysOriginal)
         
+        let sendImage = UIImage(named: "storySend")?.withRenderingMode(.alwaysOriginal)
         cell.btnSend.backgroundColor = .white
         cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
         cell.btnSend.isUserInteractionEnabled = false
@@ -151,40 +152,116 @@ extension SendStoryViewController: UITableViewDataSource, UITableViewDelegate{
         cell.updateConstraintsIfNeeded()
         cell.layoutSubviews()
         
-        cell.userImage.sd_setImage(with: URL(string: user.chatUserImage), placeholderImage: UIImage(named: "img_placeholder"))
-        cell.lblUsername.text = user.chatUserName
-        if (user.isRead){
-            cell.btnSend.setTitle("Sent", for: .normal)
-            cell.btnSend.setImage(nil, for: .normal)
+        if (isForOthersStory){
+            if (indexPath.row == 0){
+                cell.userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "img_placeholder"))
+                cell.lblUsername.text = "My Story"
+                if (isSendToMyStory){
+                    cell.btnSend.setTitle("Sent", for: .normal)
+                    cell.btnSend.setImage(nil, for: .normal)
+                }
+                else{
+                    cell.btnSend.setTitle("", for: .normal)
+                    cell.btnSend.setImage(sendImage, for: .normal)
+                }
+            }
+            else{
+                let user = recentChatsArray[indexPath.row - 1]
+                cell.userImage.sd_setImage(with: URL(string: user.chatUserImage), placeholderImage: UIImage(named: "img_placeholder"))
+                cell.lblUsername.text = user.chatUserName
+                if (user.isRead){
+                    cell.btnSend.setTitle("Sent", for: .normal)
+                    cell.btnSend.setImage(nil, for: .normal)
+                }
+                else{
+                    cell.btnSend.setTitle("", for: .normal)
+                    cell.btnSend.setImage(sendImage, for: .normal)
+                }
+            }
         }
         else{
-            cell.btnSend.setTitle("", for: .normal)
-            cell.btnSend.setImage(sendImage, for: .normal)
+            let user = recentChatsArray[indexPath.row]
+            cell.userImage.sd_setImage(with: URL(string: user.chatUserImage), placeholderImage: UIImage(named: "img_placeholder"))
+            cell.lblUsername.text = user.chatUserName
+            if (user.isRead){
+                cell.btnSend.setTitle("Sent", for: .normal)
+                cell.btnSend.setImage(nil, for: .normal)
+            }
+            else{
+                cell.btnSend.setTitle("", for: .normal)
+                cell.btnSend.setImage(sendImage, for: .normal)
+            }
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (recentChatsArray[indexPath.row].isRead == false){
-            recentChatsArray[indexPath.row].isRead = true
-            
-            let chatRef = rootRef.child("NormalChats").child(recentChatsArray[indexPath.row].chatId)
-            chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
-                                                       "senderId": "\(Utility.getLoginUserId())",
-                                                       "message": currentStoryMedia,
-                                                       "type": currentStoryMediaType == "image" ? 2 : 4,
-                                                       "isRead": false,
-                                                       "timestamp" : ServerValue.timestamp()])
-            
-            chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
-                                                       "senderId": "\(Utility.getLoginUserId())",
-                "message": currentUserId == Utility.getLoginUserId() ? "\(Utility.getLoginUserFullName()) shared story with you." : "\(Utility.getLoginUserFullName()) shared \(currentUserName)'s story with you.",
-                                                       "type": 1,
-                                                       "isRead": false,
-                                                       "timestamp" : ServerValue.timestamp()])
-            
+        
+        if (isForOthersStory){
+            if (indexPath.row == 0){
+                if (!isSendToMyStory){
+                    let params = ["media": currentStoryMedia,
+                                  "expire_hours": Utility.getLoginUserStoryExpireHours(),
+                                  "caption": "",
+                                  "media_type": currentStoryMediaType] as [String : Any]
+                    API.sharedInstance.executeAPI(type: .createStory, method: .post, params: params) { (status, result, message) in
+                        DispatchQueue.main.async {
+                            if (status == .authError){
+                                Utility.showOrHideLoader(shouldShow: false)
+                                Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+                                    Utility.logoutUser()
+                                }
+                            }
+                        }
+                    }
+                    isSendToMyStory = true
+                }
+            }
+            else{
+                if (recentChatsArray[indexPath.row - 1].isRead == false){
+                    recentChatsArray[indexPath.row - 1].isRead = true
+                    
+                    let chatRef = rootRef.child("NormalChats").child(recentChatsArray[indexPath.row - 1].chatId)
+                    chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                               "senderId": "\(Utility.getLoginUserId())",
+                        "message": currentStoryMedia,
+                        "type": currentStoryMediaType == "image" ? 2 : 4,
+                        "isRead": false,
+                        "timestamp" : ServerValue.timestamp()])
+                    
+                    chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                               "senderId": "\(Utility.getLoginUserId())",
+                        "message": currentUserId == Utility.getLoginUserId() ? "\(Utility.getLoginUserFullName()) shared story with you." : "\(Utility.getLoginUserFullName()) shared \(currentUserName)'s story with you.",
+                        "type": 1,
+                        "isRead": false,
+                        "timestamp" : ServerValue.timestamp()])
+                    
+                }
+            }
         }
+        else{
+            if (recentChatsArray[indexPath.row].isRead == false){
+                recentChatsArray[indexPath.row].isRead = true
+                
+                let chatRef = rootRef.child("NormalChats").child(recentChatsArray[indexPath.row].chatId)
+                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                           "senderId": "\(Utility.getLoginUserId())",
+                    "message": currentStoryMedia,
+                    "type": currentStoryMediaType == "image" ? 2 : 4,
+                    "isRead": false,
+                    "timestamp" : ServerValue.timestamp()])
+                
+                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                           "senderId": "\(Utility.getLoginUserId())",
+                    "message": currentUserId == Utility.getLoginUserId() ? "\(Utility.getLoginUserFullName()) shared story with you." : "\(Utility.getLoginUserFullName()) shared \(currentUserName)'s story with you.",
+                    "type": 1,
+                    "isRead": false,
+                    "timestamp" : ServerValue.timestamp()])
+                
+            }
+        }
+        
         self.friendsTableView.reloadData()
     }
     

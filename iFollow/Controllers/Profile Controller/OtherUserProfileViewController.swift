@@ -471,7 +471,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
                         
                     }
                     if (self.isPrivateProfile){
-                        self.otherUserProfile.userRequestStatus = "pending"
+                        self.otherUserProfile.userRequestStatus = result["status"].stringValue
                         self.trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
                         self.trendView.backgroundColor = .clear
                         self.trendView.alpha = 1
@@ -480,7 +480,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
                         self.trendView.isUserInteractionEnabled = true
                     }
                     else{
-                        self.otherUserProfile.userRequestStatus = "success"
+                        self.otherUserProfile.userRequestStatus = result["status"].stringValue
                         self.trendView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
                         self.lblTrend.text = "Trending"
                         self.lblTrend.textColor = .white

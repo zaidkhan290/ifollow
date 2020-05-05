@@ -165,7 +165,12 @@ class StoriesViewController: UIViewController {
         currentStoryMedia = storyModel.storyURL
         currentStoryMediaType = storyModel.storyMediaType
         btnView.isHidden = isForMyStory ? false : storyModel.shouldShowStoryViews == 1
-        btnViewWidthConstraint.constant = storyModel.shouldShowStoryViews == 1 ? 0 : 35
+        if (isForMyStory){
+            btnViewWidthConstraint.constant = 35
+        }
+        else{
+            btnViewWidthConstraint.constant = storyModel.shouldShowStoryViews == 1 ? 0 : 35
+        }
         self.view.updateConstraintsIfNeeded()
         self.view.layoutSubviews()
         if (storyModel.storyMediaType == "video"){
@@ -405,6 +410,7 @@ class StoriesViewController: UIViewController {
         vc.currentStoryId = self.currentStoryId
         vc.currentStoryMedia = self.currentStoryMedia
         vc.currentStoryMediaType = self.currentStoryMediaType
+        vc.isForOthersStory = !isForMyStory
         vc.delegate = self
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self

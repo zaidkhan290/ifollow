@@ -141,7 +141,8 @@ class API: NSObject {
                                 completion?(.failure,JSON(value),"Server Error")
                             }
                             else{
-                                completion?(.failure,JSON(value),json["message"].stringValue)
+                                let errorMessage = json["message"].stringValue
+                                completion?(.failure,JSON(value), errorMessage == "" ? "Something went wrong" : errorMessage)
                             }
 
                             return
@@ -186,7 +187,8 @@ class API: NSObject {
                         completion?(.failure,JSON(value),"Server Error")
                     }
                     else{
-                        completion?(.failure,JSON(value),json["message"].stringValue)
+                        let errorMessage = json["message"].stringValue
+                        completion?(.failure,JSON(value), errorMessage == "" ? "Something went wrong" : errorMessage)
                     }
                     
                     return

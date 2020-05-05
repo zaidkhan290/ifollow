@@ -75,7 +75,7 @@ class TrendesViewController: UIViewController {
                     Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                         
                     }
-                    self.trendersArray[self.selectedIndex].userRequestStatus = "pending"
+                    self.trendersArray[self.selectedIndex].userRequestStatus = result["status"].stringValue
                     self.trendesTableView.reloadData()
                 }
                 else if (status == .failure){
@@ -94,7 +94,7 @@ class TrendesViewController: UIViewController {
     }
     
     func showUnTrendPopup(){
-        let vc = UIAlertController(title: "Untrend", message: "Are you sure you want to untrend \(trendersArray[selectedIndex].userFullName)?", preferredStyle: .alert)
+        let vc = UIAlertController(title: "Untrend", message: "Are you sure you want to remove \(trendersArray[selectedIndex].userFullName) from your Trenders?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
             DispatchQueue.main.async {
                 self.untrendUser()

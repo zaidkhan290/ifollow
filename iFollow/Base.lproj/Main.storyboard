@@ -1823,7 +1823,7 @@
                                 <rect key="frame" x="-2" y="-3" width="420" height="739"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiG-G6-TmD">
-                                <rect key="frame" x="134.66666666666669" y="40" width="144.66666666666669" height="30"/>
+                                <rect key="frame" x="137" y="40" width="140" height="30"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -2500,6 +2500,12 @@
                                 <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RhI-8R-ejN">
+                                <rect key="frame" x="207" y="52.666666666666664" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -2515,6 +2521,7 @@
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="bottom" secondItem="BdC-mz-ckV" secondAttribute="bottom" constant="20" id="BFl-Fm-VNr"/>
                             <constraint firstItem="9NT-ju-crZ" firstAttribute="leading" secondItem="WSe-4k-XPy" secondAttribute="leading" constant="20" id="CRn-fd-Imq"/>
                             <constraint firstItem="Zcm-Q6-Kfl" firstAttribute="top" secondItem="WSe-4k-XPy" secondAttribute="top" constant="20" id="D5X-Sd-YOP"/>
+                            <constraint firstItem="RhI-8R-ejN" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" id="E8b-BK-k0Y"/>
                             <constraint firstItem="D3w-Qz-cp8" firstAttribute="trailing" secondItem="9hw-sH-gi9" secondAttribute="trailing" id="FRB-cC-YfT"/>
                             <constraint firstItem="ZdE-8t-qjH" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" multiplier="0.5" id="Kpy-2b-gOs"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="gZk-KZ-Qkx" secondAttribute="trailing" constant="20" id="Kwy-4V-n3X"/>
@@ -2546,6 +2553,7 @@
                             <constraint firstItem="9hw-sH-gi9" firstAttribute="centerX" secondItem="3tR-l5-VkQ" secondAttribute="centerX" multiplier="1.5" id="p2k-3E-Pxw"/>
                             <constraint firstItem="WSe-4k-XPy" firstAttribute="trailing" secondItem="9NT-ju-crZ" secondAttribute="trailing" constant="20" id="pM8-Cx-Cwj"/>
                             <constraint firstItem="sw2-9r-yua" firstAttribute="top" secondItem="9NT-ju-crZ" secondAttribute="bottom" constant="15" id="tv4-lI-3Uo"/>
+                            <constraint firstItem="RhI-8R-ejN" firstAttribute="centerY" secondItem="Zcm-Q6-Kfl" secondAttribute="centerY" id="v5z-uY-CyU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WSe-4k-XPy"/>
                     </view>
@@ -2573,6 +2581,7 @@
                         <outlet property="lblNormal" destination="SOI-Ge-DiU" id="doA-Ok-TAq"/>
                         <outlet property="lblTime" destination="9Pg-kA-5PV" id="nGF-0J-Ewo"/>
                         <outlet property="lblVideo" destination="xnR-K9-jIF" id="xg1-aM-ZRs"/>
+                        <outlet property="lblVideoTimer" destination="RhI-8R-ejN" id="bRu-fG-EiB"/>
                         <outlet property="locationIcon" destination="uv7-H4-UU8" id="lRz-Is-hDJ"/>
                         <outlet property="locationView" destination="MSi-1I-SUf" id="hpB-jy-b93"/>
                         <outlet property="previewView" destination="wbu-yt-hY1" id="IPI-4D-Dnl"/>

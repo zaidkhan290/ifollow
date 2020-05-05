@@ -18,7 +18,7 @@ protocol CameraViewControllerDelegate: class {
     func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel])
 }
 
-class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
+class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVCaptureFileOutputRecordingDelegate {
 
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var previewView: UIView!
@@ -48,11 +48,14 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var btnPlay: UIButton!
     @IBOutlet weak var txtFieldCaption: UITextField!
+    @IBOutlet weak var lblVideoTimer: UILabel!
     
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
     var videoPreviewLayer: AVCaptureVideoPreviewLayer!
+    var movieOutput: AVCaptureMovieFileOutput!
     var flashMode = AVCaptureDevice.FlashMode.off
+    var audioDeviceInput: AVCaptureDeviceInput!
     var isFrontCamera = false
     var isPictureCaptured = false
     var emojis = [UIImage]()
@@ -74,6 +77,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     var selectedImage = UIImage()
     var delegate: CameraViewControllerDelegate!
     var videoURL: URL!
+    
+    var timer = Timer()
+    var seconds = 0
     
     var storyImageToSend = UIImage()
     
@@ -160,8 +166,6 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(_:)))
         swipeRightGesture.direction = .right
         
-//        self.filterView.addGestureRecognizer(swipeLeftGesture)
-//        self.filterView.addGestureRecognizer(swipeRightGesture)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -169,6 +173,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = .hd4K3840x2160
+       // captureSession.automaticallyConfiguresApplicationAudioSession = false
+       //
+        captureSession.usesApplicationAudioSession = true
         
         guard let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
             else {
@@ -177,12 +184,17 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         }
         
         do {
+//            self.audioDeviceInput = try? AVCaptureDeviceInput(device: AVCaptureDevice.default(for: .audio)!)
             let input = try AVCaptureDeviceInput(device: backCamera)
-            
             stillImageOutput = AVCapturePhotoOutput()
+            let audioInput = AVCaptureDevice.default(for: .audio)
+            movieOutput = AVCaptureMovieFileOutput()
+            
             if captureSession.canAddInput(input) && captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addInput(input)
+                captureSession.addInput(try AVCaptureDeviceInput(device: audioInput!))
                 captureSession.addOutput(stillImageOutput)
+                captureSession.addOutput(movieOutput)
                 setupLivePreview()
             }
             
@@ -244,9 +256,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         lblVideo.font = Theme.getLatoBoldFontOfSize(size: 18)
         lblLive.font = Theme.getLatoRegularFontOfSize(size: 15)
         lblNormal.font = Theme.getLatoRegularFontOfSize(size: 15)
-        imagePicker.sourceType = .camera
-        imagePicker.mediaTypes = ["public.movie"]
-        self.present(imagePicker, animated: true, completion: nil)
+//        imagePicker.sourceType = .camera
+//        imagePicker.mediaTypes = ["public.movie"]
+//        self.present(imagePicker, animated: true, completion: nil)
     }
     
     @objc func timeViewTapped(){
@@ -383,6 +395,35 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         btnFlash.isEnabled = false
         changeView(isVideoSelected: false)
       //  preview(image: image!)
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if error == nil {
+            DispatchQueue.main.async {
+                if let videoScreenShot = Utility.imageFromVideo(url: outputFileURL, at: 0, totalTime: 15){
+                    self.videoURL = outputFileURL
+                    self.isPictureCaptured = true
+                    self.cameraView.isHidden = false
+                    self.cameraView.contentMode = .scaleAspectFit
+                    self.selectedImage = videoScreenShot
+                    self.cameraView.image = videoScreenShot
+                    self.filterView.isHidden = false
+                    self.btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
+                    self.btnGallery.setImage(UIImage(named: "filter"), for: .normal)
+                    self.btnBack.setImage(UIImage(named: "close-1"), for: .normal)
+                    self.lblLive.isHidden = true
+                    self.lblNormal.isHidden = true
+                    self.lblVideo.isHidden = true
+                    self.changeView(isVideoSelected: true)
+//                    let audioSession = AVAudioSession.sharedInstance()
+//                    try! audioSession.setCategory(.ambient)
+//                    try! audioSession.setActive(false)
+//                    self.captureSession?.beginConfiguration()
+//                    self.captureSession?.removeInput(self.audioDeviceInput)
+//                    self.captureSession?.commitConfiguration()
+                }
+            }
+        }
     }
     
     @objc func setDragging(_ sender:UIPanGestureRecognizer){
@@ -538,7 +579,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             editableTextField.isHidden = true
             lblVideo.isHidden = false
             lblNormal.isHidden = false
-            lblLive.isHidden = false
+          //  lblLive.isHidden = false
             btnPlay.isHidden = true
             btnGallery.isHidden = false
             btnEmoji.isHidden = false
@@ -574,6 +615,29 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
                 btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
                 btnGallery.setImage(UIImage(named: "filter"), for: .normal)
                 btnBack.setImage(UIImage(named: "close-1"), for: .normal)
+            }
+            else if (isVideo){
+                if movieOutput.isRecording {
+                    movieOutput.stopRecording()
+                    timer.invalidate()
+                    seconds = 0
+                    self.lblVideoTimer.text = ""
+                }
+                else {
+//                    let audioSession = AVAudioSession.sharedInstance()
+//                    try! audioSession.setCategory(.playback)
+//                    try! audioSession.setActive(true)
+                    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                    let fileUrl = paths[0].appendingPathComponent("output.mov")
+                    try? FileManager.default.removeItem(at: fileUrl)
+                    movieOutput.startRecording(to: fileUrl, recordingDelegate: self)
+//                    captureSession?.beginConfiguration()
+//                    if (captureSession?.canAddInput(audioDeviceInput!))! {
+//                        captureSession?.addInput(audioDeviceInput!)
+//                    }
+//                    captureSession?.commitConfiguration()
+                    self.runTimer()
+                }
             }
         }
         else{
@@ -664,28 +728,29 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBAction func btnRotateTapped(_ sender: UIButton) {
         if let session = captureSession {
             //Remove existing input
-            guard let currentCameraInput: AVCaptureInput = session.inputs.first else {
-                return
-            }
+//            guard let currentCameraInput: AVCaptureInput = session.inputs.first else {
+//                return
+//            }
             
             //Indicate that some changes will be made to the session
             session.beginConfiguration()
-            session.removeInput(currentCameraInput)
+            for input in session.inputs{
+                session.removeInput(input)
+            }
             
             //Get new input
             var newCamera: AVCaptureDevice! = nil
-            if let input = currentCameraInput as? AVCaptureDeviceInput {
-                if (input.device.position == .back) {
-                    newCamera = cameraWithPosition(position: .front)
-                    session.sessionPreset = .medium
-                    isFrontCamera = true
-                    btnFlash.isEnabled = false
-                } else {
-                    newCamera = cameraWithPosition(position: .back)
-                    session.sessionPreset = .hd4K3840x2160
-                    isFrontCamera = false
-                    btnFlash.isEnabled = true
-                }
+            
+            if (!isFrontCamera) {
+                newCamera = cameraWithPosition(position: .front)
+                session.sessionPreset = .hd1920x1080
+                isFrontCamera = true
+                btnFlash.isEnabled = false
+            } else {
+                newCamera = cameraWithPosition(position: .back)
+                session.sessionPreset = .high
+                isFrontCamera = false
+                btnFlash.isEnabled = true
             }
             
             //Add input to session
@@ -701,6 +766,13 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
             if newVideoInput == nil || err != nil {
                 print("Error creating capture device input: \(err?.localizedDescription)")
             } else {
+                let audioInput = AVCaptureDevice.default(for: .audio)
+                do {
+                    captureSession.addInput(try AVCaptureDeviceInput(device: audioInput!))
+                }
+                catch{
+
+                }
                 session.addInput(newVideoInput)
             }
             
@@ -775,6 +847,28 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         lblFont.isHidden = false
         fontSlider.isHidden = false
     }
+    
+    func runTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateTimer(){
+        seconds += 1
+        self.lblVideoTimer.text = timeString(time: TimeInterval(seconds))
+        if (seconds == 15){
+            timer.invalidate()
+            seconds = 0
+            self.lblVideoTimer.text = ""
+            if movieOutput.isRecording {
+                movieOutput.stopRecording()
+            }
+        }
+    }
+    
+    func timeString(time:TimeInterval) -> String {
+        let seconds = Int(time) % 60
+        return String(format:"%02i",seconds)
+    }
 }
 
 //extension CameraViewController: DSSwipableFilterViewDataSource {
@@ -838,7 +932,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
                 cameraView.contentMode = .scaleAspectFit
             }
             else{
-                cameraView.contentMode = .scaleAspectFill
+                cameraView.contentMode = .scaleAspectFit//.scaleAspectFill
             }
             cameraView.isHidden = false
             selectedImage = image

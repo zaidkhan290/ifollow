@@ -97,7 +97,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
         cell.backgroundColor = .clear
         let user = searchUsersArray[indexPath.row]
         cell.lblUsername.text = user.userFullName
-        cell.lblUserMessage.text = user.userCountry
+        cell.lblUserMessage.text = user.userName
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
         cell.userImage.sd_setImage(with: URL(string: user.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         cell.lblMessageCounter.isHidden = true
