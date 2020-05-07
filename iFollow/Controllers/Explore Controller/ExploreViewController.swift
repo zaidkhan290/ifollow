@@ -42,7 +42,7 @@ class ExploreViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 1
-        layout.itemSize = CGSize(width: 130, height: self.recentStoriesCollectionView.frame.height)
+        layout.itemSize = CGSize(width: 105, height: self.recentStoriesCollectionView.frame.height)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         self.recentStoriesCollectionView.collectionViewLayout = layout
         self.recentStoriesCollectionView.showsHorizontalScrollIndicator = false
@@ -71,7 +71,7 @@ class ExploreViewController: UIViewController {
         let layout2 = UICollectionViewFlowLayout()
         layout2.scrollDirection = .horizontal
         layout2.minimumInteritemSpacing = 1
-        layout2.itemSize = CGSize(width: 130, height: (self.allStoriesCollectionView.bounds.height / 2) - 5)
+        layout2.itemSize = CGSize(width: 105, height: (self.allStoriesCollectionView.bounds.height / 2) - 5)
         layout2.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         self.allStoriesCollectionView.collectionViewLayout = layout2
         self.allStoriesCollectionView.showsHorizontalScrollIndicator = false

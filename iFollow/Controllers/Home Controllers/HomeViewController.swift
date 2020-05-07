@@ -51,7 +51,7 @@ class HomeViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 1
-        layout.itemSize = CGSize(width: 130, height: self.storyCollectionView.frame.height)
+        layout.itemSize = CGSize(width: 105, height: self.storyCollectionView.frame.height)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         self.storyCollectionView.collectionViewLayout = layout
         self.storyCollectionView.showsHorizontalScrollIndicator = false
@@ -641,6 +641,10 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             itemView.mainView.layer.cornerRadius = 10
             itemView.btnOptions.tag = index - (index / 5)
             itemView.btnOptions.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
+            itemView.postShareView.tag = index - (index / 5)
+            itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(shareViewTapped(_:))))
+            itemView.postHideView.tag = index - (index / 5)
+            itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideViewTapped(_:))))
             view.backgroundColor = .white
             view.clipsToBounds = true
             view.addSubview(itemView)
@@ -696,6 +700,19 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         self.present(vc, animated: false, completion: nil)
+    }
+    
+    @objc func shareViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        let vc = Utility.getShareViewController()
+        vc.postId = self.postsArray[optionsPopupIndex].postId
+        vc.postUserId = self.postsArray[optionsPopupIndex].postUserId
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func hideViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        self.showHidePostPopup()
     }
     
     @objc func likeViewTapped(_ sender: UITapGestureRecognizer){

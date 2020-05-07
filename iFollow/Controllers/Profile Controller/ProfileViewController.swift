@@ -384,6 +384,11 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
         itemView.btnOptions.tag = index
         itemView.btnOptions.addTarget(self, action: #selector(showFeedsOptionsPopup(sender:)), for: .touchUpInside)
+        itemView.postShareView.tag = index - (index / 5)
+        itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editViewTapped(_:))))
+        itemView.postHideView.tag = index - (index / 5)
+        itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(deleteViewTapped(_:))))
+        
         view.backgroundColor = .white
         view.clipsToBounds = true
         view.addSubview(itemView)
@@ -431,6 +436,30 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)
     }
+    
+    @objc func editViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        let post = self.userPosts[optionsPopupIndex]
+        let vc = Utility.getNewPostViewController()
+        isFullScreen = true
+        vc.isForEdit = true
+        vc.editablePostId = post.postId
+        vc.editablePostText = post.postDescription
+        vc.editablePostImage = post.postMedia
+        vc.editablePostMediaType = post.postMediaType
+        vc.editablePostUserLocation = post.postLocation
+        vc.delegate = self
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: false, completion: nil)
+
+    }
+    
+    @objc func deleteViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        self.showDeletePostPopup()
+    }
+    
 }
 
 extension ProfileViewController: UIViewControllerTransitioningDelegate {

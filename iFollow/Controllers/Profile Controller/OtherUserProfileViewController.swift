@@ -604,6 +604,19 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         }
     }
     
+    @objc func shareViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        let vc = Utility.getShareViewController()
+        vc.postId = self.otherUserProfile.userPosts[optionsPopupIndex].postId
+        vc.postUserId = self.userId
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func hideViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        self.showHidePostPopup()
+    }
+    
     func showHidePostPopup(){
         let alertVC = UIAlertController(title: "Report Post", message: "Are you sure you want to report this post?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
@@ -712,6 +725,10 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
         itemView.btnOptions.tag = index
         itemView.btnOptions.addTarget(self, action: #selector(showFeedsOptionsPopup(sender:)), for: .touchUpInside)
+        itemView.postShareView.tag = index
+        itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(shareViewTapped(_:))))
+        itemView.postHideView.tag = index
+        itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideViewTapped(_:))))
         view.backgroundColor = .white
         view.clipsToBounds = true
         view.addSubview(itemView)

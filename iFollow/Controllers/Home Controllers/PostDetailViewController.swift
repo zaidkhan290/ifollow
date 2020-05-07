@@ -194,6 +194,10 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
         itemView.btnOptions.isHidden = true
+        itemView.likeView.isHidden = true
+        itemView.feedBackView.isHidden = true
+        itemView.postShareView.isHidden = true
+        itemView.postHideView.isHidden = true
         itemView.btnOptions.tag = index
         itemView.btnOptions.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
         view.clipsToBounds = true
