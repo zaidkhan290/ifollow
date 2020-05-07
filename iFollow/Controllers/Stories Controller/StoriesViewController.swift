@@ -517,6 +517,9 @@ class StoriesViewController: UIViewController {
     }
    
     @objc func dismissStory(){
+        if (isVideoPlaying){
+            self.videoPlayer.pause()
+        }
         self.dismiss(animated: true, completion: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshHomeDataAfterViewedStory"), object: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshDiscoverDataAfterViewedStory"), object: nil)

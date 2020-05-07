@@ -1184,7 +1184,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Vo-A4-dNl">
                                         <rect key="frame" x="20" y="50" width="287.66666666666669" height="0.0"/>
@@ -1823,7 +1823,7 @@
                                 <rect key="frame" x="-2" y="-3" width="420" height="739"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiG-G6-TmD">
-                                <rect key="frame" x="137" y="40" width="140" height="30"/>
+                                <rect key="frame" x="134.66666666666669" y="40" width="144.66666666666669" height="30"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -2249,13 +2249,23 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
-                                    <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="X8Y-OA-kLg">
-                                        <rect key="frame" x="202" y="378.66666666666669" width="10" height="52"/>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fYh-KM-M0r">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                        <subviews>
+                                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="X8Y-OA-kLg">
+                                                <rect key="frame" x="202" y="342" width="10" height="52"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="30"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="30"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
+                                        <constraints>
+                                            <constraint firstItem="X8Y-OA-kLg" firstAttribute="centerY" secondItem="fYh-KM-M0r" secondAttribute="centerY" id="KVt-69-idJ"/>
+                                            <constraint firstItem="X8Y-OA-kLg" firstAttribute="centerX" secondItem="fYh-KM-M0r" secondAttribute="centerX" id="S3f-Xz-4xx"/>
+                                        </constraints>
+                                    </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhd-In-lDz">
                                         <rect key="frame" x="137" y="311.33333333333331" width="140" height="40"/>
                                         <subviews>
@@ -2321,10 +2331,12 @@
                                     <constraint firstAttribute="bottom" secondItem="E7w-Dh-cgK" secondAttribute="bottom" id="Dzr-Bc-rH3"/>
                                     <constraint firstItem="MSi-1I-SUf" firstAttribute="centerY" secondItem="XDX-CZ-y98" secondAttribute="centerY" multiplier="1.1" id="GSN-Cd-wKG"/>
                                     <constraint firstItem="MSi-1I-SUf" firstAttribute="centerX" secondItem="XDX-CZ-y98" secondAttribute="centerX" id="NWV-fz-VlE"/>
+                                    <constraint firstItem="fYh-KM-M0r" firstAttribute="leading" secondItem="XDX-CZ-y98" secondAttribute="leading" id="RQX-bX-uTC"/>
+                                    <constraint firstAttribute="trailing" secondItem="fYh-KM-M0r" secondAttribute="trailing" id="Rzq-y8-IRQ"/>
                                     <constraint firstItem="E7w-Dh-cgK" firstAttribute="top" secondItem="XDX-CZ-y98" secondAttribute="top" id="U53-La-vyY"/>
-                                    <constraint firstItem="X8Y-OA-kLg" firstAttribute="centerY" secondItem="XDX-CZ-y98" secondAttribute="centerY" multiplier="1.1" id="j9U-rY-nAP"/>
+                                    <constraint firstItem="fYh-KM-M0r" firstAttribute="top" secondItem="XDX-CZ-y98" secondAttribute="top" id="cho-yJ-FfC"/>
+                                    <constraint firstAttribute="bottom" secondItem="fYh-KM-M0r" secondAttribute="bottom" id="f5Y-Sl-ee1"/>
                                     <constraint firstItem="E7w-Dh-cgK" firstAttribute="leading" secondItem="XDX-CZ-y98" secondAttribute="leading" id="osC-Aw-00w"/>
-                                    <constraint firstItem="X8Y-OA-kLg" firstAttribute="centerX" secondItem="XDX-CZ-y98" secondAttribute="centerX" id="p7B-el-hap"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zcm-Q6-Kfl">
@@ -2573,6 +2585,7 @@
                         <outlet property="deleteIcon" destination="ZSm-yG-JQX" id="NDS-eF-RKU"/>
                         <outlet property="deleteView" destination="G7X-9m-hIY" id="gsx-mv-Qsm"/>
                         <outlet property="editableTextField" destination="X8Y-OA-kLg" id="8r6-Zs-WFn"/>
+                        <outlet property="emojiesMainView" destination="fYh-KM-M0r" id="VOP-K6-xIG"/>
                         <outlet property="filterView" destination="XDX-CZ-y98" id="6TX-Rc-ZXP"/>
                         <outlet property="fontSlider" destination="D3w-Qz-cp8" id="Psa-lo-kog"/>
                         <outlet property="lblFont" destination="8cL-Nk-pjt" id="fKD-je-2Ea"/>

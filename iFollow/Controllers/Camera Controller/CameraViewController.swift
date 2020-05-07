@@ -23,6 +23,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var previewView: UIView!
     @IBOutlet weak var cameraView: UIImageView!
+    @IBOutlet weak var emojiesMainView: UIView!
     @IBOutlet weak var btnEmoji: UIButton!
     @IBOutlet weak var btnCapture: UIButton!
     @IBOutlet weak var btnGallery: UIButton!
@@ -382,6 +383,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         cameraView.contentMode = .scaleAspectFill
         cameraView.image = image!
         filterView.isHidden = false
+        emojiesMainView.isHidden = false
 //        filterSwipeView.isPlayingLibraryVideo = true
         btnEmoji.isEnabled = true
         btnLocation.isHidden = false
@@ -408,6 +410,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     self.selectedImage = videoScreenShot
                     self.cameraView.image = videoScreenShot
                     self.filterView.isHidden = false
+                    self.emojiesMainView.isHidden = false
                     self.btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
                     self.btnGallery.setImage(UIImage(named: "filter"), for: .normal)
                     self.btnBack.setImage(UIImage(named: "close-1"), for: .normal)
@@ -448,9 +451,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
 //        }
         
         var rec: CGRect = sender.view!.frame
-        let imgvw: CGRect = cameraView.frame
-        if rec.origin.y > cameraView.bounds.height{
-            rec.origin.y = cameraView.bounds.height
+        let imgvw: CGRect = filterView.frame
+        if rec.origin.y > filterView.bounds.height{
+            rec.origin.y = filterView.bounds.height
         }
         if rec.origin.x < 0{
             rec.origin.x = 0
@@ -502,7 +505,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     else if (sender.view! == locationView){
                         locationView.isHidden = true
                         locationView.alpha = 1
-                        locationView.frame = timeViewFrame
+                        locationView.frame = locationViewFrame
                         locationViewStyle = 1
                     }
                     else{
@@ -562,6 +565,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         if (isPictureCaptured){
             isPictureCaptured = false
             filterView.isHidden = true
+            emojiesMainView.isHidden = true
             cameraView.isHidden = true
             cameraView.image = nil
             btnBack.setImage(UIImage(named: "back"), for: .normal)
@@ -591,7 +595,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             lblFont.isHidden = true
             lblNormalTapped()
             for subView in filterView.subviews{
-                if (subView == cameraView || subView == timeView || subView == editableTextField || subView == locationView){
+                if (subView == cameraView || subView == timeView || subView == editableTextField || subView == locationView || subView == emojiesMainView){
                     
                 }
                 else{
@@ -698,7 +702,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @IBAction func btnClockTapped(_ sender: UIButton){
         lblTime.text = Utility.getCurrentTime()
         timeView.isHidden = false
-        self.filterView.bringSubviewToFront(timeView)
+      //  self.filterView.bringSubviewToFront(timeView)
        // self.cameraView.bringSubviewToFront(timeView)
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
         panGesture.delegate = self
@@ -709,7 +713,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     
     @IBAction func btnTextTapped(_ sender: UIButton) {
         editableTextField.isHidden = false
-        self.filterView.bringSubviewToFront(editableTextField)
+      //  self.filterView.bringSubviewToFront(editableTextField)
        // self.cameraView.bringSubviewToFront(editableTextField)
         colorSlider.isHidden = false
         lblFont.isHidden = false
@@ -908,8 +912,9 @@ extension CameraViewController: EmojisViewControllerDelegate{
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFill
         imageView.image = image
-        filterView.addSubview(imageView)
-     //   cameraView.addSubview(imageView)
+        emojiesMainView.addSubview(imageView)
+       // filterView.addSubview(imageView)
+        //cameraView.addSubview(imageView)
         imageView.isUserInteractionEnabled = true
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
         panGesture.delegate = self
@@ -938,6 +943,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
             selectedImage = image
             cameraView.image = image
             filterView.isHidden = false
+            emojiesMainView.isHidden = false
 //            filterSwipeView.isPlayingLibraryVideo = true
 //            preview(image: image)
             btnEmoji.isEnabled = true
@@ -966,6 +972,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
                     self.selectedImage = videoScreenShot
                     self.cameraView.image = videoScreenShot
                     self.filterView.isHidden = false
+                    self.emojiesMainView.isHidden = false
                     self.btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
                     self.btnGallery.setImage(UIImage(named: "filter"), for: .normal)
                     self.btnBack.setImage(UIImage(named: "close-1"), for: .normal)
@@ -1004,6 +1011,12 @@ extension CameraViewController: UITextViewDelegate{
         }
         
     }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        timeView.frame = timeView.frame
+        locationView.frame = locationView.frame
+        return true
+    }
 }
 
 extension CameraViewController: UIGestureRecognizerDelegate{
@@ -1019,7 +1032,7 @@ extension CameraViewController: GMSAutocompleteViewControllerDelegate{
         if let placeName = place.name{
             lblLocation.text = placeName
             locationView.isHidden = false
-            self.filterView.bringSubviewToFront(locationView)
+         //   self.filterView.bringSubviewToFront(locationView)
             // self.cameraView.bringSubviewToFront(timeView)
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
             panGesture.delegate = self

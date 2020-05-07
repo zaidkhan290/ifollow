@@ -333,99 +333,121 @@ class HomeViewController: UIViewController {
     }
     
     func getHomeData(){
-        Utility.showOrHideLoader(shouldShow: true)
         
-        API.sharedInstance.executeAPI(type: .homePage, method: .get, params: nil) { (status, result, message) in
-            DispatchQueue.main.async {
-                
-                Utility.showOrHideLoader(shouldShow: false)
-                
-                if (status == .success){
-                    
-                    let realm = try! Realm()
-                    try! realm.safeWrite {
-                        
-                        //----------STORIES WORK START----------//
-                        realm.delete(realm.objects(StoryUserModel.self))
-                        realm.delete(realm.objects(UserStoryModel.self))
-                        
-                        if (result["my_stories"].arrayValue).count > 0{
-                            let myStoryModel = StoryUserModel()
-                            myStoryModel.updateModelWithJSON(json: result, isForMyStory: true, isPublicStory: false)
-                            let myStories = Array(myStoryModel.userStories)
-                            if let _ = myStories.firstIndex(where: {$0.isStoryViewed == 0}){
-                                myStoryModel.isAllStoriesViewed = false
-                            }
-                            else{
-                                myStoryModel.isAllStoriesViewed = true
-                            }
-                            if let lastMyStory = myStories.last{
-                                myStoryModel.lastStoryMediaType = lastMyStory.storyMediaType
-                                myStoryModel.lastStoryPreview = lastMyStory.storyURL
-                            }
-                            realm.add(myStoryModel)
-                        }
-                        
-                        let followersStories = result["user_stories"].arrayValue
-                        for followerStory in followersStories{
-                            let followerStoryModel = StoryUserModel()
-                            followerStoryModel.updateModelWithJSON(json: followerStory, isForMyStory: false, isPublicStory: false)
-                            let followerStories = Array(followerStoryModel.userStories)
-                            if let _ = followerStories.firstIndex(where: {$0.isStoryViewed == 0}){
-                                followerStoryModel.isAllStoriesViewed = false
-                            }
-                            else{
-                                followerStoryModel.isAllStoriesViewed = true
-                            }
-                            if let lastFollowerStory = followerStories.last{
-                                followerStoryModel.lastStoryMediaType = lastFollowerStory.storyMediaType
-                                followerStoryModel.lastStoryPreview = lastFollowerStory.storyURL
-                            }
-                            realm.add(followerStoryModel)
-                        }
-                        
-                        //----------STORIES WORK END----------//
-                        
-                        
-                        //----------POSTS WORK START----------//
-                        realm.delete(realm.objects(HomePostsModel.self))
-                        let posts = result["posts"].arrayValue
-                        for post in posts{
-                            let model = HomePostsModel()
-                            model.updateModelWithJSON(json: post)
-                            realm.add(model)
-                        }
-                        //----------POSTS WORK END----------//
-                    }
-                    self.myStoryArray = StoryUserModel.getMyStory()
-                    self.followersStoriesArray = StoryUserModel.getFollowersUsersStories()
-                    self.postsArray = HomePostsModel.getAllHomePosts()
-                    self.storyCollectionView.reloadData()
-                    self.carouselView.reloadData()
-                    
-                }
-                else if (status == .failure){
+        if (Reachability.isConnectedToNetwork()){
+            if (followersStoriesArray.count == 0 && postsArray.count == 0){
+                Utility.showOrHideLoader(shouldShow: true)
+            }
+            else{
+                storyCollectionView.isUserInteractionEnabled = false
+                carouselView.isUserInteractionEnabled = false
+            }
+            
+            API.sharedInstance.executeAPI(type: .homePage, method: .get, params: nil) { (status, result, message) in
+                DispatchQueue.main.async {
                     
                     Utility.showOrHideLoader(shouldShow: false)
-                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                    
+                    if (status == .success){
+                        
+                        let realm = try! Realm()
+                        try! realm.safeWrite {
+                            
+                            //----------STORIES WORK START----------//
+                            realm.delete(realm.objects(StoryUserModel.self))
+                            realm.delete(realm.objects(UserStoryModel.self))
+                            
+                            if (result["my_stories"].arrayValue).count > 0{
+                                let myStoryModel = StoryUserModel()
+                                myStoryModel.updateModelWithJSON(json: result, isForMyStory: true, isPublicStory: false)
+                                let myStories = Array(myStoryModel.userStories)
+                                if let _ = myStories.firstIndex(where: {$0.isStoryViewed == 0}){
+                                    myStoryModel.isAllStoriesViewed = false
+                                }
+                                else{
+                                    myStoryModel.isAllStoriesViewed = true
+                                }
+                                if let lastMyStory = myStories.last{
+                                    myStoryModel.lastStoryMediaType = lastMyStory.storyMediaType
+                                    myStoryModel.lastStoryPreview = lastMyStory.storyURL
+                                }
+                                realm.add(myStoryModel)
+                            }
+                            
+                            let followersStories = result["user_stories"].arrayValue
+                            for followerStory in followersStories{
+                                let followerStoryModel = StoryUserModel()
+                                followerStoryModel.updateModelWithJSON(json: followerStory, isForMyStory: false, isPublicStory: false)
+                                let followerStories = Array(followerStoryModel.userStories)
+                                if let _ = followerStories.firstIndex(where: {$0.isStoryViewed == 0}){
+                                    followerStoryModel.isAllStoriesViewed = false
+                                }
+                                else{
+                                    followerStoryModel.isAllStoriesViewed = true
+                                }
+                                if let lastFollowerStory = followerStories.last{
+                                    followerStoryModel.lastStoryMediaType = lastFollowerStory.storyMediaType
+                                    followerStoryModel.lastStoryPreview = lastFollowerStory.storyURL
+                                }
+                                realm.add(followerStoryModel)
+                            }
+                            
+                            //----------STORIES WORK END----------//
+                            
+                            
+                            //----------POSTS WORK START----------//
+                            realm.delete(realm.objects(HomePostsModel.self))
+                            let posts = result["posts"].arrayValue
+                            for post in posts{
+                                let model = HomePostsModel()
+                                model.updateModelWithJSON(json: post)
+                                realm.add(model)
+                            }
+                            //----------POSTS WORK END----------//
+                        }
                         self.myStoryArray = StoryUserModel.getMyStory()
                         self.followersStoriesArray = StoryUserModel.getFollowersUsersStories()
                         self.postsArray = HomePostsModel.getAllHomePosts()
                         self.storyCollectionView.reloadData()
                         self.carouselView.reloadData()
+                        self.storyCollectionView.isUserInteractionEnabled = true
+                        self.carouselView.isUserInteractionEnabled = true
+                        
+                    }
+                    else if (status == .failure){
+                        
+                        Utility.showOrHideLoader(shouldShow: false)
+                        Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            self.myStoryArray = StoryUserModel.getMyStory()
+                            self.followersStoriesArray = StoryUserModel.getFollowersUsersStories()
+                            self.postsArray = HomePostsModel.getAllHomePosts()
+                            self.storyCollectionView.reloadData()
+                            self.carouselView.reloadData()
+                            self.storyCollectionView.isUserInteractionEnabled = true
+                            self.carouselView.isUserInteractionEnabled = true
+                        }
+                        
+                    }
+                    else if (status == .authError){
+                        
+                        Utility.showOrHideLoader(shouldShow: false)
+                        Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            Utility.logoutUser()
+                        }
+                        
                     }
                     
                 }
-                else if (status == .authError){
-                    
-                    Utility.showOrHideLoader(shouldShow: false)
-                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-                        Utility.logoutUser()
-                    }
-                    
-                }
-                
             }
+        }
+        else{
+            self.myStoryArray = StoryUserModel.getMyStory()
+            self.followersStoriesArray = StoryUserModel.getFollowersUsersStories()
+            self.postsArray = HomePostsModel.getAllHomePosts()
+            self.storyCollectionView.reloadData()
+            self.carouselView.reloadData()
+            self.storyCollectionView.isUserInteractionEnabled = true
+            self.carouselView.isUserInteractionEnabled = true
         }
     }
     
@@ -646,6 +668,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             else{
                 let playerVC = MobilePlayerViewController(contentURL: URL(string: post.postMedia)!)
                 playerVC.title = post.postDescription
+                playerVC.shouldAutoplay = true
                 playerVC.activityItems = [URL(string: post.postMedia)!]
                 self.present(playerVC, animated: true, completion: nil)
             }
@@ -719,40 +742,43 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     
     func getStikcers(){
         
-        let params = ["location": userCurrentAddress]
-        Utility.showOrHideLoader(shouldShow: true)
-
-        API.sharedInstance.executeAPI(type: .stickers, method: .get, params: params) { (status, result, message) in
-
-            DispatchQueue.main.async {
-
-                if (status == .success){
-                    let realm = try! Realm()
-                    try! realm.safeWrite {
-                        let stickers = result["message"].arrayValue
-                        realm.delete(realm.objects(StickersModel.self))
-                        for sticker in stickers{
-                            let model = StickersModel()
-                            model.updateModelWithJSON(json: sticker)
-                            realm.add(model)
+        if (Reachability.isConnectedToNetwork()){
+            let params = ["location": userCurrentAddress]
+            Utility.showOrHideLoader(shouldShow: true)
+            
+            API.sharedInstance.executeAPI(type: .stickers, method: .get, params: params) { (status, result, message) in
+                
+                DispatchQueue.main.async {
+                    
+                    if (status == .success){
+                        let realm = try! Realm()
+                        try! realm.safeWrite {
+                            let stickers = result["message"].arrayValue
+                            realm.delete(realm.objects(StickersModel.self))
+                            for sticker in stickers{
+                                let model = StickersModel()
+                                model.updateModelWithJSON(json: sticker)
+                                realm.add(model)
+                            }
+                            Utility.showOrHideLoader(shouldShow: false)
                         }
+                    }
+                    else if (status == .failure){
                         Utility.showOrHideLoader(shouldShow: false)
+                        Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            
+                        }
                     }
-                }
-                else if (status == .failure){
-                    Utility.showOrHideLoader(shouldShow: false)
-                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-
-                    }
-                }
-                else if (status == .authError){
-                    Utility.showOrHideLoader(shouldShow: false)
-                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-                        Utility.logoutUser()
+                    else if (status == .authError){
+                        Utility.showOrHideLoader(shouldShow: false)
+                        Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            Utility.logoutUser()
+                        }
                     }
                 }
             }
         }
+        
     }
 }
 

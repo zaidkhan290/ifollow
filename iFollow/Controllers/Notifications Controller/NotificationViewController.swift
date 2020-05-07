@@ -148,7 +148,7 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
         cell.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: notification.notificationDate))
         cell.btnMinus.isHidden = !(notification.notificationTag == "1")
         cell.btnPlus.isHidden = !(notification.notificationTag == "1")
-        let notificationText = notification.notificationMessage
+        let notificationText = "\(notification.notificationFriendName)\(notification.notificationMessage)"
         let range1 = notificationText.range(of: notification.notificationFriendName)
         let attributedString = NSMutableAttributedString(string: notificationText)
         if (range1 == nil){

@@ -12,6 +12,7 @@ import NVActivityIndicatorView
 import RealmSwift
 import AVFoundation
 import DateToolsSwift
+import AVKit
 
 struct Utility {
     
@@ -404,5 +405,48 @@ struct Utility {
         }
         let vc = Utility.getLoginNavigationController()
         UIWINDOW!.rootViewController = vc
+    }
+    
+    static func encodeVideo(videoUrl: URL, outputUrl: URL? = nil, resultClosure: @escaping (URL?) -> Void ) {
+        
+        var finalOutputUrl: URL? = outputUrl
+        
+        if finalOutputUrl == nil {
+            var url = videoUrl
+            url.deletePathExtension()
+            url.appendPathExtension("\(UUID().uuidString).mp4")
+            finalOutputUrl = url
+        }
+        
+        if FileManager.default.fileExists(atPath: finalOutputUrl!.path) {
+            print("Converted file already exists \(finalOutputUrl!.path)")
+            resultClosure(finalOutputUrl)
+            return
+        }
+        
+        let asset = AVURLAsset(url: videoUrl)
+        if let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetPassthrough) {
+            exportSession.outputURL = finalOutputUrl!
+            exportSession.outputFileType = AVFileType.mp4
+            let start = CMTimeMakeWithSeconds(0.0, preferredTimescale: 0)
+            let range = CMTimeRangeMake(start: start, duration: asset.duration)
+            exportSession.timeRange = range
+            exportSession.shouldOptimizeForNetworkUse = true
+            exportSession.exportAsynchronously() {
+                
+                switch exportSession.status {
+                case .failed:
+                    print("Export failed: \(exportSession.error != nil ? exportSession.error!.localizedDescription : "No Error Info")")
+                case .cancelled:
+                    print("Export canceled")
+                case .completed:
+                    resultClosure(finalOutputUrl!)
+                default:
+                    break
+                }
+            }
+        } else {
+            resultClosure(nil)
+        }
     }
 }
