@@ -194,10 +194,14 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
         itemView.btnOptions.isHidden = true
-        itemView.likeView.isHidden = true
-        itemView.feedBackView.isHidden = true
-        itemView.postShareView.isHidden = true
-        itemView.postHideView.isHidden = true
+        itemView.likeView.isHidden = post.postUserId == Utility.getLoginUserId()
+        itemView.feedBackView.isHidden = post.postUserId == Utility.getLoginUserId()
+        itemView.postShareView.isHidden = post.postUserId == Utility.getLoginUserId()
+        itemView.postHideView.isHidden = post.postUserId == Utility.getLoginUserId()
+        itemView.postShareView.tag = index
+        itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(shareViewTapped(_:))))
+        itemView.postHideView.tag = index
+        itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideViewTapped(_:))))
         itemView.btnOptions.tag = index
         itemView.btnOptions.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
         view.clipsToBounds = true
@@ -243,11 +247,32 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
     }
     
     @objc func feedbackViewTapped(){
-        let vc = Utility.getCommentViewController()
         isFullScreen = true
+        let post = postsArray.first!
+        let vc = Utility.getCommentViewController()
+        vc.postId = post.postId
+        vc.postUserId = post.postUserId
+        vc.postUserImage = post.postUserImage
+        vc.postUserName = post.postUserFullName
+        vc.postUserLocation = post.postLocation
+        vc.postUserMedia = post.postMedia
+        vc.postType = post.postMediaType
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
+        self.present(vc, animated: false, completion: nil)
+    }
+    
+    @objc func shareViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        let vc = Utility.getShareViewController()
+        vc.postId = self.postsArray[optionsPopupIndex].postId
+        vc.postUserId = self.postsArray[optionsPopupIndex].postUserId
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func hideViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        self.showHidePostPopup()
     }
     
     @objc func likeViewTapped(_ sender: UITapGestureRecognizer){

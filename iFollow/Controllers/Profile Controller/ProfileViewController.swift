@@ -360,7 +360,8 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.lblUsername.text = Utility.getLoginUserFullName()
         itemView.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: post.postCreatedAt))
         itemView.lblUserAddress.text = post.postLocation
-        itemView.feedBackView.isUserInteractionEnabled = true
+        itemView.feedBackView.isHidden = true
+        itemView.feedBackView.isUserInteractionEnabled = false
         itemView.feedBackView.tag = index
         itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
         itemView.postlikeView.isUserInteractionEnabled = true
@@ -384,9 +385,11 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
         itemView.btnOptions.tag = index
         itemView.btnOptions.addTarget(self, action: #selector(showFeedsOptionsPopup(sender:)), for: .touchUpInside)
-        itemView.postShareView.tag = index - (index / 5)
+        itemView.postShareImageView.image = UIImage(named: "edit-1")
+        itemView.postShareView.tag = index
         itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editViewTapped(_:))))
-        itemView.postHideView.tag = index - (index / 5)
+        itemView.postHideImageView.image = UIImage(named: "delete-1")
+        itemView.postHideView.tag = index
         itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(deleteViewTapped(_:))))
         
         view.backgroundColor = .white
