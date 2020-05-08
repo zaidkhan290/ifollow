@@ -360,8 +360,8 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.lblUsername.text = Utility.getLoginUserFullName()
         itemView.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: post.postCreatedAt))
         itemView.lblUserAddress.text = post.postLocation
-        itemView.feedBackView.isHidden = true
-        itemView.feedBackView.isUserInteractionEnabled = false
+        itemView.feedbackImageView.image = UIImage(named: "share-1")
+        itemView.feedBackView.isUserInteractionEnabled = true
         itemView.feedBackView.tag = index
         itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
         itemView.postlikeView.isUserInteractionEnabled = true
@@ -421,11 +421,11 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         
     }
     
-    @objc func feedbackViewTapped(_ sender: UIView){
-        let vc = Utility.getCommentViewController()
-        isFullScreen = true
-        vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = self
+    @objc func feedbackViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        let vc = Utility.getShareViewController()
+        vc.postId = self.userPosts[optionsPopupIndex].postId
+        vc.postUserId = Utility.getLoginUserId()
         self.present(vc, animated: true, completion: nil)
     }
     
