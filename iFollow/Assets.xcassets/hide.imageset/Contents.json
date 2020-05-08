@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "interface.png",
+      "filename" : "eye logo final.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "interface@2x.png",
+      "filename" : "eye logo final@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "interface@3x.png",
+      "filename" : "eye logo final@3x.png",
       "scale" : "3x"
     }
   ],

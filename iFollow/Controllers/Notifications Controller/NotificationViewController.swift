@@ -38,7 +38,14 @@ class NotificationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        resetNotificationCount()
         getNotifications(isForRefresh: false)
+    }
+    
+    func resetNotificationCount(){
+        API.sharedInstance.executeAPI(type: .resetNotificationCount, method: .post, params: nil) { (status, result, message) in
+            
+        }
     }
     
     func getNotifications(isForRefresh: Bool){

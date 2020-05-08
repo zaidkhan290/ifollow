@@ -135,8 +135,11 @@ class ProfileViewController: UIViewController {
                 Utility.showOrHideLoader(shouldShow: false)
                 
                 if (status == .success){
+                    
                     let realm = try! Realm()
                     let userData = result["message"].arrayValue.first!
+                    UserDefaults.standard.set(userData["notification_count"].intValue, forKey: "notificationCount")
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setNotificationCount"), object: nil)
                     try! realm.safeWrite {
                         if let user = UserModel.getCurrentUser(){
                             user.userTrenders = userData["trenders"].intValue
@@ -376,7 +379,13 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
             itemView.feedImage.image = UIImage(named: "post_video")
         }
         itemView.playIcon.isHidden = true
-        itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
+        //itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
+        if (post.isPostLike == 1){
+            itemView.likeButton.setSelected(selected: true, animated: true)
+        }
+        else{
+            itemView.likeButton.setSelected(selected: false, animated: false)
+        }
         itemView.feedImage.contentMode = .scaleAspectFill
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10

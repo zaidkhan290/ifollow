@@ -123,8 +123,8 @@ class StoriesViewController: UIViewController {
             self.view.addSubview(self.spb)
             
             self.spb.delegate = self
-            self.spb.topColor = UIColor.white
-            self.spb.bottomColor = UIColor.gray
+            self.spb.topColor = UIColor.clear//UIColor.white
+            self.spb.bottomColor = UIColor.clear//UIColor.gray
             self.spb.padding = 2
             let storiesArray = Array(self.storiesUsersArray[self.storyUserIndex].userStories)
             if (!self.isForMyStory){

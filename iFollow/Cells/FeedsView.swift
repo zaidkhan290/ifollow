@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import FaveButton
 
 protocol FeedsViewDelegate: class {
     func userImageTapped(index: Int)
@@ -34,6 +35,7 @@ class FeedsView: UIView {
     @IBOutlet weak var postlikeView: UIView!
     @IBOutlet weak var playIcon: UIImageView!
     @IBOutlet weak var postTrendLikeIcon: UIImageView!
+    @IBOutlet weak var likeButton: FaveButton!
     
     var index: Int!
     var delegate: FeedsViewDelegate!

@@ -62,6 +62,7 @@ enum EndPoint: String {
     case termsConditions = "tnc"
     case privacyPolicy = "privacy"
     case getPostFromNotification = "post_for_notifications"
+    case resetNotificationCount = "reset_notification_count"
     case logout = "logout"
 }
 

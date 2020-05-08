@@ -708,7 +708,13 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.lblLikeComments.text = "\(post.postLikes)"
         itemView.feedImage.clipsToBounds = true
         itemView.feedImage.contentMode = .scaleAspectFill
-        itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
+       // itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
+        if (post.isPostLike == 1){
+            itemView.likeButton.setSelected(selected: true, animated: true)
+        }
+        else{
+            itemView.likeButton.setSelected(selected: false, animated: false)
+        }
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
         itemView.likeView.isUserInteractionEnabled = true

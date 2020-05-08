@@ -33,6 +33,7 @@ class TabBarViewController: UIViewController {
     @IBOutlet weak var profileTab: UIView!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileSelectedView: UIView!
+    @IBOutlet weak var lblNotificationsCount: UILabel!
     
     var selectedIndex = 0
     var storageRef: StorageReference?
@@ -60,8 +61,11 @@ class TabBarViewController: UIViewController {
         
         changeTab()
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
+        lblNotificationsCount.layer.masksToBounds = true
+        lblNotificationsCount.layer.cornerRadius = lblNotificationsCount.frame.height / 2
         
         NotificationCenter.default.addObserver(self, selector: #selector(logoutUser), name: NSNotification.Name("logoutUser"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setNotificationsCount), name: NSNotification.Name(rawValue: "setNotificationCount"), object: nil)
         
     }
     
@@ -69,6 +73,15 @@ class TabBarViewController: UIViewController {
     
     @objc func logoutUser(){
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func setNotificationsCount(){
+        var notificationCount = 0
+        if let count = UserDefaults.standard.value(forKey: "notificationCount"){
+            notificationCount = count as! Int
+        }
+        lblNotificationsCount.isHidden = notificationCount == 0
+        lblNotificationsCount.text = "\(notificationCount)"
     }
     
     @objc func homeTabTapped(){
@@ -87,6 +100,8 @@ class TabBarViewController: UIViewController {
     }
     
     @objc func notificationTabTapped(){
+        UserDefaults.standard.set(0, forKey: "notificationCount")
+        setNotificationsCount()
         selectedIndex = 3
         changeTab()
     }
@@ -101,6 +116,13 @@ class TabBarViewController: UIViewController {
         vc.delegate = self
         let navigationVC = UINavigationController(rootViewController: vc)
         navigationVC.isNavigationBarHidden = true
+        self.present(navigationVC, animated: true, completion: nil)
+    }
+    
+    func openChatBox(){
+        let vc = Utility.getChatBoxContainerViewController()
+        let navigationVC = UINavigationController(rootViewController: vc)
+        navigationVC.navigationBar.isHidden = true
         self.present(navigationVC, animated: true, completion: nil)
     }
     
@@ -141,7 +163,7 @@ class TabBarViewController: UIViewController {
             
         }
         else if (selectedIndex == 2){
-            openCamera()
+            openChatBox()
         }
         else if (selectedIndex == 3){
             

@@ -861,7 +861,7 @@ extension GroupChatViewController: DTPhotoViewerControllerDelegate{
 extension GroupChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             self.saveImageToFireBaseStorage(image: image)
         }
         if let video = info[UIImagePickerController.InfoKey.mediaURL] as? URL{
