@@ -14,7 +14,6 @@ import RealmSwift
 import Loaf
 import AVKit
 import AVFoundation
-import MobilePlayer
 
 class ProfileViewController: UIViewController {
 
@@ -417,14 +416,16 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
             let image = LightboxImage(imageURL: URL(string: post.postMedia)!, text: post.postDescription, videoURL: nil)
             let vc = LightboxController(images: [image], startIndex: 0)
             vc.pageDelegate = self
-            vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .currentContext
             vc.dismissalDelegate = self
             vc.dynamicBackground = true
             self.present(vc, animated: true, completion: nil)
         }
         else{
-            let playerVC = MobilePlayerViewController(contentURL: URL(string: post.postMedia)!)
+            let playerVC = MobilePlayerViewController()
+            playerVC.setConfig(contentURL: URL(string: post.postMedia)!)
             playerVC.title = post.postDescription
+            playerVC.shouldAutoplay = true
             playerVC.activityItems = [URL(string: post.postMedia)!]
             self.present(playerVC, animated: true, completion: nil)
         }

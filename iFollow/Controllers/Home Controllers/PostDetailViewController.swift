@@ -231,13 +231,12 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
             self.present(vc, animated: true, completion: nil)
         }
         else{
-            let player = AVPlayer(url: URL(string: post.postMedia)!)
-            
-            let playerViewController = AVPlayerViewController()
-            playerViewController.player = player
-            self.present(playerViewController, animated: true) {
-                playerViewController.player!.play()
-            }
+            let playerVC = MobilePlayerViewController()
+            playerVC.setConfig(contentURL: URL(string: post.postMedia)!)
+            playerVC.title = post.postDescription
+            playerVC.shouldAutoplay = true
+            playerVC.activityItems = [URL(string: post.postMedia)!]
+            self.present(playerVC, animated: true, completion: nil)
         }
         
     }

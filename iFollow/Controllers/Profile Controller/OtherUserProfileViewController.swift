@@ -13,7 +13,6 @@ import Loaf
 import AVKit
 import AVFoundation
 import RealmSwift
-import MobilePlayer
 
 class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationControllerDelegate, UIPopoverPresentationControllerDelegate {
 
@@ -757,8 +756,10 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
             self.present(vc, animated: true, completion: nil)
         }
         else{
-            let playerVC = MobilePlayerViewController(contentURL: URL(string: post.postMedia)!)
+            let playerVC = MobilePlayerViewController()
             playerVC.title = post.postDescription
+            playerVC.shouldAutoplay = true
+            playerVC.setConfig(contentURL: URL(string: post.postMedia)!)
             playerVC.activityItems = [URL(string: post.postMedia)!]
             self.present(playerVC, animated: true, completion: nil)
         }

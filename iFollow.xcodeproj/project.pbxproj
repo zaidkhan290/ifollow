@@ -133,6 +133,33 @@
 		18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */; };
 		18D6BBD424375749004D90EB /* AudioRecorderSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6BBD324375749004D90EB /* AudioRecorderSingleton.swift */; };
 		18DC8813242127FE00494FAD /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC8812242127FE00494FAD /* Constant.swift */; };
+		18DF117E246C2E2600D0F89E /* MobilePlayerNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF115C246C2E2600D0F89E /* MobilePlayerNotification.swift */; };
+		18DF117F246C2E2600D0F89E /* YoutubeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF115E246C2E2600D0F89E /* YoutubeParser.swift */; };
+		18DF1180246C2E2600D0F89E /* MobilePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1160246C2E2600D0F89E /* MobilePlayerViewController.swift */; };
+		18DF1181246C2E2600D0F89E /* SliderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1162246C2E2600D0F89E /* SliderConfig.swift */; };
+		18DF1182246C2E2600D0F89E /* ElementConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1163246C2E2600D0F89E /* ElementConfig.swift */; };
+		18DF1183246C2E2600D0F89E /* LabelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1164246C2E2600D0F89E /* LabelConfig.swift */; };
+		18DF1184246C2E2600D0F89E /* MobilePlayerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1165246C2E2600D0F89E /* MobilePlayerConfig.swift */; };
+		18DF1185246C2E2600D0F89E /* WatermarkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1166246C2E2600D0F89E /* WatermarkConfig.swift */; };
+		18DF1186246C2E2600D0F89E /* BarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1167246C2E2600D0F89E /* BarConfig.swift */; };
+		18DF1187246C2E2600D0F89E /* ToggleButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1168246C2E2600D0F89E /* ToggleButtonConfig.swift */; };
+		18DF1188246C2E2600D0F89E /* ButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1169246C2E2600D0F89E /* ButtonConfig.swift */; };
+		18DF1189246C2E2600D0F89E /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF116B246C2E2600D0F89E /* UIColor+Hex.swift */; };
+		18DF118A246C2E2600D0F89E /* UIImage+CocoaPods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF116C246C2E2600D0F89E /* UIImage+CocoaPods.swift */; };
+		18DF118B246C2E2600D0F89E /* ClosureSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF116D246C2E2600D0F89E /* ClosureSupport.swift */; };
+		18DF118C246C2E2600D0F89E /* MobilePlayerOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF116E246C2E2600D0F89E /* MobilePlayerOverlayViewController.swift */; };
+		18DF118D246C2E2600D0F89E /* WatermarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF116F246C2E2600D0F89E /* WatermarkViewController.swift */; };
+		18DF118E246C2E2600D0F89E /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1171246C2E2600D0F89E /* Label.swift */; };
+		18DF118F246C2E2600D0F89E /* MobilePlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1172246C2E2600D0F89E /* MobilePlayerControlsView.swift */; };
+		18DF1190246C2E2600D0F89E /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1173246C2E2600D0F89E /* VolumeView.swift */; };
+		18DF1191246C2E2600D0F89E /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1174246C2E2600D0F89E /* Bar.swift */; };
+		18DF1192246C2E2600D0F89E /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1175246C2E2600D0F89E /* Element.swift */; };
+		18DF1193246C2E2600D0F89E /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1176246C2E2600D0F89E /* PlayerView.swift */; };
+		18DF1194246C2E2600D0F89E /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1177246C2E2600D0F89E /* Slider.swift */; };
+		18DF1195246C2E2600D0F89E /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1178246C2E2600D0F89E /* ToggleButton.swift */; };
+		18DF1196246C2E2600D0F89E /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF1179246C2E2600D0F89E /* Button.swift */; };
+		18DF1197246C2E2600D0F89E /* MobilePlayerControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF117B246C2E2600D0F89E /* MobilePlayerControllable.swift */; };
+		18DF1198246C2E2600D0F89E /* StateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF117D246C2E2600D0F89E /* StateHelper.swift */; };
 		18E198F1243B140900511296 /* HomePostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E198F0243B140900511296 /* HomePostsModel.swift */; };
 		18E198F3243B5BDD00511296 /* PostLikesUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E198F2243B5BDD00511296 /* PostLikesUserModel.swift */; };
 /* End PBXBuildFile section */
@@ -266,6 +293,34 @@
 		18D0B3BB2372CC3100C6BD06 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		18D6BBD324375749004D90EB /* AudioRecorderSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderSingleton.swift; sourceTree = "<group>"; };
 		18DC8812242127FE00494FAD /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		18DF115C246C2E2600D0F89E /* MobilePlayerNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilePlayerNotification.swift; sourceTree = "<group>"; };
+		18DF115E246C2E2600D0F89E /* YoutubeParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YoutubeParser.swift; sourceTree = "<group>"; };
+		18DF115F246C2E2600D0F89E /* MobilePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobilePlayer.h; sourceTree = "<group>"; };
+		18DF1160246C2E2600D0F89E /* MobilePlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilePlayerViewController.swift; sourceTree = "<group>"; };
+		18DF1162246C2E2600D0F89E /* SliderConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderConfig.swift; sourceTree = "<group>"; };
+		18DF1163246C2E2600D0F89E /* ElementConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementConfig.swift; sourceTree = "<group>"; };
+		18DF1164246C2E2600D0F89E /* LabelConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelConfig.swift; sourceTree = "<group>"; };
+		18DF1165246C2E2600D0F89E /* MobilePlayerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilePlayerConfig.swift; sourceTree = "<group>"; };
+		18DF1166246C2E2600D0F89E /* WatermarkConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatermarkConfig.swift; sourceTree = "<group>"; };
+		18DF1167246C2E2600D0F89E /* BarConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarConfig.swift; sourceTree = "<group>"; };
+		18DF1168246C2E2600D0F89E /* ToggleButtonConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleButtonConfig.swift; sourceTree = "<group>"; };
+		18DF1169246C2E2600D0F89E /* ButtonConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonConfig.swift; sourceTree = "<group>"; };
+		18DF116B246C2E2600D0F89E /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		18DF116C246C2E2600D0F89E /* UIImage+CocoaPods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CocoaPods.swift"; sourceTree = "<group>"; };
+		18DF116D246C2E2600D0F89E /* ClosureSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosureSupport.swift; sourceTree = "<group>"; };
+		18DF116E246C2E2600D0F89E /* MobilePlayerOverlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilePlayerOverlayViewController.swift; sourceTree = "<group>"; };
+		18DF116F246C2E2600D0F89E /* WatermarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatermarkViewController.swift; sourceTree = "<group>"; };
+		18DF1171246C2E2600D0F89E /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		18DF1172246C2E2600D0F89E /* MobilePlayerControlsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilePlayerControlsView.swift; sourceTree = "<group>"; };
+		18DF1173246C2E2600D0F89E /* VolumeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VolumeView.swift; sourceTree = "<group>"; };
+		18DF1174246C2E2600D0F89E /* Bar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
+		18DF1175246C2E2600D0F89E /* Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
+		18DF1176246C2E2600D0F89E /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		18DF1177246C2E2600D0F89E /* Slider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
+		18DF1178246C2E2600D0F89E /* ToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
+		18DF1179246C2E2600D0F89E /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		18DF117B246C2E2600D0F89E /* MobilePlayerControllable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilePlayerControllable.swift; sourceTree = "<group>"; };
+		18DF117D246C2E2600D0F89E /* StateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateHelper.swift; sourceTree = "<group>"; };
 		18E198F0243B140900511296 /* HomePostsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostsModel.swift; sourceTree = "<group>"; };
 		18E198F2243B5BDD00511296 /* PostLikesUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikesUserModel.swift; sourceTree = "<group>"; };
 		262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.release.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.release.xcconfig"; sourceTree = "<group>"; };
@@ -376,6 +431,7 @@
 		1839088B236C70D6009A28E6 /* iFollow */ = {
 			isa = PBXGroup;
 			children = (
+				18DF115B246C2E2600D0F89E /* MobilePlayer */,
 				18D6BBD22437572C004D90EB /* AudioRecorderSingleton */,
 				186CD0D3242391BF004E7D90 /* GoogleService-Info.plist */,
 				18B371DB242D15740068ADE2 /* iFollow.entitlements */,
@@ -656,6 +712,89 @@
 			path = AudioRecorderSingleton;
 			sourceTree = "<group>";
 		};
+		18DF115B246C2E2600D0F89E /* MobilePlayer */ = {
+			isa = PBXGroup;
+			children = (
+				18DF115C246C2E2600D0F89E /* MobilePlayerNotification.swift */,
+				18DF115D246C2E2600D0F89E /* Parsers */,
+				18DF115F246C2E2600D0F89E /* MobilePlayer.h */,
+				18DF1160246C2E2600D0F89E /* MobilePlayerViewController.swift */,
+				18DF1161246C2E2600D0F89E /* Config */,
+				18DF116A246C2E2600D0F89E /* Extensions */,
+				18DF116E246C2E2600D0F89E /* MobilePlayerOverlayViewController.swift */,
+				18DF116F246C2E2600D0F89E /* WatermarkViewController.swift */,
+				18DF1170246C2E2600D0F89E /* Views */,
+				18DF117A246C2E2600D0F89E /* Protocols */,
+				18DF117C246C2E2600D0F89E /* Helpers */,
+			);
+			path = MobilePlayer;
+			sourceTree = "<group>";
+		};
+		18DF115D246C2E2600D0F89E /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				18DF115E246C2E2600D0F89E /* YoutubeParser.swift */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
+		18DF1161246C2E2600D0F89E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				18DF1162246C2E2600D0F89E /* SliderConfig.swift */,
+				18DF1163246C2E2600D0F89E /* ElementConfig.swift */,
+				18DF1164246C2E2600D0F89E /* LabelConfig.swift */,
+				18DF1165246C2E2600D0F89E /* MobilePlayerConfig.swift */,
+				18DF1166246C2E2600D0F89E /* WatermarkConfig.swift */,
+				18DF1167246C2E2600D0F89E /* BarConfig.swift */,
+				18DF1168246C2E2600D0F89E /* ToggleButtonConfig.swift */,
+				18DF1169246C2E2600D0F89E /* ButtonConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		18DF116A246C2E2600D0F89E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				18DF116B246C2E2600D0F89E /* UIColor+Hex.swift */,
+				18DF116C246C2E2600D0F89E /* UIImage+CocoaPods.swift */,
+				18DF116D246C2E2600D0F89E /* ClosureSupport.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		18DF1170246C2E2600D0F89E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				18DF1171246C2E2600D0F89E /* Label.swift */,
+				18DF1172246C2E2600D0F89E /* MobilePlayerControlsView.swift */,
+				18DF1173246C2E2600D0F89E /* VolumeView.swift */,
+				18DF1174246C2E2600D0F89E /* Bar.swift */,
+				18DF1175246C2E2600D0F89E /* Element.swift */,
+				18DF1176246C2E2600D0F89E /* PlayerView.swift */,
+				18DF1177246C2E2600D0F89E /* Slider.swift */,
+				18DF1178246C2E2600D0F89E /* ToggleButton.swift */,
+				18DF1179246C2E2600D0F89E /* Button.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		18DF117A246C2E2600D0F89E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				18DF117B246C2E2600D0F89E /* MobilePlayerControllable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		18DF117C246C2E2600D0F89E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				18DF117D246C2E2600D0F89E /* StateHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		321A3F2ED6C77D47B34797F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -856,23 +995,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				18C89E0C243F3F120032A663 /* RecentChatsModel.swift in Sources */,
+				18DF1196246C2E2600D0F89E /* Button.swift in Sources */,
 				1870700523732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.swift in Sources */,
 				18BDABBA24322510003B772C /* PrivacyPolicyViewController.swift in Sources */,
 				18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */,
+				18DF1198246C2E2600D0F89E /* StateHelper.swift in Sources */,
 				189329BA237014E90067077F /* Utility.swift in Sources */,
+				18DF117F246C2E2600D0F89E /* YoutubeParser.swift in Sources */,
 				189329C7237023860067077F /* Theme.swift in Sources */,
 				189329BF23701EE50067077F /* SignupViewController.swift in Sources */,
+				18DF1182246C2E2600D0F89E /* ElementConfig.swift in Sources */,
 				18A1F32A243C9C2A002E542A /* StoryUserModel.swift in Sources */,
 				18B086432371AA71002D773E /* TabBarViewController.swift in Sources */,
 				18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */,
+				18DF118C246C2E2600D0F89E /* MobilePlayerOverlayViewController.swift in Sources */,
 				188073AD242B47E30005CAE4 /* Reachability.swift in Sources */,
+				18DF1190246C2E2600D0F89E /* VolumeView.swift in Sources */,
 				1825A52C237AEA64002811E7 /* TrendingViewController.swift in Sources */,
+				18DF118B246C2E2600D0F89E /* ClosureSupport.swift in Sources */,
 				185640E023741B7800CC2777 /* MenuViewController.swift in Sources */,
 				18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */,
 				18B14CC52375AB8F005E5CE4 /* OptionsViewController.swift in Sources */,
 				1834832C24223E5500200F8C /* ExtensionOfRealm.swift in Sources */,
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
 				18A32627240FBCE800CF329E /* DSSwipableFilterView.swift in Sources */,
+				18DF1183246C2E2600D0F89E /* LabelConfig.swift in Sources */,
 				1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */,
 				18C89E0A243F2DD40032A663 /* SearchUserModel.swift in Sources */,
 				1825A52A237AEA50002811E7 /* TrendesViewController.swift in Sources */,
@@ -884,6 +1031,7 @@
 				189329CD237035670067077F /* LabelExtension.swift in Sources */,
 				18781C2223707019001BAF95 /* FeedsView.swift in Sources */,
 				1855081923798976008EAC2E /* FriendsTableViewCell.swift in Sources */,
+				18DF1180246C2E2600D0F89E /* MobilePlayerViewController.swift in Sources */,
 				1890CB81242136060096044E /* UserModel.swift in Sources */,
 				18B14CCA2375CA85005E5CE4 /* StoriesViewController.swift in Sources */,
 				18847A53237BF2FA004D500A /* ChatViewController.swift in Sources */,
@@ -891,14 +1039,20 @@
 				185640EA2374444D00CC2777 /* PrivateChatBoxViewController.swift in Sources */,
 				18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */,
 				18A3262C241010AE00CF329E /* EmojisViewController.swift in Sources */,
+				18DF118D246C2E2600D0F89E /* WatermarkViewController.swift in Sources */,
 				18B82A312371CBDB00693F7F /* NotificationViewController.swift in Sources */,
 				189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */,
 				18A32629240FBCE800CF329E /* DSSwipableFilterViewDataSource.swift in Sources */,
+				18DF1181246C2E2600D0F89E /* SliderConfig.swift in Sources */,
 				18AC39A5237ED0A40044136B /* AddMembersViewController.swift in Sources */,
+				18DF118E246C2E2600D0F89E /* Label.swift in Sources */,
 				1825A528237AEA41002811E7 /* TrendersContainerViewController.swift in Sources */,
 				189AA402244F29F40074B081 /* ShareStoriesViewController.swift in Sources */,
 				18A3262F241010D300CF329E /* EmojisCollectionViewCell.swift in Sources */,
 				182F62582372E94B00A55E52 /* ChatBoxContainerViewController.swift in Sources */,
+				18DF118A246C2E2600D0F89E /* UIImage+CocoaPods.swift in Sources */,
+				18DF118F246C2E2600D0F89E /* MobilePlayerControlsView.swift in Sources */,
+				18DF1192246C2E2600D0F89E /* Element.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
 				18847A5B237C5A52004D500A /* MediaViewController.swift in Sources */,
 				1855081623797DA8008EAC2E /* SendStoryViewController.swift in Sources */,
@@ -914,9 +1068,12 @@
 				18A32628240FBCE800CF329E /* DSFilterView.swift in Sources */,
 				18AD1C4B2449F70F006AFF67 /* ShareViewController.swift in Sources */,
 				1825A52F237AFDEF002811E7 /* ChatContainerViewController.swift in Sources */,
+				18DF117E246C2E2600D0F89E /* MobilePlayerNotification.swift in Sources */,
 				18847A58237C3010004D500A /* MediaCollectionViewCell.swift in Sources */,
+				18DF1184246C2E2600D0F89E /* MobilePlayerConfig.swift in Sources */,
 				182F625A2372E96A00A55E52 /* AllChatsListViewController.swift in Sources */,
 				18B14CC3237580A0005E5CE4 /* SignupDetail2ViewController.swift in Sources */,
+				18DF1191246C2E2600D0F89E /* Bar.swift in Sources */,
 				185CC0C52379A096006BDC9D /* NewPostViewController.swift in Sources */,
 				18B14CC123758086005E5CE4 /* SignupDetail1ViewController.swift in Sources */,
 				18847A55237C21F1004D500A /* GroupDetailViewController.swift in Sources */,
@@ -927,14 +1084,20 @@
 				1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */,
 				1855081C23799422008EAC2E /* HalfSizePresentation.swift in Sources */,
 				18E198F3243B5BDD00511296 /* PostLikesUserModel.swift in Sources */,
+				18DF1193246C2E2600D0F89E /* PlayerView.swift in Sources */,
 				18706FFD23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift in Sources */,
+				18DF1194246C2E2600D0F89E /* Slider.swift in Sources */,
 				18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */,
 				189E3F8F24408F5800244BCD /* PostDetailViewController.swift in Sources */,
 				1855080F23795352008EAC2E /* SegmentProgressBar.swift in Sources */,
+				18DF1195246C2E2600D0F89E /* ToggleButton.swift in Sources */,
+				18DF1187246C2E2600D0F89E /* ToggleButtonConfig.swift in Sources */,
+				18DF1189246C2E2600D0F89E /* UIColor+Hex.swift in Sources */,
 				18A3262A240FBCE800CF329E /* DSFilter.swift in Sources */,
 				188073B1242BA1040005CAE4 /* NotificationModel.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
 				185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */,
+				18DF1186246C2E2600D0F89E /* BarConfig.swift in Sources */,
 				18C970F12445B69300C4F7C4 /* GroupChatViewController.swift in Sources */,
 				181709472424D8AB00EE5753 /* StickersModel.swift in Sources */,
 				188073AB242B41EF0005CAE4 /* UserPostsModel.swift in Sources */,
@@ -945,9 +1108,12 @@
 				185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */,
 				18A4C33D244859AB00893D9D /* GroupChatModel.swift in Sources */,
 				1889F2DE23DF41100079DB72 /* ViewersViewController.swift in Sources */,
+				18DF1197246C2E2600D0F89E /* MobilePlayerControllable.swift in Sources */,
 				1834832A2422313A00200F8C /* API.swift in Sources */,
+				18DF1185246C2E2600D0F89E /* WatermarkConfig.swift in Sources */,
 				18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */,
 				1895C31524358036006F3CE7 /* StoryModel.swift in Sources */,
+				18DF1188246C2E2600D0F89E /* ButtonConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
