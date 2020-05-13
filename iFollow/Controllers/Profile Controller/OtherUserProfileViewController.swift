@@ -751,6 +751,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
             let image = LightboxImage(imageURL: URL(string: post.postMedia)!, text: post.postDescription, videoURL: nil)
             let vc = LightboxController(images: [image], startIndex: 0)
             vc.pageDelegate = self
+            vc.modalPresentationStyle = .currentContext
             vc.dismissalDelegate = self
             vc.dynamicBackground = true
             self.present(vc, animated: true, completion: nil)
