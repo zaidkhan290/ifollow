@@ -194,6 +194,7 @@ class ExploreViewController: UIViewController {
         vc.delegate = self
         let navigationVC = UINavigationController(rootViewController: vc)
         navigationVC.isNavigationBarHidden = true
+        navigationVC.modalPresentationStyle = .fullScreen
         self.present(navigationVC, animated: true, completion: nil)
     }
     
@@ -487,6 +488,7 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
                     vc.storyUserIndex = 0
                     let navVC = UINavigationController(rootViewController: vc)
                     navVC.isNavigationBarHidden = true
+                    navVC.modalPresentationStyle = .fullScreen
                     self.present(navVC, animated: true, completion: nil)
                 }
             }
@@ -497,6 +499,7 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
                 vc.storyUserIndex = indexPath.row - 1
                 let navVC = UINavigationController(rootViewController: vc)
                 navVC.isNavigationBarHidden = true
+                navVC.modalPresentationStyle = .fullScreen
                 self.present(navVC, animated: true, completion: nil)
             }
         }
@@ -507,6 +510,7 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
             vc.storyUserIndex = indexPath.row
             let navVC = UINavigationController(rootViewController: vc)
             navVC.isNavigationBarHidden = true
+            navVC.modalPresentationStyle = .fullScreen
             self.present(navVC, animated: true, completion: nil)
         }
     }

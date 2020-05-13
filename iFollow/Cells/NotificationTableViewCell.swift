@@ -10,6 +10,7 @@ import UIKit
 
 protocol NotificationTableViewCellDelegate: class {
     func respondToRequest(indexPath: IndexPath, isAccept: Bool)
+    func userImageTapped(indexPath: IndexPath)
 }
 
 class NotificationTableViewCell: UITableViewCell {
@@ -25,6 +26,8 @@ class NotificationTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         userImage.layer.cornerRadius = 35
+        userImage.isUserInteractionEnabled = true
+        userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped)))
         
     }
 
@@ -34,7 +37,13 @@ class NotificationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    //MARK:- Actions
+    //MARK:- Methods and Actions
+    
+    @objc func userImageTapped(){
+        if (delegate != nil){
+            self.delegate!.userImageTapped(indexPath: indexPath)
+        }
+    }
     
     @IBAction func btnMinusTapped(_ sender: UIButton) {
         if (delegate != nil){

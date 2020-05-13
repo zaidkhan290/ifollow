@@ -206,7 +206,15 @@ extension NotificationViewController: NotificationTableViewCellDelegate{
              "request_id": notification.notificationRequestId]
         self.respondToNotification(params: params, isAccept: isAccept)
     }
+    
+    func userImageTapped(indexPath: IndexPath) {
+        let notification = notifications[indexPath.row]
+        let vc = Utility.getOtherUserProfileViewController()
+        vc.userId = notification.notificationFriendId
+        self.present(vc, animated: true, completion: nil)
+    }
 }
+
 
 extension NotificationViewController: EmptyDataSetSource, EmptyDataSetDelegate{
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
