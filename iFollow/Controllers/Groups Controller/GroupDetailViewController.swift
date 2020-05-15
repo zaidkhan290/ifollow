@@ -207,7 +207,7 @@ class GroupDetailViewController: UIViewController {
     
     @objc func deactivateGroupTapped(){
         
-        let alertVC = UIAlertController(title: groupModel.groupAdminId == Utility.getLoginUserId() ? "Deactivate Group" : "Leave From Group", message: groupModel.groupAdminId == Utility.getLoginUserId() ? "are you sure you want to deactivate this group?" : "are you sure you want to leave this group?", preferredStyle: .alert)
+        let alertVC = UIAlertController(title: groupModel.groupAdminId == Utility.getLoginUserId() ? "Deactivate Group" : "Leave From Group", message: groupModel.groupAdminId == Utility.getLoginUserId() ? "Are you sure you want to deactivate this group?" : "Are you sure you want to leave this group?", preferredStyle: .alert)
         
         let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
             DispatchQueue.main.async {
@@ -226,18 +226,28 @@ class GroupDetailViewController: UIViewController {
     @objc func showOptionsPopup(sender: UIButton){
         
         optionsPopupIndex = sender.tag
-        let vc = Utility.getOptionsViewController()
-        vc.options = ["Remove"]
-        vc.delegate = self
-        vc.isFromPostView = true
-        vc.modalPresentationStyle = .popover
-        vc.preferredContentSize = CGSize(width: 100, height: 50)
-        
-        let popup = vc.popoverPresentationController
-        popup?.permittedArrowDirections = UIPopoverArrowDirection.up
-        popup?.sourceView = sender
-        popup?.delegate = self
-        self.present(vc, animated: true, completion: nil)
+//        let vc = Utility.getOptionsViewController()
+//        vc.options = ["Remove"]
+//        vc.delegate = self
+//        vc.isFromPostView = true
+//        vc.modalPresentationStyle = .popover
+//        vc.preferredContentSize = CGSize(width: 100, height: 50)
+//
+//        let popup = vc.popoverPresentationController
+//        popup?.permittedArrowDirections = UIPopoverArrowDirection.up
+//        popup?.sourceView = sender
+//        popup?.delegate = self
+//        self.present(vc, animated: true, completion: nil)
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let removeAction = UIAlertAction(title: "Remove", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.showRemoveMemberPopup()
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(removeAction)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
         
     }
     

@@ -1011,7 +1011,7 @@
                                     <constraint firstAttribute="height" constant="25" id="KXC-oX-g58"/>
                                     <constraint firstAttribute="width" constant="25" id="cDw-wB-Ll7"/>
                                 </constraints>
-                                <state key="normal" image="back"/>
+                                <state key="normal" image="select_down"/>
                                 <connections>
                                     <action selector="btnBackTapped:" destination="5rb-dQ-cWm" eventType="touchUpInside" id="m9n-4x-BnT"/>
                                 </connections>
@@ -2351,7 +2351,7 @@
                                     <constraint firstAttribute="width" constant="25" id="6jE-k7-hY6"/>
                                     <constraint firstAttribute="height" constant="25" id="rxu-6M-gfp"/>
                                 </constraints>
-                                <state key="normal" image="back"/>
+                                <state key="normal" image="select_down"/>
                                 <connections>
                                     <action selector="btnBackTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="Sij-PY-XqG"/>
                                 </connections>
@@ -2877,7 +2877,7 @@
                                     <constraint firstAttribute="height" constant="25" id="vNr-Qu-1a5"/>
                                     <constraint firstAttribute="width" constant="25" id="z2L-vr-iPh"/>
                                 </constraints>
-                                <state key="normal" image="back"/>
+                                <state key="normal" image="select_down"/>
                                 <connections>
                                     <action selector="btnBackTapped:" destination="AUl-iU-rn1" eventType="touchUpInside" id="KAS-kl-KuB"/>
                                 </connections>
@@ -3926,7 +3926,7 @@
                                     <constraint firstAttribute="height" constant="25" id="Kht-yO-LMW"/>
                                     <constraint firstAttribute="width" constant="25" id="LL4-y1-qSs"/>
                                 </constraints>
-                                <state key="normal" image="back"/>
+                                <state key="normal" image="select_down"/>
                                 <connections>
                                     <action selector="btnBackTapped:" destination="7ZT-gG-PpZ" eventType="touchUpInside" id="sBg-fx-PWj"/>
                                 </connections>
@@ -4448,7 +4448,7 @@
                                     <constraint firstAttribute="width" constant="25" id="3Rv-kI-4N4"/>
                                     <constraint firstAttribute="height" constant="25" id="Aut-t8-zoW"/>
                                 </constraints>
-                                <state key="normal" image="back"/>
+                                <state key="normal" image="select_down"/>
                                 <connections>
                                     <action selector="btnBackTapped:" destination="3KB-6S-FlM" eventType="touchUpInside" id="A3f-hx-taK"/>
                                 </connections>
@@ -5507,7 +5507,7 @@
                                     <constraint firstAttribute="width" constant="25" id="3a2-jH-22V"/>
                                     <constraint firstAttribute="height" constant="25" id="krY-6S-M04"/>
                                 </constraints>
-                                <state key="normal" image="back"/>
+                                <state key="normal" image="select_down"/>
                                 <connections>
                                     <action selector="btnBackTapped:" destination="fS6-ya-PWd" eventType="touchUpInside" id="YaK-xL-S1K"/>
                                 </connections>
@@ -5570,7 +5570,7 @@
                                     <constraint firstAttribute="height" constant="25" id="DwT-xn-DJC"/>
                                     <constraint firstAttribute="width" constant="25" id="YvV-ET-DyY"/>
                                 </constraints>
-                                <state key="normal" image="back"/>
+                                <state key="normal" image="select_down"/>
                                 <connections>
                                     <action selector="btnBackTapped:" destination="VHT-pT-rMi" eventType="touchUpInside" id="Zm9-VB-EeU"/>
                                 </connections>
@@ -5770,6 +5770,7 @@
         <image name="rotate" width="37.333332061767578" height="35.333332061767578"/>
         <image name="search" width="24" height="24"/>
         <image name="searchSelected" width="24" height="24"/>
+        <image name="select_down" width="15.333333015441895" height="18.666666030883789"/>
         <image name="send" width="36" height="36"/>
         <image name="send-1" width="18.333333969116211" height="17"/>
         <image name="text" width="38" height="37"/>

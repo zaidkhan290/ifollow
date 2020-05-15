@@ -56,7 +56,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         imagePicker.mediaTypes = ["public.image", "public.movie"]
-        imagePicker.videoMaximumDuration = 15
+        imagePicker.videoMaximumDuration = 60
         imagePicker.videoQuality = .type640x480
         
         incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: isPrivateChat ? Theme.privateChatIncomingMessage : Theme.profileLabelsYellowColor)
@@ -678,13 +678,12 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                         self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
                     }
                     else if let videoItem = mediaItem as? JSQVideoMediaItem{
-                        let player = AVPlayer(url: videoItem.fileURL)
+                        let playerVC = MobilePlayerViewController()
+                        playerVC.setConfig(contentURL: videoItem.fileURL)
+                        playerVC.shouldAutoplay = true
+                        playerVC.activityItems = [videoItem.fileURL!]
+                        self.present(playerVC, animated: true, completion: nil)
                         
-                        let playerViewController = AVPlayerViewController()
-                        playerViewController.player = player
-                        self.present(playerViewController, animated: true) {
-                            playerViewController.player!.play()
-                        }
                         self.collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
                         self.collectionView.reloadItems(at: [IndexPath(row: indexPath.row, section: 0)])
                     }
