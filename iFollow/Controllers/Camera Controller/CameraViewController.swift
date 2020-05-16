@@ -12,6 +12,7 @@ import Photos
 import ColorSlider
 import GooglePlaces
 import AVKit
+import Photos
 
 protocol CameraViewControllerDelegate: class {
     func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel])
@@ -1057,9 +1058,22 @@ extension CameraViewController: GMSAutocompleteViewControllerDelegate{
 extension CameraViewController: ShareStoriesViewControllerDelegate{
     func shareStoryToMyStoryAndFriends(isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
         if (self.videoURL == nil){
+            
+            if (isToSendMyStory){
+                UIImageWriteToSavedPhotosAlbum(storyImageToSend, self, nil, nil)
+            }
             self.delegate.getStoryImage(image: storyImageToSend, caption: self.txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
         }
         else{
+            if (isToSendMyStory){
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: self.videoURL)
+                }) { saved, error in
+                    if saved {
+                    }
+                }
+            }
+            
             self.delegate.getStoryVideo(videoURL: self.videoURL, caption: txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
         }
         self.dismiss(animated: true, completion: nil)

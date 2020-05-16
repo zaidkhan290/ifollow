@@ -63,6 +63,7 @@ enum EndPoint: String {
     case privacyPolicy = "privacy"
     case getPostFromNotification = "post_for_notifications"
     case resetNotificationCount = "reset_notification_count"
+    case resetAppBadge = "reset_push_count"
     case logout = "logout"
 }
 

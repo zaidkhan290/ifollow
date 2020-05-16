@@ -72,6 +72,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if (Utility.getLoginUserId() != 0){
             let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
             usersRef.updateChildValues(["isActive" : true])
+            
+            API.sharedInstance.executeAPI(type: .resetAppBadge, method: .post, params: nil) { (status, result, message) in
+                
+            }
         }
     }
 
