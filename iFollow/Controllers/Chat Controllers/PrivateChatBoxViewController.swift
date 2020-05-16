@@ -41,6 +41,7 @@ class PrivateChatBoxViewController: UIViewController {
         familyView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(familyTapped)))
         groupsView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(groupsTapped)))
         changeTab()
+        
     }
    
     //MARK: Actions

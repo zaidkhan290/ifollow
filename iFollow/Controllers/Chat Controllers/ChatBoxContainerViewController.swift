@@ -39,7 +39,6 @@ class ChatBoxContainerViewController: UIViewController {
         
         changeTab()
         
-        
 //        let items = ["All", "Groups"]
 //        let carbonTabSwipeNavigation = CarbonTabSwipeNavigation(items: items, delegate: self)
 //        carbonTabSwipeNavigation.insert(intoRootViewController: self, andTargetView: containerView)

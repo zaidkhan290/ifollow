@@ -165,6 +165,17 @@
                                                     <constraint firstAttribute="height" constant="1" id="26f-Ba-nyb"/>
                                                 </constraints>
                                             </view>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PV7-9D-xND">
+                                                <rect key="frame" x="55.333333333333343" y="4.6666666666666288" width="26" height="26"/>
+                                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="26" id="ry4-cs-FQM"/>
+                                                    <constraint firstAttribute="height" constant="26" id="zHo-cv-sdK"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -172,6 +183,8 @@
                                             <constraint firstAttribute="trailing" secondItem="rJb-oP-DV9" secondAttribute="trailing" id="7pR-f3-QEU"/>
                                             <constraint firstAttribute="bottom" secondItem="rJb-oP-DV9" secondAttribute="bottom" id="8Sg-6c-uJI"/>
                                             <constraint firstItem="rJb-oP-DV9" firstAttribute="leading" secondItem="W8l-KY-0KF" secondAttribute="leading" id="QAW-xp-aAx"/>
+                                            <constraint firstItem="PV7-9D-xND" firstAttribute="centerY" secondItem="W8l-KY-0KF" secondAttribute="centerY" multiplier="0.5" id="SQQ-Dj-Yz6"/>
+                                            <constraint firstItem="PV7-9D-xND" firstAttribute="leading" secondItem="2p6-mm-SCc" secondAttribute="trailing" constant="-18" id="cnI-jZ-gzX"/>
                                             <constraint firstItem="2p6-mm-SCc" firstAttribute="centerY" secondItem="W8l-KY-0KF" secondAttribute="centerY" id="dKD-3c-sB8"/>
                                         </constraints>
                                     </view>
@@ -283,6 +296,7 @@
                         <outlet property="homeImage" destination="n6k-Rd-I2f" id="bkP-E3-o1Z"/>
                         <outlet property="homeSelectedView" destination="9Vi-6g-Jxs" id="iao-Ra-6gI"/>
                         <outlet property="homeTab" destination="96e-qH-iuH" id="JLJ-M5-RO2"/>
+                        <outlet property="lblMessagesCount" destination="PV7-9D-xND" id="ARX-nS-VkE"/>
                         <outlet property="lblNotificationsCount" destination="RDM-v1-xxd" id="Wqj-5d-Q4i"/>
                         <outlet property="notificationImage" destination="nFd-PQ-ZP6" id="Mrz-Ac-luS"/>
                         <outlet property="notificationSelectedView" destination="3C7-MZ-Ywo" id="nxj-PX-4s1"/>
@@ -303,7 +317,7 @@
         <!--Chat Box Container View Controller-->
         <scene sceneID="TpR-G6-F89">
             <objects>
-                <viewController storyboardIdentifier="ChatBoxContainerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gHy-Wf-RTq" customClass="ChatBoxContainerViewController" customModule="iFollow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatBoxContainerViewController" modalPresentationStyle="overFullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gHy-Wf-RTq" customClass="ChatBoxContainerViewController" customModule="iFollow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Lxz-Ua-nDu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -317,7 +331,7 @@
                                     <constraint firstAttribute="height" constant="25" id="G97-3q-zzP"/>
                                     <constraint firstAttribute="width" constant="25" id="dmk-Yi-29p"/>
                                 </constraints>
-                                <state key="normal" image="back"/>
+                                <state key="normal" image="select_down"/>
                                 <connections>
                                     <action selector="btnBackTapped:" destination="gHy-Wf-RTq" eventType="touchUpInside" id="Chq-tV-Yew"/>
                                 </connections>

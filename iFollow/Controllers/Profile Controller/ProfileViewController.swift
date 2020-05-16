@@ -177,6 +177,7 @@ class ProfileViewController: UIViewController {
         let vc = Utility.getChatBoxContainerViewController()
         let navigationVC = UINavigationController(rootViewController: vc)
         navigationVC.navigationBar.isHidden = true
+//        navigationVC.modalPresentationStyle = .overFullScreen
         self.present(navigationVC, animated: true, completion: nil)
     }
     

@@ -203,6 +203,8 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 chatToUpdate.updateChildValues(["isRead": true])
             }
         }
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateMessagesCounterAfterReadChat"), object: nil)
        
         chatRef.observe(.childAdded, with: { (snapshot) in
             

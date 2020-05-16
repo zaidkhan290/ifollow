@@ -34,6 +34,7 @@ class TabBarViewController: UIViewController {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileSelectedView: UIView!
     @IBOutlet weak var lblNotificationsCount: UILabel!
+    @IBOutlet weak var lblMessagesCount: UILabel!
     
     var selectedIndex = 0
     var storageRef: StorageReference?
@@ -43,6 +44,12 @@ class TabBarViewController: UIViewController {
     var exploreController = UIViewController()
     var notificationController = UIViewController()
     var profileController = UIViewController()
+    
+    var allChatsArray = [RecentChatsModel]()
+    var allPrivateChatsArray = [RecentChatsModel]()
+    
+    var normalChatRef = rootRef
+    var privateChatRef = rootRef
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,12 +71,30 @@ class TabBarViewController: UIViewController {
         lblNotificationsCount.layer.masksToBounds = true
         lblNotificationsCount.layer.cornerRadius = lblNotificationsCount.frame.height / 2
         
+        lblMessagesCount.layer.masksToBounds = true
+        lblMessagesCount.layer.cornerRadius = lblMessagesCount.frame.height / 2
+        
         NotificationCenter.default.addObserver(self, selector: #selector(logoutUser), name: NSNotification.Name("logoutUser"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(setNotificationsCount), name: NSNotification.Name(rawValue: "setNotificationCount"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateMessagesCounterAfterReadChat), name: NSNotification.Name(rawValue: "updateMessagesCounterAfterReadChat"), object: nil)
+        UserDefaults.standard.set(0, forKey: "messagesCount")
+        normalChatRef = normalChatRef.child("NormalChats")
+        privateChatRef = privateChatRef.child("PrivateChats")
+        getChatList()
+        getPrivateChatList()
         
     }
     
     //MARK:- Methods
+    
+    @objc func updateMessagesCounterAfterReadChat(){
+        UserDefaults.standard.set(0, forKey: "messagesCount")
+//        normalChatRef.removeAllObservers()
+//        privateChatRef.removeAllObservers()
+//        getChatList()
+//        getPrivateChatList()
+        self.setMessagesCount()
+    }
     
     @objc func logoutUser(){
         self.dismiss(animated: true, completion: nil)
@@ -82,6 +107,15 @@ class TabBarViewController: UIViewController {
         }
         lblNotificationsCount.isHidden = notificationCount == 0
         lblNotificationsCount.text = "\(notificationCount)"
+    }
+    
+    @objc func setMessagesCount(){
+        var messagesCount = 0
+        if let count = UserDefaults.standard.value(forKey: "messagesCount"){
+            messagesCount = count as! Int
+        }
+        lblMessagesCount.isHidden = messagesCount == 0
+        lblMessagesCount.text = "\(messagesCount)"
     }
     
     @objc func homeTabTapped(){
@@ -120,9 +154,11 @@ class TabBarViewController: UIViewController {
     }
     
     func openChatBox(){
+        self.setMessagesCount()
         let vc = Utility.getChatBoxContainerViewController()
         let navigationVC = UINavigationController(rootViewController: vc)
         navigationVC.navigationBar.isHidden = true
+//        navigationVC.modalPresentationStyle = .overFullScreen
         self.present(navigationVC, animated: true, completion: nil)
     }
     
@@ -397,6 +433,127 @@ class TabBarViewController: UIViewController {
             
         }
     }
+    
+    func getChatList(){
+        
+        API.sharedInstance.executeAPI(type: .getNormalChatsList, method: .get, params: nil) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                if (status == .success){
+                    self.allChatsArray.removeAll()
+                    let chatArray = result["message"].arrayValue
+                    for chat in chatArray{
+                        let recentChatModel = RecentChatsModel()
+                        recentChatModel.updateModelWithJSON(json: chat)
+                        self.allChatsArray.append(recentChatModel)
+                    }
+                    self.normalChatRef.observe(.childAdded) { (chatSnapshot) in
+                        if let recentChat = self.allChatsArray.first(where: {$0.chatId == chatSnapshot.key}){
+                            let chatNode = self.normalChatRef.child(chatSnapshot.key)
+                            chatNode.queryLimited(toLast: 1).observe(.childAdded, with: { (snapshot) in
+                                
+                                let userId = (snapshot.childSnapshot(forPath: "senderId").value as! String)
+                                let message = (snapshot.childSnapshot(forPath: "message").value as! String)
+                                let lastMessageIsRead = (snapshot.childSnapshot(forPath: "isRead").value as! Bool)
+                                if (message != ""){
+                                    if (userId == "\(Utility.getLoginUserId())"){
+                                        recentChat.isRead = true
+                                    }
+                                    else{
+                                        if (!lastMessageIsRead){
+                                            if let count = UserDefaults.standard.value(forKey: "messagesCount"){
+                                                UserDefaults.standard.set(count as! Int + 1, forKey: "messagesCount")
+                                            }
+                                            else{
+                                                UserDefaults.standard.set(1, forKey: "messagesCount")
+                                            }
+                                            self.setMessagesCount()
+                                        }
+                                    }
+                                }
+                                
+                                
+                            })
+                        }
+                        
+                    }
+                    
+                }
+                else if (status == .failure){
+                    
+                }
+                else if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+        
+    }
+    
+    func getPrivateChatList(){
+        
+        API.sharedInstance.executeAPI(type: .getPrivateChatsList, method: .get, params: nil) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                if (status == .success){
+                    self.allPrivateChatsArray.removeAll()
+                    let chatArray = result["message"].arrayValue
+                    for chat in chatArray{
+                        let recentChatModel = RecentChatsModel()
+                        recentChatModel.updateModelWithJSON(json: chat)
+                        self.allPrivateChatsArray.append(recentChatModel)
+                    }
+                    self.privateChatRef.observe(.childAdded) { (chatSnapshot) in
+                        if let recentChat = self.allPrivateChatsArray.first(where: {$0.chatId == chatSnapshot.key}){
+                            let chatNode = self.privateChatRef.child(chatSnapshot.key)
+                            chatNode.queryLimited(toLast: 1).observe(.childAdded, with: { (snapshot) in
+                                
+                                let userId = (snapshot.childSnapshot(forPath: "senderId").value as! String)
+                                let message = (snapshot.childSnapshot(forPath: "message").value as! String)
+                                let lastMessageIsRead = (snapshot.childSnapshot(forPath: "isRead").value as! Bool)
+                                if (message != ""){
+                                    if (userId == "\(Utility.getLoginUserId())"){
+                                       
+                                    }
+                                    else{
+                                        if (!lastMessageIsRead){
+                                            if let count = UserDefaults.standard.value(forKey: "messagesCount"){
+                                                UserDefaults.standard.set(count as! Int + 1, forKey: "messagesCount")
+                                            }
+                                            else{
+                                                UserDefaults.standard.set(1, forKey: "messagesCount")
+                                            }
+                                            self.setMessagesCount()
+                                        }
+                                    }
+                                }
+                                
+                                
+                            })
+                        }
+                        
+                    }
+                    
+                }
+                else if (status == .failure){
+                    
+                }
+                else if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+        
+    }
+    
 }
 
 extension TabBarViewController: CameraViewControllerDelegate{
