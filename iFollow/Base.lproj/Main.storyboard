@@ -1229,7 +1229,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ivo-Ni-E5t">
                                         <rect key="frame" x="20" y="260" width="40" height="58"/>
-                                        <state key="normal" image="pin"/>
+                                        <state key="normal" image="pin-icon"/>
                                         <connections>
                                             <action selector="btnLocationTapped:" destination="FIJ-nH-bWm" eventType="touchUpInside" id="35E-Im-TSH"/>
                                         </connections>
@@ -5775,7 +5775,7 @@
         <image name="password" width="17" height="19.666666030883789"/>
         <image name="pencil-striped-symbol-for-interface-edit-buttons" width="16.333333969116211" height="16.333333969116211"/>
         <image name="photo" width="26" height="26"/>
-        <image name="pin" width="20.333333969116211" height="29"/>
+        <image name="pin-icon" width="20.333333969116211" height="29"/>
         <image name="play_Icon" width="96" height="96"/>
         <image name="plus" width="23.666666030883789" height="23.666666030883789"/>
         <image name="profile" width="24" height="24"/>

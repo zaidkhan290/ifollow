@@ -208,20 +208,28 @@ class ProfileViewController: UIViewController {
     
     @objc func searchViewTapped(){
         
-        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
-            self.imagePicker.sourceType = .camera
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }
-        let galleryAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
-            self.imagePicker.sourceType = .photoLibrary
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertVC.addAction(cameraAction)
-        alertVC.addAction(galleryAction)
-        alertVC.addAction(cancelAction)
-        self.present(alertVC, animated: true, completion: nil)
+//        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
+//            self.imagePicker.sourceType = .camera
+//            self.present(self.imagePicker, animated: true, completion: nil)
+//        }
+//        let galleryAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+//            self.imagePicker.sourceType = .photoLibrary
+//            self.present(self.imagePicker, animated: true, completion: nil)
+//        }
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        alertVC.addAction(cameraAction)
+//        alertVC.addAction(galleryAction)
+//        alertVC.addAction(cancelAction)
+//        self.present(alertVC, animated: true, completion: nil)
+        
+        let vc = Utility.getCameraViewController()
+        vc.isForPost = true
+        vc.delegate = self
+        let navigationVC = UINavigationController(rootViewController: vc)
+        navigationVC.isNavigationBarHidden = true
+        navigationVC.modalPresentationStyle = .fullScreen
+        self.present(navigationVC, animated: true, completion: nil)
         
     }
     
@@ -562,5 +570,36 @@ extension ProfileViewController: LightboxControllerPageDelegate, LightboxControl
     
     func lightboxControllerWillDismiss(_ controller: LightboxController) {
         
+    }
+}
+
+extension ProfileViewController: CameraViewControllerDelegate{
+    func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
+        
+        let vc = Utility.getNewPostViewController()
+        vc.postSelectedImage = image
+        vc.isVideo = false
+        isFullScreen = true
+        vc.delegate = self
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: false, completion: nil)
+        
+    }
+    
+    func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
+        DispatchQueue.main.async {
+            if let videoScreenShot = Utility.imageFromVideo(url: videoURL, at: 0, totalTime: 60){
+                let vc = Utility.getNewPostViewController()
+                vc.postSelectedImage = videoScreenShot
+                vc.videoURL = videoURL
+                vc.isVideo = true
+                self.isFullScreen = true
+                vc.delegate = self
+                vc.modalPresentationStyle = .custom
+                vc.transitioningDelegate = self
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
     }
 }

@@ -85,6 +85,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     
     var storyImageToSend = UIImage()
     
+    var isForPost = false
+    
   //  let filterSwipeView = DSSwipableFilterView(frame: UIScreen.main.bounds)
     
 //    let filterList = [DSFilter(name: "No Filter", type: .ciFilter),
@@ -225,7 +227,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         btnFlash.isHidden = isVideoSelected
         btnRotate.isHidden = isVideoSelected
         btnPlay.isHidden = !isVideoSelected
-        txtFieldCaption.isHidden = false
+        if (!isForPost){
+            txtFieldCaption.isHidden = false
+        }
+        
     }
     
     @objc func colorSliderValueChanged(_ slider: ColorSlider) {
@@ -389,7 +394,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         btnEmoji.isEnabled = true
         btnLocation.isHidden = false
         btnText.isHidden = false
-        txtFieldCaption.isHidden = false
+        if (!isForPost){
+            txtFieldCaption.isHidden = false
+        }
         btnClock.isHidden = false
         lblLive.isHidden = true
         lblNormal.isHidden = true
@@ -569,7 +576,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             emojiesMainView.isHidden = true
             cameraView.isHidden = true
             cameraView.image = nil
-            btnBack.setImage(UIImage(named: "back"), for: .normal)
+            btnBack.setImage(UIImage(named: "select_down"), for: .normal)
             btnGallery.setImage(UIImage(named: "attach-1"), for: .normal)
             btnCapture.setImage(UIImage(named: "capture"), for: .normal)
             btnRotate.isEnabled = true
@@ -649,9 +656,20 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             if (self.videoURL == nil){
                 self.storyImageToSend = self.filterView.screenshot()
             }
-            let vc = Utility.getShareStoriesViewController()
-            vc.delegate = self
-            self.pushToVC(vc: vc)
+            if (isForPost){
+                self.dismiss(animated: true, completion: nil)
+                if (self.videoURL == nil){
+                    self.delegate.getStoryImage(image: self.storyImageToSend, caption: "", isToSendMyStory: true, friendsArray: [])
+                }
+                else{
+                    self.delegate.getStoryVideo(videoURL: self.videoURL, caption: "", isToSendMyStory: true, friendsArray: [])
+                }
+            }
+            else{
+                let vc = Utility.getShareStoriesViewController()
+                vc.delegate = self
+                self.pushToVC(vc: vc)
+            }
         }
         
     }
@@ -950,7 +968,9 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
             btnEmoji.isEnabled = true
             btnLocation.isHidden = false
             btnText.isHidden = false
-            txtFieldCaption.isHidden = false
+            if (!isForPost){
+                txtFieldCaption.isHidden = false
+            }
             btnClock.isHidden = false
             btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
             btnGallery.setImage(UIImage(named: "filter"), for: .normal)
