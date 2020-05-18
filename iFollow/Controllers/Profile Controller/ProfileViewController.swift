@@ -387,13 +387,13 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
             itemView.feedImage.image = UIImage(named: "post_video")
         }
         itemView.playIcon.isHidden = true
-        //itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
-        if (post.isPostLike == 1){
-            itemView.likeButton.setSelected(selected: true, animated: true)
-        }
-        else{
-            itemView.likeButton.setSelected(selected: false, animated: false)
-        }
+        itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
+//        if (post.isPostLike == 1){
+//            itemView.likeButton.setSelected(selected: true, animated: true)
+//        }
+//        else{
+//            itemView.likeButton.setSelected(selected: false, animated: false)
+//        }
         itemView.feedImage.contentMode = .scaleAspectFill
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10

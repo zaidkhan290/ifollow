@@ -155,7 +155,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8l-KY-0KF">
                                         <rect key="frame" x="165.66666666666666" y="0.0" width="82.666666666666657" height="70"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message" translatesAutoresizingMaskIntoConstraints="NO" id="2p6-mm-SCc">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message-icon" translatesAutoresizingMaskIntoConstraints="NO" id="2p6-mm-SCc">
                                                 <rect key="frame" x="9.3333333333333428" y="3" width="64" height="64"/>
                                             </imageView>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rJb-oP-DV9">
@@ -5767,7 +5767,7 @@
         <image name="location-unfill" width="44" height="45"/>
         <image name="menu" width="22.333333969116211" height="16.666666030883789"/>
         <image name="menuUserImage" width="83" height="83"/>
-        <image name="message" width="64" height="64"/>
+        <image name="message-icon" width="64" height="64"/>
         <image name="minus" width="23.666666030883789" height="23.666666030883789"/>
         <image name="no-post" width="266.66665649414062" height="262"/>
         <image name="notification" width="12.333333015441895" height="23"/>

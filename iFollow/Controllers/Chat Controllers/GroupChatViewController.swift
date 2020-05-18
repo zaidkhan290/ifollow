@@ -134,7 +134,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
             }
         }
         
-    }
+    } 
     
     func mediaPlaceholderView() -> UIView! {
         
@@ -628,7 +628,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         
         if cell.textView != nil{
             cell.textView.font = Theme.getLatoRegularFontOfSize(size: 15)
-            cell.textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
+      //      cell.textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
             
             if data.senderId == self.senderId{
                 cell.textView.textColor = UIColor.white
