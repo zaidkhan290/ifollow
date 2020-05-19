@@ -129,6 +129,8 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     
     func setOtherUserData(){
         isPrivateProfile = otherUserProfile.userProfileStatus == "private"
+        trendsView.isHidden = otherUserProfile.userTrendStatus == "private"
+        trendingsView.isHidden = otherUserProfile.userTrendStatus == "private"
         lblEmptyStateDescription.text = "This account is private. You must trend \(otherUserProfile.userFullName) first."
         profileImage.sd_setImage(with: URL(string: otherUserProfile.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
@@ -584,7 +586,8 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         model.postLikes = model.isPostLike == 0 ? model.postLikes + 1 : model.postLikes - 1
         model.isPostLike = model.isPostLike == 0 ? 1 : 0
         
-        self.carouselView.reloadItem(at: sender.view!.tag, animated: true)
+        //self.carouselView.reloadItem(at: sender.view!.tag, animated: true)
+        self.carouselView.reloadData()
         
         let params = ["user_id": postUserId,
                       "post_id": postId]
@@ -605,10 +608,52 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     
     @objc func shareViewTapped(_ sender: UITapGestureRecognizer){
         optionsPopupIndex = sender.view!.tag
-        let vc = Utility.getShareViewController()
-        vc.postId = self.otherUserProfile.userPosts[optionsPopupIndex].postId
-        vc.postUserId = self.userId
-        self.present(vc, animated: true, completion: nil)
+        
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let trendersActions = UIAlertAction(title: "Share with Trenders", style: .default) { (action) in
+            DispatchQueue.main.async {
+                let vc = Utility.getShareViewController()
+                vc.postId = self.otherUserProfile.userPosts[self.optionsPopupIndex].postId
+                vc.postUserId = self.userId
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+        
+        let myPostAction = UIAlertAction(title: "Share as My Post", style: .default) { (action) in
+                
+                DispatchQueue.main.async {
+                    
+                    Loaf("Post Shared", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                    }
+                    
+                    let params = ["media": self.otherUserProfile.userPosts[self.optionsPopupIndex].postMedia,
+                                  "description": "",
+                                  "location": "",
+                                  "expire_hours": Utility.getLoginUserPostExpireHours(),
+                                  "duration": 0,
+                                  "media_type": self.otherUserProfile.userPosts[self.optionsPopupIndex].postMediaType,
+                                  "budget": 0] as [String: Any]
+                    
+                    API.sharedInstance.executeAPI(type: .createPost, method: .post, params: params) { (status, result, message) in
+                        DispatchQueue.main.async {
+                            if (status == .authError){
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                Utility.logoutUser()
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(trendersActions)
+        alertVC.addAction(myPostAction)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
+        
+        
     }
     
     @objc func hideViewTapped(_ sender: UITapGestureRecognizer){

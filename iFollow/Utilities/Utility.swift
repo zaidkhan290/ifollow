@@ -305,6 +305,13 @@ struct Utility {
         return ""
     }
     
+    static func getLoginUserDisplayTrendStatus() -> String{
+        if let user = UserModel.getCurrentUser(){
+            return user.userTrendStatus
+        }
+        return ""
+    }
+    
     static var storyTimeFormatter: DateFormatter{
         get{
             if (timeFormatter == nil){

@@ -57,7 +57,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         imagePicker.allowsEditing = true
         imagePicker.mediaTypes = ["public.image", "public.movie"]
         imagePicker.videoMaximumDuration = 60
-        imagePicker.videoQuality = .type640x480
+        imagePicker.videoQuality = .typeHigh
         
         incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: isPrivateChat ? Theme.privateChatIncomingMessage : Theme.profileLabelsYellowColor)
         outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: isPrivateChat ? Theme.privateChatOutgoingMessage : Theme.privateChatBoxSearchBarColor)

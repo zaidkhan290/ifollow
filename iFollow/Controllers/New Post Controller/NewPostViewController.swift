@@ -250,7 +250,7 @@ class NewPostViewController: UIViewController {
                                     params = ["media": videoURL.absoluteString,
                                               "description": self.txtFieldStatus.text!,
                                               "location": self.userAddress,
-                                              "expire_hours": Utility.getLoginUserPostExpireHours,
+                                              "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": self.days,
                                               "media_type": "video",
                                               "budget": self.budget] as [String: Any]
@@ -317,7 +317,7 @@ class NewPostViewController: UIViewController {
                                     params = ["media": imageURL.absoluteString,
                                               "description": self.txtFieldStatus.text!,
                                               "location": self.userAddress,
-                                              "expire_hours": 48,
+                                              "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": self.days,
                                               "media_type": "image",
                                               "budget": self.budget] as [String: Any]
@@ -326,7 +326,7 @@ class NewPostViewController: UIViewController {
                                     params = ["media": imageURL.absoluteString,
                                               "description": self.txtFieldStatus.text!,
                                               "location": self.userAddress,
-                                              "expire_hours": 48,
+                                              "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": 0,
                                               "media_type": "image",
                                               "budget": 0] as [String: Any]

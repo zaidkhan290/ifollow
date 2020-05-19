@@ -47,10 +47,20 @@ class ViewersViewController: UIViewController {
             getStoryViews()
         }
         
+        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownToDimsiss))
+        swipeDownGesture.direction = .down
+        self.view.addGestureRecognizer(swipeDownGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+    }
+    
+    @objc func swipeDownToDimsiss(){
+        self.dismiss(animated: true, completion: nil)
+        if (delegate != nil){
+            self.delegate.viewersPopupDismissed()
+        }
     }
     
     func getStoryViews(){

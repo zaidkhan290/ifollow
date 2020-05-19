@@ -415,6 +415,9 @@ class HomeViewController: UIViewController {
                         self.carouselView.reloadData()
                         self.storyCollectionView.isUserInteractionEnabled = true
                         self.carouselView.isUserInteractionEnabled = true
+                        if (self.postsArray.count > 0){
+                            self.carouselView.scrollToItem(at: 0, animated: true)
+                        }
                         
                     }
                     else if (status == .failure){
@@ -717,10 +720,51 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     
     @objc func shareViewTapped(_ sender: UITapGestureRecognizer){
         optionsPopupIndex = sender.view!.tag
-        let vc = Utility.getShareViewController()
-        vc.postId = self.postsArray[optionsPopupIndex].postId
-        vc.postUserId = self.postsArray[optionsPopupIndex].postUserId
-        self.present(vc, animated: true, completion: nil)
+        
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let trendersActions = UIAlertAction(title: "Share with Trenders", style: .default) { (action) in
+            DispatchQueue.main.async {
+                let vc = Utility.getShareViewController()
+                vc.postId = self.postsArray[self.optionsPopupIndex].postId
+                vc.postUserId = self.postsArray[self.optionsPopupIndex].postUserId
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+        
+        let myPostAction = UIAlertAction(title: "Share as My Post", style: .default) { (action) in
+                
+                DispatchQueue.main.async {
+                    
+                    Loaf("Post Shared", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                    }
+                    
+                    let params = ["media": self.postsArray[self.optionsPopupIndex].postMedia,
+                                  "description": "",
+                                  "location": "",
+                                  "expire_hours": Utility.getLoginUserPostExpireHours(),
+                                  "duration": 0,
+                                  "media_type": self.postsArray[self.optionsPopupIndex].postMediaType,
+                                  "budget": 0] as [String: Any]
+                    
+                    API.sharedInstance.executeAPI(type: .createPost, method: .post, params: params) { (status, result, message) in
+                        DispatchQueue.main.async {
+                            if (status == .authError){
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                Utility.logoutUser()
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(trendersActions)
+        alertVC.addAction(myPostAction)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
+        
     }
     
     @objc func hideViewTapped(_ sender: UITapGestureRecognizer){
@@ -740,7 +784,8 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
                 model.isPostLike = model.isPostLike == 0 ? 1 : 0
             }
         }
-        self.carouselView.reloadItem(at: sender.view!.tag, animated: true)
+        //self.carouselView.reloadItem(at: sender.view!.tag, animated: true)
+        self.carouselView.reloadData()
         
         let params = ["user_id": postUserId,
                       "post_id": postId]

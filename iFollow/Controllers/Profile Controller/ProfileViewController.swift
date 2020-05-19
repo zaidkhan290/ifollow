@@ -270,7 +270,8 @@ class ProfileViewController: UIViewController {
                 model.isPostLike = model.isPostLike == 0 ? 1 : 0
             }
         }
-        self.carouselView.reloadItem(at: sender.view!.tag, animated: true)
+        //self.carouselView.reloadItem(at: sender.view!.tag, animated: true)
+        self.carouselView.reloadData()
         
         let params = ["user_id": postUserId,
                       "post_id": postId]

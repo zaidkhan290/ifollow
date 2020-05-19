@@ -16,6 +16,7 @@ class UserModel: Object {
     @objc dynamic var userPostExpireHours: Int = 0
     @objc dynamic var userStoryExpireHours: Int = 0
     @objc dynamic var userProfileStatus: String = ""
+    @objc dynamic var userTrendStatus: String = "public"
     @objc dynamic var isUserPostViewEnable: Int = 0
     @objc dynamic var isUserStoryViewEnable: Int = 0
     @objc dynamic var userFirstName: String = ""
@@ -47,6 +48,7 @@ class UserModel: Object {
         userPostExpireHours = userSettings["post_hours"].intValue
         userStoryExpireHours = userSettings["story_hours"].intValue
         userProfileStatus = userSettings["profile_status"].stringValue
+        userTrendStatus = userSettings["trend_status"].stringValue
         isUserPostViewEnable = userSettings["post_view"].intValue
         isUserStoryViewEnable = userSettings["story_view"].intValue
         userFirstName = user["first_name"].stringValue

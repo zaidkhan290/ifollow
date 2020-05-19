@@ -14,6 +14,7 @@ import UserNotificationsUI
 import GoogleMobileAds
 import Siren
 import SwiftyJSON
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -23,6 +24,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let config = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { migration, oldSchemaVersion in
+                if (oldSchemaVersion < 1){
+                    migration.enumerateObjects(ofType: UserModel.className()) { (oldObject, newObject) in
+                        newObject?["userTrendStatus"] = "public"
+                    }
+                }
+        }
+        )
+        Realm.Configuration.defaultConfiguration = config
+        
         IQKeyboardManager.shared.enable = true
         FirebaseApp.configure()
         navigateTOInitialViewController()
