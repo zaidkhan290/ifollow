@@ -65,7 +65,8 @@ class StoriesViewController: UIViewController {
         txtFieldMessage.delegate = self
         txtFieldMessage.returnKeyType = .send
         btnOptions.isHidden = !isForMyStory
-        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .black
+        imageView.contentMode = .scaleAspectFit
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(tapOnView(recognizer:)))
         longPressGesture.minimumPressDuration = 0.1

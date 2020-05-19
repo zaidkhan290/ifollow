@@ -35,6 +35,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     @IBOutlet weak var trendingsView: UIView!
     @IBOutlet weak var lblEmptyStateDescription: UILabel!
     @IBOutlet weak var lblNoPosts: UILabel!
+    @IBOutlet weak var verifiedIcon: UIImageView!
     
     var otherUserProfile = OtherUserModel()
     var isTrending = false
@@ -128,6 +129,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     func setOtherUserData(){
+        verifiedIcon.isHidden = otherUserProfile.userVerifiedStatus == 0
         isPrivateProfile = otherUserProfile.userProfileStatus == "private"
         trendsView.isHidden = otherUserProfile.userTrendStatus == "private"
         trendingsView.isHidden = otherUserProfile.userTrendStatus == "private"

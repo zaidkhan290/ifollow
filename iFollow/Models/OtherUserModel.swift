@@ -13,6 +13,7 @@ class OtherUserModel: NSObject{
     
     var userFirstName: String = ""
     var userLastName: String = ""
+    var userVerifiedStatus: Int = 0
     var userFullName: String = ""
     var userBio: String = ""
     var userCountry: String = ""
@@ -29,6 +30,7 @@ class OtherUserModel: NSObject{
         let userData = json["message"].arrayValue.first!
         userFirstName = userData["first_name"].stringValue
         userLastName = userData["last_name"].stringValue
+        userVerifiedStatus = userData["verified"].intValue
         userFullName = "\(userFirstName) \(userLastName)"
         userBio = userData["short_bio"].stringValue
         userCountry = userData["country"].stringValue

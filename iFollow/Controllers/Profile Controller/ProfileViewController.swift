@@ -31,6 +31,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var txtFiledSearch: UITextField!
     @IBOutlet weak var carouselView: iCarousel!
     @IBOutlet weak var emptyDataView: UIView!
+    @IBOutlet weak var verifiedIcon: UIImageView!
     
     var userPosts = [UserPostsModel]()
     var imagePicker = UIImagePickerController()
@@ -153,6 +154,7 @@ class ProfileViewController: UIViewController {
                             realm.add(model)
                         }
                     }
+                    self.verifiedIcon.isHidden = result["message"].arrayValue.first!["verified"].intValue == 0
                     self.setUserPosts(isAfterNewPost: isAfterNewPost)
                 }
                 else if (status == .failure){

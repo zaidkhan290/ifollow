@@ -494,7 +494,7 @@
                                     <constraint firstAttribute="width" constant="35" id="i9l-Th-rGw"/>
                                     <constraint firstAttribute="height" constant="35" id="jeN-oN-te2"/>
                                 </constraints>
-                                <state key="normal" image="eye"/>
+                                <state key="normal" image="eye-icon"/>
                                 <connections>
                                     <action selector="btnViewTapped:" destination="avW-mP-0gq" eventType="touchUpInside" id="K1i-QY-tCC"/>
                                 </connections>
@@ -1222,7 +1222,7 @@
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8D-hC-OB1">
                                         <rect key="frame" x="70" y="260" width="52" height="52"/>
-                                        <state key="normal" image="photo"/>
+                                        <state key="normal" image="photo-icon"/>
                                         <connections>
                                             <action selector="btnImageTapped:" destination="FIJ-nH-bWm" eventType="touchUpInside" id="9ZL-OA-bmr"/>
                                         </connections>
@@ -1550,7 +1550,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RfU-OL-zIV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1712" y="2120"/>
+            <point key="canvasLocation" x="1711.5942028985507" y="2119.5652173913045"/>
         </scene>
         <!--All Chats List View Controller-->
         <scene sceneID="e1m-ui-trg">
@@ -2179,7 +2179,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bella Nova" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="krI-Xl-fGu">
-                                <rect key="frame" x="140" y="50.666666666666664" width="106" height="26.666666666666664"/>
+                                <rect key="frame" x="140" y="50.666666666666664" width="105" height="26.666666666666664"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="22"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -2648,7 +2648,7 @@
                                     <action selector="btnMenuTapped:" destination="eY0-rA-SxI" eventType="touchUpInside" id="bba-pc-ujv"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7BS-pT-g1e">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7BS-pT-g1e">
                                 <rect key="frame" x="20" y="15" width="80" height="35"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Private Talk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpM-wA-4dS">
@@ -2665,6 +2665,9 @@
                                     <constraint firstAttribute="height" constant="35" id="HOA-fI-Exc"/>
                                 </constraints>
                             </view>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="verified-icon" translatesAutoresizingMaskIntoConstraints="NO" id="33m-ob-Niz">
+                                <rect key="frame" x="19.999999999999993" y="8.6666666666666643" width="98.333333333333314" height="48"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t8G-Ai-Uq0">
                                 <rect key="frame" x="0.0" y="83" width="414" height="653"/>
                                 <subviews>
@@ -2842,7 +2845,9 @@
                             <constraint firstItem="wNQ-PP-iBg" firstAttribute="trailing" secondItem="LWg-Zd-UFW" secondAttribute="trailing" constant="20" id="PXF-Mz-lYQ"/>
                             <constraint firstAttribute="bottom" secondItem="ved-m8-bVH" secondAttribute="bottom" id="c9O-0X-KyF"/>
                             <constraint firstItem="7BS-pT-g1e" firstAttribute="centerY" secondItem="LWg-Zd-UFW" secondAttribute="centerY" id="cJM-nT-4wM"/>
+                            <constraint firstItem="33m-ob-Niz" firstAttribute="leading" secondItem="wNQ-PP-iBg" secondAttribute="leading" constant="20" id="cYP-b8-DcD"/>
                             <constraint firstItem="6cc-TD-TTs" firstAttribute="bottom" secondItem="rnT-fk-U7t" secondAttribute="bottom" constant="30" id="epZ-kf-VRD"/>
+                            <constraint firstItem="33m-ob-Niz" firstAttribute="centerY" secondItem="LWg-Zd-UFW" secondAttribute="centerY" id="fea-IP-bqf"/>
                             <constraint firstItem="ved-m8-bVH" firstAttribute="leading" secondItem="wNQ-PP-iBg" secondAttribute="leading" constant="-2" id="hcn-Pe-qmJ"/>
                             <constraint firstItem="7BS-pT-g1e" firstAttribute="leading" secondItem="wNQ-PP-iBg" secondAttribute="leading" constant="20" id="ieb-Hf-0hr"/>
                             <constraint firstItem="wNQ-PP-iBg" firstAttribute="trailing" secondItem="t8G-Ai-Uq0" secondAttribute="trailing" id="jBr-nL-sgF"/>
@@ -2868,6 +2873,7 @@
                         <outlet property="trendingView" destination="UzN-kt-hdd" id="fNy-sx-8OT"/>
                         <outlet property="txtFiledSearch" destination="jU8-As-ypy" id="mxr-vz-uyi"/>
                         <outlet property="userSmallImage" destination="gHR-1S-bog" id="G91-F0-gWO"/>
+                        <outlet property="verifiedIcon" destination="33m-ob-Niz" id="6AW-ex-stk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OWr-BC-qzi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3967,6 +3973,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ArH-Sz-WnX">
                                 <rect key="frame" x="0.0" y="83" width="414" height="653"/>
                                 <subviews>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="verified_orange" translatesAutoresizingMaskIntoConstraints="NO" id="Y0r-gY-pFU">
+                                        <rect key="frame" x="10" y="10" width="196" height="96"/>
+                                    </imageView>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uwx-yt-Ojs">
                                         <rect key="frame" x="304" y="10" width="100" height="30"/>
                                         <subviews>
@@ -4156,8 +4165,10 @@
                                 <constraints>
                                     <constraint firstItem="wfX-T2-i5x" firstAttribute="top" secondItem="mTw-f5-0qg" secondAttribute="bottom" constant="10" id="3hk-yN-Ig9"/>
                                     <constraint firstAttribute="trailing" secondItem="mTw-f5-0qg" secondAttribute="trailing" constant="20" id="3qy-O6-Fc8"/>
+                                    <constraint firstItem="Y0r-gY-pFU" firstAttribute="leading" secondItem="ArH-Sz-WnX" secondAttribute="leading" constant="10" id="9Qk-QT-DFZ"/>
                                     <constraint firstAttribute="bottom" secondItem="gHa-b8-uV7" secondAttribute="bottom" constant="20" id="E94-nR-DHI"/>
                                     <constraint firstItem="MCu-g4-Tch" firstAttribute="centerX" secondItem="ArH-Sz-WnX" secondAttribute="centerX" id="FMQ-Wg-nTV"/>
+                                    <constraint firstItem="Y0r-gY-pFU" firstAttribute="top" secondItem="ArH-Sz-WnX" secondAttribute="top" constant="10" id="HX4-1T-j9e"/>
                                     <constraint firstItem="mTw-f5-0qg" firstAttribute="leading" secondItem="ArH-Sz-WnX" secondAttribute="leading" constant="20" id="OJW-Ns-XDu"/>
                                     <constraint firstItem="qBV-LZ-uoG" firstAttribute="top" secondItem="pEa-xd-P9F" secondAttribute="bottom" constant="30" id="Pez-Cy-HOt"/>
                                     <constraint firstItem="qBV-LZ-uoG" firstAttribute="leading" secondItem="ArH-Sz-WnX" secondAttribute="leading" id="SQd-C6-quM"/>
@@ -4230,6 +4241,7 @@
                         <outlet property="trendView" destination="I3F-Oj-jfY" id="6Rj-vn-Fdy"/>
                         <outlet property="trendingsView" destination="wfX-T2-i5x" id="v9V-0C-JIh"/>
                         <outlet property="trendsView" destination="onZ-O8-RjX" id="cWk-y7-Dgl"/>
+                        <outlet property="verifiedIcon" destination="Y0r-gY-pFU" id="Mx8-Uz-PuL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WLx-9R-Vi2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5755,7 +5767,7 @@
         <image name="editProfilePlaceholder" width="105" height="105"/>
         <image name="email" width="17" height="10.333333015441895"/>
         <image name="emotions" width="31" height="31"/>
-        <image name="eye" width="32.666667938232422" height="21"/>
+        <image name="eye-icon" width="32.666667938232422" height="21"/>
         <image name="fedora" width="18.666666030883789" height="19.333333969116211"/>
         <image name="flash_off" width="21" height="25"/>
         <image name="footprint" width="244.33332824707031" height="267.33334350585938"/>
@@ -5774,7 +5786,7 @@
         <image name="options" width="4.3333334922790527" height="16.666666030883789"/>
         <image name="password" width="17" height="19.666666030883789"/>
         <image name="pencil-striped-symbol-for-interface-edit-buttons" width="16.333333969116211" height="16.333333969116211"/>
-        <image name="photo" width="26" height="26"/>
+        <image name="photo-icon" width="26" height="26"/>
         <image name="pin-icon" width="20.333333969116211" height="29"/>
         <image name="play_Icon" width="96" height="96"/>
         <image name="plus" width="23.666666030883789" height="23.666666030883789"/>
@@ -5791,6 +5803,8 @@
         <image name="unselect" width="24.333333969116211" height="24"/>
         <image name="upload_photo-1" width="44.666667938232422" height="35.666667938232422"/>
         <image name="username" width="17" height="17"/>
+        <image name="verified-icon" width="98.333335876464844" height="48"/>
+        <image name="verified_orange" width="98.333335876464844" height="48"/>
         <namedColor name="AwayColor">
             <color red="0.96470588235294119" green="0.73725490196078436" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -871,6 +871,13 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         fontSlider.isHidden = false
     }
     
+    @objc func editableTextFieldRotate(recognizer: UIRotationGestureRecognizer){
+        if let view = recognizer.view {
+            view.transform = view.transform.rotated(by: recognizer.rotation)
+          //  recognizer.rotation = 0
+        }
+    }
+    
     func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
     }
@@ -1029,6 +1036,9 @@ extension CameraViewController: UITextViewDelegate{
             panGesture.delegate = self
             editableTextField.gestureRecognizers?.removeAll()
             editableTextField.addGestureRecognizer(panGesture)
+            let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(editableTextFieldRotate(recognizer:)))
+            rotationGesture.delegate = self
+           // editableTextField.addGestureRecognizer(rotationGesture)
         }
         
     }
