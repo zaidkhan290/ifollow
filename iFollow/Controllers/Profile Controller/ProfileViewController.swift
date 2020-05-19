@@ -295,14 +295,25 @@ class ProfileViewController: UIViewController {
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
             DispatchQueue.main.async {
                 let params = ["post_id": self.userPosts[self.optionsPopupIndex].postId]
-                self.userPosts.remove(at: self.optionsPopupIndex)
-                self.carouselView.removeItem(at: self.optionsPopupIndex, animated: true)
-                Loaf("Post Deleted", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
-                    
-                }
+                Utility.showOrHideLoader(shouldShow: true)
+                
                 API.sharedInstance.executeAPI(type: .deletePost, method: .post, params: params, completion: { (status, result, message) in
                     DispatchQueue.main.async {
-                        if (status == .authError){
+                        Utility.showOrHideLoader(shouldShow: false)
+                        if (status == .success){
+                            self.userPosts.remove(at: self.optionsPopupIndex)
+                            self.carouselView.removeItem(at: self.optionsPopupIndex, animated: true)
+                            Loaf("Post Deleted", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+                                
+                            }
+                            self.carouselView.reloadData()
+                        }
+                        else if (status == .failure){
+                            Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                
+                            }
+                        }
+                        else if (status == .authError){
                             Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                                 Utility.logoutUser()
                             }
