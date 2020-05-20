@@ -165,7 +165,10 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
             lblTrend.textColor = Theme.profileLabelsYellowColor
             trendView.isUserInteractionEnabled = true
         }
-        self.carouselView.reloadData()
+        DispatchQueue.main.async {
+            self.carouselView.reloadData()
+        }
+        
     }
     
     func showOptionsPopup(){

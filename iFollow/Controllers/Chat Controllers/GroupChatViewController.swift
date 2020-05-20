@@ -530,6 +530,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         return self.messages.count
     }
     
+    
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         
         let data = messages[indexPath.row]
@@ -627,7 +628,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         cell.cellTopLabel.font = Theme.getLatoRegularFontOfSize(size: 12)
         
         if cell.textView != nil{
-            cell.textView.font = Theme.getLatoRegularFontOfSize(size: 15)
+            cell.textView.font = Theme.getLatoRegularFontOfSize(size: 18)
       //      cell.textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
             
             if data.senderId == self.senderId{

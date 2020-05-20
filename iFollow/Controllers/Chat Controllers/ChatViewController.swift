@@ -732,7 +732,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             cell.cellBottomLabel.font = Theme.getLatoRegularFontOfSize(size: 11)
             
             if cell.textView != nil{
-                cell.textView.font = Theme.getLatoRegularFontOfSize(size: 15)
+                cell.textView.font = Theme.getLatoRegularFontOfSize(size: 18)
                 cell.textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
                 
                 if data.senderId == self.senderId{
