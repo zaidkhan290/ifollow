@@ -178,22 +178,75 @@ class HomeViewController: UIViewController {
                                 self.postStory(mediaUrl: imageURL.absoluteString, postType: "image", caption: caption)
                             }
                             for friend in friendsArray{
-                                let chatRef = rootRef.child("NormalChats").child(friend.chatId)
-                                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
-                                                                           "senderId": "\(Utility.getLoginUserId())",
-                                                                           "message": imageURL.absoluteString,
-                                                                           "type": 2,
-                                                                           "isRead": false,
-                                                                           "timestamp" : ServerValue.timestamp()])
                                 
-                                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
-                                                                           "senderId": "\(Utility.getLoginUserId())",
-                                                                           "message": "\(Utility.getLoginUserFullName()) shared a story with you",
-                                                                           "type": 1,
-                                                                           "isRead": false,
-                                                                           "timestamp" : ServerValue.timestamp()])
+                                if (friend.chatId == ""){
+                                    let params = ["user_id": friend.chatUserId,
+                                                  "is_private": 0]
+                                    
+                                    API.sharedInstance.executeAPI(type: .createChatRoom, method: .post, params: params) { (status, result, message) in
+                                        
+                                        DispatchQueue.main.async {
+                                            
+                                            if (status == .success){
+                                                let chatId = result["chat_room_id"].stringValue
+                                                if (chatId != ""){
+                                                    let chatRef = rootRef.child("NormalChats").child(chatId)
+                                                    chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                                               "senderId": "\(Utility.getLoginUserId())",
+                                                                                               "message": imageURL.absoluteString,
+                                                                                               "type": 2,
+                                                                                               "isRead": false,
+                                                                                               "timestamp" : ServerValue.timestamp()])
+                                                    
+                                                    chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                                               "senderId": "\(Utility.getLoginUserId())",
+                                                                                               "message": "\(Utility.getLoginUserFullName()) shared a story with you",
+                                                                                               "type": 1,
+                                                                                               "isRead": false,
+                                                                                               "timestamp" : ServerValue.timestamp()])
+                                                    
+                                                    Utility.showOrHideLoader(shouldShow: false)
+                                                }
+                                                else{
+                                                    Loaf("Failed to create chat room", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                                    }
+                                                }
+                                                
+                                            }
+                                            else if (status == .failure){
+                                                Utility.showOrHideLoader(shouldShow: false)
+                                                Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                                }
+                                            }
+                                            else if (status == .authError){
+                                                Utility.showOrHideLoader(shouldShow: false)
+                                                Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                                    Utility.logoutUser()
+                                                }
+                                            }
+                                        }
+                                        
+                                    }
+                                }
+                                else{
+                                    let chatRef = rootRef.child("NormalChats").child(friend.chatId)
+                                    chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                               "senderId": "\(Utility.getLoginUserId())",
+                                                                               "message": imageURL.absoluteString,
+                                                                               "type": 2,
+                                                                               "isRead": false,
+                                                                               "timestamp" : ServerValue.timestamp()])
+                                    
+                                    chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                               "senderId": "\(Utility.getLoginUserId())",
+                                                                               "message": "\(Utility.getLoginUserFullName()) shared a story with you",
+                                                                               "type": 1,
+                                                                               "isRead": false,
+                                                                               "timestamp" : ServerValue.timestamp()])
+                                    
+                                    Utility.showOrHideLoader(shouldShow: false)
+                                }
                                 
-                                Utility.showOrHideLoader(shouldShow: false)
                                 
                             }
                             if (friendsArray.count > 0){
@@ -251,22 +304,74 @@ class HomeViewController: UIViewController {
                                 self.postStory(mediaUrl: videoURL.absoluteString, postType: "video", caption: caption)
                             }
                             for friend in friendsArray{
-                                let chatRef = rootRef.child("NormalChats").child(friend.chatId)
-                                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
-                                                                           "senderId": "\(Utility.getLoginUserId())",
-                                                                           "message": videoURL.absoluteString,
-                                                                           "type": 4,
-                                                                           "isRead": false,
-                                                                           "timestamp" : ServerValue.timestamp()])
                                 
-                                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
-                                                                           "senderId": "\(Utility.getLoginUserId())",
-                                                                           "message": "\(Utility.getLoginUserFullName()) shared a story with you",
-                                                                           "type": 1,
-                                                                           "isRead": false,
-                                                                           "timestamp" : ServerValue.timestamp()])
-                                
-                                Utility.showOrHideLoader(shouldShow: false)
+                                if (friend.chatId == ""){
+                                    let params = ["user_id": friend.chatUserId,
+                                                  "is_private": 0]
+                                    
+                                    API.sharedInstance.executeAPI(type: .createChatRoom, method: .post, params: params) { (status, result, message) in
+                                        
+                                        DispatchQueue.main.async {
+                                            
+                                            if (status == .success){
+                                                let chatId = result["chat_room_id"].stringValue
+                                                if (chatId != ""){
+                                                    let chatRef = rootRef.child("NormalChats").child(chatId)
+                                                    chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                                               "senderId": "\(Utility.getLoginUserId())",
+                                                                                               "message": videoURL.absoluteString,
+                                                                                               "type": 4,
+                                                                                               "isRead": false,
+                                                                                               "timestamp" : ServerValue.timestamp()])
+                                                    
+                                                    chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                                               "senderId": "\(Utility.getLoginUserId())",
+                                                                                               "message": "\(Utility.getLoginUserFullName()) shared a story with you",
+                                                                                               "type": 1,
+                                                                                               "isRead": false,
+                                                                                               "timestamp" : ServerValue.timestamp()])
+                                                    
+                                                    Utility.showOrHideLoader(shouldShow: false)
+                                                }
+                                                else{
+                                                    Loaf("Failed to create chat room", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                                    }
+                                                }
+                                                
+                                            }
+                                            else if (status == .failure){
+                                                Utility.showOrHideLoader(shouldShow: false)
+                                                Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                                }
+                                            }
+                                            else if (status == .authError){
+                                                Utility.showOrHideLoader(shouldShow: false)
+                                                Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                                                    Utility.logoutUser()
+                                                }
+                                            }
+                                        }
+                                        
+                                    }
+                                }
+                                else{
+                                    let chatRef = rootRef.child("NormalChats").child(friend.chatId)
+                                    chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                               "senderId": "\(Utility.getLoginUserId())",
+                                                                               "message": videoURL.absoluteString,
+                                                                               "type": 4,
+                                                                               "isRead": false,
+                                                                               "timestamp" : ServerValue.timestamp()])
+                                    
+                                    chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                               "senderId": "\(Utility.getLoginUserId())",
+                                                                               "message": "\(Utility.getLoginUserFullName()) shared a story with you",
+                                                                               "type": 1,
+                                                                               "isRead": false,
+                                                                               "timestamp" : ServerValue.timestamp()])
+                                    
+                                    Utility.showOrHideLoader(shouldShow: false)
+                                }
                                 
                             }
                             if (friendsArray.count > 0){

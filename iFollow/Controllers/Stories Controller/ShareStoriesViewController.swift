@@ -60,6 +60,42 @@ class ShareStoriesViewController: UIViewController {
                             self.recentChatsArray.append(recentChatModel)
                         }
                     }
+                    self.getTrenders()
+                    
+                }
+                else if (status == .failure){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    func getTrenders(){
+        API.sharedInstance.executeAPI(type: .getTrendersAndTrendings, method: .get, params: ["id": Utility.getLoginUserId()]) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                if (status == .success){
+                    let chatArray = result["trendings"].arrayValue
+                    for chat in chatArray{
+                        let recentChatModel = RecentChatsModel()
+                        recentChatModel.chatUserId = chat["user_id"].intValue
+                        recentChatModel.chatUserName = chat["name"].stringValue
+                        recentChatModel.chatUserImage = chat["user_image"].stringValue.replacingOccurrences(of: "\\", with: "")
+                        if (self.recentChatsArray.filter{$0.chatUserId == recentChatModel.chatUserId}.count == 0) && (self.recentChatsArray.filter{$0.chatUserId == recentChatModel.chatUserId}.count == 0){
+                            
+                            self.recentChatsArray.append(recentChatModel)
+                        }
+                    }
                     Utility.showOrHideLoader(shouldShow: false)
                     self.shareTableView.reloadData()
                     
