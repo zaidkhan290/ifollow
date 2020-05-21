@@ -30,16 +30,16 @@
 	<key>NSCameraUsageDescription</key>
 	<string>iFollow will only upload and share photos you choose.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>iFollow uses to make some features work, personalize content, help people find places and more. You can always change this later in your phone&apos;s settings</string>
+	<string>iFollow uses to make some features work, personalize content, help people find places and more. You can always change this later in your phone's settings</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>iFollow would like to access your microphone in order to record voice messages and start sharing videos with background sound.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Enables us to save photos and videos you've taken with the app.
+
+
+Enables us to save photos and videos you've taken with the app.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>iFollow will only upload and share photos you choose.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Enables us to save photos and videos you&apos;ve taken with the app.
-
-
-Enables us to save photos and videos you&apos;ve taken with the app.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Bold_0.ttf</string>

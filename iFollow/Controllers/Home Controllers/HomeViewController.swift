@@ -31,6 +31,8 @@ class HomeViewController: UIViewController {
     let manager = CLLocationManager()
     let geocoder = CLGeocoder()
     var userCurrentAddress = ""
+    var userLatitude = 0.0
+    var userLongitude = 0.0
     var postsArray = [HomePostsModel]()
     var optionsPopupIndex = 0
     
@@ -923,7 +925,9 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     func getStikcers(){
         
         if (Reachability.isConnectedToNetwork()){
-            let params = ["location": userCurrentAddress]
+            let params = ["location": userCurrentAddress,
+                          "latitude": userLatitude,
+                          "longitude": userLongitude] as [String: Any]
             Utility.showOrHideLoader(shouldShow: true)
             
             API.sharedInstance.executeAPI(type: .stickers, method: .get, params: params) { (status, result, message) in
@@ -1030,6 +1034,8 @@ extension HomeViewController: CLLocationManagerDelegate{
                     let placemark = placemarks![0]
                     if let area = placemark.name, let city = placemark.locality, let country = placemark.country{
                         self.userCurrentAddress = "\(area), \(city), \(country)"
+                        self.userLatitude = (placemark.location?.coordinate.latitude)!
+                        self.userLongitude = (placemark.location?.coordinate.longitude)!
                         print(self.userCurrentAddress)
                         self.getStikcers()
                     }

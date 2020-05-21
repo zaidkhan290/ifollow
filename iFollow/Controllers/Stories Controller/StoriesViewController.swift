@@ -758,6 +758,9 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
         
         if (isForMyStory){
             self.dismissStory()
+            if (isVideoPlaying){
+                self.videoPlayer.pause()
+            }
         }
         else{
             goToNextUserStory()
