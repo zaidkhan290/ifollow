@@ -44,6 +44,8 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
     var shouldSendNotification = true
     var videoURL: URL!
     var imagePicker = UIImagePickerController()
+    var lastMessageKey = ""
+    var isAllMessagesLoad = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +66,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         self.setup()
-        self.messageAdded()
+        self.messageAdded(isFirstTime: true)
         self.inputToolbar.contentView.textView.placeHolder = "Type a message..."
         self.inputToolbar.contentView.textView.layer.borderColor = UIColor.clear.cgColor
         self.inputToolbar.contentView.textView.autocorrectionType = .yes
@@ -170,50 +172,77 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         return UIImage()
     }
     
-    func messageAdded(){
+    func messageAdded(isFirstTime: Bool){
         
-//        let userRef = rootRef.child("Users").child("\(otherUserId)")
-//        userRef.observe(.value) { (snapshot) in
-//            if (snapshot.hasChild("isOnChat")){
-//                let isOnChat = snapshot.childSnapshot(forPath: "isOnChat").value as! Bool
-//                self.shouldSendNotification = !isOnChat
-//            }
-//
-//        }
-        
-//        chatRef.queryLimited(toLast: 1).observe(.childAdded) { (snapshot) in
-//            let chatNode = snapshot.key
-//            let userId = (snapshot.childSnapshot(forPath: "senderId").value as! String)
-//            if (userId != "\(Utility.getLoginUserId())"){
-//                let chatToUpdate = self.chatRef.child(chatNode)
-//                chatToUpdate.updateChildValues(["isRead": true])
-//            }
-//        }
-        
-        chatRef.observe(.childAdded, with: { (snapshot) in
-            
-            let type = snapshot.childSnapshot(forPath: "type").value as! Int
-            let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
-            let message = snapshot.childSnapshot(forPath: "message").value as! String
-            let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
-            let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
-            let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
-            
-            if(type == 1){
-                self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
-            }else if (type == 2){
-                self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
-            }
-            else if (type == 3){
-                self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
+        if (isFirstTime){
+            chatRef.queryLimited(toLast: 100).observe(.childAdded, with: { (snapshot) in
                 
-            }
-            else{
-                self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date)
+                let type = snapshot.childSnapshot(forPath: "type").value as! Int
+                let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
+                let message = snapshot.childSnapshot(forPath: "message").value as! String
+                let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
+                let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
+                let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
+                
+                if(type == 1){
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
+                }else if (type == 2){
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
+                }
+                else if (type == 3){
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
+                    
+                }
+                else{
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date)
+                }
+                
+            })
+        }
+        else{
+            
+            chatRef.queryLimited(toLast: 1).observe(.childAdded) { (snapshot) in
+                let chatNode = snapshot.key
+                self.lastMessageKey = snapshot.key
+                let userId = (snapshot.childSnapshot(forPath: "senderId").value as! String)
+                if (userId != "\(Utility.getLoginUserId())"){
+                    let chatToUpdate = self.chatRef.child(chatNode)
+                    chatToUpdate.updateChildValues(["isRead": true])
+                }
             }
             
-        })
-        
+            Utility.showOrHideLoader(shouldShow: true)
+            chatRef.removeAllObservers()
+            self.messages.removeAll()
+            
+            chatRef.observe(.childAdded, with: { (snapshot) in
+                
+                let type = snapshot.childSnapshot(forPath: "type").value as! Int
+                let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
+                let message = snapshot.childSnapshot(forPath: "message").value as! String
+                let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
+                let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
+                let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
+                
+                if(type == 1){
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
+                }else if (type == 2){
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
+                }
+                else if (type == 3){
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
+                    
+                }
+                else{
+                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date)
+                }
+                
+                if (snapshot.key == self.lastMessageKey){
+                    Utility.showOrHideLoader(shouldShow: false)
+                }
+                
+            })
+        }
     }
     
     func addDemoMessages(sender_Id : String, senderName : String, textMsg : String, isImage :Bool?=false, isAudio:Bool?=false, isVideo:Bool?=false, date:Double) {
@@ -628,7 +657,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         cell.cellTopLabel.font = Theme.getLatoRegularFontOfSize(size: 12)
         
         if cell.textView != nil{
-            cell.textView.font = Theme.getLatoRegularFontOfSize(size: 18)
+       //     cell.textView.font = Theme.getLatoRegularFontOfSize(size: 18)
       //      cell.textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
             
             if data.senderId == self.senderId{
@@ -651,6 +680,17 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         }
         
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if (indexPath.row == 0){
+            
+            if (!isAllMessagesLoad && self.messages.count >= 100){
+                isAllMessagesLoad = true
+                self.messageAdded(isFirstTime: false)
+            }
+        }
     }
     
     func audioMediaItem(_ audioMediaItem: JSQAudioMediaItem, didChangeAudioCategory category: String, options: AVAudioSession.CategoryOptions = [], error: Error?) {

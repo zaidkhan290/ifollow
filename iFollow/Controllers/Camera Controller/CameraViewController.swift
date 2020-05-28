@@ -114,7 +114,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
      //   prepareFilterView()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
-        imagePicker.videoMaximumDuration = 15
+        imagePicker.videoMaximumDuration = isForPost ? 60 : 15
         imagePicker.videoQuality = .type640x480
         
         editableTextField.delegate = self
@@ -885,7 +885,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @objc func updateTimer(){
         seconds += 1
         self.lblVideoTimer.text = timeString(time: TimeInterval(seconds))
-        if (seconds == 15){
+        if (seconds == (isForPost ? 60 : 15)){
             timer.invalidate()
             seconds = 0
             self.lblVideoTimer.text = ""

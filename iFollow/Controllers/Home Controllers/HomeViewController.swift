@@ -87,7 +87,7 @@ class HomeViewController: UIViewController {
         
         let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
         usersRef.updateChildValues(["isActive" : true])
-        refreshHomeData()
+        getHomeData()
     }
     
     //MARK:- Methods
@@ -102,6 +102,9 @@ class HomeViewController: UIViewController {
     }
     
     @objc func refreshHomeData(){
+        if (postsArray.count > 0){
+            self.carouselView.scrollToItem(at: 0, animated: true)
+        }
         getHomeData()
     }
     
@@ -522,9 +525,7 @@ class HomeViewController: UIViewController {
                         self.carouselView.reloadData()
                         self.storyCollectionView.isUserInteractionEnabled = true
                         self.carouselView.isUserInteractionEnabled = true
-                        if (self.postsArray.count > 0){
-                            self.carouselView.scrollToItem(at: 0, animated: true)
-                        }
+                        
                         
                     }
                     else if (status == .failure){

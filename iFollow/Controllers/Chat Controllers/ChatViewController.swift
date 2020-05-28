@@ -50,6 +50,8 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     var videoURL: URL!
     var imagePicker = UIImagePickerController()
     var messagesModel = [MessagesModel]()
+    var lastMessageKey = ""
+    var isAllMessagesLoad = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +80,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         }
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         self.setup()
-        self.messageAdded()
+        self.messageAdded(isFirstTime: true)
         self.inputToolbar.contentView.textView.placeHolder = "Type a message..."
         self.inputToolbar.contentView.textView.layer.borderColor = UIColor.clear.cgColor
         self.inputToolbar.contentView.textView.autocorrectionType = .yes
@@ -184,98 +186,184 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         return UIImage()
     }
     
-    func messageAdded(){
+    func messageAdded(isFirstTime: Bool){
         
-        let userRef = rootRef.child("Users").child("\(otherUserId)")
-        userRef.observe(.value) { (snapshot) in
-            if (snapshot.hasChild("isOnChat")){
-                let isOnChat = snapshot.childSnapshot(forPath: "isOnChat").value as! Bool
-                self.shouldSendNotification = !isOnChat
-            }
+        if (isFirstTime){
+            let userRef = rootRef.child("Users").child("\(otherUserId)")
+             userRef.observe(.value) { (snapshot) in
+                 if (snapshot.hasChild("isOnChat")){
+                     let isOnChat = snapshot.childSnapshot(forPath: "isOnChat").value as! Bool
+                     self.shouldSendNotification = !isOnChat
+                 }
 
-        }
-        
-        chatRef.queryLimited(toLast: 1).observe(.childAdded) { (snapshot) in
-            let chatNode = snapshot.key
-            let userId = (snapshot.childSnapshot(forPath: "senderId").value as! String)
-            if (userId != "\(Utility.getLoginUserId())"){
-                let chatToUpdate = self.chatRef.child(chatNode)
-                chatToUpdate.updateChildValues(["isRead": true])
-            }
-        }
-        
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateMessagesCounterAfterReadChat"), object: nil)
-       
-        chatRef.observe(.childAdded, with: { (snapshot) in
+             }
+             
+             chatRef.queryLimited(toLast: 1).observe(.childAdded) { (snapshot) in
+                 let chatNode = snapshot.key
+                 self.lastMessageKey = snapshot.key
+                 let userId = (snapshot.childSnapshot(forPath: "senderId").value as! String)
+                 if (userId != "\(Utility.getLoginUserId())"){
+                     let chatToUpdate = self.chatRef.child(chatNode)
+                     chatToUpdate.updateChildValues(["isRead": true])
+                 }
+             }
+             
+             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateMessagesCounterAfterReadChat"), object: nil)
             
-            if (self.isPrivateChat){
-                let type = snapshot.childSnapshot(forPath: "type").value as! Int
-                let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
-                let message = snapshot.childSnapshot(forPath: "message").value as! String
-                let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
-                let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
-                let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
-                let expireTime = snapshot.childSnapshot(forPath: "expireTime").value as! Double
-                
-                let currentTime = Int64(Date().timeIntervalSince1970 * 1000)
-                
-                if (Int64(expireTime) > currentTime){
-                    if(type == 1){
-                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
-                    }else if (type == 2){
-                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
-                    }
-                    else if (type == 3){
-                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
-                        
-                    }
-                    else {
-                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date)
-                    }
+            chatRef.queryLimited(toLast: 100).observe(.childAdded, with: { (snapshot) in
+                 
+                 if (self.isPrivateChat){
+                     let type = snapshot.childSnapshot(forPath: "type").value as! Int
+                     let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
+                     let message = snapshot.childSnapshot(forPath: "message").value as! String
+                     let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
+                     let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
+                     let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
+                     let expireTime = snapshot.childSnapshot(forPath: "expireTime").value as! Double
+                     
+                     let currentTime = Int64(Date().timeIntervalSince1970 * 1000)
+                     
+                     if (Int64(expireTime) > currentTime){
+                         if(type == 1){
+                             self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date, isFirstTime: isFirstTime)
+                         }else if (type == 2){
+                             self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date, isFirstTime: isFirstTime)
+                         }
+                         else if (type == 3){
+                             self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date, isFirstTime: isFirstTime)
+                             
+                         }
+                         else {
+                             self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date, isFirstTime: isFirstTime)
+                         }
+                     }
+                     
+                 }
+                 else{
+                     let type = snapshot.childSnapshot(forPath: "type").value as! Int
+                     let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
+                     let message = snapshot.childSnapshot(forPath: "message").value as! String
+                     let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
+                     let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
+                     let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
+                     
+                     var postId = 0
+                     if (snapshot.hasChild("postId")){
+                         postId = snapshot.childSnapshot(forPath: "postId").value as! Int
+                     }
+                     
+                     let model = MessagesModel()
+                     model.senderId = sender
+                     model.senderDisplayName = user_name
+                     model.messageType = type
+                     model.messageTimeStamp = date
+                     model.message = message
+                     model.postId = postId
+                     self.messagesModel.append(model)
+                     
+                     if(type == 1){
+                         self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date, isFirstTime: isFirstTime)
+                     }else if (type == 2){
+                         self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date, isFirstTime: isFirstTime)
+                     }
+                     else if (type == 3){
+                         self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date, isFirstTime: isFirstTime)
+                         
+                     }
+                     else{
+                         self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date, isFirstTime: isFirstTime)
+                     }
+                 }
+                 
+             })
+        }
+        else{
+            
+            chatRef.queryLimited(toLast: 1).observe(.childAdded) { (snapshot) in
+                let chatNode = snapshot.key
+                let userId = (snapshot.childSnapshot(forPath: "senderId").value as! String)
+                if (userId != "\(Utility.getLoginUserId())"){
+                    let chatToUpdate = self.chatRef.child(chatNode)
+                    chatToUpdate.updateChildValues(["isRead": true])
                 }
-                
             }
-            else{
-                let type = snapshot.childSnapshot(forPath: "type").value as! Int
-                let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
-                let message = snapshot.childSnapshot(forPath: "message").value as! String
-                let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
-                let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
-                let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
+            
+            Utility.showOrHideLoader(shouldShow: true)
+            chatRef.removeAllObservers()
+            self.messages.removeAll()
+            
+            chatRef.observe(.childAdded, with: { (snapshot) in
                 
-                var postId = 0
-                if (snapshot.hasChild("postId")){
-                    postId = snapshot.childSnapshot(forPath: "postId").value as! Int
-                }
-                
-                let model = MessagesModel()
-                model.senderId = sender
-                model.senderDisplayName = user_name
-                model.messageType = type
-                model.messageTimeStamp = date
-                model.message = message
-                model.postId = postId
-                self.messagesModel.append(model)
-                
-                if(type == 1){
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
-                }else if (type == 2){
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
-                }
-                else if (type == 3){
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
+                if (self.isPrivateChat){
+                    let type = snapshot.childSnapshot(forPath: "type").value as! Int
+                    let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
+                    let message = snapshot.childSnapshot(forPath: "message").value as! String
+                    let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
+                    let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
+                    let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
+                    let expireTime = snapshot.childSnapshot(forPath: "expireTime").value as! Double
+                    
+                    let currentTime = Int64(Date().timeIntervalSince1970 * 1000)
+                    
+                    if (Int64(expireTime) > currentTime){
+                        if(type == 1){
+                            self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date, isFirstTime: isFirstTime)
+                        }else if (type == 2){
+                            self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date, isFirstTime: isFirstTime)
+                        }
+                        else if (type == 3){
+                            self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date, isFirstTime: isFirstTime)
+                            
+                        }
+                        else {
+                            self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date, isFirstTime: isFirstTime)
+                        }
+                    }
                     
                 }
                 else{
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date)
+                    let type = snapshot.childSnapshot(forPath: "type").value as! Int
+                    let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
+                    let message = snapshot.childSnapshot(forPath: "message").value as! String
+                    let user_name = snapshot.childSnapshot(forPath: "senderName").value as! String
+                    let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
+                    let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
+                    
+                    var postId = 0
+                    if (snapshot.hasChild("postId")){
+                        postId = snapshot.childSnapshot(forPath: "postId").value as! Int
+                    }
+                    
+                    let model = MessagesModel()
+                    model.senderId = sender
+                    model.senderDisplayName = user_name
+                    model.messageType = type
+                    model.messageTimeStamp = date
+                    model.message = message
+                    model.postId = postId
+                    self.messagesModel.append(model)
+                    
+                    if(type == 1){
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date, isFirstTime: isFirstTime)
+                    }else if (type == 2){
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date, isFirstTime: isFirstTime)
+                    }
+                    else if (type == 3){
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date, isFirstTime: isFirstTime)
+                        
+                    }
+                    else{
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date, isFirstTime: isFirstTime)
+                    }
                 }
-            }
-            
-        })
-        
+                if (snapshot.key == self.lastMessageKey){
+                    Utility.showOrHideLoader(shouldShow: false)
+                }
+            })
+        }
     }
     
-    func addDemoMessages(sender_Id : String, senderName : String, textMsg : String, isImage :Bool?=false, isAudio:Bool?=false, isVideo:Bool?=false, date:Double) {
+    func addDemoMessages(sender_Id : String, senderName : String, textMsg : String, isImage :Bool?=false, isAudio:Bool?=false, isVideo:Bool?=false, date:Double, isFirstTime: Bool) {
         
         if(isImage)!{
             
@@ -318,6 +406,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     let dateFromTimeStamp : NSDate = NSDate(timeIntervalSince1970: Double(date/1000))
                     let message = JSQMessage(senderId: sender_Id, senderDisplayName: senderName, date: dateFromTimeStamp as Date?, media: videoData)
                     self.messages.append(message!)
+
                 }
             }
             else{
@@ -326,6 +415,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 let dateFromTimeStamp : NSDate = NSDate(timeIntervalSince1970: Double(date/1000))
                 let message = JSQMessage(senderId: sender_Id, senderDisplayName: senderName, date: dateFromTimeStamp as Date?, media: videoData)
                 self.messages.append(message!)
+                
             }
         }
         else if (isAudio)!{
@@ -337,9 +427,11 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     audioData.delegate = self
                     audioData.audioData = nil
                     let dateFromTimeStamp : NSDate = NSDate(timeIntervalSince1970: Double(date/1000))
+                  
                     let message = JSQMessage(senderId: sender_Id, senderDisplayName: senderName, date: dateFromTimeStamp as Date?, media: audioData)
                     self.handleAudioForIndexPath(indexPath: NSIndexPath.init(row: self.messages.count, section: 0), audioUrl: textMsg, appliesMediaViewMaskAsOutgoing: true, date: date)
                     self.messages.append(message!)
+                    
                 }
             }
             else{
@@ -356,15 +448,14 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             
         }
         else{
-            
             let dateFromTimeStamp : NSDate = NSDate(timeIntervalSince1970: Double(date/1000))
-            let message = JSQMessage.init(senderId: sender_Id, senderDisplayName: senderName, date: dateFromTimeStamp as Date?, text: textMsg)
-            self.messages.append(message!)
-            
+                let message = JSQMessage.init(senderId: sender_Id, senderDisplayName: senderName, date: dateFromTimeStamp as Date?, text: textMsg)
+                self.messages.append(message!)
         }
         
         self.collectionView?.reloadData()
         self.scrollToBottom(animated: false)
+
     }
     
     func handleImageForIndexPath(indexPath: NSIndexPath, image: String, appliesMediaViewMaskAsOutgoing : Bool, date:Double) {
@@ -701,8 +792,11 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
         
-        let data = self.messages[indexPath.row]
-        return data
+        if (self.messages.count > 0){
+            let data = self.messages[indexPath.row]
+            return data
+        }
+        return nil
         
     }
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, didDeleteMessageAt indexPath: IndexPath!) {
@@ -732,8 +826,8 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             cell.cellBottomLabel.font = Theme.getLatoRegularFontOfSize(size: 11)
             
             if cell.textView != nil{
-                cell.textView.font = Theme.getLatoRegularFontOfSize(size: 18)
-                cell.textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
+             //   cell.textView.font = Theme.getLatoRegularFontOfSize(size: 18)
+            //    cell.textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
                 
                 if data.senderId == self.senderId{
                     cell.textView.textColor = UIColor.white
@@ -753,6 +847,17 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         }
         
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if (indexPath.row == 0){
+            
+            if (!isAllMessagesLoad && self.messages.count >= 100){
+                isAllMessagesLoad = true
+                self.messageAdded(isFirstTime: false)
+            }
+        }
     }
     
     func audioMediaItem(_ audioMediaItem: JSQAudioMediaItem, didChangeAudioCategory category: String, options: AVAudioSession.CategoryOptions = [], error: Error?) {
