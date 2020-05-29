@@ -406,6 +406,13 @@
                                             <action selector="btnAddGroupTapped:" destination="gHy-Wf-RTq" eventType="touchUpInside" id="EN6-j1-V3t"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbu-C2-deW">
+                                        <rect key="frame" x="322" y="9" width="42" height="42"/>
+                                        <state key="normal" image="addGroup"/>
+                                        <connections>
+                                            <action selector="btnAddTapped:" destination="gHy-Wf-RTq" eventType="touchUpInside" id="iep-VE-T8z"/>
+                                        </connections>
+                                    </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fedora" translatesAutoresizingMaskIntoConstraints="NO" id="lVv-ok-sXj">
                                         <rect key="frame" x="374" y="20" width="20" height="20"/>
                                         <constraints>
@@ -425,6 +432,7 @@
                                     <constraint firstItem="lVv-ok-sXj" firstAttribute="top" secondItem="fgj-Nn-M31" secondAttribute="top" constant="20" id="3yp-Gu-Wfe"/>
                                     <constraint firstItem="q8f-rT-gr7" firstAttribute="top" secondItem="fgj-Nn-M31" secondAttribute="top" constant="70" id="4Fm-lQ-wNz"/>
                                     <constraint firstItem="ewj-yI-KqX" firstAttribute="width" secondItem="Q1o-sN-SqY" secondAttribute="width" id="GFj-3l-Vd1"/>
+                                    <constraint firstItem="lVv-ok-sXj" firstAttribute="leading" secondItem="mbu-C2-deW" secondAttribute="trailing" constant="10" id="HAn-IH-pPV"/>
                                     <constraint firstItem="rx2-zG-ULB" firstAttribute="leading" secondItem="ewj-yI-KqX" secondAttribute="trailing" constant="10" id="NlS-mK-oie"/>
                                     <constraint firstItem="Q1o-sN-SqY" firstAttribute="top" secondItem="fgj-Nn-M31" secondAttribute="top" id="QNT-34-kCu"/>
                                     <constraint firstAttribute="trailing" secondItem="q8f-rT-gr7" secondAttribute="trailing" id="TOf-Dz-b2x"/>
@@ -433,6 +441,7 @@
                                     <constraint firstItem="Q1o-sN-SqY" firstAttribute="leading" secondItem="fgj-Nn-M31" secondAttribute="leading" constant="20" id="nOK-7I-fFG"/>
                                     <constraint firstItem="ewj-yI-KqX" firstAttribute="top" secondItem="fgj-Nn-M31" secondAttribute="top" id="pRc-l2-Sft"/>
                                     <constraint firstAttribute="trailing" secondItem="lVv-ok-sXj" secondAttribute="trailing" constant="20" id="raS-K2-y0b"/>
+                                    <constraint firstItem="mbu-C2-deW" firstAttribute="centerY" secondItem="lVv-ok-sXj" secondAttribute="centerY" id="xQZ-ci-e9T"/>
                                     <constraint firstItem="ewj-yI-KqX" firstAttribute="leading" secondItem="Q1o-sN-SqY" secondAttribute="trailing" constant="20" id="zMr-90-1yR"/>
                                 </constraints>
                             </view>
@@ -457,6 +466,7 @@
                     <connections>
                         <outlet property="allSelectedView" destination="jMj-SV-6Lu" id="McF-tS-2QL"/>
                         <outlet property="allView" destination="Q1o-sN-SqY" id="6YA-Xp-sPJ"/>
+                        <outlet property="btnAdd" destination="mbu-C2-deW" id="E8N-WN-SwY"/>
                         <outlet property="btnAddGroup" destination="rx2-zG-ULB" id="MiM-pE-EoU"/>
                         <outlet property="chatListView" destination="fgj-Nn-M31" id="Oy1-HW-Kyi"/>
                         <outlet property="containerView" destination="q8f-rT-gr7" id="kfH-ay-sWd"/>
@@ -524,7 +534,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eOX-G4-zPT">
                                 <rect key="frame" x="110" y="676" width="284" height="40"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Send Message" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bpa-PW-w8V">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Send Feedback" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bpa-PW-w8V">
                                         <rect key="frame" x="20" y="10" width="244" height="20"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -2440,7 +2450,7 @@
                                     <constraint firstAttribute="width" constant="40" id="EgH-CK-MvN"/>
                                     <constraint firstAttribute="height" constant="40" id="k2B-Vu-eOO"/>
                                 </constraints>
-                                <state key="normal" image="location"/>
+                                <state key="normal" image="location-unfill"/>
                                 <connections>
                                     <action selector="btnLocationTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="7ma-2p-hdN"/>
                                 </connections>
@@ -5020,6 +5030,9 @@
                         <viewLayoutGuide key="safeArea" id="kHu-gs-SxB"/>
                     </view>
                     <connections>
+                        <outlet property="btnAdd" destination="Xmo-Oc-y93" id="F9J-cg-DYE"/>
+                        <outlet property="btnAddWidthConstraint" destination="xeP-gl-x2U" id="LuE-Vn-0ZN"/>
+                        <outlet property="lblTopTitle" destination="hur-zG-tDA" id="TUt-J4-nEj"/>
                         <outlet property="membersTableView" destination="ZzD-p1-aaL" id="U4Z-i1-GGm"/>
                         <outlet property="membersView" destination="Uzt-au-1qF" id="gPt-aD-DUz"/>
                         <outlet property="searchView" destination="d9B-kl-lLg" id="lOF-Vh-GoM"/>
@@ -5775,7 +5788,6 @@
         <image name="homeSelected" width="24" height="21.666666030883789"/>
         <image name="iFollow-white-logo" width="263" height="90"/>
         <image name="iFollow-white-logo-1" width="136" height="53"/>
-        <image name="location" width="44" height="45"/>
         <image name="location-unfill" width="44" height="45"/>
         <image name="menu" width="22.333333969116211" height="16.666666030883789"/>
         <image name="menuUserImage" width="83" height="83"/>

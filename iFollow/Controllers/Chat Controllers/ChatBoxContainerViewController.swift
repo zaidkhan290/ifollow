@@ -19,6 +19,7 @@ class ChatBoxContainerViewController: UIViewController {
     @IBOutlet weak var groupSelectedView: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var btnAddGroup: UIButton!
+    @IBOutlet weak var btnAdd: UIButton!
     
     var selectedIndex = 0
     var allChatsController = UIViewController()
@@ -57,6 +58,12 @@ class ChatBoxContainerViewController: UIViewController {
     }
     @IBAction func btnAddGroupTapped(_ sender: UIButton) {
         let vc = Utility.getCreateGroupViewController()
+        self.pushToVC(vc: vc)
+    }
+    
+    @IBAction func btnAddTapped(_ sender: UIButton){
+        let vc = Utility.getAddMembersViewController()
+        vc.isForChat = true
         self.pushToVC(vc: vc)
     }
     

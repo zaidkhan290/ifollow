@@ -15,19 +15,28 @@ protocol AddMembersViewControllerDelegate: class {
 
 class AddMembersViewController: UIViewController {
 
+    @IBOutlet weak var lblTopTitle: UILabel!
     @IBOutlet weak var membersView: UIView!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var txtFieldSearch: UITextField!
     @IBOutlet weak var membersTableView: UITableView!
+    @IBOutlet weak var btnAdd: UIButton!
+    @IBOutlet weak var btnAddWidthConstraint: NSLayoutConstraint!
     
     var trendingArray = [PostLikesUserModel]()
     var searchTrendingArray = [PostLikesUserModel]()
     var selectedUsersIds = [Int]()
     var delegate: AddMembersViewControllerDelegate?
+    var isForChat = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        lblTopTitle.text = isForChat ? "Trendees" : "Add Members"
+        btnAdd.isHidden = isForChat
+        btnAddWidthConstraint.constant = isForChat ? 0 : 60
+        self.view.updateConstraintsIfNeeded()
+        self.view.layoutSubviews()
         membersView.roundTopCorners(radius: 30)
         searchView.dropShadow(color: .white)
         searchView.layer.cornerRadius = 25
@@ -108,6 +117,71 @@ class AddMembersViewController: UIViewController {
         self.membersTableView.reloadData()
     }
     
+    func showTalkPopup(userId: Int, userFullName: String, userImage: String){
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let normalTalk = UIAlertAction(title: "Normal Talk", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.createChatRoom(isPrivate: false, userId: userId, userFullName: userFullName, userImage: userImage)
+            }
+        }
+        let privateTalk = UIAlertAction(title: "Private Talk", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.createChatRoom(isPrivate: true, userId: userId, userFullName: userFullName, userImage: userImage)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(normalTalk)
+        alertVC.addAction(privateTalk)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    func createChatRoom(isPrivate: Bool, userId: Int, userFullName: String, userImage: String){
+        
+        let params = ["user_id": userId,
+                      "is_private": isPrivate ? 1 : 0]
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        API.sharedInstance.executeAPI(type: .createChatRoom, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    let chatId = result["chat_room_id"].stringValue
+                    if (chatId != ""){
+                        let vc = Utility.getChatContainerViewController()
+                        vc.isPrivateChat = isPrivate
+                        vc.chatId = chatId
+                        vc.userId = userId
+                        vc.userName = userFullName
+                        vc.chatUserImage = userImage
+                        self.pushToVC(vc: vc)
+                    }
+                    else{
+                        Loaf("Failed to create chat room", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        }
+                    }
+                    
+                }
+                else if (status == .failure){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                    }
+                }
+                else if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
+        
+    }
+    
 }
 
 extension AddMembersViewController: UITableViewDataSource, UITableViewDelegate{
@@ -121,13 +195,18 @@ extension AddMembersViewController: UITableViewDataSource, UITableViewDelegate{
         let user = txtFieldSearch.text == "" ? trendingArray[indexPath.row] : searchTrendingArray[indexPath.row]
         cell.indexPath = indexPath
         cell.delegate = self
-        cell.btnSend.isHidden = true
-        cell.selectImage.isHidden = false
+        cell.btnSend.isHidden = !isForChat
+        cell.selectImage.isHidden = isForChat
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.sd_setImage(with: URL(string: user.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         cell.lblUsername.text = user.userFullName
         cell.lblLastSeen.text = user.userCountry
+        cell.btnSend.setTitle("Talk", for: .normal)
+        cell.btnSend.backgroundColor = .clear
+        cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
+        cell.btnSend.layer.borderWidth = 1
+        cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
         
         if (user.userSelected){
             cell.selectImage.image = UIImage(named: "select")
@@ -163,10 +242,22 @@ extension AddMembersViewController: FriendsTableViewCellDelegate{
     func btnSendTapped(indexPath: IndexPath) {
         
         if (txtFieldSearch.text == ""){
-            trendingArray[indexPath.row].userSelected = !trendingArray[indexPath.row].userSelected
+            if (isForChat){
+                self.showTalkPopup(userId: trendingArray[indexPath.row].userId, userFullName: trendingArray[indexPath.row].userFullName, userImage: trendingArray[indexPath.row].userImage)
+            }
+            else{
+                trendingArray[indexPath.row].userSelected = !trendingArray[indexPath.row].userSelected
+            }
+            
         }
         else{
-            searchTrendingArray[indexPath.row].userSelected = !searchTrendingArray[indexPath.row].userSelected
+            if (isForChat){
+                self.showTalkPopup(userId: searchTrendingArray[indexPath.row].userId, userFullName: trendingArray[indexPath.row].userFullName, userImage: trendingArray[indexPath.row].userImage)
+            }
+            else{
+                searchTrendingArray[indexPath.row].userSelected = !searchTrendingArray[indexPath.row].userSelected
+            }
+            
         }
         self.membersTableView.reloadData()
     }

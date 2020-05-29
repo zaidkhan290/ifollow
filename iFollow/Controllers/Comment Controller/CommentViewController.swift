@@ -43,7 +43,7 @@ class CommentViewController: UIViewController {
         feedImage.clipsToBounds = true
         commentFeedView.layer.cornerRadius = 10
         commentFeedView.dropShadow(color: .white)
-        Utility.setTextFieldPlaceholder(textField: txtFieldComment, placeholder: "Type a comment", color: Theme.searchFieldColor)
+        Utility.setTextFieldPlaceholder(textField: txtFieldComment, placeholder: "Type a Feedback", color: Theme.searchFieldColor)
         
         let swipeDonwGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownGesture))
         swipeDonwGestureRecognizer.direction = .down

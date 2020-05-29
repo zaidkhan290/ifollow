@@ -69,8 +69,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     var selectedFont = ""
     var timeViewFrame: CGRect!
     var locationViewFrame: CGRect!
-    var timeViewStyle = 1 // 1 for Yellow, 2 for unfill, 3 for white
-    var locationViewStyle = 1 // 1 for Yellow, 2 for unfill, 3 for white
+    var timeViewStyle = 0 // 0 for no boarder // 1 for Yellow, 2 for unfill, 3 for white
+    var locationViewStyle = 0 // 0 for no boarder // 1 for Yellow, 2 for unfill, 3 for white
     var timeViewTapGesture = UITapGestureRecognizer()
     var locationViewTapGesture = UITapGestureRecognizer()
     var fontsNames = ["Rightland", "LemonMilk", "Cream", "Gobold", "Janda", "Poetsen", "Simplisicky", "Evogria", "Yellosun"]
@@ -176,7 +176,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         super.viewDidAppear(true)
         
         captureSession = AVCaptureSession()
-        captureSession.sessionPreset = .hd4K3840x2160
+        captureSession.sessionPreset = .hd1920x1080
        // captureSession.automaticallyConfiguresApplicationAudioSession = false
        //
         captureSession.usesApplicationAudioSession = true
@@ -269,33 +269,45 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     }
     
     @objc func timeViewTapped(){
-        if (timeViewStyle == 1){
+        if (timeViewStyle == 0){
+            timeViewStyle = 1
+        }
+        else if (timeViewStyle == 1){
             timeViewStyle = 2
         }
         else if (timeViewStyle == 2){
             timeViewStyle = 3
         }
         else if (timeViewStyle == 3){
-            timeViewStyle = 1
+            timeViewStyle = 0
         }
         changeTimeViewStyle()
     }
     
     @objc func locationViewTapped(){
-        if (locationViewStyle == 1){
+        if (locationViewStyle == 0){
+            locationViewStyle = 1
+        }
+        else if (locationViewStyle == 1){
             locationViewStyle = 2
         }
         else if (locationViewStyle == 2){
             locationViewStyle = 3
         }
         else if (locationViewStyle == 3){
-            locationViewStyle = 1
+            locationViewStyle = 0
         }
         changeLocationViewStyle()
     }
     
     @objc func changeTimeViewStyle(){
-        if (timeViewStyle == 1){
+        if (timeViewStyle == 0){
+            timeView.backgroundColor = .clear
+            timeView.layer.borderColor = UIColor.clear.cgColor
+            lblTime.textColor = .white
+            clockIcon.image = UIImage(named: "clock-unfill")
+        }
+        else if (timeViewStyle == 1){
             timeView.backgroundColor = Theme.profileLabelsYellowColor
             timeView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
             lblTime.textColor = .white
@@ -316,7 +328,13 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     }
     
     @objc func changeLocationViewStyle(){
-        if (locationViewStyle == 1){
+        if (locationViewStyle == 0){
+            locationView.backgroundColor = .clear
+            locationView.layer.borderColor = UIColor.clear.cgColor
+            lblLocation.textColor = .white
+            locationIcon.image = UIImage(named: "location-unfill")
+        }
+        else if (locationViewStyle == 1){
             locationView.backgroundColor = Theme.profileLabelsYellowColor
             locationView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
             lblLocation.textColor = .white
@@ -508,13 +526,13 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                         timeView.isHidden = true
                         timeView.alpha = 1
                         timeView.frame = timeViewFrame
-                        timeViewStyle = 1
+                        timeViewStyle = 0
                     }
                     else if (sender.view! == locationView){
                         locationView.isHidden = true
                         locationView.alpha = 1
                         locationView.frame = locationViewFrame
-                        locationViewStyle = 1
+                        locationViewStyle = 0
                     }
                     else{
                         sender.view?.removeFromSuperview()
