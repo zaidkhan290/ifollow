@@ -1521,6 +1521,7 @@
                                     <constraint firstAttribute="trailing" secondItem="HnT-DM-WwA" secondAttribute="trailing" constant="20" id="mIa-Dt-jQv"/>
                                     <constraint firstItem="wLg-3u-JLg" firstAttribute="top" secondItem="2Vo-A4-dNl" secondAttribute="bottom" constant="10" id="qWw-9Q-Bcg"/>
                                     <constraint firstItem="2Vo-A4-dNl" firstAttribute="trailing" secondItem="sHr-Tu-kcf" secondAttribute="trailing" id="rxK-J3-rjo"/>
+                                    <constraint firstAttribute="trailing" secondItem="2Vo-A4-dNl" secondAttribute="trailing" constant="20" id="uJa-5q-KLR"/>
                                     <constraint firstAttribute="height" constant="280" id="uK6-Yb-S3Z"/>
                                     <constraint firstItem="2Vo-A4-dNl" firstAttribute="top" secondItem="sHr-Tu-kcf" secondAttribute="bottom" constant="5" id="vf9-zf-ps7"/>
                                 </constraints>

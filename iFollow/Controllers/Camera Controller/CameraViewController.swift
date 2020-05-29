@@ -86,6 +86,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     var storyImageToSend = UIImage()
     
     var isForPost = false
+    var shouldSaveToGallery = false
     
   //  let filterSwipeView = DSSwipableFilterView(frame: UIScreen.main.bounds)
     
@@ -401,6 +402,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         guard let imageData = photo.fileDataRepresentation()
             else { return }
         
+        shouldSaveToGallery = true
         let image = UIImage(data: imageData)
         cameraView.isHidden = false
         selectedImage = image!
@@ -428,6 +430,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if error == nil {
             DispatchQueue.main.async {
+                self.shouldSaveToGallery = true
                 if let videoScreenShot = Utility.imageFromVideo(url: outputFileURL, at: 0, totalTime: 15){
                     self.videoURL = outputFileURL
                     self.isPictureCaptured = true
@@ -973,6 +976,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         picker.dismiss(animated: true, completion: nil)
+        self.shouldSaveToGallery = false
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             isPictureCaptured = true
@@ -1107,13 +1111,13 @@ extension CameraViewController: ShareStoriesViewControllerDelegate{
     func shareStoryToMyStoryAndFriends(isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
         if (self.videoURL == nil){
             
-            if (isToSendMyStory){
+            if (isToSendMyStory && shouldSaveToGallery){
                 UIImageWriteToSavedPhotosAlbum(storyImageToSend, self, nil, nil)
             }
             self.delegate.getStoryImage(image: storyImageToSend, caption: self.txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
         }
         else{
-            if (isToSendMyStory){
+            if (isToSendMyStory && shouldSaveToGallery){
                 PHPhotoLibrary.shared().performChanges({
                     PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: self.videoURL)
                 }) { saved, error in

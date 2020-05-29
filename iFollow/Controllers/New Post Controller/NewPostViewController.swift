@@ -424,6 +424,7 @@ extension NewPostViewController: GMSAutocompleteViewControllerDelegate{
         
         if let placeName = place.name{
             userAddress = placeName
+            lblLocation.text = userAddress
         }
         
         dismiss(animated: true, completion: nil)

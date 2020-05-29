@@ -64,7 +64,7 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Markin Lake, Canada" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEY-jN-7kQ">
-                            <rect key="frame" x="80" y="41.5" width="114.5" height="14"/>
+                            <rect key="frame" x="80" y="41.5" width="225" height="14"/>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                             <color key="textColor" red="0.34509803919999998" green="0.35294117650000001" blue="0.35686274509999999" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -213,6 +213,7 @@
                         <constraint firstItem="Jf1-8q-ctc" firstAttribute="centerY" secondItem="bJa-sC-NoZ" secondAttribute="centerY" id="6P6-Lg-iR3"/>
                         <constraint firstAttribute="bottom" secondItem="boW-Jw-bsH" secondAttribute="bottom" id="AyB-JJ-wyk"/>
                         <constraint firstItem="iwh-tD-z17" firstAttribute="leading" secondItem="qsY-B6-WiC" secondAttribute="trailing" constant="5" id="C2N-MH-pDB"/>
+                        <constraint firstItem="TYm-a8-VUl" firstAttribute="leading" secondItem="WEY-jN-7kQ" secondAttribute="trailing" id="CjO-2p-zUf"/>
                         <constraint firstItem="Nyn-7Y-rJs" firstAttribute="top" secondItem="g0t-Ra-yTE" secondAttribute="top" constant="20" id="Fj8-YB-bKD"/>
                         <constraint firstItem="K99-P7-8ug" firstAttribute="top" secondItem="g0t-Ra-yTE" secondAttribute="top" constant="10" id="FnG-xm-Xdg"/>
                         <constraint firstAttribute="trailing" secondItem="iwh-tD-z17" secondAttribute="trailing" constant="8" id="HAm-gN-yZ2"/>
