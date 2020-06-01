@@ -52,6 +52,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     var messagesModel = [MessagesModel]()
     var lastMessageKey = ""
     var isAllMessagesLoad = false
+    var messageKeys = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -211,7 +212,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateMessagesCounterAfterReadChat"), object: nil)
             
             chatRef.queryLimited(toLast: 100).observe(.childAdded, with: { (snapshot) in
-                 
+                 self.messageKeys.append(snapshot.key)
                  if (self.isPrivateChat){
                      let type = snapshot.childSnapshot(forPath: "type").value as! Int
                      let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
@@ -291,9 +292,10 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             Utility.showOrHideLoader(shouldShow: true)
             chatRef.removeAllObservers()
             self.messages.removeAll()
+            self.messageKeys.removeAll()
             
             chatRef.observe(.childAdded, with: { (snapshot) in
-                
+                self.messageKeys.append(snapshot.key)
                 if (self.isPrivateChat){
                     let type = snapshot.childSnapshot(forPath: "type").value as! Int
                     let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
@@ -360,6 +362,17 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     Utility.showOrHideLoader(shouldShow: false)
                 }
             })
+        }
+        
+        chatRef.observe(.childRemoved) { (snapshot) in
+            let deleteMessageKey = snapshot.key
+            if let indexOfDeleteMessageKey = self.messageKeys.firstIndex(of: deleteMessageKey){
+                self.collectionView.deleteItems(at: [IndexPath(row: indexOfDeleteMessageKey, section: 0)])
+                self.messageKeys.remove(at: indexOfDeleteMessageKey)
+                self.messages.remove(at: indexOfDeleteMessageKey)
+                self.messagesModel.remove(at: indexOfDeleteMessageKey)
+                self.collectionView.reloadData()
+            }
         }
     }
     
@@ -815,6 +828,10 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
+        cell.tag = indexPath.row
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showDeleteMessagePopup(_:)))
+        longPressGesture.minimumPressDuration = 0.5
+        cell.addGestureRecognizer(longPressGesture)
         let data = self.messages[indexPath.row]
         
         DispatchQueue.main.async {
@@ -858,6 +875,23 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 self.messageAdded(isFirstTime: false)
             }
         }
+    }
+    
+    @objc func showDeleteMessagePopup(_ sender: UILongPressGestureRecognizer){
+        if ((messages[sender.view!.tag].senderId == self.senderId) && (messageKeys.count == messages.count)){
+            let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let deleteMessage = UIAlertAction(title: "Remove Message", style: .default) { (action) in
+                DispatchQueue.main.async {
+                    let messageKey = self.messageKeys[sender.view!.tag]
+                    self.chatRef.child(messageKey).removeValue()
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alertVC.addAction(deleteMessage)
+            alertVC.addAction(cancelAction)
+            self.present(alertVC, animated: true, completion: nil)
+        }
+        
     }
     
     func audioMediaItem(_ audioMediaItem: JSQAudioMediaItem, didChangeAudioCategory category: String, options: AVAudioSession.CategoryOptions = [], error: Error?) {
