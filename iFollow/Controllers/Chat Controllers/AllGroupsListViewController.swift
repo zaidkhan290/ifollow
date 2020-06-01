@@ -8,6 +8,7 @@
 
 import UIKit
 import Loaf
+import Firebase
 
 class AllGroupsListViewController: UIViewController {
     
@@ -85,7 +86,7 @@ class AllGroupsListViewController: UIViewController {
 //                                    else{
 //                                        recentChat.isRead = lastMessageIsRead
 //                                    }
-                                
+                                if (lastMessageTime > recentChat.userClearChatTime){
                                     if (type == 1){
                                         recentChat.groupLastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: \(message)" : "\(userName): \(message)")
                                     }
@@ -98,7 +99,10 @@ class AllGroupsListViewController: UIViewController {
                                     else if (type == 4){
                                         recentChat.groupLastMessage = (userId == "\(Utility.getLoginUserId())" ? "You: Video" : "\(userName): Video")
                                     }
-                                
+                                }
+                                else{
+                                    recentChat.groupLastMessage = "Chat cleared"
+                                }
                                 
                                 Utility.showOrHideLoader(shouldShow: false)
                                 self.groupsList.sort(by: { (model1, model2) -> Bool in
@@ -143,6 +147,49 @@ class AllGroupsListViewController: UIViewController {
         self.chatListTableView.reloadData()
     }
     
+    func showClearChatPopup(groupId: String){
+        let vc = UIAlertController(title: "Clear Chat", message: "Are you sure you want to clear this group chat?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.clearGroupChat(groupId: groupId)
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        vc.addAction(yesAction)
+        vc.addAction(noAction)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func clearGroupChat(groupId: String){
+        Utility.showOrHideLoader(shouldShow: true)
+        var time = Date().timeIntervalSince1970.rounded()
+        time = time * 1000
+        let params = ["group_id": groupId,
+                      "time": time] as [String: Any]
+
+        API.sharedInstance.executeAPI(type: .clearGroupChatMessage, method: .post, params: params) { (status, result, message) in
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                if (status == .success){
+                    Loaf("Chat cleared", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+
+                    }
+                    self.getGroupsList()
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+        }
+    }
+    
 }
 
 extension AllGroupsListViewController: UITableViewDataSource, UITableViewDelegate{
@@ -183,4 +230,15 @@ extension AllGroupsListViewController: UITableViewDataSource, UITableViewDelegat
         self.pushToVC(vc: vc)
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Clear Chat") { (action, indexPath) in
+            self.showClearChatPopup(groupId: self.groupsList[indexPath.row].groupChatId)
+        }
+        return [deleteAction]
+    }
 }

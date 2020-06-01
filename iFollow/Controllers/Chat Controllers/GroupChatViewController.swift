@@ -47,6 +47,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
     var lastMessageKey = ""
     var isAllMessagesLoad = false
     var messageKeys = [String]()
+    var currentUserGroupClearTime = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +62,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         
         chatRef = chatRef.child("GroupChats").child(chatId)
         groupMediaRef = groupMediaRef.child("GroupMedia").child(chatId)
+        currentUserGroupClearTime = groupModel.userClearChatTime
         self.inputToolbar.contentView.backgroundColor = .white
         self.inputToolbar.contentView.textView.textColor = .black
         self.inputToolbar.contentView.textView.backgroundColor = .clear
@@ -177,7 +179,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         
         if (isFirstTime){
             chatRef.queryLimited(toLast: 100).observe(.childAdded, with: { (snapshot) in
-                self.messageKeys.append(snapshot.key)
+                
                 let type = snapshot.childSnapshot(forPath: "type").value as! Int
                 let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
                 let message = snapshot.childSnapshot(forPath: "message").value as! String
@@ -185,17 +187,20 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
                 let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
                 let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
                 
-                if(type == 1){
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
-                }else if (type == 2){
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
-                }
-                else if (type == 3){
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
-                    
-                }
-                else{
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date)
+                if (date > self.currentUserGroupClearTime){
+                    self.messageKeys.append(snapshot.key)
+                    if(type == 1){
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
+                    }else if (type == 2){
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
+                    }
+                    else if (type == 3){
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
+                        
+                    }
+                    else{
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date)
+                    }
                 }
                 
             })
@@ -218,7 +223,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
             self.messageKeys.removeAll()
             
             chatRef.observe(.childAdded, with: { (snapshot) in
-                self.messageKeys.append(snapshot.key)
+                
                 let type = snapshot.childSnapshot(forPath: "type").value as! Int
                 let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
                 let message = snapshot.childSnapshot(forPath: "message").value as! String
@@ -226,21 +231,24 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
                 let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
                 let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
                 
-                if(type == 1){
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
-                }else if (type == 2){
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
-                }
-                else if (type == 3){
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
+                if (date > self.currentUserGroupClearTime){
+                    self.messageKeys.append(snapshot.key)
+                    if(type == 1){
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date)
+                    }else if (type == 2){
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isImage: true,date: date)
+                    }
+                    else if (type == 3){
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isAudio: true,date: date)
+                        
+                    }
+                    else{
+                        self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date)
+                    }
                     
-                }
-                else{
-                    self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message, isVideo: true,date: date)
-                }
-                
-                if (snapshot.key == self.lastMessageKey){
-                    Utility.showOrHideLoader(shouldShow: false)
+                    if (snapshot.key == self.lastMessageKey){
+                        Utility.showOrHideLoader(shouldShow: false)
+                    }
                 }
                 
             })

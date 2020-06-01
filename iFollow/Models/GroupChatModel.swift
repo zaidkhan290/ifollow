@@ -20,6 +20,7 @@ class GroupChatModel: NSObject {
     var groupLastMessageUserId: String = ""
     var groupLastMessage: String = ""
     var groupLastMessageTime: Double = 0.0
+    var userClearChatTime: Double = 0.0
     var groupUsers = [GroupMembersModel]()
     
     func updateModelWithJSON(json: JSON){
@@ -28,6 +29,7 @@ class GroupChatModel: NSObject {
         groupAdminName = json["admin_name"].stringValue
         groupName = json["group_name"].stringValue
         groupImage = json["image"].stringValue
+        userClearChatTime = json["chat_clear_time"].doubleValue
         groupCreatedAt = json["created_at"].stringValue
         
         let groupMembers = json["user_list"].arrayValue
