@@ -254,9 +254,10 @@ class StoriesViewController: UIViewController {
                 self.prevStoryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.prevStory)))
             }
             
+            Utility.showOrHideLoader(shouldShow: true)
             Alamofire.request(storyModel.storyURL).downloadProgress(closure : { (progress) in
                 print(progress.fractionCompleted)
-                Utility.showOrHideLoader(shouldShow: true)
+               // Utility.showOrHideLoader(shouldShow: true)
             }).responseData{ (response) in
                 print(response)
                 print(response.result.value!)
