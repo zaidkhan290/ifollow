@@ -29,6 +29,8 @@ class ChatBoxContainerViewController: UIViewController {
         super.viewDidLoad()
         
         chatListView.roundTopCorners(radius: 30)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         allChatsController = Utility.getAllChatsListViewController()
         groupsChatController = Utility.getAllGroupsListViewController()
@@ -115,6 +117,12 @@ class ChatBoxContainerViewController: UIViewController {
             viewController.removeFromParent()
         }
         
+    }
+}
+
+extension ChatBoxContainerViewController: UIGestureRecognizerDelegate{
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
 

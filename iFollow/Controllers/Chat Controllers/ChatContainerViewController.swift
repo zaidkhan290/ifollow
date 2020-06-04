@@ -41,8 +41,6 @@ class ChatContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-
         lblMessage.layer.masksToBounds = true
         lblMessage.layer.cornerRadius = 5
         onlineIcon.layer.cornerRadius = onlineIcon.frame.height / 2

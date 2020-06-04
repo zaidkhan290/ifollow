@@ -12,6 +12,7 @@ import FirebaseStorage
 import Loaf
 import AVFoundation
 import AVKit
+import PassKit
 
 protocol PostViewControllerDelegate: class {
     func postTapped(postView: UIViewController)
@@ -27,6 +28,7 @@ class NewPostViewController: UIViewController {
     @IBOutlet weak var btnPic: UIButton!
     @IBOutlet weak var btnLocation: UIButton!
     @IBOutlet weak var btnBoost: UIButton!
+    @IBOutlet weak var btnPostBackgroundImage: UIImageView!
     @IBOutlet weak var btnPost: UIButton!
     @IBOutlet weak var postViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var postViewHeightConstraint: NSLayoutConstraint!
@@ -38,8 +40,9 @@ class NewPostViewController: UIViewController {
     @IBOutlet weak var lblDays: UILabel!
     @IBOutlet weak var btnPlus: UIButton!
     @IBOutlet weak var lblPeoples: UILabel!
-    @IBOutlet weak var lblLike: UILabel!
-    @IBOutlet weak var lblVisa: UILabel!
+    @IBOutlet weak var lblTotalBudget: UILabel!
+    @IBOutlet weak var btnLink: UIButton!
+    @IBOutlet weak var linkSwitch: UISwitch!
     @IBOutlet weak var btnBoostPost: UIButton!
     
     var storageRef: StorageReference?
@@ -50,7 +53,7 @@ class NewPostViewController: UIViewController {
     var delegate: PostViewControllerDelegate!
     var days = 1
     var userAddress = ""
-    var budget: Float = 5.0
+    var budget: Float = 1.0
     var isForEdit = false
     var editablePostId = 0
     var editablePostText = ""
@@ -64,7 +67,7 @@ class NewPostViewController: UIViewController {
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         
         postView.layer.cornerRadius = 20
-        btnBoost.isHidden = true
+        //btnBoost.isHidden = true
         btnPic.isHidden = isForEdit
         postView.dropShadow(color: .white)
         if (isForEdit){
@@ -96,7 +99,6 @@ class NewPostViewController: UIViewController {
         let attributedLikeString = NSMutableAttributedString(string: likeText)
         attributedLikeString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: Theme.getLatoBoldFontOfSize(size: 14)], range: likeText.nsRange(from: rang1!))
         attributedLikeString.addAttributes([NSAttributedString.Key.foregroundColor: Theme.privateChatBoxTabsColor, NSAttributedString.Key.font: Theme.getLatoRegularFontOfSize(size: 14)], range: likeText.nsRange(from: rang2!))
-        lblLike.attributedText = attributedLikeString
         
         let visaText = "Visa **7045"
         let visaRange1 = visaText.range(of: "Visa")
@@ -105,14 +107,13 @@ class NewPostViewController: UIViewController {
         let attributedVisaString = NSMutableAttributedString(string: visaText)
         attributedVisaString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: Theme.getLatoBoldFontOfSize(size: 14)], range: visaText.nsRange(from: visaRange1!))
         attributedVisaString.addAttributes([NSAttributedString.Key.foregroundColor: Theme.privateChatBoxTabsColor, NSAttributedString.Key.font: Theme.getLatoRegularFontOfSize(size: 14)], range: visaText.nsRange(from: visaRange2!))
-        lblVisa.attributedText = attributedVisaString
         
         lblDays.text = "\(days) Days"
         
-        budgetSlider.minimumValue = 5
-        budgetSlider.maximumValue = 100
-        budgetSlider.value = 5
-        lblAddBudget.text = "Add Budget ($5)"
+        budgetSlider.minimumValue = 1
+        budgetSlider.maximumValue = 500
+        budgetSlider.value = 1
+        lblAddBudget.text = "Daily Budget ($1)"
         budgetSlider.addTarget(self, action: #selector(budgetSliderValueChange), for: .valueChanged)
         
         postImage.isUserInteractionEnabled = !isForEdit
@@ -155,7 +156,8 @@ class NewPostViewController: UIViewController {
     @objc func budgetSliderValueChange(){
         budget = budgetSlider.value.rounded()
         let budgetString = String(format: "%.0f", budget)
-        lblAddBudget.text = "Add Budget ($\(budgetString))"
+        lblAddBudget.text = "Daily Budget ($\(budgetString))"
+        lblTotalBudget.text = "$\(budgetString)"
     }
     
     @IBAction func btnBoostTapped(_ sender: UIButton) {
@@ -188,8 +190,56 @@ class NewPostViewController: UIViewController {
         lblDays.text = "\(days) Days"
     }
     
+    @IBAction func btnAddLinkTapped(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func linkSwitchTapped(_ sender: UISwitch) {
+    }
+    
     @IBAction func btnBoosPostTapped(_ sender: UIButton) {
-        self.savePostMediaToFirebase(image: postSelectedImage)
+        
+        let request = PKPaymentRequest()
+        request.merchantIdentifier = "merchant.com.mou.iFollow"
+        request.supportedNetworks = [.visa, .masterCard]
+        request.merchantCapabilities = .capability3DS
+        request.countryCode = "US"
+        request.currencyCode = "USD"
+        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Boost Payment", amount: NSDecimalNumber(value: budget))]
+        
+        if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
+            controller.delegate = self
+            present(controller, animated: true, completion: nil)
+        }
+        
+     //   self.savePostMediaToFirebase(image: postSelectedImage)
+//        let paymentNetworks = [PKPaymentNetwork.amex, .discover, .masterCard, .visa]
+//        if (PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks)){
+//
+//            let request = PKPaymentRequest()
+//            request.currencyCode = "USD" // 1
+//            request.countryCode = "US" // 2
+//            request.merchantIdentifier = "merchant.com.mou.iFollow" // 3
+//            request.merchantCapabilities = PKMerchantCapability.capability3DS // 4
+//            request.supportedNetworks = paymentNetworks // 5
+//            request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Boost fee", amount: NSDecimalNumber(value: budget))]
+//
+//            if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
+//                controller.delegate = self
+//                present(controller, animated: true, completion: nil)
+//            }
+//
+////            guard let paymentVC = PKPaymentAuthorizationViewController(paymentRequest: request) else {
+////                displayDefaultAlert(title: "Error", message: "Unable to present Apple Pay authorization.")
+////                return
+////            }
+////                paymentVC.delegate = self
+////                self.present(paymentVC, animated: true, completion: nil)
+//
+//        }
+//        else {
+//            displayDefaultAlert(title: "Error", message: "Unable to make Apple Pay transaction.")
+//        }
     }
     
     @objc func postImageTapped(){
@@ -207,11 +257,12 @@ class NewPostViewController: UIViewController {
     func changePostViewSize(){
         
         isDetail = !isDetail
-        btnBoost.setImage(UIImage(named: isDetail ? "promoteSelected" : "promote"), for: .normal)
+        btnPost.isHidden = isDetail
+        btnPostBackgroundImage.isHidden = isDetail
         
         if (isDetail){
-            postViewTopConstraint.constant = 30
-            postViewHeightConstraint.constant = 600
+            postViewTopConstraint.constant = 20
+            postViewHeightConstraint.constant = 620
         }
         else{
             postViewTopConstraint.constant = 100
@@ -416,6 +467,13 @@ class NewPostViewController: UIViewController {
             
         }
     }
+    
+    func displayDefaultAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+       let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension NewPostViewController: GMSAutocompleteViewControllerDelegate{
@@ -457,4 +515,18 @@ extension NewPostViewController: UITextFieldDelegate{
         }
     }
 
+}
+
+extension NewPostViewController: PKPaymentAuthorizationViewControllerDelegate{
+    
+    func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        
+        dismiss(animated: true, completion: nil)
+        displayDefaultAlert(title: "Success!", message: "The Apple Pay transaction was complete.")
+    }
+    
 }

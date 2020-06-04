@@ -119,7 +119,7 @@ class StoriesViewController: UIViewController {
             self.userImage.layer.borderColor = UIColor.white.cgColor
             self.userImage.sd_setImage(with: URL(string: self.storiesUsersArray[self.storyUserIndex].userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
             
-            self.spb = SegmentedProgressBar(numberOfSegments: self.storiesUsersArray[self.storyUserIndex].userStories.count, duration: 15)
+            self.spb = SegmentedProgressBar(numberOfSegments: self.storiesUsersArray[self.storyUserIndex].userStories.count, duration: 16)
             self.spb.frame = CGRect(x: 15, y: self.view.safeAreaInsets.top + 20, width: self.view.frame.width - 30, height: 4)
             self.view.addSubview(self.spb)
             
@@ -144,6 +144,12 @@ class StoriesViewController: UIViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(userProfileDismissed), name: NSNotification.Name(rawValue: "userProfileDismissed"), object: nil)
+//        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+//                                               object: nil,
+//                                               queue: nil) { [weak self] note in
+//                                                self?.storyVideoFinish()
+//        }
+        NotificationCenter.default.addObserver(self, selector: #selector(storyVideoFinish), name: .AVPlayerItemDidPlayToEndTime, object: nil)
         
     }
     
@@ -152,9 +158,18 @@ class StoriesViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         IQKeyboardManager.shared.enable = true
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     //MARK:- Methods and Actions
@@ -211,15 +226,19 @@ class StoriesViewController: UIViewController {
                     }
                 })
             }
-            
+            let videoItem = self.videoPlayer.currentItem!
+            let totalDuration = videoItem.duration.seconds
             self.videoPlayer.play()
             self.videoPlayer.isMuted = false
-            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
-                                                   object: nil,
-                                                   queue: nil) { [weak self] note in
-                                                    self?.videoPlayer.seek(to: CMTime.zero)
-                                                    self?.videoPlayer.play()
-            }
+            
+        //    if (totalDuration < 15){
+//                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+//                                                       object: nil,
+//                                                       queue: nil) { [weak self] note in
+//                                                        self?.storyVideoFinish()
+//                }
+         //   }
+        
             self.isVideoPlaying = true
             if (isFirstStory){
                 self.spb.startAnimation()
@@ -286,14 +305,19 @@ class StoriesViewController: UIViewController {
                     playerLayer.frame = self.videoView.frame
                     self.videoView.layer.addSublayer(playerLayer)
                     Utility.showOrHideLoader(shouldShow: false)
+                    
+                    let videoItem = self.videoPlayer.currentItem!
+                    let totalDuration = videoItem.duration.seconds
+                    
                     self.videoPlayer.play()
                     self.videoPlayer.isMuted = false
-                    NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
-                                                           object: nil,
-                                                           queue: nil) { [weak self] note in
-                                                            self?.videoPlayer.seek(to: CMTime.zero)
-                                                            self?.videoPlayer.play()
-                    }
+                  //  if (totalDuration < 15){
+//                        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+//                                                               object: nil,
+//                                                               queue: nil) { [weak self] note in
+//                                                                self?.storyVideoFinish()
+//                        }
+                 //   }
                     self.isVideoPlaying = true
                     self.spb.isPaused = false
                 }
@@ -553,6 +577,19 @@ class StoriesViewController: UIViewController {
         }
         isForSkip = false
         self.spb.rewind()
+    }
+    
+    @objc func storyVideoFinish(){
+        nextStory()
+//        if (videoPlayer != nil){
+//            if (videoPlayer.currentTime().seconds <= 15){
+//
+//                NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+//                NotificationCenter.default.addObserver(self, selector: #selector(storyVideoFinish), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+//
+//                self.nextStory()
+//            }
+//        }
     }
     
     @objc func tapOnView(recognizer: UILongPressGestureRecognizer){
