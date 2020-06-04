@@ -144,11 +144,7 @@ class StoriesViewController: UIViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(userProfileDismissed), name: NSNotification.Name(rawValue: "userProfileDismissed"), object: nil)
-//        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
-//                                               object: nil,
-//                                               queue: nil) { [weak self] note in
-//                                                self?.storyVideoFinish()
-//        }
+
         NotificationCenter.default.addObserver(self, selector: #selector(storyVideoFinish), name: .AVPlayerItemDidPlayToEndTime, object: nil)
         
     }
@@ -230,14 +226,6 @@ class StoriesViewController: UIViewController {
             let totalDuration = videoItem.duration.seconds
             self.videoPlayer.play()
             self.videoPlayer.isMuted = false
-            
-        //    if (totalDuration < 15){
-//                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
-//                                                       object: nil,
-//                                                       queue: nil) { [weak self] note in
-//                                                        self?.storyVideoFinish()
-//                }
-         //   }
         
             self.isVideoPlaying = true
             if (isFirstStory){
@@ -311,13 +299,7 @@ class StoriesViewController: UIViewController {
                     
                     self.videoPlayer.play()
                     self.videoPlayer.isMuted = false
-                  //  if (totalDuration < 15){
-//                        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
-//                                                               object: nil,
-//                                                               queue: nil) { [weak self] note in
-//                                                                self?.storyVideoFinish()
-//                        }
-                 //   }
+                  
                     self.isVideoPlaying = true
                     self.spb.isPaused = false
                 }
@@ -580,16 +562,7 @@ class StoriesViewController: UIViewController {
     }
     
     @objc func storyVideoFinish(){
-        nextStory()
-//        if (videoPlayer != nil){
-//            if (videoPlayer.currentTime().seconds <= 15){
-//
-//                NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
-//                NotificationCenter.default.addObserver(self, selector: #selector(storyVideoFinish), name: .AVPlayerItemDidPlayToEndTime, object: nil)
-//
-//                self.nextStory()
-//            }
-//        }
+        self.nextStory()
     }
     
     @objc func tapOnView(recognizer: UILongPressGestureRecognizer){
