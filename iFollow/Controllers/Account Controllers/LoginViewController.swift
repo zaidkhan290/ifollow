@@ -32,6 +32,7 @@ class LoginViewController: UIViewController {
         
         Utility.setTextFieldPlaceholder(textField: txtFieldUsername, placeholder: "Username", color: Theme.textFieldColor)
         Utility.setTextFieldPlaceholder(textField: txtFieldPassword, placeholder: "Password", color: Theme.textFieldColor)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
 
     }
     

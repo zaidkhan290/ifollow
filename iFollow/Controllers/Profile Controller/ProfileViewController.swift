@@ -379,6 +379,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         let post = userPosts[index]
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
+        itemView.postLinkView.isHidden = true
         itemView.frame = view.frame
         itemView.userImage.layer.cornerRadius = 25
         itemView.userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))

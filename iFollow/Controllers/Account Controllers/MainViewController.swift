@@ -15,8 +15,8 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     @IBAction func btnLoginTapped(_ sender: UIButton) {
@@ -29,5 +29,10 @@ class MainViewController: UIViewController {
         self.pushToVC(vc: vc)
     }
     
-    
+}
+
+extension MainViewController: UIGestureRecognizerDelegate{
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }

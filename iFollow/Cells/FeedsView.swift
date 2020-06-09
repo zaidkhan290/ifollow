@@ -30,6 +30,7 @@ class FeedsView: UIView {
     @IBOutlet weak var likeImage: UIImageView!
     @IBOutlet weak var postShareView: UIView!
     @IBOutlet weak var postHideView: UIView!
+    @IBOutlet weak var postLinkView: UIView!
     @IBOutlet weak var postShareImageView: UIImageView!
     @IBOutlet weak var postHideImageView: UIImageView!
     @IBOutlet weak var postlikeView: UIView!

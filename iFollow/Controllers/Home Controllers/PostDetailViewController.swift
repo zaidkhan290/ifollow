@@ -153,6 +153,7 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
         view.backgroundColor = .clear
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
+        itemView.postLinkView.isHidden = true
         itemView.backgroundColor = .clear
         itemView.index = index
         let post = postsArray[index]

@@ -13,6 +13,7 @@ import Loaf
 import AVFoundation
 import AVKit
 import PassKit
+import IQKeyboardManagerSwift
 
 protocol PostViewControllerDelegate: class {
     func postTapped(postView: UIViewController)
@@ -41,7 +42,7 @@ class NewPostViewController: UIViewController {
     @IBOutlet weak var btnPlus: UIButton!
     @IBOutlet weak var lblPeoples: UILabel!
     @IBOutlet weak var lblTotalBudget: UILabel!
-    @IBOutlet weak var btnLink: UIButton!
+    @IBOutlet weak var txtFieldLink: UITextField!
     @IBOutlet weak var linkSwitch: UISwitch!
     @IBOutlet weak var btnBoostPost: UIButton!
     
@@ -60,6 +61,7 @@ class NewPostViewController: UIViewController {
     var editablePostImage = ""
     var editablePostMediaType = ""
     var editablePostUserLocation = ""
+    var isValidURL = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,15 +122,17 @@ class NewPostViewController: UIViewController {
         postImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postImageTapped)))
         postView.addShadow()
         txtFieldStatus.delegate = self
+        txtFieldLink.delegate = self
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-      //  DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-        //    self.changePostViewSize()
-      //  }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
         
     }
     
@@ -157,7 +161,12 @@ class NewPostViewController: UIViewController {
         budget = budgetSlider.value.rounded()
         let budgetString = String(format: "%.0f", budget)
         lblAddBudget.text = "Daily Budget ($\(budgetString))"
-        lblTotalBudget.text = "$\(budgetString)"
+        setTotalBudget()
+    }
+    
+    @objc func setTotalBudget(){
+        let totalBudget = budget * Float(days)
+        lblTotalBudget.text = "$\(totalBudget)"
     }
     
     @IBAction func btnBoostTapped(_ sender: UIButton) {
@@ -181,6 +190,7 @@ class NewPostViewController: UIViewController {
             days -= 1
         }
         lblDays.text = "\(days) Days"
+        setTotalBudget()
     }
     
     @IBAction func btnPlusTapped(_ sender: UIButton) {
@@ -188,13 +198,11 @@ class NewPostViewController: UIViewController {
             days += 1
         }
         lblDays.text = "\(days) Days"
-    }
-    
-    @IBAction func btnAddLinkTapped(_ sender: UIButton) {
-        
+        setTotalBudget()
     }
     
     @IBAction func linkSwitchTapped(_ sender: UISwitch) {
+        txtFieldLink.isHidden = !sender.isOn
     }
     
     @IBAction func btnBoosPostTapped(_ sender: UIButton) {
@@ -474,6 +482,19 @@ class NewPostViewController: UIViewController {
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func checkIsValidURL(){
+        txtFieldLink.endEditing(true)
+        if (txtFieldLink.text!.isValidURL){
+            isValidURL = true
+        }
+        else{
+            isValidURL = false
+            Loaf("Please enter the valid URL", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                
+            }
+        }
+    }
 }
 
 extension NewPostViewController: GMSAutocompleteViewControllerDelegate{
@@ -501,19 +522,39 @@ extension NewPostViewController: GMSAutocompleteViewControllerDelegate{
 
 extension NewPostViewController: UITextFieldDelegate{
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        if (isVideo){
-            let maxLength = 40
-            let currentString: NSString = textField.text! as NSString
-            let newString: NSString =
-                currentString.replacingCharacters(in: range, with: string) as NSString
-            return newString.length <= maxLength
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if (textField == txtFieldStatus){
+            IQKeyboardManager.shared.enableAutoToolbar = true
         }
-        else{
-            return true
+        else if (textField == txtFieldLink){
+            IQKeyboardManager.shared.enableAutoToolbar = false
         }
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if (textField == txtFieldStatus){
+            if (isVideo){
+                let maxLength = 40
+                let currentString: NSString = textField.text! as NSString
+                let newString: NSString =
+                    currentString.replacingCharacters(in: range, with: string) as NSString
+                return newString.length <= maxLength
+            }
+            else{
+                return true
+            }
+        }
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if (textField == txtFieldLink){
+            checkIsValidURL()
+        }
+        return true
+    }
+    
 
 }
 

@@ -65,6 +65,7 @@ enum EndPoint: String {
     case resetNotificationCount = "reset_notification_count"
     case resetAppBadge = "reset_push_count"
     case clearGroupChatMessage = "chat_clear"
+    case viewPost = "post_view"
     case logout = "logout"
 }
 

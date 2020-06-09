@@ -740,6 +740,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         let post = otherUserProfile.userPosts[index]
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
+        itemView.postLinkView.isHidden = true
         itemView.frame = view.frame
         itemView.lblUsername.text = otherUserProfile.userFullName
         itemView.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: post.postCreatedAt))

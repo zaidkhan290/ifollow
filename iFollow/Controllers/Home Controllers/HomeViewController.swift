@@ -695,6 +695,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         let view = UIView(frame: CGRect(x: 0, y: 0, width: carouselView.frame.width, height: carouselView.frame.height))
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
+        itemView.postLinkView.isHidden = true
         let addView = Bundle.main.loadNibNamed("UnifiedNativeAdView", owner: self, options: nil)?.first! as! GADUnifiedNativeAdView
         
         addView.frame = view.frame
