@@ -41,6 +41,7 @@ pod 'Google-Mobile-Ads-SDK'
 pod 'Siren', :git => 'https://github.com/ArtSabintsev/Siren.git', :branch => 'swift4.2'
 pod 'PullToRefresher', '3.1'
 pod 'FaveButton'
-pod 'SwiftLinkPreview'
+pod 'Braintree/PayPal'
+pod 'Braintree'
 
 end

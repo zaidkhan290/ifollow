@@ -31,3 +31,5 @@ let FireBaseStorageURL = "gs://ifollow-13644.appspot.com"
 let GoogleAPIKey = "AIzaSyA7oFL_W-gT4OG1kg-O-q_5S5-LpOPkDSQ"
 //let adUnitID = "ca-app-pub-7830642545217251/6128712626" // Live.. Also change info.plist to ca-app-pub-7830642545217251~5552522779
 let adUnitID = "ca-app-pub-3940256099942544/3986624511" // Testing
+let BT_AUTHORIZATION_KEY = "sandbox_rzxh3y9w_vgv2k4dn6fj3dqmx"
+//let BT_AUTHORIZATION_KEY = "production_yk8knskb_7v7bfwgqbgd65w4p"

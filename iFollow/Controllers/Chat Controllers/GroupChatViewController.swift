@@ -695,12 +695,12 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         if data.senderId == self.senderId{
             cell.cellTopLabel.text = "You"
             cell.cellTopLabel.textAlignment = .right
-            cell.cellBottomLabel.text = "\(Utility.getNotificationTime(date: data.date))"
+            cell.cellBottomLabel.text = "\(Utility.timeAgoSince(data.date))"
         }
         else{
             cell.cellTopLabel.text = data.senderDisplayName
             cell.cellTopLabel.textAlignment = .left
-            cell.cellBottomLabel.text = "\(Utility.getNotificationTime(date: data.date))"
+            cell.cellBottomLabel.text = "\(Utility.timeAgoSince(data.date))"
         }
         
         return cell

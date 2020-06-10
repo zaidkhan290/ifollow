@@ -743,7 +743,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.postLinkView.isHidden = true
         itemView.frame = view.frame
         itemView.lblUsername.text = otherUserProfile.userFullName
-        itemView.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: post.postCreatedAt))
+        itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postCreatedAt))
         itemView.userImage.sd_setImage(with: URL(string: otherUserProfile.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
         itemView.lblUserAddress.text = post.postLocation

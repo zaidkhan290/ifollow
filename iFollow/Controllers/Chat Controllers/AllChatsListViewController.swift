@@ -226,7 +226,7 @@ extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate
         cell.lblMessageCounter.isHidden = true
         cell.messageCounterIcon.isHidden = chat.isRead
         let lastMessageDate = Date(timeIntervalSince1970: (chat.lastMessageTime / 1000))
-        cell.lblTime.text = Utility.getNotificationTime(date: lastMessageDate)
+        cell.lblTime.text = Utility.timeAgoSince(lastMessageDate)
         cell.lblUserMessage.font = chat.isRead ? Theme.getLatoRegularFontOfSize(size: 13) : Theme.getLatoBoldFontOfSize(size: 13)
         return cell
         

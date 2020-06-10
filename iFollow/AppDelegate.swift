@@ -15,6 +15,7 @@ import GoogleMobileAds
 import Siren
 import SwiftyJSON
 import RealmSwift
+import Braintree
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -41,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseApp.configure()
         navigateTOInitialViewController()
         GMSPlacesClient.provideAPIKey(GoogleAPIKey)
+        BTAppSwitch.setReturnURLScheme("com.mou.iFollow.payments")
         registerForPushNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
         GADMobileAds.sharedInstance().start(completionHandler: nil)

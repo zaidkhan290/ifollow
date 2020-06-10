@@ -14,6 +14,7 @@ import AVFoundation
 import AVKit
 import PassKit
 import IQKeyboardManagerSwift
+import Braintree
 
 protocol PostViewControllerDelegate: class {
     func postTapped(postView: UIViewController)
@@ -55,6 +56,7 @@ class NewPostViewController: UIViewController {
     var days = 1
     var userAddress = ""
     var budget: Float = 1.0
+    var totalBudget: Float = 1.0
     var isForEdit = false
     var editablePostId = 0
     var editablePostText = ""
@@ -62,6 +64,7 @@ class NewPostViewController: UIViewController {
     var editablePostMediaType = ""
     var editablePostUserLocation = ""
     var isValidURL = false
+    var braintreeClient: BTAPIClient!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,6 +126,7 @@ class NewPostViewController: UIViewController {
         postView.addShadow()
         txtFieldStatus.delegate = self
         txtFieldLink.delegate = self
+        self.braintreeClient = BTAPIClient(authorization: BT_AUTHORIZATION_KEY)
         
     }
     
@@ -165,7 +169,7 @@ class NewPostViewController: UIViewController {
     }
     
     @objc func setTotalBudget(){
-        let totalBudget = budget * Float(days)
+        totalBudget = budget * Float(days)
         lblTotalBudget.text = "$\(totalBudget)"
     }
     
@@ -186,7 +190,7 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnMinusTapped(_ sender: UIButton) {
-        if (days > 1 && days <= 7){
+        if (days > 1 && days <= 3){
             days -= 1
         }
         lblDays.text = "\(days) Days"
@@ -194,7 +198,7 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnPlusTapped(_ sender: UIButton) {
-        if (days >= 1 && days < 7){
+        if (days >= 1 && days < 3){
             days += 1
         }
         lblDays.text = "\(days) Days"
@@ -206,48 +210,57 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnBoosPostTapped(_ sender: UIButton) {
+        payWithPaypal()
+//        let request = PKPaymentRequest()
+//        request.merchantIdentifier = "merchant.com.mou.iFollow"
+//        request.supportedNetworks = [.visa, .masterCard]
+//        request.merchantCapabilities = .capability3DS
+//        request.countryCode = "US"
+//        request.currencyCode = "USD"
+//        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Boost Payment", amount: NSDecimalNumber(value: budget))]
+//
+//        if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
+//            controller.delegate = self
+//            present(controller, animated: true, completion: nil)
+//        }
         
-        let request = PKPaymentRequest()
-        request.merchantIdentifier = "merchant.com.mou.iFollow"
-        request.supportedNetworks = [.visa, .masterCard]
-        request.merchantCapabilities = .capability3DS
-        request.countryCode = "US"
+    }
+    
+    func payWithPaypal(){
+        let payPalDriver = BTPayPalDriver(apiClient: self.braintreeClient)
+        payPalDriver.viewControllerPresentingDelegate = self
+        payPalDriver.appSwitchDelegate = self
+        
+        let request = BTPayPalRequest(amount: "\(totalBudget)")
         request.currencyCode = "USD"
-        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Boost Payment", amount: NSDecimalNumber(value: budget))]
-        
-        if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
-            controller.delegate = self
-            present(controller, animated: true, completion: nil)
-        }
-        
-     //   self.savePostMediaToFirebase(image: postSelectedImage)
-//        let paymentNetworks = [PKPaymentNetwork.amex, .discover, .masterCard, .visa]
-//        if (PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks)){
-//
-//            let request = PKPaymentRequest()
-//            request.currencyCode = "USD" // 1
-//            request.countryCode = "US" // 2
-//            request.merchantIdentifier = "merchant.com.mou.iFollow" // 3
-//            request.merchantCapabilities = PKMerchantCapability.capability3DS // 4
-//            request.supportedNetworks = paymentNetworks // 5
-//            request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Boost fee", amount: NSDecimalNumber(value: budget))]
-//
-//            if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
-//                controller.delegate = self
-//                present(controller, animated: true, completion: nil)
+        payPalDriver.requestOneTimePayment(request) { (tokenizedPayPalAccount, error) -> Void in
+            guard let tokenizedPayPalAccount = tokenizedPayPalAccount else {
+                if let error = error {
+                    Loaf(error.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+                        
+                    }
+                } else {
+                    // User canceled
+                }
+                return
+            }
+            print("Got a nonce! \(tokenizedPayPalAccount.nonce)")
+            Loaf("Payment Success", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+                
+            }
+            let params = ["gateway": "paypal",
+                          "description": "One time payment",
+                          "amount": "1",
+                          "response": "email: \(tokenizedPayPalAccount.email!), nonce: \(tokenizedPayPalAccount.nonce)",
+                          "order_id": tokenizedPayPalAccount.payerId!,
+                          "fk_plan_id": Utility.getLoginUserId(),
+            "status": "Complete"] as [String : Any]
+         //   self.proceedPayment(params: params)
+            
+//            if let address = tokenizedPayPalAccount.billingAddress {
+//                print("Billing address:\n\(address.streetAddress)\n\(address.extendedAddress)\n\(address.locality) \(address.region)\n\(address.postalCode) \(address.countryCodeAlpha2)")
 //            }
-//
-////            guard let paymentVC = PKPaymentAuthorizationViewController(paymentRequest: request) else {
-////                displayDefaultAlert(title: "Error", message: "Unable to present Apple Pay authorization.")
-////                return
-////            }
-////                paymentVC.delegate = self
-////                self.present(paymentVC, animated: true, completion: nil)
-//
-//        }
-//        else {
-//            displayDefaultAlert(title: "Error", message: "Unable to make Apple Pay transaction.")
-//        }
+        }
     }
     
     @objc func postImageTapped(){
@@ -568,6 +581,29 @@ extension NewPostViewController: PKPaymentAuthorizationViewControllerDelegate{
         
         dismiss(animated: true, completion: nil)
         displayDefaultAlert(title: "Success!", message: "The Apple Pay transaction was complete.")
+    }
+    
+}
+
+extension NewPostViewController: BTAppSwitchDelegate, BTViewControllerPresentingDelegate{
+    func appSwitcherWillPerformAppSwitch(_ appSwitcher: Any) {
+        
+    }
+    
+    func appSwitcher(_ appSwitcher: Any, didPerformSwitchTo target: BTAppSwitchTarget) {
+        
+    }
+    
+    func appSwitcherWillProcessPaymentInfo(_ appSwitcher: Any) {
+        
+    }
+    
+    func paymentDriver(_ driver: Any, requestsPresentationOf viewController: UIViewController) {
+        
+    }
+    
+    func paymentDriver(_ driver: Any, requestsDismissalOf viewController: UIViewController) {
+        
     }
     
 }

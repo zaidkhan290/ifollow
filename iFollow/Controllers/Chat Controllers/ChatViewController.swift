@@ -855,10 +855,10 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             }
             
             if data.senderId == self.senderId{
-                cell.cellBottomLabel.text = "\(Utility.getNotificationTime(date: data.date))"
+                cell.cellBottomLabel.text = "\(Utility.timeAgoSince(data.date))"
             }
             else{
-                cell.cellBottomLabel.text = "\(Utility.getNotificationTime(date: data.date))"
+                cell.cellBottomLabel.text = "\(Utility.timeAgoSince(data.date))"
             }
             
         }

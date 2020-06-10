@@ -171,7 +171,7 @@ class StoriesViewController: UIViewController {
     //MARK:- Methods and Actions
     
     func setStory(storyModel: UserStoryModel, isFirstStory: Bool){
-        lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: storyModel.storyTime))
+        lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: storyModel.storyTime))
         lblStoryCaption.text = storyModel.storyCaption
         currentStoryId = storyModel.storyId
         currentStoryMedia = storyModel.storyURL

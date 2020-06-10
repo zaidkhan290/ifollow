@@ -152,7 +152,7 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.clipsToBounds = true
         cell.lblNotification.font = Theme.getLatoRegularFontOfSize(size: 16.0)
-        cell.lblTime.text = Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: notification.notificationDate))
+        cell.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: notification.notificationDate))
         cell.btnMinus.isHidden = !(notification.notificationTag == "1")
         cell.btnPlus.isHidden = !(notification.notificationTag == "1")
         let notificationText = "\(notification.notificationFriendName)\(notification.notificationMessage)"

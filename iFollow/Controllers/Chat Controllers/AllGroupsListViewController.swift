@@ -208,7 +208,7 @@ extension AllGroupsListViewController: UITableViewDataSource, UITableViewDelegat
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.sd_setImage(with: URL(string: group.groupImage)!)
         cell.lblUsername.text = group.groupName
-        cell.lblTime.text = group.groupLastMessage == "" ? Utility.getNotificationTime(date: Utility.getNotificationDateFrom(dateString: group.groupCreatedAt)) : Utility.getNotificationTime(date: Date(timeIntervalSince1970: (group.groupLastMessageTime / 1000)))
+        cell.lblTime.text = group.groupLastMessage == "" ? Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: group.groupCreatedAt)) : Utility.timeAgoSince(Date(timeIntervalSince1970: (group.groupLastMessageTime / 1000)))
         if (group.groupAdminId == Utility.getLoginUserId()){
             cell.lblUserMessage.text = group.groupLastMessage == "" ? "You created" : group.groupLastMessage
         }
