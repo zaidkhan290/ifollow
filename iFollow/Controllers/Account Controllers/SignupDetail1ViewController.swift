@@ -70,6 +70,37 @@ class SignupDetail1ViewController: UIViewController {
         dob = selectedDate
     }
     
+    func checkIfUsernameIsAvailable(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["username": username]
+        
+        API.sharedInstance.executeAPI(type: .checkUsername, method: .get, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                if (status == .success){
+                    let vc = Utility.getSignupDetail2ViewController()
+                    self.userModel.userFirstName = self.firstName
+                    self.userModel.userLastName = self.lastName
+                    self.userModel.userDOB = self.dob
+                    self.userModel.username = self.username
+                    self.userModel.userGender = self.userGender
+                    vc.userModel = self.userModel
+                    vc.userImage = self.userImage
+                    self.pushToVC(vc: vc)
+                }
+                else{
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+            }
+            
+        }
+        
+    }
+    
     func openImagePicker(){
         
         let alertVC = UIAlertController(title: "Select Action", message: "", preferredStyle: .actionSheet)
@@ -206,16 +237,7 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
             }
             return
         }
-        
-        let vc = Utility.getSignupDetail2ViewController()
-        userModel.userFirstName = firstName
-        userModel.userLastName = lastName
-        userModel.userDOB = dob
-        userModel.username = username
-        userModel.userGender = userGender
-        vc.userModel = userModel
-        vc.userImage = userImage
-        self.pushToVC(vc: vc)
+        checkIfUsernameIsAvailable()
     }
 }
 

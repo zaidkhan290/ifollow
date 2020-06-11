@@ -82,6 +82,34 @@ class SignupViewController: UIViewController {
         
     }
     
+    func checkIfEmailIsAvailable(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["email": txtFieldEmail.text!]
+        
+        API.sharedInstance.executeAPI(type: .checkEmail, method: .get, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                if (status == .success){
+                    let vc = Utility.getSignupDetail1ViewController()
+                    let userModel = UserModel()
+                    userModel.userEmail = self.txtFieldEmail.text!
+                    userModel.userPassword = self.txtFieldPassword.text!
+                    vc.userModel = userModel
+                    self.pushToVC(vc: vc)
+                }
+                else{
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+            }
+            
+        }
+        
+    }
+    
     @IBAction func btnStartTapped(_ sender: UIButton) {
         
         if (!Utility.isValid(email: txtFieldEmail.text!)){
@@ -108,13 +136,8 @@ class SignupViewController: UIViewController {
             }
             
         }
+        checkIfEmailIsAvailable()
         
-        let vc = Utility.getSignupDetail1ViewController()
-        let userModel = UserModel()
-        userModel.userEmail = txtFieldEmail.text!
-        userModel.userPassword = txtFieldPassword.text!
-        vc.userModel = userModel
-        self.pushToVC(vc: vc)
     }
     
     @IBAction func btnSignInTapped(_ sender: UIButton) {

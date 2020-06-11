@@ -170,7 +170,8 @@ class NewPostViewController: UIViewController {
     
     @objc func setTotalBudget(){
         totalBudget = budget * Float(days)
-        lblTotalBudget.text = "$\(totalBudget)"
+        let budgetString = String(format: "%.0f", totalBudget)
+        lblTotalBudget.text = "$\(budgetString)"
     }
     
     @IBAction func btnBoostTapped(_ sender: UIButton) {
@@ -210,23 +211,25 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnBoosPostTapped(_ sender: UIButton) {
-        payWithPaypal()
-//        let request = PKPaymentRequest()
-//        request.merchantIdentifier = "merchant.com.mou.iFollow"
-//        request.supportedNetworks = [.visa, .masterCard]
-//        request.merchantCapabilities = .capability3DS
-//        request.countryCode = "US"
-//        request.currencyCode = "USD"
-//        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Boost Payment", amount: NSDecimalNumber(value: budget))]
-//
-//        if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
-//            controller.delegate = self
-//            present(controller, animated: true, completion: nil)
-//        }
+        if (linkSwitch.isOn){
+            if (isValidURL){
+                payWithPaypal()
+            }
+            else{
+                Loaf("Please enter the valid URL", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                    
+                }
+            }
+        }
+        else{
+            isValidURL = false
+            payWithPaypal()
+        }
         
     }
     
     func payWithPaypal(){
+        self.isDetail = true
         let payPalDriver = BTPayPalDriver(apiClient: self.braintreeClient)
         payPalDriver.viewControllerPresentingDelegate = self
         payPalDriver.appSwitchDelegate = self
@@ -244,22 +247,11 @@ class NewPostViewController: UIViewController {
                 }
                 return
             }
-            print("Got a nonce! \(tokenizedPayPalAccount.nonce)")
+         //   print("Got a nonce! \(tokenizedPayPalAccount.nonce)")
             Loaf("Payment Success", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
                 
             }
-            let params = ["gateway": "paypal",
-                          "description": "One time payment",
-                          "amount": "1",
-                          "response": "email: \(tokenizedPayPalAccount.email!), nonce: \(tokenizedPayPalAccount.nonce)",
-                          "order_id": tokenizedPayPalAccount.payerId!,
-                          "fk_plan_id": Utility.getLoginUserId(),
-            "status": "Complete"] as [String : Any]
-         //   self.proceedPayment(params: params)
-            
-//            if let address = tokenizedPayPalAccount.billingAddress {
-//                print("Billing address:\n\(address.streetAddress)\n\(address.extendedAddress)\n\(address.locality) \(address.region)\n\(address.postalCode) \(address.countryCodeAlpha2)")
-//            }
+            self.savePostMediaToFirebase(image: self.postSelectedImage)
         }
     }
     
@@ -325,7 +317,8 @@ class NewPostViewController: UIViewController {
                                               "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": self.days,
                                               "media_type": "video",
-                                              "budget": self.budget] as [String: Any]
+                                              "budget": self.budget,
+                                              "link": self.isValidURL ? self.txtFieldLink.text! : ""] as [String: Any]
                                 }
                                 else{
                                     params = ["media": videoURL.absoluteString,
@@ -392,7 +385,8 @@ class NewPostViewController: UIViewController {
                                               "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": self.days,
                                               "media_type": "image",
-                                              "budget": self.budget] as [String: Any]
+                                              "budget": self.budget,
+                                              "link": self.isValidURL ? self.txtFieldLink.text! : ""] as [String: Any]
                                 }
                                 else{
                                     params = ["media": imageURL.absoluteString,

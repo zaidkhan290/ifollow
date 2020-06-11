@@ -15,6 +15,8 @@ typealias completionBlock = (StatusCodes,JSON,String) -> ()
 enum EndPoint: String {
     case login = "login"
     case signup = "register"
+    case checkEmail = "email_status"
+    case checkUsername = "username_status"
     case forgotPassword = "forgot_password"
     case changePassword = "change_password"
     case updateProfile = "update_profile"

@@ -20,6 +20,8 @@ let kLastNameError = "Please enter your last name"
 let kUsernameError = "Please enter your username"
 let kOldPasswordError = "Please enter your old password"
 let kTermsAndConditionError = "In order to continue, you need to accept to our Terms & Conditions and Privacy Policy. Kindly tap on provided check box in order to do that"
+let kEmailAlreadyExistError = "Email already exist. Kindly use any other email address"
+let kUsernameAlreadyExistError = "Username already exist. Kindly use any other username"
 
 //Others
 let BASEURL = "http://apis.ifollowinc.com:5000/users/"

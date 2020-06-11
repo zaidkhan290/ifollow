@@ -211,7 +211,7 @@ class StoriesViewController: UIViewController {
             Utility.showOrHideLoader(shouldShow: false)
             
             if (!self.isForMyStory){
-                API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId], completion: { (status, result, message) in
+                API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId, "user_id": currentUserId], completion: { (status, result, message) in
                     DispatchQueue.main.async {
                         if (status == .authError){
                             Utility.showOrHideLoader(shouldShow: false)
@@ -275,7 +275,7 @@ class StoriesViewController: UIViewController {
                     }
 
                     if (!self.isForMyStory){
-                        API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId], completion: { (status, result, message) in
+                        API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId, "user_id": self.currentUserId], completion: { (status, result, message) in
                             DispatchQueue.main.async {
                                 if (status == .authError){
                                     Utility.showOrHideLoader(shouldShow: false)
@@ -325,7 +325,7 @@ class StoriesViewController: UIViewController {
                 self.isVideoPlaying = false
                 
                 if (!self.isForMyStory){
-                    API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId], completion: { (status, result, message) in
+                    API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId, "user_id": currentUserId], completion: { (status, result, message) in
                         DispatchQueue.main.async {
                             if (status == .authError){
                                 Utility.showOrHideLoader(shouldShow: false)
@@ -381,7 +381,7 @@ class StoriesViewController: UIViewController {
                     }
                     
                     if (!self.isForMyStory){
-                        API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId], completion: { (status, result, message) in
+                        API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId, "user_id": self.currentUserId], completion: { (status, result, message) in
                             DispatchQueue.main.async {
                                 if (status == .authError){
                                     Utility.showOrHideLoader(shouldShow: false)
