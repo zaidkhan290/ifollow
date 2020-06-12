@@ -330,6 +330,20 @@ class ProfileViewController: UIViewController {
         self.present(alertVC, animated: true, completion: nil)
     }
     
+    @objc func linkViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        var postLinkUrl = self.userPosts[optionsPopupIndex].postBoostLink
+        if (postLinkUrl.contains("https://") || postLinkUrl.contains("http://")){
+            
+        }
+        else{
+            postLinkUrl = "https://\(postLinkUrl)"
+        }
+        if let url = URL(string: postLinkUrl) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
 }
 
 extension ProfileViewController: OptionsViewControllerDelegate{
@@ -379,7 +393,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         let post = userPosts[index]
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
-        itemView.postLinkView.isHidden = true
+        itemView.postLinkView.isHidden = post.postBoostLink == ""
         itemView.frame = view.frame
         itemView.userImage.layer.cornerRadius = 25
         itemView.userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
@@ -423,6 +437,8 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.postHideImageView.image = UIImage(named: "delete-1")
         itemView.postHideView.tag = index
         itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(deleteViewTapped(_:))))
+        itemView.postLinkView.tag = index
+        itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
         
         view.backgroundColor = .white
         view.clipsToBounds = true

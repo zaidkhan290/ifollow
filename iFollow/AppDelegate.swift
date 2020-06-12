@@ -39,6 +39,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         newObject?["isBoostPost"] = false
                         newObject?["postBoostLink"] = ""
                     }
+                    migration.enumerateObjects(ofType: UserPostsModel.className()) { (oldObject, newObject) in
+                        newObject?["postBoostLink"] = ""
+                        newObject?["postStatus"] = "live"
+                    }
                 }
                 
         }

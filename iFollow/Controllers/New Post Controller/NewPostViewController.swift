@@ -46,6 +46,8 @@ class NewPostViewController: UIViewController {
     @IBOutlet weak var txtFieldLink: UITextField!
     @IBOutlet weak var linkSwitch: UISwitch!
     @IBOutlet weak var btnBoostPost: UIButton!
+    @IBOutlet weak var seperatorView: UIView!
+    @IBOutlet weak var lblBoostYourPost: UILabel!
     
     var storageRef: StorageReference?
     var isDetail = false
@@ -64,7 +66,9 @@ class NewPostViewController: UIViewController {
     var editablePostMediaType = ""
     var editablePostUserLocation = ""
     var isValidURL = false
+    var isForBoostEdit = false
     var braintreeClient: BTAPIClient!
+    @IBOutlet weak var txtFieldLinkTopConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,6 +132,16 @@ class NewPostViewController: UIViewController {
         txtFieldLink.delegate = self
         self.braintreeClient = BTAPIClient(authorization: BT_AUTHORIZATION_KEY)
         
+        if (isForBoostEdit){
+            postViewTopConstraint.constant = 70
+            postViewHeightConstraint.constant = 357
+            txtFieldLinkTopConstraint.constant = 10
+            self.postView.layer.cornerRadius = 20
+            seperatorView.isHidden = true
+            lblBoostYourPost.isHidden = true
+            self.view.updateConstraintsIfNeeded()
+            self.view.layoutSubviews()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

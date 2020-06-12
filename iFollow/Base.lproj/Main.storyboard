@@ -1459,7 +1459,6 @@
                                                     <constraint firstItem="wGA-Pa-hOh" firstAttribute="top" secondItem="3NX-Id-t5B" secondAttribute="bottom" constant="2" id="Eei-R7-hOy"/>
                                                     <constraint firstAttribute="trailing" secondItem="a8O-WT-pdG" secondAttribute="trailing" constant="20" id="G2S-aQ-lXo"/>
                                                     <constraint firstItem="5dy-zO-sjP" firstAttribute="centerY" secondItem="XAo-WN-3aB" secondAttribute="centerY" id="G5h-hU-xZX"/>
-                                                    <constraint firstItem="uNL-mh-3Hx" firstAttribute="top" secondItem="kJ6-2D-Vbt" secondAttribute="bottom" constant="10" id="HOZ-UL-kVO"/>
                                                     <constraint firstItem="Mgz-ur-ntt" firstAttribute="leading" secondItem="uNL-mh-3Hx" secondAttribute="trailing" constant="20" id="Hce-Rr-CNM"/>
                                                     <constraint firstItem="gi2-nQ-c6w" firstAttribute="leading" secondItem="ub9-q5-Wvi" secondAttribute="leading" constant="20" id="Kjf-MA-Ksk"/>
                                                     <constraint firstItem="ZFe-sv-N53" firstAttribute="centerY" secondItem="XAo-WN-3aB" secondAttribute="centerY" id="KyD-wy-UW8"/>
@@ -1477,6 +1476,7 @@
                                                     <constraint firstItem="M4b-si-SiE" firstAttribute="top" secondItem="1sP-yY-Cqu" secondAttribute="bottom" constant="5" id="V9s-FD-Fdi"/>
                                                     <constraint firstItem="Koy-BC-Ytd" firstAttribute="top" secondItem="MYY-3y-91f" secondAttribute="bottom" constant="10" id="Vwv-61-cPe"/>
                                                     <constraint firstAttribute="trailing" secondItem="MYY-3y-91f" secondAttribute="trailing" constant="5" id="WnJ-Jj-dy7"/>
+                                                    <constraint firstItem="uNL-mh-3Hx" firstAttribute="top" secondItem="ub9-q5-Wvi" secondAttribute="top" constant="297" id="XRr-f4-JTh"/>
                                                     <constraint firstItem="wGA-Pa-hOh" firstAttribute="trailing" secondItem="3NX-Id-t5B" secondAttribute="trailing" id="XaO-4W-eiz"/>
                                                     <constraint firstAttribute="height" constant="380" id="cNP-sd-ugP"/>
                                                     <constraint firstItem="Mgz-ur-ntt" firstAttribute="top" secondItem="uNL-mh-3Hx" secondAttribute="top" id="clH-48-nyC"/>
@@ -1564,6 +1564,7 @@
                         <outlet property="btnPostBackgroundImage" destination="HnT-DM-WwA" id="tG8-Db-vgP"/>
                         <outlet property="budgetSlider" destination="1sP-yY-Cqu" id="45I-Pi-dzc"/>
                         <outlet property="lblAddBudget" destination="sQF-7k-VpD" id="gZ9-2s-5eN"/>
+                        <outlet property="lblBoostYourPost" destination="pbR-d3-LvE" id="Zh9-yt-uUo"/>
                         <outlet property="lblDays" destination="5dy-zO-sjP" id="F2J-xG-z6o"/>
                         <outlet property="lblLocation" destination="2Vo-A4-dNl" id="NkJ-ou-JFp"/>
                         <outlet property="lblMaxBudget" destination="a8O-WT-pdG" id="0qx-EM-CGw"/>
@@ -1575,7 +1576,9 @@
                         <outlet property="postView" destination="QIe-qc-0Qp" id="403-xf-Zuu"/>
                         <outlet property="postViewHeightConstraint" destination="uK6-Yb-S3Z" id="zeq-Dx-gO7"/>
                         <outlet property="postViewTopConstraint" destination="fkR-UP-xZa" id="sbZ-V9-jkY"/>
+                        <outlet property="seperatorView" destination="O4K-oV-IPx" id="SD6-Xb-Znj"/>
                         <outlet property="txtFieldLink" destination="uNL-mh-3Hx" id="zPe-ai-G4N"/>
+                        <outlet property="txtFieldLinkTopConstraint" destination="XRr-f4-JTh" id="7ad-VU-rwq"/>
                         <outlet property="txtFieldStatus" destination="sHr-Tu-kcf" id="dfa-vL-vmp"/>
                     </connections>
                 </viewController>

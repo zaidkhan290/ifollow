@@ -666,6 +666,20 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         self.showHidePostPopup()
     }
     
+    @objc func linkViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        var postLinkUrl = otherUserProfile.userPosts[optionsPopupIndex].postBoostLink
+        if (postLinkUrl.contains("https://") || postLinkUrl.contains("http://")){
+            
+        }
+        else{
+            postLinkUrl = "https://\(postLinkUrl)"
+        }
+        if let url = URL(string: postLinkUrl) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
     func showHidePostPopup(){
         let alertVC = UIAlertController(title: "Report Post", message: "Are you sure you want to report this post?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
@@ -740,7 +754,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         let post = otherUserProfile.userPosts[index]
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
-        itemView.postLinkView.isHidden = true
+        itemView.postLinkView.isHidden = post.postBoostLink == ""
         itemView.frame = view.frame
         itemView.lblUsername.text = otherUserProfile.userFullName
         itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postCreatedAt))
@@ -785,6 +799,8 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(shareViewTapped(_:))))
         itemView.postHideView.tag = index
         itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideViewTapped(_:))))
+        itemView.postLinkView.tag = index
+        itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
         view.backgroundColor = .white
         view.clipsToBounds = true
         view.addSubview(itemView)
