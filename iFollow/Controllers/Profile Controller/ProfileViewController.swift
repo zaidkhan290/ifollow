@@ -502,6 +502,9 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         vc.editablePostImage = post.postMedia
         vc.editablePostMediaType = post.postMediaType
         vc.editablePostUserLocation = post.postLocation
+        vc.isForBoostEdit = post.postStatus == "boost"
+        vc.editablePostStatus = post.postStatus
+        vc.editablePostLink = post.postBoostLink
         vc.delegate = self
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self

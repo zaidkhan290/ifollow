@@ -153,12 +153,17 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
         view.backgroundColor = .clear
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
-        itemView.postLinkView.isHidden = true
         itemView.backgroundColor = .clear
         itemView.index = index
         let post = postsArray[index]
         
         itemView.lblUsername.text = post.postUserFullName
+        if (post.postUserId == Utility.getLoginUserId()){
+            itemView.postLinkView.isHidden = true
+        }
+        else{
+            itemView.postLinkView.isHidden = post.postBoostLink == ""
+        }
         itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postTime))
         
         itemView.userImage.sd_setImage(with: URL(string: post.postUserImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
@@ -213,6 +218,8 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideViewTapped(_:))))
         itemView.btnOptions.tag = index
         itemView.btnOptions.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
+        itemView.postLinkView.tag = index
+        itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
         view.clipsToBounds = true
         view.addSubview(itemView)
         
@@ -323,6 +330,20 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
     @objc func hideViewTapped(_ sender: UITapGestureRecognizer){
         optionsPopupIndex = sender.view!.tag
         self.showHidePostPopup()
+    }
+    
+    @objc func linkViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        var postLinkUrl = postsArray[optionsPopupIndex].postBoostLink
+        if (postLinkUrl.contains("https://") || postLinkUrl.contains("http://")){
+            
+        }
+        else{
+            postLinkUrl = "https://\(postLinkUrl)"
+        }
+        if let url = URL(string: postLinkUrl) {
+            UIApplication.shared.open(url)
+        }
     }
     
     @objc func likeViewTapped(_ sender: UITapGestureRecognizer){

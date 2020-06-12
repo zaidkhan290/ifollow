@@ -67,6 +67,8 @@ class NewPostViewController: UIViewController {
     var editablePostUserLocation = ""
     var isValidURL = false
     var isForBoostEdit = false
+    var editablePostStatus = ""
+    var editablePostLink = ""
     var braintreeClient: BTAPIClient!
     @IBOutlet weak var txtFieldLinkTopConstraint: NSLayoutConstraint!
     
@@ -139,6 +141,12 @@ class NewPostViewController: UIViewController {
             self.postView.layer.cornerRadius = 20
             seperatorView.isHidden = true
             lblBoostYourPost.isHidden = true
+            if (editablePostStatus == "boost"){
+                linkSwitch.isOn = editablePostLink != ""
+                txtFieldLink.text = editablePostLink
+                txtFieldLink.isHidden = editablePostLink == ""
+                isValidURL = editablePostLink != ""
+            }
             self.view.updateConstraintsIfNeeded()
             self.view.layoutSubviews()
         }
@@ -196,7 +204,27 @@ class NewPostViewController: UIViewController {
     
     @IBAction func btnPostTapped(_ sender: UIButton){
         if (isForEdit){
-            self.editPostWithRequest()
+            
+            if (editablePostStatus == "boost"){
+                if (linkSwitch.isOn){
+                    if (isValidURL){
+                        editPostWithRequest()
+                    }
+                    else{
+                        Loaf("Please enter the valid URL", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            
+                        }
+                    }
+                }
+                else{
+                    isValidURL = false
+                    editPostWithRequest()
+                }
+            }
+            else{
+               self.editPostWithRequest()
+            }
+            
         }
         else{
             self.savePostMediaToFirebase(image: postSelectedImage)
@@ -468,9 +496,20 @@ class NewPostViewController: UIViewController {
     func editPostWithRequest(){
         
         Utility.showOrHideLoader(shouldShow: true)
-        let params = ["post_id": editablePostId,
+        
+        var params = [String:Any]()
+        
+        if (editablePostStatus == "boost"){
+            params = ["post_id": editablePostId,
+                      "location": self.userAddress == "" ? self.editablePostUserLocation : self.userAddress,
+                      "description": txtFieldStatus.text!,
+                      "link": isValidURL ? self.txtFieldLink.text! : ""] as [String : Any]
+        }
+        else{
+            params = ["post_id": editablePostId,
                       "location": self.userAddress == "" ? self.editablePostUserLocation : self.userAddress,
                       "description": txtFieldStatus.text!] as [String : Any]
+        }
         
         API.sharedInstance.executeAPI(type: .editPost, method: .post, params: params) { (status, result, message) in
             
