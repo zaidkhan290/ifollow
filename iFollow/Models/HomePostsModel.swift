@@ -27,6 +27,8 @@ class HomePostsModel: Object{
     @objc dynamic var postMediaType: String = ""
     @objc dynamic var postTime: String = ""
     @objc dynamic var shouldShowPostTrends: Int = 0
+    @objc dynamic var isBoostPost: Bool = false
+    @objc dynamic var postBoostLink: String = ""
     
     func updateModelWithJSON(json: JSON){
         postUserId = json["user_id"].intValue
@@ -44,6 +46,8 @@ class HomePostsModel: Object{
         postMediaType = json["media_type"].stringValue
         postTime = json["created_at"].stringValue
         shouldShowPostTrends = json["post_view_settings"].intValue
+        isBoostPost = json["isBoost"].boolValue
+        postBoostLink = json["post_boost_link"].stringValue
     }
     
     static func getAllHomePosts() -> [HomePostsModel]{

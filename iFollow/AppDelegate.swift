@@ -27,13 +27,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         
         let config = Realm.Configuration(
-            schemaVersion: 1,
+            schemaVersion: 2,
             migrationBlock: { migration, oldSchemaVersion in
                 if (oldSchemaVersion < 1){
                     migration.enumerateObjects(ofType: UserModel.className()) { (oldObject, newObject) in
                         newObject?["userTrendStatus"] = "public"
                     }
                 }
+                if (oldSchemaVersion < 2){
+                    migration.enumerateObjects(ofType: HomePostsModel.className()) { (oldObject, newObject) in
+                        newObject?["isBoostPost"] = false
+                        newObject?["postBoostLink"] = ""
+                    }
+                }
+                
         }
         )
         Realm.Configuration.defaultConfiguration = config

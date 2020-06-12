@@ -179,7 +179,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = .hd1920x1080
        // captureSession.automaticallyConfiguresApplicationAudioSession = false
-       //
+    
         captureSession.usesApplicationAudioSession = true
         
         guard let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
@@ -447,12 +447,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     self.lblNormal.isHidden = true
                     self.lblVideo.isHidden = true
                     self.changeView(isVideoSelected: true)
-//                    let audioSession = AVAudioSession.sharedInstance()
-//                    try! audioSession.setCategory(.ambient)
-//                    try! audioSession.setActive(false)
-//                    self.captureSession?.beginConfiguration()
-//                    self.captureSession?.removeInput(self.audioDeviceInput)
-//                    self.captureSession?.commitConfiguration()
+                    
                 }
             }
         }
@@ -468,16 +463,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         }
         
         if (sender.view!.isKind(of: UITextView.self)){
-            fontSlider.isHidden = true
+           // fontSlider.isHidden = true
             colorSlider.isHidden = true
             lblFont.isHidden = true
         }
-        
-//        if (sender.view! == timeView){
-//            if (sender.state == .began){
-//                timeViewTapped()
-//            }
-//        }
         
         var rec: CGRect = sender.view!.frame
         let imgvw: CGRect = filterView.frame
@@ -553,6 +542,84 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         }
     }
     
+    @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+        
+        if (gestureRecognizer.state == .changed){
+            deleteIcon.isHidden = false
+        }
+        else{
+            deleteIcon.isHidden = true
+        }
+        
+        if (gestureRecognizer.view!.isKind(of: UITextView.self)){
+           // fontSlider.isHidden = true
+            colorSlider.isHidden = true
+            lblFont.isHidden = true
+        }
+        
+        let translation = gestureRecognizer.translation(in: self.filterView)
+        // note: 'view' is optional and need to be unwrapped
+        gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
+        gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
+        
+        if ((deleteView.frame.intersects(gestureRecognizer.view!.frame))){
+            deleteIcon.image = UIImage(named: "delete-selected")
+            gestureRecognizer.view?.alpha = 0.6
+            if (gestureRecognizer.state == .ended){
+                if (gestureRecognizer.view!.isKind(of: UITextView.self)){
+                    editableTextField.text = ""
+                    editableTextField.isHidden = true
+                    editableTextField.alpha = 1
+                    selectedFont = ""
+                    lblFont.text = fontsNames.first!
+                    lblFont.font = Theme.getPictureEditFonts(fontName: fontsNames.first!, size: 20)
+                    editableTextField.font = Theme.getLatoBoldFontOfSize(size: 30)
+                    editableTextField.textColor = .white
+                }
+                else if (gestureRecognizer.view! == timeView){
+                    timeView.isHidden = true
+                    timeView.alpha = 1
+                    timeView.frame = timeViewFrame
+                    timeViewStyle = 0
+                }
+                else if (gestureRecognizer.view! == locationView){
+                    locationView.isHidden = true
+                    locationView.alpha = 1
+                    locationView.frame = locationViewFrame
+                    locationViewStyle = 0
+                }
+                else{
+                    gestureRecognizer.view?.removeFromSuperview()
+                    deleteIcon.isHidden = true
+                    deleteIcon.image = UIImage(named: "delete")
+                }
+                
+            }
+            
+        }
+        else{
+            deleteIcon.image = UIImage(named: "delete")
+            gestureRecognizer.view?.alpha = 1
+        }
+
+    }
+
+    @objc func pinchRecognized(pinch: UIPinchGestureRecognizer) {
+
+        if let view = pinch.view {
+            view.transform = view.transform.scaledBy(x: pinch.scale, y: pinch.scale)
+            pinch.scale = 1
+        }
+    }
+
+    @objc func handleRotate(recognizer : UIRotationGestureRecognizer) {
+        if let view = recognizer.view {
+            view.transform = view.transform.rotated(by: recognizer.rotation)
+            recognizer.rotation = 0
+        }
+    }
+    
+    
     @objc func swipeLeft(_ gesture: UISwipeGestureRecognizer){
         if (selectedFilter < filters.count - 1){
             selectedFilter += 1
@@ -610,6 +677,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             timeView.isHidden = true
             locationView.isHidden = true
             editableTextField.isHidden = true
+            editableTextField.text = ""
             lblVideo.isHidden = false
             lblNormal.isHidden = false
           //  lblLive.isHidden = false
@@ -620,9 +688,18 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             btnFlash.isHidden = false
             editableTextField.text = ""
             colorSlider.isHidden = true
-            fontSlider.isHidden = true
+           // fontSlider.isHidden = true
             lblFont.isHidden = true
             lblNormalTapped()
+            for emojiView in emojiesMainView.subviews{
+                if (emojiView == editableTextField){
+                    
+                }
+                else{
+                    emojiView.removeFromSuperview()
+                }
+                
+            }
             for subView in filterView.subviews{
                 if (subView == cameraView || subView == timeView || subView == editableTextField || subView == locationView || subView == emojiesMainView){
                     
@@ -742,13 +819,34 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @IBAction func btnClockTapped(_ sender: UIButton){
         lblTime.text = Utility.getCurrentTime()
         timeView.isHidden = false
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+                gestureRecognizer.delegate = self
+                gestureRecognizer.require(toFail: timeViewTapGesture)
+                timeView.gestureRecognizers?.removeAll()
+                timeView.addGestureRecognizer(gestureRecognizer)
+
+                //Enable multiple touch and user interaction for textfield
+        //        timeView.isUserInteractionEnabled = true
+        //        timeView.isMultipleTouchEnabled = true
+
+                //add pinch gesture
+                let pinchGesture = UIPinchGestureRecognizer(target: self, action:#selector(pinchRecognized(pinch:)))
+                pinchGesture.delegate = self
+                timeView.addGestureRecognizer(pinchGesture)
+
+                //add rotate gesture.
+                let rotate = UIRotationGestureRecognizer.init(target: self, action: #selector(handleRotate(recognizer:)))
+                rotate.delegate = self
+                timeView.addGestureRecognizer(rotate)
       //  self.filterView.bringSubviewToFront(timeView)
        // self.cameraView.bringSubviewToFront(timeView)
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
-        panGesture.delegate = self
-        panGesture.require(toFail: timeViewTapGesture)
-        timeView.gestureRecognizers?.removeAll()
-        timeView.addGestureRecognizer(panGesture)
+//        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
+//        panGesture.delegate = self
+//        panGesture.require(toFail: timeViewTapGesture)
+//        timeView.gestureRecognizers?.removeAll()
+//        timeView.addGestureRecognizer(panGesture)
+        
+        
     }
     
     @IBAction func btnTextTapped(_ sender: UIButton) {
@@ -757,7 +855,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
        // self.cameraView.bringSubviewToFront(editableTextField)
         colorSlider.isHidden = false
         lblFont.isHidden = false
-        fontSlider.isHidden = false
+       // fontSlider.isHidden = false
         editableTextField.becomeFirstResponder()
     }
     
@@ -889,7 +987,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @objc func editableTextFieldTapped(){
         colorSlider.isHidden = false
         lblFont.isHidden = false
-        fontSlider.isHidden = false
+       // fontSlider.isHidden = false
     }
     
     @objc func editableTextFieldRotate(recognizer: UIRotationGestureRecognizer){
@@ -919,6 +1017,130 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     func timeString(time:TimeInterval) -> String {
         let seconds = Int(time) % 60
         return String(format:"%02i",seconds)
+    }
+    
+//    @objc func editVideo() {
+//
+//        let composition = AVMutableComposition()
+//        let vidAsset = AVURLAsset(url: videoURL, options: nil)
+//
+//        // get video track
+//        let vtrack =  vidAsset.tracks(withMediaType: AVMediaType.video)
+//        let videoTrack: AVAssetTrack = vtrack[0]
+//        let vid_timerange = CMTimeRangeMake(start: CMTime.zero, duration: vidAsset.duration)
+//
+//        let tr: CMTimeRange = CMTimeRange(start: CMTime.zero, duration: CMTime(seconds: 10.0, preferredTimescale: 600))
+//        composition.insertEmptyTimeRange(tr)
+//
+//        let trackID:CMPersistentTrackID = CMPersistentTrackID(kCMPersistentTrackID_Invalid)
+//
+//        if let compositionvideoTrack: AVMutableCompositionTrack = composition.addMutableTrack(withMediaType: AVMediaType.video, preferredTrackID: trackID) {
+//
+//            do {
+//                try compositionvideoTrack.insertTimeRange(vid_timerange, of: videoTrack, at: CMTime.zero)
+//            } catch {
+//                print("error")
+//            }
+//
+//            compositionvideoTrack.preferredTransform = videoTrack.preferredTransform
+//
+//        } else {
+//            print("unable to add video track")
+//            return
+//        }
+//
+//
+//        // Watermark Effect
+//        let size = videoTrack.naturalSize
+//
+//        let imglogo = UIImage(named: "10")
+//        let imglayer = CALayer()
+//        imglayer.contents = imglogo?.cgImage
+//        imglayer.frame = CGRect(x: 100, y: 100, width: 200, height: 200)
+//        imglayer.opacity = 0.6
+//
+//        // create text Layer
+//        let titleLayer = CATextLayer()
+//        titleLayer.backgroundColor = UIColor.white.cgColor
+//        titleLayer.string = "Dummy text"
+//        titleLayer.font = UIFont(name: "Helvetica", size: 28)
+//        titleLayer.shadowOpacity = 0.5
+//        titleLayer.alignmentMode = CATextLayerAlignmentMode.center
+//        titleLayer.frame = CGRect(x: 0, y: 50, width: size.width, height: size.height / 6)
+//
+//
+//        let videolayer = CALayer()
+//        videolayer.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+//
+//        let parentlayer = CALayer()
+//        parentlayer.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+//        parentlayer.addSublayer(videolayer)
+//        parentlayer.addSublayer(imglayer)
+//        parentlayer.addSublayer(titleLayer)
+//
+//        let layercomposition = AVMutableVideoComposition()
+//        layercomposition.frameDuration = CMTimeMake(value: 1, timescale: 30)
+//        layercomposition.renderSize = size
+//        layercomposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videolayer, in: parentlayer)
+//
+//        // instruction for watermark
+//        let instruction = AVMutableVideoCompositionInstruction()
+//        instruction.timeRange = CMTimeRangeMake(start: CMTime.zero, duration: composition.duration)
+//        let videotrack = composition.tracks(withMediaType: AVMediaType.video)[0] as AVAssetTrack
+//        let layerinstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: videotrack)
+//        instruction.layerInstructions = NSArray(object: layerinstruction) as [AnyObject] as! [AVVideoCompositionLayerInstruction]
+//        layercomposition.instructions = NSArray(object: instruction) as [AnyObject] as! [AVVideoCompositionInstructionProtocol]
+//
+//        //  create new file to receive data
+//        let dirPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+//        let docsDir = dirPaths[0] as NSString
+//        let movieFilePath = docsDir.appendingPathComponent("result.mov")
+//        let movieDestinationUrl = NSURL(fileURLWithPath: movieFilePath)
+//
+//        // use AVAssetExportSession to export video
+//        let assetExport = AVAssetExportSession(asset: composition, presetName:AVAssetExportPresetHighestQuality)
+//        assetExport?.outputFileType = AVFileType.mov
+//        assetExport?.videoComposition = layercomposition
+//
+//        // Check exist and remove old file
+//        FileManager.default.removeItemIfExisted(movieDestinationUrl as URL)
+//
+//        assetExport?.outputURL = movieDestinationUrl as URL
+//        assetExport?.exportAsynchronously(completionHandler: {
+//            switch assetExport!.status {
+//            case AVAssetExportSession.Status.failed:
+//                print("failed")
+//                print(assetExport?.error ?? "unknown error")
+//            case AVAssetExportSession.Status.cancelled:
+//                print("cancelled")
+//                print(assetExport?.error ?? "unknown error")
+//            default:
+//                print("Movie complete")
+//
+//                self.videoURL = movieDestinationUrl as URL
+//
+//                PHPhotoLibrary.shared().performChanges({
+//                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: movieDestinationUrl as URL)
+//                }) { saved, error in
+//                    if saved {
+//                        print("Saved")
+//                    }
+//                }
+//
+//                self.playVideo()
+//
+//            }
+//        })
+//
+//    }
+
+    func playVideo() {
+        let player = AVPlayer(url: videoURL!)
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = self.view.bounds
+        self.view.layer.addSublayer(playerLayer)
+        player.play()
+        print("playing...")
     }
 }
 
@@ -963,10 +1185,28 @@ extension CameraViewController: EmojisViewControllerDelegate{
        // filterView.addSubview(imageView)
         //cameraView.addSubview(imageView)
         imageView.isUserInteractionEnabled = true
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
-        panGesture.delegate = self
-        imageView.addGestureRecognizer(panGesture)
-        imageView.enableZoom()
+//        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
+//        panGesture.delegate = self
+//        imageView.addGestureRecognizer(panGesture)
+//        imageView.enableZoom()
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+                gestureRecognizer.delegate = self
+                imageView.gestureRecognizers?.removeAll()
+                imageView.addGestureRecognizer(gestureRecognizer)
+
+                //Enable multiple touch and user interaction for textfield
+        //        timeView.isUserInteractionEnabled = true
+        //        timeView.isMultipleTouchEnabled = true
+
+                //add pinch gesture
+                let pinchGesture = UIPinchGestureRecognizer(target: self, action:#selector(pinchRecognized(pinch:)))
+                pinchGesture.delegate = self
+                imageView.addGestureRecognizer(pinchGesture)
+
+                //add rotate gesture.
+                let rotate = UIRotationGestureRecognizer.init(target: self, action: #selector(handleRotate(recognizer:)))
+                rotate.delegate = self
+                imageView.addGestureRecognizer(rotate)
         
     }
 }
@@ -1048,19 +1288,37 @@ extension CameraViewController: UITextViewDelegate{
     func textViewDidEndEditing(_ textView: UITextView) {
         
         if (textView.text == ""){
-            fontSlider.isHidden = true
+          //  fontSlider.isHidden = true
             colorSlider.isHidden = true
             lblFont.isHidden = true
             editableTextField.isHidden = true
         }
         else{
-            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
-            panGesture.delegate = self
-            editableTextField.gestureRecognizers?.removeAll()
-            editableTextField.addGestureRecognizer(panGesture)
-            let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(editableTextFieldRotate(recognizer:)))
-            rotationGesture.delegate = self
-           // editableTextField.addGestureRecognizer(rotationGesture)
+//            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
+//            panGesture.delegate = self
+//            editableTextField.gestureRecognizers?.removeAll()
+//            editableTextField.addGestureRecognizer(panGesture)
+//            let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(editableTextFieldRotate(recognizer:)))
+//            rotationGesture.delegate = self
+//           // editableTextField.addGestureRecognizer(rotationGesture)
+            let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+                    gestureRecognizer.delegate = self
+                    editableTextField.gestureRecognizers?.removeAll()
+                    editableTextField.addGestureRecognizer(gestureRecognizer)
+
+                    //Enable multiple touch and user interaction for textfield
+                    editableTextField.isUserInteractionEnabled = true
+                    editableTextField.isMultipleTouchEnabled = true
+
+                    //add pinch gesture
+                    let pinchGesture = UIPinchGestureRecognizer(target: self, action:#selector(pinchRecognized(pinch:)))
+                    pinchGesture.delegate = self
+                    editableTextField.addGestureRecognizer(pinchGesture)
+
+                    //add rotate gesture.
+                    let rotate = UIRotationGestureRecognizer.init(target: self, action: #selector(handleRotate(recognizer:)))
+                    rotate.delegate = self
+                    editableTextField.addGestureRecognizer(rotate)
         }
         
     }
@@ -1087,11 +1345,29 @@ extension CameraViewController: GMSAutocompleteViewControllerDelegate{
             locationView.isHidden = false
          //   self.filterView.bringSubviewToFront(locationView)
             // self.cameraView.bringSubviewToFront(timeView)
-            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
-            panGesture.delegate = self
-            panGesture.require(toFail: locationViewTapGesture)
-            locationView.gestureRecognizers?.removeAll()
-            locationView.addGestureRecognizer(panGesture)
+//            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(setDragging(_:)))
+//            panGesture.delegate = self
+//            panGesture.require(toFail: locationViewTapGesture)
+//            locationView.gestureRecognizers?.removeAll()
+//            locationView.addGestureRecognizer(panGesture)
+            let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+                    gestureRecognizer.delegate = self
+                    locationView.gestureRecognizers?.removeAll()
+                    locationView.addGestureRecognizer(gestureRecognizer)
+
+                    //Enable multiple touch and user interaction for textfield
+            //        timeView.isUserInteractionEnabled = true
+            //        timeView.isMultipleTouchEnabled = true
+
+                    //add pinch gesture
+                    let pinchGesture = UIPinchGestureRecognizer(target: self, action:#selector(pinchRecognized(pinch:)))
+                    pinchGesture.delegate = self
+                    locationView.addGestureRecognizer(pinchGesture)
+
+                    //add rotate gesture.
+                    let rotate = UIRotationGestureRecognizer.init(target: self, action: #selector(handleRotate(recognizer:)))
+                    rotate.delegate = self
+                    locationView.addGestureRecognizer(rotate)
         }
         dismiss(animated: true, completion: nil)
     }
@@ -1132,3 +1408,4 @@ extension CameraViewController: ShareStoriesViewControllerDelegate{
 
     }
 }
+

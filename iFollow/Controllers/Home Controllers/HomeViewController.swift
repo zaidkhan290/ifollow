@@ -695,7 +695,6 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         let view = UIView(frame: CGRect(x: 0, y: 0, width: carouselView.frame.width, height: carouselView.frame.height))
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
-        itemView.postLinkView.isHidden = true
         let addView = Bundle.main.loadNibNamed("UnifiedNativeAdView", owner: self, options: nil)?.first! as! GADUnifiedNativeAdView
         
         addView.frame = view.frame
@@ -718,6 +717,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             itemView.index = index - (index / 10)
             let post = postsArray[index - (index / 10)]
             
+            itemView.postLinkView.isHidden = post.postBoostLink == ""
             itemView.lblUsername.text = post.postUserFullName
             itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postTime))
             itemView.userImage.sd_setImage(with: URL(string: post.postUserImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
@@ -768,6 +768,8 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(shareViewTapped(_:))))
             itemView.postHideView.tag = index - (index / 10)
             itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideViewTapped(_:))))
+            itemView.postLinkView.tag = index - (index / 10)
+            itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
             view.backgroundColor = .white
             view.clipsToBounds = true
             view.addSubview(itemView)
@@ -879,6 +881,20 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     @objc func hideViewTapped(_ sender: UITapGestureRecognizer){
         optionsPopupIndex = sender.view!.tag
         self.showHidePostPopup()
+    }
+    
+    @objc func linkViewTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        var postLinkUrl = postsArray[optionsPopupIndex].postBoostLink
+        if (postLinkUrl.contains("https://") || postLinkUrl.contains("http://")){
+            
+        }
+        else{
+            postLinkUrl = "https://\(postLinkUrl)"
+        }
+        if let url = URL(string: postLinkUrl) {
+            UIApplication.shared.open(url)
+        }
     }
     
     @objc func likeViewTapped(_ sender: UITapGestureRecognizer){
