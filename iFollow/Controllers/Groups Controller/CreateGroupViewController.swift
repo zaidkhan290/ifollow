@@ -193,7 +193,7 @@ class CreateGroupViewController: UIViewController {
         let params = ["user_id": "",
                       "alert": "\(txtFieldGroupName.text!): \(Utility.getLoginUserFullName()) created a new group",
             "name": Utility.getLoginUserFullName(),
-            "data": "",
+            "data": "\(txtFieldGroupName.text!): \(Utility.getLoginUserFullName()) created a new group",
             "tag": 11,
             "chat_room_id": groupId] as [String: Any]
         API.sharedInstance.executeAPI(type: .sendPushNotification, method: .post, params: params) { (status, result, message) in

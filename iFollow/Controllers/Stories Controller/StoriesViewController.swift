@@ -672,7 +672,7 @@ class StoriesViewController: UIViewController {
         let params = ["user_id": self.currentUserId,
                       "alert": "\(Utility.getLoginUserFullName()) left feedback on your story",
             "name": Utility.getLoginUserFullName(),
-            "data": "",
+            "data": "\(Utility.getLoginUserFullName()) left feedback on your story",
             "tag": 12,
             "chat_room_id": chatId] as [String: Any]
         API.sharedInstance.executeAPI(type: .sendPushNotification, method: .post, params: params) { (status, result, message) in

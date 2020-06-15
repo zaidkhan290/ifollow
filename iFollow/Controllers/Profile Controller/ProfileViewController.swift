@@ -394,11 +394,20 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
         itemView.postLinkView.isHidden = post.postBoostLink == ""
+        if (post.postStatus == "boost"){
+            itemView.lblTime.text = "Sponsor"
+            itemView.lblTime.textColor = Theme.profileLabelsYellowColor
+            itemView.lblTime.font = Theme.getLatoBoldFontOfSize(size: 11)
+        }
+        else{
+            itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postCreatedAt))
+            itemView.lblTime.textColor = Theme.feedsViewTimeColor
+            itemView.lblTime.font = Theme.getLatoRegularFontOfSize(size: 10)
+        }
         itemView.frame = view.frame
         itemView.userImage.layer.cornerRadius = 25
         itemView.userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         itemView.lblUsername.text = Utility.getLoginUserFullName()
-        itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postCreatedAt))
         itemView.lblUserAddress.text = post.postLocation
         itemView.feedbackImageView.image = UIImage(named: "share-1")
         itemView.feedBackView.isUserInteractionEnabled = true
@@ -411,11 +420,15 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.feedImage.clipsToBounds = true
         if (post.postMediaType == "image"){
             itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
+            itemView.playIcon.isHidden = true
         }
         else{
-            itemView.feedImage.image = UIImage(named: "post_video")
+            itemView.feedImage.image = UIImage(named: "photo_placeholder")
+            itemView.playIcon.isHidden = false
+            Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
+                itemView.feedImage.image = thumbnailImage
+            }
         }
-        itemView.playIcon.isHidden = true
         itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
 //        if (post.isPostLike == 1){
 //            itemView.likeButton.setSelected(selected: true, animated: true)

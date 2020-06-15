@@ -946,7 +946,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             let params = ["user_id": self.otherUserId,
                           "alert": isPrivateChat ? "\(Utility.getLoginUserFullName()) sent you a private message" : "\(Utility.getLoginUserFullName()) sent you a message",
                           "name": Utility.getLoginUserFullName(),
-                          "data": "",
+                          "data": isPrivateChat ? "\(Utility.getLoginUserFullName()) sent you a private message" : "\(Utility.getLoginUserFullName()) sent you a message",
                           "tag": isPrivateChat ? 13 : 12,
             "chat_room_id": self.chatId] as [String: Any]
             API.sharedInstance.executeAPI(type: .sendPushNotification, method: .post, params: params) { (status, result, message) in

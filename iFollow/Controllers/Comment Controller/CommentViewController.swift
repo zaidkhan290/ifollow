@@ -138,7 +138,7 @@ class CommentViewController: UIViewController {
         let params = ["user_id": postUserId,
                       "alert": "\(Utility.getLoginUserFullName()) left feedback on your post",
             "name": Utility.getLoginUserFullName(),
-            "data": "",
+            "data": "\(Utility.getLoginUserFullName()) left feedback on your post",
             "tag": 12,
             "chat_room_id": self.chatId] as [String: Any]
         API.sharedInstance.executeAPI(type: .sendPushNotification, method: .post, params: params) { (status, result, message) in

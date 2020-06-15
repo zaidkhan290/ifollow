@@ -777,7 +777,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         let params = ["user_id": "",
                       "alert": "\(self.groupModel.groupName): \(Utility.getLoginUserFullName()) sent a message",
             "name": Utility.getLoginUserFullName(),
-            "data": "",
+            "data": "\(self.groupModel.groupName): \(Utility.getLoginUserFullName()) sent a message",
             "tag": 11,
             "chat_room_id": self.chatId] as [String: Any]
         API.sharedInstance.executeAPI(type: .sendPushNotification, method: .post, params: params) { (status, result, message) in

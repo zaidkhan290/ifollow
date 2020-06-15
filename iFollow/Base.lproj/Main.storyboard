@@ -1197,7 +1197,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QIe-qc-0Qp">
-                                <rect key="frame" x="20.666666666666657" y="100" width="372.66666666666674" height="280"/>
+                                <rect key="frame" x="20.666666666666657" y="100" width="372.66666666666674" height="300"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dvz-ba-5As">
                                         <rect key="frame" x="327.66666666666663" y="20" width="25" height="25"/>
@@ -1218,52 +1218,52 @@
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Vo-A4-dNl">
-                                        <rect key="frame" x="20" y="50" width="287.66666666666669" height="0.0"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Vo-A4-dNl">
+                                        <rect key="frame" x="20" y="50" width="287.66666666666669" height="14"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Layer 6 copy" translatesAutoresizingMaskIntoConstraints="NO" id="wLg-3u-JLg">
-                                        <rect key="frame" x="0.0" y="60" width="372.66666666666669" height="180"/>
+                                        <rect key="frame" x="0.0" y="74" width="372.66666666666669" height="180"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="180" id="xmh-mv-WPO"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8D-hC-OB1">
-                                        <rect key="frame" x="70" y="260" width="52" height="52"/>
+                                        <rect key="frame" x="58" y="274" width="37" height="37"/>
                                         <state key="normal" image="photo-icon"/>
                                         <connections>
                                             <action selector="btnImageTapped:" destination="FIJ-nH-bWm" eventType="touchUpInside" id="9ZL-OA-bmr"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ivo-Ni-E5t">
-                                        <rect key="frame" x="20" y="260" width="40" height="58"/>
+                                        <rect key="frame" x="20" y="274" width="28" height="40"/>
                                         <state key="normal" image="pin-icon"/>
                                         <connections>
                                             <action selector="btnLocationTapped:" destination="FIJ-nH-bWm" eventType="touchUpInside" id="35E-Im-TSH"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FF0-ha-8SX">
-                                        <rect key="frame" x="132" y="260" width="22" height="22"/>
+                                        <rect key="frame" x="105" y="274" width="22" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="22" id="AeN-BB-bv7"/>
                                             <constraint firstAttribute="height" constant="22" id="G6K-J8-nNZ"/>
                                         </constraints>
-                                        <state key="normal" image="share"/>
+                                        <state key="normal" image="share-icon"/>
                                         <connections>
                                             <action selector="btnBoostTapped:" destination="FIJ-nH-bWm" eventType="touchUpInside" id="iMX-1Y-wKa"/>
                                         </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Path 3107" translatesAutoresizingMaskIntoConstraints="NO" id="HnT-DM-WwA">
-                                        <rect key="frame" x="272.66666666666663" y="255" width="80" height="30"/>
+                                        <rect key="frame" x="272.66666666666663" y="269" width="80" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="2O1-mP-Z7y"/>
                                             <constraint firstAttribute="height" constant="30" id="TZM-mG-USM"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WIS-c7-0p0">
-                                        <rect key="frame" x="272.66666666666663" y="255" width="80" height="30"/>
+                                        <rect key="frame" x="272.66666666666663" y="269" width="80" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="vdt-2p-Ti7"/>
@@ -1540,7 +1540,7 @@
                                     <constraint firstItem="wLg-3u-JLg" firstAttribute="top" secondItem="2Vo-A4-dNl" secondAttribute="bottom" constant="10" id="qWw-9Q-Bcg"/>
                                     <constraint firstItem="2Vo-A4-dNl" firstAttribute="trailing" secondItem="sHr-Tu-kcf" secondAttribute="trailing" id="rxK-J3-rjo"/>
                                     <constraint firstItem="Dvz-ba-5As" firstAttribute="leading" secondItem="sHr-Tu-kcf" secondAttribute="trailing" constant="20" id="tMM-i9-5VV"/>
-                                    <constraint firstAttribute="height" constant="280" id="uK6-Yb-S3Z"/>
+                                    <constraint firstAttribute="height" constant="300" id="uK6-Yb-S3Z"/>
                                     <constraint firstItem="2Vo-A4-dNl" firstAttribute="top" secondItem="sHr-Tu-kcf" secondAttribute="bottom" constant="5" id="vf9-zf-ps7"/>
                                 </constraints>
                             </view>
@@ -5822,8 +5822,8 @@
         <image name="options" width="4.3333334922790527" height="16.666666030883789"/>
         <image name="password" width="17" height="19.666666030883789"/>
         <image name="pencil-striped-symbol-for-interface-edit-buttons" width="16.333333969116211" height="16.333333969116211"/>
-        <image name="photo-icon" width="26" height="26"/>
-        <image name="pin-icon" width="20.333333969116211" height="29"/>
+        <image name="photo-icon" width="18.666666030883789" height="18.666666030883789"/>
+        <image name="pin-icon" width="14.333333015441895" height="20"/>
         <image name="play_Icon" width="96" height="96"/>
         <image name="plus" width="23.666666030883789" height="23.666666030883789"/>
         <image name="profile" width="24" height="24"/>
@@ -5834,7 +5834,7 @@
         <image name="select_down" width="15.333333015441895" height="18.666666030883789"/>
         <image name="send" width="36" height="36"/>
         <image name="send-1" width="18.333333969116211" height="17"/>
-        <image name="share" width="27.333333969116211" height="31"/>
+        <image name="share-icon" width="19" height="19"/>
         <image name="text" width="38" height="37"/>
         <image name="unselect" width="24.333333969116211" height="24"/>
         <image name="upload_photo-1" width="44.666667938232422" height="35.666667938232422"/>

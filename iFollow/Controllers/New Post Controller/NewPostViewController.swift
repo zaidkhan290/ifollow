@@ -321,7 +321,7 @@ class NewPostViewController: UIViewController {
         }
         else{
             postViewTopConstraint.constant = 100
-            postViewHeightConstraint.constant = 280
+            postViewHeightConstraint.constant = 300
         }
         self.postView.layer.cornerRadius = 20
         self.view.updateConstraintsIfNeeded()

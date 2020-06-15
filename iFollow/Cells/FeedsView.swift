@@ -19,6 +19,7 @@ class FeedsView: UIView {
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var lblUsername: UILabel!
+    @IBOutlet weak var verifiedIcon: UIImageView!
     @IBOutlet weak var lblUserAddress: UILabel!
     @IBOutlet weak var btnOptions: UIButton!
     @IBOutlet weak var lblLikeComments: UILabel!

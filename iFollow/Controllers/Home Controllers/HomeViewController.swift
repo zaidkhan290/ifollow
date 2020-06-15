@@ -719,18 +719,31 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             
             itemView.postLinkView.isHidden = post.postBoostLink == ""
             itemView.lblUsername.text = post.postUserFullName
-            itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postTime))
+            if (post.isBoostPost){
+                itemView.lblTime.text = "Sponsor"
+                itemView.lblTime.textColor = Theme.profileLabelsYellowColor
+                itemView.lblTime.font = Theme.getLatoBoldFontOfSize(size: 11)
+            }
+            else{
+                itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postTime))
+                itemView.lblTime.textColor = Theme.feedsViewTimeColor
+                itemView.lblTime.font = Theme.getLatoRegularFontOfSize(size: 10)
+            }
             itemView.userImage.sd_setImage(with: URL(string: post.postUserImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
             itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
             itemView.lblUserAddress.text = post.postLocation
             itemView.userImage.layer.cornerRadius = 25
             if (post.postMediaType == "image"){
                 itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
+                itemView.playIcon.isHidden = true
             }
             else{
-                itemView.feedImage.image = UIImage(named: "post_video")
+                itemView.feedImage.image = UIImage(named: "photo_placeholder")
+                itemView.playIcon.isHidden = false
+                Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
+                    itemView.feedImage.image = thumbnailImage
+                }
             }
-            itemView.playIcon.isHidden = true
             itemView.feedImage.clipsToBounds = true
             itemView.feedImage.contentMode = .scaleAspectFill
             itemView.lblLikeComments.text = "\(post.postLikes)"
