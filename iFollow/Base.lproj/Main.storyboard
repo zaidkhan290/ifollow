@@ -2306,18 +2306,30 @@
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fYh-KM-M0r">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                         <subviews>
-                                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="X8Y-OA-kLg">
-                                                <rect key="frame" x="202" y="342" width="10" height="52"/>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cst-OW-YKC">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                                <subviews>
+                                                    <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="X8Y-OA-kLg">
+                                                        <rect key="frame" x="202" y="342" width="10" height="52"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="30"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    </textView>
+                                                </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="30"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
+                                                <constraints>
+                                                    <constraint firstItem="X8Y-OA-kLg" firstAttribute="centerX" secondItem="cst-OW-YKC" secondAttribute="centerX" id="8fK-qD-Lfv"/>
+                                                    <constraint firstItem="X8Y-OA-kLg" firstAttribute="centerY" secondItem="cst-OW-YKC" secondAttribute="centerY" id="yWn-ov-bqK"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="X8Y-OA-kLg" firstAttribute="centerY" secondItem="fYh-KM-M0r" secondAttribute="centerY" id="KVt-69-idJ"/>
-                                            <constraint firstItem="X8Y-OA-kLg" firstAttribute="centerX" secondItem="fYh-KM-M0r" secondAttribute="centerX" id="S3f-Xz-4xx"/>
+                                            <constraint firstItem="cst-OW-YKC" firstAttribute="leading" secondItem="fYh-KM-M0r" secondAttribute="leading" id="Eoe-f4-9Vp"/>
+                                            <constraint firstItem="cst-OW-YKC" firstAttribute="top" secondItem="fYh-KM-M0r" secondAttribute="top" id="N6R-9b-TyK"/>
+                                            <constraint firstAttribute="trailing" secondItem="cst-OW-YKC" secondAttribute="trailing" id="pJD-8u-6kR"/>
+                                            <constraint firstAttribute="bottom" secondItem="cst-OW-YKC" secondAttribute="bottom" id="ybh-Dq-W1Q"/>
                                         </constraints>
                                     </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhd-In-lDz">
@@ -2639,6 +2651,7 @@
                         <outlet property="deleteIcon" destination="ZSm-yG-JQX" id="NDS-eF-RKU"/>
                         <outlet property="deleteView" destination="G7X-9m-hIY" id="gsx-mv-Qsm"/>
                         <outlet property="editableTextField" destination="X8Y-OA-kLg" id="8r6-Zs-WFn"/>
+                        <outlet property="editableTextFieldView" destination="cst-OW-YKC" id="jtl-Fn-ksW"/>
                         <outlet property="emojiesMainView" destination="fYh-KM-M0r" id="VOP-K6-xIG"/>
                         <outlet property="filterView" destination="XDX-CZ-y98" id="6TX-Rc-ZXP"/>
                         <outlet property="fontSlider" destination="D3w-Qz-cp8" id="Psa-lo-kog"/>

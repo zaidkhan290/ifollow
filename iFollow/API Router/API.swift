@@ -74,6 +74,7 @@ enum EndPoint: String {
 enum StatusCodes {
     case success
     case failure
+    case blockByAdmin
     case authError
 }
 
@@ -143,6 +144,9 @@ class API: NSObject {
                             if (response.response?.statusCode == 200){
                                 completion?(.success,JSON(value),json["message"].stringValue)
                             }
+                            else if (response.response?.statusCode == 202){
+                                completion?(.blockByAdmin,JSON(value),json["message"].stringValue)
+                            }
                             else if (response.response?.statusCode == 503){
                                 completion?(.failure,JSON(value),"Server Error")
                             }
@@ -188,6 +192,9 @@ class API: NSObject {
                     
                     if (response.response?.statusCode == 200){
                         completion?(.success,JSON(value),json["message"].stringValue)
+                    }
+                    else if (response.response?.statusCode == 202){
+                        completion?(.blockByAdmin,JSON(value),json["message"].stringValue)
                     }
                     else if (response.response?.statusCode == 503){
                         completion?(.failure,JSON(value),"Server Error")

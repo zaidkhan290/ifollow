@@ -99,6 +99,14 @@ class LoginViewController: UIViewController {
                     let vc = Utility.getTabBarViewController()
                     self.present(vc, animated: true, completion: nil)
                 }
+                else if (status == .blockByAdmin){
+                    let alertVC = UIAlertController(title: "Activity Blocked", message: "This action was blocked by admin. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake. Email us at support@ifollowapp.com.", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "Ok", style: .default) { (action) in
+                        
+                    }
+                    alertVC.addAction(okAction)
+                    self.present(alertVC, animated: true, completion: nil)
+                }
                 else{
                     Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                         

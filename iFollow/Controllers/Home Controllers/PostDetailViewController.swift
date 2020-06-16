@@ -165,7 +165,7 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
             itemView.postLinkView.isHidden = post.postBoostLink == ""
         }
         if (post.isBoostPost){
-            itemView.lblTime.text = "Sponsor"
+            itemView.lblTime.text = "SPONSORED"
             itemView.lblTime.textColor = Theme.profileLabelsYellowColor
             itemView.lblTime.font = Theme.getLatoBoldFontOfSize(size: 11)
         }

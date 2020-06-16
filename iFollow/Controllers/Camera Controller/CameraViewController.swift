@@ -25,6 +25,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @IBOutlet weak var previewView: UIView!
     @IBOutlet weak var cameraView: UIImageView!
     @IBOutlet weak var emojiesMainView: UIView!
+    @IBOutlet weak var editableTextFieldView: UIView!
     @IBOutlet weak var btnEmoji: UIButton!
     @IBOutlet weak var btnCapture: UIButton!
     @IBOutlet weak var btnGallery: UIButton!
@@ -410,6 +411,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         cameraView.image = image!
         filterView.isHidden = false
         emojiesMainView.isHidden = false
+        editableTextFieldView.isHidden = false
 //        filterSwipeView.isPlayingLibraryVideo = true
         btnEmoji.isEnabled = true
         btnLocation.isHidden = false
@@ -440,6 +442,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     self.cameraView.image = videoScreenShot
                     self.filterView.isHidden = false
                     self.emojiesMainView.isHidden = false
+                    self.editableTextFieldView.isHidden = false
                     self.btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
                     self.btnGallery.setImage(UIImage(named: "filter"), for: .normal)
                     self.btnBack.setImage(UIImage(named: "close-1"), for: .normal)
@@ -662,6 +665,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             isPictureCaptured = false
             filterView.isHidden = true
             emojiesMainView.isHidden = true
+            editableTextFieldView.isHidden = true
             cameraView.isHidden = true
             cameraView.image = nil
             btnBack.setImage(UIImage(named: "select_down"), for: .normal)
@@ -692,7 +696,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             lblFont.isHidden = true
             lblNormalTapped()
             for emojiView in emojiesMainView.subviews{
-                if (emojiView == editableTextField){
+                if (emojiView == editableTextField || emojiView == editableTextFieldView){
                     
                 }
                 else{
@@ -701,7 +705,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                 
             }
             for subView in filterView.subviews{
-                if (subView == cameraView || subView == timeView || subView == editableTextField || subView == locationView || subView == emojiesMainView){
+                if (subView == cameraView || subView == timeView || subView == editableTextField || subView == locationView || subView == emojiesMainView || subView == editableTextFieldView){
                     
                 }
                 else{
@@ -1232,6 +1236,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
             cameraView.image = image
             filterView.isHidden = false
             emojiesMainView.isHidden = false
+            editableTextFieldView.isHidden = false
 //            filterSwipeView.isPlayingLibraryVideo = true
 //            preview(image: image)
             btnEmoji.isEnabled = true
@@ -1263,6 +1268,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
                     self.cameraView.image = videoScreenShot
                     self.filterView.isHidden = false
                     self.emojiesMainView.isHidden = false
+                    self.editableTextFieldView.isHidden = false
                     self.btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
                     self.btnGallery.setImage(UIImage(named: "filter"), for: .normal)
                     self.btnBack.setImage(UIImage(named: "close-1"), for: .normal)

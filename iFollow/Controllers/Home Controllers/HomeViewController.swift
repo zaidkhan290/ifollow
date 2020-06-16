@@ -528,6 +528,16 @@ class HomeViewController: UIViewController {
                         
                         
                     }
+                    else if (status == .blockByAdmin){
+                        let alertVC = UIAlertController(title: "Activity Blocked", message: "This action was blocked by admin. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake. Email us at support@ifollowapp.com.", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "Ok", style: .default) { (action) in
+                            DispatchQueue.main.async {
+                                Utility.logoutUser()
+                            }
+                        }
+                        alertVC.addAction(okAction)
+                        self.present(alertVC, animated: true, completion: nil)
+                    }
                     else if (status == .failure){
                         
                         Utility.showOrHideLoader(shouldShow: false)
@@ -721,7 +731,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             itemView.postLinkView.isHidden = post.postBoostLink == ""
             itemView.lblUsername.text = post.postUserFullName
             if (post.isBoostPost){
-                itemView.lblTime.text = "Sponsor"
+                itemView.lblTime.text = "SPONSORED"
                 itemView.lblTime.textColor = Theme.profileLabelsYellowColor
                 itemView.lblTime.font = Theme.getLatoBoldFontOfSize(size: 11)
             }

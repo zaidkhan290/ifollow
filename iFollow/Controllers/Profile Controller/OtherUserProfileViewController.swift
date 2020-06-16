@@ -756,7 +756,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
         itemView.postLinkView.isHidden = post.postBoostLink == ""
         if (post.postStatus == "boost"){
-            itemView.lblTime.text = "Sponsor"
+            itemView.lblTime.text = "SPONSORED"
             itemView.lblTime.textColor = Theme.profileLabelsYellowColor
             itemView.lblTime.font = Theme.getLatoBoldFontOfSize(size: 11)
         }
