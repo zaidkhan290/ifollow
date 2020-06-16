@@ -717,6 +717,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             itemView.index = index - (index / 10)
             let post = postsArray[index - (index / 10)]
             
+            itemView.verifiedIcon.isHidden = post.isPostUserVerified == 0
             itemView.postLinkView.isHidden = post.postBoostLink == ""
             itemView.lblUsername.text = post.postUserFullName
             if (post.isBoostPost){

@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         
         let config = Realm.Configuration(
-            schemaVersion: 2,
+            schemaVersion: 3,
             migrationBlock: { migration, oldSchemaVersion in
                 if (oldSchemaVersion < 1){
                     migration.enumerateObjects(ofType: UserModel.className()) { (oldObject, newObject) in
@@ -42,6 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     migration.enumerateObjects(ofType: UserPostsModel.className()) { (oldObject, newObject) in
                         newObject?["postBoostLink"] = ""
                         newObject?["postStatus"] = "live"
+                    }
+                }
+                if (oldSchemaVersion < 3){
+                    migration.enumerateObjects(ofType: HomePostsModel.className()) { (oldObject, newObject) in
+                        newObject?["isPostUserVerified"] = 0
                     }
                 }
                 
