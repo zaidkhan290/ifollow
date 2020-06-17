@@ -425,9 +425,9 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         else{
             itemView.feedImage.image = UIImage(named: "photo_placeholder")
             itemView.playIcon.isHidden = false
-            Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
-                itemView.feedImage.image = thumbnailImage
-            }
+//            Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
+//                itemView.feedImage.image = thumbnailImage
+//            }
         }
         itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
 //        if (post.isPostLike == 1){

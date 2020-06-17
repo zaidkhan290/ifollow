@@ -751,9 +751,9 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             else{
                 itemView.feedImage.image = UIImage(named: "photo_placeholder")
                 itemView.playIcon.isHidden = false
-                Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
-                    itemView.feedImage.image = thumbnailImage
-                }
+//                Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
+//                    itemView.feedImage.image = thumbnailImage
+//                }
             }
             itemView.feedImage.clipsToBounds = true
             itemView.feedImage.contentMode = .scaleAspectFill

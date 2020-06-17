@@ -116,7 +116,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
      //   prepareFilterView()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
-        imagePicker.videoMaximumDuration = isForPost ? 60 : 15
+        imagePicker.videoMaximumDuration = 60//isForPost ? 60 : 15
         imagePicker.videoQuality = .type640x480
         
         editableTextField.delegate = self
@@ -433,7 +433,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         if error == nil {
             DispatchQueue.main.async {
                 self.shouldSaveToGallery = true
-                if let videoScreenShot = Utility.imageFromVideo(url: outputFileURL, at: 0, totalTime: 15){
+                if let videoScreenShot = Utility.imageFromVideo(url: outputFileURL, at: 0, totalTime: 60){
                     self.videoURL = outputFileURL
                     self.isPictureCaptured = true
                     self.cameraView.isHidden = false
@@ -1008,7 +1008,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @objc func updateTimer(){
         seconds += 1
         self.lblVideoTimer.text = timeString(time: TimeInterval(seconds))
-        if (seconds == (isForPost ? 60 : 15)){
+        if (seconds == (60/*isForPost ? 60 : 15*/)){
             timer.invalidate()
             seconds = 0
             self.lblVideoTimer.text = ""
@@ -1259,7 +1259,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
         
         if let video = info[UIImagePickerController.InfoKey.mediaURL] as? URL{
             DispatchQueue.main.async {
-                if let videoScreenShot = Utility.imageFromVideo(url: video, at: 0, totalTime: 15){
+                if let videoScreenShot = Utility.imageFromVideo(url: video, at: 0, totalTime: 60){
                     self.videoURL = video
                     self.isPictureCaptured = true
                     self.cameraView.isHidden = false

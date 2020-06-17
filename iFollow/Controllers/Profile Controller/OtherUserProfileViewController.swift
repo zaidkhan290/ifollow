@@ -778,9 +778,9 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         else{
             itemView.feedImage.image = UIImage(named: "photo_placeholder")
             itemView.playIcon.isHidden = false
-            Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
-                itemView.feedImage.image = thumbnailImage
-            }
+//            Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
+//                itemView.feedImage.image = thumbnailImage
+//            }
         }
         itemView.lblLikeComments.text = "\(post.postLikes)"
         itemView.feedImage.clipsToBounds = true
