@@ -119,7 +119,17 @@ class StoriesViewController: UIViewController {
             self.userImage.layer.borderColor = UIColor.white.cgColor
             self.userImage.sd_setImage(with: URL(string: self.storiesUsersArray[self.storyUserIndex].userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
             
-            self.spb = SegmentedProgressBar(numberOfSegments: self.storiesUsersArray[self.storyUserIndex].userStories.count, duration: 16)
+            var durations = [TimeInterval]()
+            for duration in self.storiesUsersArray[self.storyUserIndex].userStories{
+                if (duration.storyMediaType == "video"){
+                    durations.append(61)
+                }
+                else{
+                    durations.append(10)
+                }
+            }
+            
+            self.spb = SegmentedProgressBar(numberOfSegments: self.storiesUsersArray[self.storyUserIndex].userStories.count, durationArrValues: durations)
             self.spb.frame = CGRect(x: 15, y: self.view.safeAreaInsets.top + 20, width: self.view.frame.width - 30, height: 4)
             self.view.addSubview(self.spb)
             
