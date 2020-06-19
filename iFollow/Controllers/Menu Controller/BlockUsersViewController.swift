@@ -111,7 +111,7 @@ extension BlockUsersViewController: UITableViewDataSource, UITableViewDelegate{
         cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
         cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
         cell.lblUsername.text = user.userFullName
-        cell.lblLastSeen.text = user.userCountry
+        cell.lblLastSeen.text = user.userName
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
         cell.userImage.sd_setImage(with: URL(string: user.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))

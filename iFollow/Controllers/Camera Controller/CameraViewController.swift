@@ -193,12 +193,21 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
 //            self.audioDeviceInput = try? AVCaptureDeviceInput(device: AVCaptureDevice.default(for: .audio)!)
             let input = try AVCaptureDeviceInput(device: backCamera)
             stillImageOutput = AVCapturePhotoOutput()
-            let audioInput = AVCaptureDevice.default(for: .audio)
             movieOutput = AVCaptureMovieFileOutput()
+            
+            if let microphone = AVCaptureDevice.default(for: AVMediaType.audio){
+                do {
+                    let micInput = try AVCaptureDeviceInput(device: microphone)
+                    if captureSession.canAddInput(micInput) {
+                        captureSession.addInput(micInput)
+                    }
+                } catch {
+                    print("Error setting device audio input: \(error)")
+                }
+            }
             
             if captureSession.canAddInput(input) && captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addInput(input)
-                captureSession.addInput(try AVCaptureDeviceInput(device: audioInput!))
                 captureSession.addOutput(stillImageOutput)
                 captureSession.addOutput(movieOutput)
                 setupLivePreview()
@@ -736,11 +745,13 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     timer.invalidate()
                     seconds = 0
                     self.lblVideoTimer.text = ""
+                    btnRotate.isHidden = false
                 }
                 else {
 //                    let audioSession = AVAudioSession.sharedInstance()
 //                    try! audioSession.setCategory(.playback)
 //                    try! audioSession.setActive(true)
+                    btnRotate.isHidden = true
                     let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
                     let fileUrl = paths[0].appendingPathComponent("output.mov")
                     try? FileManager.default.removeItem(at: fileUrl)
@@ -912,12 +923,15 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             if newVideoInput == nil || err != nil {
                 print("Error creating capture device input: \(err?.localizedDescription)")
             } else {
-                let audioInput = AVCaptureDevice.default(for: .audio)
-                do {
-                    captureSession.addInput(try AVCaptureDeviceInput(device: audioInput!))
-                }
-                catch{
-
+                if let microphone = AVCaptureDevice.default(for: AVMediaType.audio){
+                    do {
+                        let micInput = try AVCaptureDeviceInput(device: microphone)
+                        if session.canAddInput(micInput) {
+                            session.addInput(micInput)
+                        }
+                    } catch {
+                        print("Error setting device audio input: \(error)")
+                    }
                 }
                 session.addInput(newVideoInput)
             }

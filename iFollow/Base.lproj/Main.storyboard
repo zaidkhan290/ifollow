@@ -1218,34 +1218,34 @@
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Vo-A4-dNl">
-                                        <rect key="frame" x="20" y="50" width="287.66666666666669" height="14"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Vo-A4-dNl">
+                                        <rect key="frame" x="20" y="50" width="287.66666666666669" height="0.0"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Layer 6 copy" translatesAutoresizingMaskIntoConstraints="NO" id="wLg-3u-JLg">
-                                        <rect key="frame" x="0.0" y="74" width="372.66666666666669" height="180"/>
+                                        <rect key="frame" x="0.0" y="60" width="372.66666666666669" height="180"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="180" id="xmh-mv-WPO"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8D-hC-OB1">
-                                        <rect key="frame" x="58" y="274" width="37" height="37"/>
+                                        <rect key="frame" x="58" y="260" width="37" height="37"/>
                                         <state key="normal" image="photo-icon"/>
                                         <connections>
                                             <action selector="btnImageTapped:" destination="FIJ-nH-bWm" eventType="touchUpInside" id="9ZL-OA-bmr"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ivo-Ni-E5t">
-                                        <rect key="frame" x="20" y="274" width="28" height="40"/>
+                                        <rect key="frame" x="20" y="260" width="28" height="40"/>
                                         <state key="normal" image="pin-icon"/>
                                         <connections>
                                             <action selector="btnLocationTapped:" destination="FIJ-nH-bWm" eventType="touchUpInside" id="35E-Im-TSH"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FF0-ha-8SX">
-                                        <rect key="frame" x="105" y="274" width="22" height="22"/>
+                                        <rect key="frame" x="105" y="260" width="22" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="22" id="AeN-BB-bv7"/>
                                             <constraint firstAttribute="height" constant="22" id="G6K-J8-nNZ"/>
@@ -1256,14 +1256,14 @@
                                         </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Path 3107" translatesAutoresizingMaskIntoConstraints="NO" id="HnT-DM-WwA">
-                                        <rect key="frame" x="272.66666666666663" y="269" width="80" height="30"/>
+                                        <rect key="frame" x="272.66666666666663" y="255" width="80" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="2O1-mP-Z7y"/>
                                             <constraint firstAttribute="height" constant="30" id="TZM-mG-USM"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WIS-c7-0p0">
-                                        <rect key="frame" x="272.66666666666663" y="269" width="80" height="30"/>
+                                        <rect key="frame" x="272.66666666666663" y="255" width="80" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="vdt-2p-Ti7"/>

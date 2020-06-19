@@ -61,11 +61,13 @@ class PostDetailViewController: UIViewController {
                         try! realm.safeWrite {
                             if let model = realm.objects(HomePostsModel.self).filter("postId = \(self.postId)").first{
                                 model.updateModelWithJSON(json: postData)
+                                model.isBoostPost = postData["status"].stringValue == "boost"
                                 self.postsArray = Array(realm.objects(HomePostsModel.self).filter("postId = \(self.postId)"))
                             }
                             else{
                                 let model = HomePostsModel()
                                 model.updateModelWithJSON(json: postData)
+                                model.isBoostPost = postData["status"].stringValue == "boost"
                                 realm.add(model)
                                 self.postsArray = Array(realm.objects(HomePostsModel.self).filter("postId = \(self.postId)"))
                             }
