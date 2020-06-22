@@ -43,6 +43,10 @@ class HomeViewController: UIViewController {
     var heightConstraint : NSLayoutConstraint?
     var nativeAdView: GADUnifiedNativeAdView!
     
+    var isFromPush = false
+    var pushTitle = ""
+    var pushDesc = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -526,6 +530,14 @@ class HomeViewController: UIViewController {
                         self.storyCollectionView.isUserInteractionEnabled = true
                         self.carouselView.isUserInteractionEnabled = true
                         
+                        if (self.isFromPush){
+                            let alertVC = UIAlertController(title: self.pushTitle, message: self.pushDesc, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "Set Trends", style: .default) { (action) in
+                            }
+                            alertVC.addAction(okAction)
+                            self.present(alertVC, animated: true, completion: nil)
+                            self.isFromPush = false
+                        }
                         
                     }
                     else if (status == .blockByAdmin){

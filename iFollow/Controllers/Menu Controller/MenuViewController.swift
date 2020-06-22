@@ -16,6 +16,7 @@ class MenuViewController: UIViewController {
     @IBOutlet weak var lblUsername: UILabel!
     @IBOutlet weak var editView: UIView!
     @IBOutlet weak var menuTableView: UITableView!
+    @IBOutlet weak var lblAppVersion: UILabel!
     
     var menuItems = [String]()
     var menuIcons = [String]()
@@ -36,6 +37,9 @@ class MenuViewController: UIViewController {
         
         menuItems = ["Privacy Settings", "Blocked Users", /*"Payments", "Geo Tagging",*/ "", "Change Password", "Terms And Conditions", "Privacy Policy", "Invite Friends", "Sign Out"]
         menuIcons = ["privacy", "friends", /*"credit-card", "map-location (1)",*/ "", "password", "privacy", "privacy", "friends", "logout"]
+        
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        lblAppVersion.text = "Application Version: \(appVersion!)"
         
     }
     

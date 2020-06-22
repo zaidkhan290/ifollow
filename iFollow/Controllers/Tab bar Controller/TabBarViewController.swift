@@ -37,6 +37,9 @@ class TabBarViewController: UIViewController {
     @IBOutlet weak var lblMessagesCount: UILabel!
     
     var selectedIndex = 0
+    var isFromPush = false
+    var pushTitle = ""
+    var pushDesc = ""
     var storageRef: StorageReference?
     var storyImage = UIImage()
     
@@ -176,6 +179,9 @@ class TabBarViewController: UIViewController {
             profileSelectedView.isHidden = true
             
             remove(asChildViewController: [exploreController, notificationController, profileController])
+            (homeController as! HomeViewController).isFromPush = isFromPush
+            (homeController as! HomeViewController).pushTitle = pushTitle
+            (homeController as! HomeViewController).pushDesc = pushDesc
             add(asChildViewController: homeController)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshHomeData"), object: nil)
             

@@ -34,14 +34,9 @@ class NewPostViewController: UIViewController {
     @IBOutlet weak var btnPost: UIButton!
     @IBOutlet weak var postViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var postViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var lblAddBudget: UILabel!
-    @IBOutlet weak var budgetSlider: UISlider!
-    @IBOutlet weak var lblMinBudget: UILabel!
-    @IBOutlet weak var lblMaxBudget: UILabel!
     @IBOutlet weak var btnMinus: UIButton!
     @IBOutlet weak var lblDays: UILabel!
     @IBOutlet weak var btnPlus: UIButton!
-    @IBOutlet weak var lblPeoples: UILabel!
     @IBOutlet weak var lblTotalBudget: UILabel!
     @IBOutlet weak var txtFieldLink: UITextField!
     @IBOutlet weak var linkSwitch: UISwitch!
@@ -57,8 +52,8 @@ class NewPostViewController: UIViewController {
     var delegate: PostViewControllerDelegate!
     var days = 1
     var userAddress = ""
-    var budget: Float = 1.0
-    var totalBudget: Float = 1.0
+    var budget: Float = 10.0
+    var totalBudget: Float = 10.0
     var isForEdit = false
     var editablePostId = 0
     var editablePostText = ""
@@ -94,38 +89,7 @@ class NewPostViewController: UIViewController {
             postImage.image = postSelectedImage
         }
         
-        let peopleText = "10k - 20k People will saw this post"
-        let range1 = peopleText.range(of: "10k - 20k")
-        let range2 = peopleText.range(of: "People will saw this post")
-        
-        let attributedPeopleString = NSMutableAttributedString(string: peopleText)
-        attributedPeopleString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: Theme.getLatoBoldFontOfSize(size: 14)], range: peopleText.nsRange(from: range1!))
-        attributedPeopleString.addAttributes([NSAttributedString.Key.foregroundColor: Theme.privateChatBoxTabsColor, NSAttributedString.Key.font: Theme.getLatoRegularFontOfSize(size: 14)], range: peopleText.nsRange(from: range2!))
-        lblPeoples.attributedText = attributedPeopleString
-      
-        let likeText = "2k - 4k Average of likes for this post"
-        let rang1 = likeText.range(of: "2k - 4k")
-        let rang2 = likeText.range(of: "Average of likes for this post")
-        
-        let attributedLikeString = NSMutableAttributedString(string: likeText)
-        attributedLikeString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: Theme.getLatoBoldFontOfSize(size: 14)], range: likeText.nsRange(from: rang1!))
-        attributedLikeString.addAttributes([NSAttributedString.Key.foregroundColor: Theme.privateChatBoxTabsColor, NSAttributedString.Key.font: Theme.getLatoRegularFontOfSize(size: 14)], range: likeText.nsRange(from: rang2!))
-        
-        let visaText = "Visa **7045"
-        let visaRange1 = visaText.range(of: "Visa")
-        let visaRange2 = visaText.range(of: "**7045")
-        
-        let attributedVisaString = NSMutableAttributedString(string: visaText)
-        attributedVisaString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: Theme.getLatoBoldFontOfSize(size: 14)], range: visaText.nsRange(from: visaRange1!))
-        attributedVisaString.addAttributes([NSAttributedString.Key.foregroundColor: Theme.privateChatBoxTabsColor, NSAttributedString.Key.font: Theme.getLatoRegularFontOfSize(size: 14)], range: visaText.nsRange(from: visaRange2!))
-        
         lblDays.text = "\(days) Days"
-        
-        budgetSlider.minimumValue = 1
-        budgetSlider.maximumValue = 500
-        budgetSlider.value = 1
-        lblAddBudget.text = "Daily Budget ($1)"
-        budgetSlider.addTarget(self, action: #selector(budgetSliderValueChange), for: .valueChanged)
         
         postImage.isUserInteractionEnabled = !isForEdit
         postImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postImageTapped)))
@@ -184,10 +148,10 @@ class NewPostViewController: UIViewController {
     }
     
     @objc func budgetSliderValueChange(){
-        budget = budgetSlider.value.rounded()
-        let budgetString = String(format: "%.0f", budget)
-        lblAddBudget.text = "Daily Budget ($\(budgetString))"
-        setTotalBudget()
+//        budget = budgetSlider.value.rounded()
+//        let budgetString = String(format: "%.0f", budget)
+//        lblAddBudget.text = "Daily Budget ($\(budgetString))"
+//        setTotalBudget()
     }
     
     @objc func setTotalBudget(){
@@ -233,7 +197,7 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnMinusTapped(_ sender: UIButton) {
-        if (days > 1 && days <= 3){
+        if (days > 1){
             days -= 1
         }
         lblDays.text = "\(days) Days"
@@ -241,7 +205,7 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func btnPlusTapped(_ sender: UIButton) {
-        if (days >= 1 && days < 3){
+        if (days >= 1){
             days += 1
         }
         lblDays.text = "\(days) Days"
@@ -316,8 +280,8 @@ class NewPostViewController: UIViewController {
         btnPostBackgroundImage.isHidden = isDetail
         
         if (isDetail){
-            postViewTopConstraint.constant = 20
-            postViewHeightConstraint.constant = 620
+            postViewTopConstraint.constant = 50
+            postViewHeightConstraint.constant = 550
         }
         else{
             postViewTopConstraint.constant = 100

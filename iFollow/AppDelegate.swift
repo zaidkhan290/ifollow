@@ -220,6 +220,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 vc.chatUserImage = json["request_id"]["image"].stringValue.replacingOccurrences(of: "\\", with: "")
                 UIWINDOW!.rootViewController = vc
             }
+            else if (json["tag"].intValue == 15){
+                let vc = Utility.getTabBarViewController()
+                vc.selectedIndex = 0
+                vc.isFromPush = true
+                vc.pushTitle = json["aps"]["alert"]["title"].stringValue
+                vc.pushDesc = json["aps"]["alert"]["body"].stringValue
+                UIWINDOW!.rootViewController = vc
+            }
             else{
                 let vc = Utility.getTabBarViewController()
                 vc.selectedIndex = 3
