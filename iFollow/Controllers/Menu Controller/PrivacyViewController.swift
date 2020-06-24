@@ -39,12 +39,23 @@ class PrivacyViewController: UIViewController {
     }
     
     func updateUserSettingOnServer(){
+        var settingVersion = Utility.getLoginUserSettingVersion()
+        settingVersion = settingVersion + 1
+        
+        let realm = try! Realm()
+        try! realm.safeWrite {
+            if let model = UserModel.getCurrentUser(){
+                model.userSettingVersion = settingVersion
+            }
+        }
+        
         let params = ["post_hours": Utility.getLoginUserPostExpireHours(),
                       "story_hours": Utility.getLoginUserStoryExpireHours(),
                       "post_view": Utility.getLoginUserIsPostViewEnable(),
                       "story_view": Utility.getLoginUserIsStoryViewEnable(),
                       "profile_status": Utility.getLoginUserProfileType(),
-                      "trend_status": Utility.getLoginUserDisplayTrendStatus()] as [String : Any]
+                      "trend_status": Utility.getLoginUserDisplayTrendStatus(),
+                      "version": settingVersion] as [String : Any]
         
         API.sharedInstance.executeAPI(type: .updateUserSettings, method: .post, params: params) { (status, result, message) in
             DispatchQueue.main.async {

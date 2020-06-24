@@ -19,6 +19,7 @@ class UserModel: Object {
     @objc dynamic var userTrendStatus: String = "public"
     @objc dynamic var isUserPostViewEnable: Int = 0
     @objc dynamic var isUserStoryViewEnable: Int = 0
+    @objc dynamic var userSettingVersion: Int = 0
     @objc dynamic var userFirstName: String = ""
     @objc dynamic var userLastName: String = ""
     @objc dynamic var userDOB: String = ""
@@ -51,6 +52,7 @@ class UserModel: Object {
         userTrendStatus = userSettings["trend_status"].stringValue
         isUserPostViewEnable = userSettings["post_view"].intValue
         isUserStoryViewEnable = userSettings["story_view"].intValue
+        userSettingVersion = userSettings["version"].intValue
         userFirstName = user["first_name"].stringValue
         userLastName = user["last_name"].stringValue
         userDOB = user["date_of_birth"].stringValue

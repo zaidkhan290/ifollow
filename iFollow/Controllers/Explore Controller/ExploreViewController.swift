@@ -601,6 +601,7 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
                 vc.isForMyStory = false
                 vc.isForPublicStory = false
                 vc.storyUserIndex = indexPath.row - 1
+                vc.isFromExplore = true
                 let navVC = UINavigationController(rootViewController: vc)
                 navVC.isNavigationBarHidden = true
                 navVC.modalPresentationStyle = .fullScreen
@@ -612,6 +613,7 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
             vc.isForMyStory = false
             vc.isForPublicStory = true
             vc.storyUserIndex = indexPath.row
+            vc.isFromExplore = true
             let navVC = UINavigationController(rootViewController: vc)
             navVC.isNavigationBarHidden = true
             navVC.modalPresentationStyle = .fullScreen

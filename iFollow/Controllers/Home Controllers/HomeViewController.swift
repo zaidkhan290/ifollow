@@ -458,6 +458,7 @@ class HomeViewController: UIViewController {
             }
             
             API.sharedInstance.executeAPI(type: .homePage, method: .get, params: nil) { (status, result, message) in
+       
                 DispatchQueue.main.async {
                     
                     Utility.showOrHideLoader(shouldShow: false)
@@ -539,6 +540,10 @@ class HomeViewController: UIViewController {
                             self.isFromPush = false
                         }
                         
+                        if (result["setting_version"].intValue != Utility.getLoginUserSettingVersion()){
+                            self.getUserSettings()
+                        }
+                        
                     }
                     else if (status == .blockByAdmin){
                         let alertVC = UIAlertController(title: "Activity Blocked", message: "This action was blocked by admin. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake. Email us at support@ifollowapp.com.", preferredStyle: .alert)
@@ -587,6 +592,42 @@ class HomeViewController: UIViewController {
         }
     }
     
+    func getUserSettings(){
+        
+        API.sharedInstance.executeAPI(type: .getSetting, method: .get, params: nil) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                
+                if (status == .success){
+                    
+                    let realm = try! Realm()
+                    try! realm.safeWrite {
+                        let settingData = result["data"]
+                        if let model = UserModel.getCurrentUser(){
+                            model.userPostExpireHours = settingData["post_hours"].intValue
+                            model.userStoryExpireHours = settingData["story_hours"].intValue
+                            model.isUserPostViewEnable = settingData["post_view"].intValue
+                            model.isUserStoryViewEnable = settingData["story_view"].intValue
+                            model.userSettingVersion = settingData["version"].intValue
+                            model.userProfileStatus = settingData["profile_status"].stringValue
+                            model.userTrendStatus = settingData["trend_status"].stringValue
+                        }
+                    }
+//
+                }
+                else if (status == .authError){
+                    
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                    
+                }
+                
+            }
+            
+        }
+    }
+    
     func updateDeviceToken(){
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
@@ -597,7 +638,7 @@ class HomeViewController: UIViewController {
                 
                 let params = ["mobile_id": deviceToken]
                 API.sharedInstance.executeAPI(type: .updateDeviceToken, method: .post, params: params, completion: { (success, result, message) in
-                    print(success)
+                    
                 })
             }
         }
@@ -673,6 +714,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             let vc = Utility.getStoriesViewController()
             vc.isForMyStory = false
             vc.isForPublicStory = false
+            vc.isFromExplore = true
             vc.storyUserIndex = indexPath.row - 1
             let navVC = UINavigationController(rootViewController: vc)
             navVC.isNavigationBarHidden = true

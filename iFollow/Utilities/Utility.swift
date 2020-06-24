@@ -312,6 +312,13 @@ struct Utility {
         return ""
     }
     
+    static func getLoginUserSettingVersion() -> Int{
+        if let user = UserModel.getCurrentUser(){
+            return user.userSettingVersion
+        }
+        return 0
+    }
+    
     static var storyTimeFormatter: DateFormatter{
         get{
             if (timeFormatter == nil){

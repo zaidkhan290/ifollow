@@ -13,6 +13,7 @@ import Alamofire
 import SDWebImage
 import Loaf
 import Firebase
+import GoogleMobileAds
 
 class StoriesViewController: UIViewController {
 
@@ -49,6 +50,9 @@ class StoriesViewController: UIViewController {
     var currentStoryMediaType = ""
     
     var spb: SegmentedProgressBar!
+    var isFromExplore = false
+    var interstitial: GADInterstitial!
+    var loadedAddIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +63,8 @@ class StoriesViewController: UIViewController {
         } catch {
             print(error)
         }
+        
+        interstitial = createAndLoadInterstitial()
         
         messageInputView.layer.cornerRadius = 20
         messageInputView.dropShadow(color: .white)
@@ -155,13 +161,12 @@ class StoriesViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(userProfileDismissed), name: NSNotification.Name(rawValue: "userProfileDismissed"), object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(storyVideoFinish), name: .AVPlayerItemDidPlayToEndTime, object: nil)
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(storyVideoFinish), name: .AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -179,6 +184,13 @@ class StoriesViewController: UIViewController {
     }
     
     //MARK:- Methods and Actions
+    
+    func createAndLoadInterstitial() -> GADInterstitial {
+      var interstitial = GADInterstitial(adUnitID: interstitialAddUnitID)
+      interstitial.delegate = self
+      interstitial.load(GADRequest())
+      return interstitial
+    }
     
     func setStory(storyModel: UserStoryModel, isFirstStory: Bool){
         lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: storyModel.storyTime))
@@ -709,6 +721,7 @@ class StoriesViewController: UIViewController {
             else{
                 let vc = Utility.getStoriesViewController()
                 vc.isForMyStory = false
+                vc.isFromExplore = isFromExplore
                 vc.isForPublicStory = isForPublicStory
                 vc.storyUserIndex = nextUserIndex
                 if (isVideoPlaying){
@@ -731,6 +744,7 @@ class StoriesViewController: UIViewController {
                 else{
                     let vc = Utility.getStoriesViewController()
                     vc.isForMyStory = false
+                    vc.isFromExplore = isFromExplore
                     vc.isForPublicStory = isForPublicStory
                     vc.storyUserIndex = prevUserIndex
                     if (isVideoPlaying){
@@ -770,7 +784,19 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
             self.imageView.image = nil
             self.imageView.backgroundColor = .black
             let storiesArray = Array(storiesUsersArray[storyUserIndex].userStories)
-            self.setStory(storyModel: storiesArray[index], isFirstStory: false)
+            if (isFromExplore && index % 5 == 0 && loadedAddIndex != index){
+                if (interstitial.isReady){
+                    loadedAddIndex = index
+                    interstitial.present(fromRootViewController: self)
+                }
+                else{
+                    self.setStory(storyModel: storiesArray[index], isFirstStory: false)
+                }
+            }
+            else{
+                self.setStory(storyModel: storiesArray[index], isFirstStory: false)
+            }
+            
         }
         
     }
@@ -840,4 +866,48 @@ extension StoriesViewController: UITextFieldDelegate{
         return false
     }
     
+}
+
+extension StoriesViewController: GADInterstitialDelegate{
+    
+    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
+      print("interstitialDidReceiveAd")
+    }
+
+    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+      print("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+
+    func interstitialWillPresentScreen(_ ad: GADInterstitial) {
+      print("interstitialWillPresentScreen")
+        DispatchQueue.main.async {
+            self.spb.isPaused = true
+            if (self.isVideoPlaying){
+                self.videoPlayer.pause()
+            }
+        }
+        
+    }
+
+    func interstitialWillDismissScreen(_ ad: GADInterstitial) {
+      print("interstitialWillDismissScreen")
+    }
+
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+      print("interstitialDidDismissScreen")
+        interstitial = createAndLoadInterstitial()
+        self.prevStory()
+        self.nextStory()
+//        DispatchQueue.main.async {
+//            self.spb.isPaused = false
+//            if (self.isVideoPlaying){
+//                self.videoPlayer.play()
+//            }
+//        }
+        
+    }
+
+    func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
+      print("interstitialWillLeaveApplication")
+    }
 }
