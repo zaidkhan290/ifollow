@@ -560,11 +560,14 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2E-iQ-Abt">
-                                <rect key="frame" x="75" y="36" width="277" height="0.0"/>
+                                <rect key="frame" x="75" y="36" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="verify" translatesAutoresizingMaskIntoConstraints="NO" id="hbO-4v-Aqo">
+                                <rect key="frame" x="80" y="29" width="14" height="14"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ff4-HZ-xJ7">
                                 <rect key="frame" x="75" y="37" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
@@ -621,10 +624,12 @@
                             <constraint firstItem="DXr-JL-xqr" firstAttribute="trailing" secondItem="eOX-G4-zPT" secondAttribute="trailing" constant="20" id="2m1-l4-rbF"/>
                             <constraint firstItem="raR-Wp-Nl4" firstAttribute="centerY" secondItem="uXH-xU-ISL" secondAttribute="centerY" id="319-9e-ssp"/>
                             <constraint firstItem="Uqr-hH-4hI" firstAttribute="top" secondItem="y2E-iQ-Abt" secondAttribute="bottom" id="3GO-zc-Ebz"/>
+                            <constraint firstItem="hbO-4v-Aqo" firstAttribute="centerY" secondItem="y2E-iQ-Abt" secondAttribute="centerY" id="3VV-qa-TXt"/>
                             <constraint firstItem="4Xh-vp-2DW" firstAttribute="top" secondItem="DXr-JL-xqr" secondAttribute="top" constant="20" id="4ee-Iq-UT9"/>
                             <constraint firstItem="uXH-xU-ISL" firstAttribute="leading" secondItem="raR-Wp-Nl4" secondAttribute="trailing" constant="15" id="5uk-MI-hgv"/>
                             <constraint firstItem="DXr-JL-xqr" firstAttribute="bottom" secondItem="4QN-V1-cgG" secondAttribute="bottom" constant="20" id="6RN-QU-C9o"/>
                             <constraint firstItem="eOX-G4-zPT" firstAttribute="leading" secondItem="uXH-xU-ISL" secondAttribute="trailing" constant="10" id="7JS-Vl-zhQ"/>
+                            <constraint firstItem="hbO-4v-Aqo" firstAttribute="leading" secondItem="y2E-iQ-Abt" secondAttribute="trailing" constant="5" id="B2l-Be-PoT"/>
                             <constraint firstItem="uXH-xU-ISL" firstAttribute="leading" secondItem="4QN-V1-cgG" secondAttribute="trailing" constant="10" id="BVE-Uj-TRP"/>
                             <constraint firstItem="DXr-JL-xqr" firstAttribute="trailing" secondItem="NPd-CF-WGm" secondAttribute="trailing" id="CW3-OC-8GA"/>
                             <constraint firstItem="4QN-V1-cgG" firstAttribute="leading" secondItem="jWo-PD-a6d" secondAttribute="leading" constant="20" id="Cb8-V1-bVx"/>
@@ -632,7 +637,6 @@
                             <constraint firstItem="zSk-hV-Hkt" firstAttribute="top" secondItem="jWo-PD-a6d" secondAttribute="top" id="Cvy-6e-Jga"/>
                             <constraint firstItem="DXr-JL-xqr" firstAttribute="trailing" secondItem="Fez-QY-f2r" secondAttribute="trailing" id="EWO-dX-evb"/>
                             <constraint firstItem="y2E-iQ-Abt" firstAttribute="leading" secondItem="4Xh-vp-2DW" secondAttribute="trailing" constant="15" id="FUU-9y-pqe"/>
-                            <constraint firstItem="SRO-dB-E36" firstAttribute="leading" secondItem="y2E-iQ-Abt" secondAttribute="trailing" constant="20" id="JbN-nj-HGs"/>
                             <constraint firstAttribute="bottom" secondItem="NPd-CF-WGm" secondAttribute="bottom" id="KP9-Ux-WDZ"/>
                             <constraint firstItem="SRO-dB-E36" firstAttribute="centerY" secondItem="y2E-iQ-Abt" secondAttribute="centerY" id="Nja-bq-ZMm"/>
                             <constraint firstItem="ckG-Yj-E0Q" firstAttribute="top" secondItem="y2E-iQ-Abt" secondAttribute="bottom" id="Qv6-jh-Zvn"/>
@@ -677,6 +681,7 @@
                         <outlet property="prevStoryView" destination="Uqr-hH-4hI" id="XZM-cy-CpV"/>
                         <outlet property="txtFieldMessage" destination="Bpa-PW-w8V" id="54v-wY-mfE"/>
                         <outlet property="userImage" destination="4Xh-vp-2DW" id="QQv-bL-doE"/>
+                        <outlet property="userVerifiedIcon" destination="hbO-4v-Aqo" id="bAx-ap-oWb"/>
                         <outlet property="videoView" destination="zSk-hV-Hkt" id="ygf-em-h9W"/>
                     </connections>
                 </viewController>

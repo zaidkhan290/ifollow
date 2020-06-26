@@ -27,6 +27,7 @@ class StoriesViewController: UIViewController {
     @IBOutlet weak var txtFieldMessage: UITextField!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var lblUsername: UILabel!
+    @IBOutlet weak var userVerifiedIcon: UIImageView!
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var btnOptions: UIButton!
     @IBOutlet weak var nextStoryView: UIView!
@@ -120,6 +121,7 @@ class StoriesViewController: UIViewController {
             self.currentUserId = self.storiesUsersArray[self.storyUserIndex].userId
             self.currentUserName = self.storiesUsersArray[self.storyUserIndex].userName
             self.lblUsername.text = self.storiesUsersArray[self.storyUserIndex].userName
+            self.userVerifiedIcon.isHidden = self.storiesUsersArray[self.storyUserIndex].isUserVerified == 0
             self.userImage.layer.cornerRadius = self.userImage.frame.height / 2
             self.userImage.layer.borderWidth = 2
             self.userImage.layer.borderColor = UIColor.white.cgColor

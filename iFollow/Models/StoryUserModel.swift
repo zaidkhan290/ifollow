@@ -16,6 +16,7 @@ class StoryUserModel: Object {
     @objc dynamic var userName: String = ""
     @objc dynamic var userImage: String = ""
     @objc dynamic var userProfileStatus = ""
+    @objc dynamic var isUserVerified: Int = 0
     @objc dynamic var isAllStoriesViewed: Bool = false
     @objc dynamic var lastStoryMediaType: String = ""
     @objc dynamic var lastStoryPreview: String = ""
@@ -31,6 +32,7 @@ class StoryUserModel: Object {
             userProfileStatus = Utility.getLoginUserProfileType()
             let stories = json["my_stories"].arrayValue
             for story in stories{
+                isUserVerified = story["verified"].intValue
                 let model = UserStoryModel()
                 model.updateModelWithJSON(json: story)
                 userStories.append(model)
@@ -41,6 +43,7 @@ class StoryUserModel: Object {
             userName = json["user_name"].stringValue
             userImage = json["user_image"].stringValue.replacingOccurrences(of: "\\", with: "")
             userProfileStatus = json["profile_status"].stringValue
+            isUserVerified = json["verified"].intValue
             isForPublicStory = isPublicStory
             let stories = json["stories"].arrayValue
             for story in stories{
