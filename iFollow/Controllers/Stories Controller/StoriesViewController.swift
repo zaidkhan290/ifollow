@@ -784,7 +784,7 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
             self.imageView.image = nil
             self.imageView.backgroundColor = .black
             let storiesArray = Array(storiesUsersArray[storyUserIndex].userStories)
-            if (isFromExplore && index % 5 == 0 && loadedAddIndex != index){
+            if (isFromExplore && index % 10 == 0 && loadedAddIndex != index){
                 if (interstitial.isReady){
                     loadedAddIndex = index
                     interstitial.present(fromRootViewController: self)

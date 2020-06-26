@@ -742,8 +742,8 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             }
             else{
                 var addsCount = 0
-                if (postsArray.count > 10){
-                    addsCount = postsArray.count / 10
+                if (postsArray.count > 25){
+                    addsCount = postsArray.count / 25
                 }
                 return postsArray.count + addsCount
             }
@@ -763,7 +763,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         
         addView.frame = view.frame
         
-        if (index % 10 == 0 && index != 0){
+        if (index % 25 == 0 && index != 0){
             
             view.backgroundColor = .white
             view.clipsToBounds = true
@@ -778,8 +778,8 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             return view
         }
         else{
-            itemView.index = index - (index / 10)
-            let post = postsArray[index - (index / 10)]
+            itemView.index = index - (index / 25)
+            let post = postsArray[index - (index / 25)]
             
             itemView.verifiedIcon.isHidden = post.isPostUserVerified == 0
             itemView.postLinkView.isHidden = post.postBoostLink == ""
@@ -821,32 +821,32 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
 //            }
             
             itemView.userImage.isUserInteractionEnabled = true
-            itemView.userImage.tag = index - (index / 10)
+            itemView.userImage.tag = index - (index / 25)
             itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped(_:))))
             itemView.feedBackView.isUserInteractionEnabled = true
-            itemView.feedBackView.tag = index - (index / 10)
+            itemView.feedBackView.tag = index - (index / 25)
             itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
             itemView.postlikeView.isHidden = post.shouldShowPostTrends == 1
             itemView.lblLikeComments.isHidden = post.shouldShowPostTrends == 1
             itemView.postTrendLikeIcon.isHidden = post.shouldShowPostTrends == 1
             itemView.postlikeView.isUserInteractionEnabled = true
-            itemView.postlikeView.tag = index - (index / 10)
+            itemView.postlikeView.tag = index - (index / 25)
             itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
             itemView.likeView.isUserInteractionEnabled = true
-            itemView.likeView.tag = index - (index / 10)
+            itemView.likeView.tag = index - (index / 25)
             itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
             itemView.frame = view.frame
             itemView.userImage.layer.cornerRadius = 25
             itemView.feedImage.clipsToBounds = true
             itemView.mainView.dropShadow(color: .white)
             itemView.mainView.layer.cornerRadius = 10
-            itemView.btnOptions.tag = index - (index / 10)
+            itemView.btnOptions.tag = index - (index / 25)
             itemView.btnOptions.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
-            itemView.postShareView.tag = index - (index / 10)
+            itemView.postShareView.tag = index - (index / 25)
             itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(shareViewTapped(_:))))
-            itemView.postHideView.tag = index - (index / 10)
+            itemView.postHideView.tag = index - (index / 25)
             itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideViewTapped(_:))))
-            itemView.postLinkView.tag = index - (index / 10)
+            itemView.postLinkView.tag = index - (index / 25)
             itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
             view.backgroundColor = .white
             view.clipsToBounds = true
@@ -859,10 +859,10 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         
-        if (index % 10 == 0 && index != 0){
+        if (index % 25 == 0 && index != 0){
         }
         else{
-            let post = postsArray[index - (index / 10)]
+            let post = postsArray[index - (index / 25)]
             
             if (post.postMediaType == "image"){
                 let image = LightboxImage(imageURL: URL(string: post.postMedia)!, text: post.postDescription, videoURL: nil)
