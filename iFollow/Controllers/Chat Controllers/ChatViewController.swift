@@ -54,6 +54,8 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     var isAllMessagesLoad = false
     var messageKeys = [String]()
     var isLastMessageSeen = false
+    var myTypingRef = rootRef
+    var userTypingRef = rootRef
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +82,9 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             self.inputToolbar.contentView.textView.textColor = .black
             self.inputToolbar.contentView.textView.backgroundColor = .clear
         }
+        myTypingRef = myTypingRef.child("Typing")
+        userTypingRef = userTypingRef.child("Typing")
+        self.showUserTypingIndicator()
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         self.setup()
         self.messageAdded(isFirstTime: true)
@@ -151,6 +156,28 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 
             }
         }
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { (notification) in
+            self.myTypingRef.child(self.chatId).child(self.senderId).updateChildValues(["isTyping": false])
+            let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
+            usersRef.updateChildValues(["isOnChat": false])
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { (notification) in
+            let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
+            usersRef.updateChildValues(["isOnChat": true])
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: nil) { (notification) in
+            let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
+            usersRef.updateChildValues(["isOnChat": false])
+        }
+    
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        myTypingRef.child(chatId).child(self.senderId).updateChildValues(["isTyping": false])
         
     }
     
@@ -387,6 +414,16 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 self.messages.remove(at: indexOfDeleteMessageKey)
                 self.messagesModel.remove(at: indexOfDeleteMessageKey)
                 self.collectionView.reloadData()
+            }
+        }
+    }
+    
+    func showUserTypingIndicator(){
+        userTypingRef.child(chatId).child("\(otherUserId)").observe(.value) { (snapshot) in
+            if (snapshot.hasChild("isTyping")){
+                let isUserTyping = snapshot.childSnapshot(forPath: "isTyping").value as! Bool
+                self.showTypingIndicator = isUserTyping
+                self.scrollToBottom(animated: true)
             }
         }
     }
@@ -941,6 +978,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
+        myTypingRef.child(chatId).child(self.senderId).updateChildValues(["isTyping": false])
         sendMsgToFireBase(sender: senderId, displayName: senderDisplayName, text: text)
         finishSendingMessage()
         self.collectionView?.reloadData()
@@ -1139,6 +1177,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     
     @objc func showImagePicker(){
         
+        myTypingRef.child(chatId).child(self.senderId).updateChildValues(["isTyping": false])
         let alertVC = UIAlertController(title: "Select Action", message: "", preferredStyle: .actionSheet)
         let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
             self.imagePicker.sourceType = .camera
@@ -1154,6 +1193,14 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         alertVC.addAction(cancelAction)
         self.present(alertVC, animated: true, completion: nil)
         
+    }
+    
+    override func textViewDidBeginEditing(_ textView: UITextView) {
+        myTypingRef.child(chatId).child(self.senderId).updateChildValues(["isTyping": true])
+    }
+    
+    override func textViewDidEndEditing(_ textView: UITextView) {
+        myTypingRef.child(chatId).child(self.senderId).updateChildValues(["isTyping": false])
     }
 }
 
