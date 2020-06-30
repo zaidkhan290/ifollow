@@ -22,7 +22,7 @@ class PrivacyViewController: UIViewController {
         let menuItemCellNib = UINib(nibName: "MenuTableViewCell", bundle: nil)
         privacyTableView.register(menuItemCellNib, forCellReuseIdentifier: "MenuCell")
         
-        menuIcons = ["privacy", "Group 7194", "Group 7194", "Group 7194", "Group 7194", "Group 7194"]
+        menuIcons = ["private_profile", "story_view", "post_trend", "display_trenders", "story_view", "post_trend"]
         menuItems = ["Private Profile", "Story View", "Post Trend Views", "Display Trenders/Trendees", "Story Expires Time", "Post Expires Time"]
         
     }

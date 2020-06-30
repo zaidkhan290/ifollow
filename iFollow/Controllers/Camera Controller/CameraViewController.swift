@@ -178,7 +178,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         super.viewDidAppear(true)
         
         captureSession = AVCaptureSession()
-        captureSession.sessionPreset = .hd1920x1080
+        captureSession.sessionPreset = .hd1280x720
        // captureSession.automaticallyConfiguresApplicationAudioSession = false
     
         captureSession.usesApplicationAudioSession = true
@@ -900,7 +900,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             
             if (!isFrontCamera) {
                 newCamera = cameraWithPosition(position: .front)
-                session.sessionPreset = .hd1920x1080
+                session.sessionPreset = .hd1280x720
                 isFrontCamera = true
                 btnFlash.isEnabled = false
             } else {

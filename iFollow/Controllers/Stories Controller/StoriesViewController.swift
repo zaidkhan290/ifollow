@@ -54,6 +54,7 @@ class StoriesViewController: UIViewController {
     var isFromExplore = false
     var interstitial: GADInterstitial!
     var loadedAddIndex = 0
+    var allStoriesToDownload = [UserStoryModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,6 +147,10 @@ class StoriesViewController: UIViewController {
             self.spb.bottomColor = UIColor.clear//UIColor.gray
             self.spb.padding = 2
             let storiesArray = Array(self.storiesUsersArray[self.storyUserIndex].userStories)
+            for story in storiesArray{
+                self.allStoriesToDownload.append(story)
+            }
+            self.downloadAllStoriesAtBackground()
             if (!self.isForMyStory){
                 if (self.storiesUsersArray[self.storyUserIndex].userProfileStatus == "private"){
                     self.btnSend.isHidden = true
@@ -428,6 +433,65 @@ class StoriesViewController: UIViewController {
             }
         }
         
+    }
+    
+    func downloadAllStoriesAtBackground(){
+        allStoriesToDownload.removeFirst()
+        if let story = allStoriesToDownload.first{
+            if (story.storyMediaType == "video"){
+                
+                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                let videoURL = documentsURL.appendingPathComponent("\(story.storyId).mp4")
+                if (try? Data(contentsOf: videoURL)) == nil{
+                    Alamofire.request(story.storyURL).downloadProgress(closure : { (progress) in
+                        print(progress.fractionCompleted)
+                       // Utility.showOrHideLoader(shouldShow: true)
+                    }).responseData{ (response) in
+                        print(response)
+                        if let data = response.result.value {
+                            
+                            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                            let videoURL = documentsURL.appendingPathComponent("\(story.storyId).mp4")
+                            do {
+                                try data.write(to: videoURL)
+                            } catch {
+                                
+                            }
+                            self.downloadAllStoriesAtBackground()
+                        }
+                    }
+                }
+                else{
+                    self.downloadAllStoriesAtBackground()
+                }
+                
+            }
+            else{
+                
+                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                let photoURL = documentsURL.appendingPathComponent("\(story.storyId).jpg")
+                if (try? Data(contentsOf: photoURL)) == nil{
+                    
+                    SDWebImageDownloader.shared.downloadImage(with: URL(string: story.storyURL)) { (image, data, error, success) in
+                        
+                        if (error == nil){
+                            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                            let photoURL = documentsURL.appendingPathComponent("\(story.storyId).jpg")
+                            do {
+                                try data!.write(to: photoURL)
+                            } catch {
+                                
+                            }
+                            self.downloadAllStoriesAtBackground()
+                        }
+                    }
+                    
+                }
+                else{
+                    self.downloadAllStoriesAtBackground()   
+                }
+            }
+        }
     }
     
     @IBAction func btnSendTapped(_ sender: UIButton) {

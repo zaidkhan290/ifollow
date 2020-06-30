@@ -97,7 +97,7 @@ class LoginViewController: UIViewController {
                         realm.add(model)
                     }
                     let vc = Utility.getTabBarViewController()
-                    self.present(vc, animated: true, completion: nil)
+                    UIWINDOW!.rootViewController = vc
                 }
                 else if (status == .blockByAdmin){
                     let alertVC = UIAlertController(title: "Activity Blocked", message: "This action was blocked by admin. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake. Email us at support@ifollowapp.com.", preferredStyle: .alert)
