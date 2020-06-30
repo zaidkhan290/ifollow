@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="543" height="133"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="543" height="132.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="543" height="133"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profilePic" translatesAutoresizingMaskIntoConstraints="NO" id="ygh-Iv-aIe">
@@ -33,33 +31,36 @@
                             <constraint firstAttribute="height" constant="60" id="sH5-vR-khe"/>
                         </constraints>
                     </imageView>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onlineIcon" translatesAutoresizingMaskIntoConstraints="NO" id="YB0-oN-nFo">
+                        <rect key="frame" x="49" y="86.5" width="11" height="11"/>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emma Watson" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9a-ay-fBs">
-                        <rect key="frame" x="85" y="39.5" width="103" height="20"/>
+                        <rect key="frame" x="85" y="40" width="103" height="20"/>
                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                         <color key="textColor" red="0.36470588235294116" green="0.36470588235294116" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your words are still in my memory words are still in my memory memory m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rGu-fW-f5x">
-                        <rect key="frame" x="85" y="64.5" width="326" height="15"/>
+                        <rect key="frame" x="85" y="65" width="326" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" red="0.36470588240000001" green="0.36470588240000001" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="messageCounter" translatesAutoresizingMaskIntoConstraints="NO" id="lQk-Np-DFZ">
-                        <rect key="frame" x="493.5" y="47.5" width="20" height="17.5"/>
+                        <rect key="frame" x="493.5" y="48" width="20" height="17.5"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17.5" id="gC3-v6-VCp"/>
                             <constraint firstAttribute="width" constant="20" id="lOU-rb-EV1"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wis-ba-Ip2">
-                        <rect key="frame" x="503.5" y="62" width="0.0" height="0.0"/>
+                        <rect key="frame" x="503.5" y="62.5" width="0.0" height="0.0"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:40 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tt3-dz-LUb">
-                        <rect key="frame" x="484" y="70" width="39" height="12"/>
+                        <rect key="frame" x="484" y="70.5" width="39" height="12"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <color key="textColor" red="0.36470588240000001" green="0.36470588240000001" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -73,12 +74,14 @@
                     <constraint firstItem="K9a-ay-fBs" firstAttribute="centerY" secondItem="ygh-Iv-aIe" secondAttribute="centerY" multiplier="0.75" id="75O-7o-W4M"/>
                     <constraint firstItem="lQk-Np-DFZ" firstAttribute="centerX" secondItem="tt3-dz-LUb" secondAttribute="centerX" id="IrE-iJ-Be6"/>
                     <constraint firstItem="K9a-ay-fBs" firstAttribute="leading" secondItem="ygh-Iv-aIe" secondAttribute="trailing" constant="15" id="MEf-eu-vY3"/>
+                    <constraint firstItem="YB0-oN-nFo" firstAttribute="trailing" secondItem="ygh-Iv-aIe" secondAttribute="trailing" constant="-10" id="TTj-Br-wOg"/>
                     <constraint firstItem="ygh-Iv-aIe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="VHg-AB-rSf"/>
                     <constraint firstItem="tt3-dz-LUb" firstAttribute="centerY" secondItem="ygh-Iv-aIe" secondAttribute="centerY" multiplier="1.15" id="WXg-LO-fNE"/>
                     <constraint firstItem="ygh-Iv-aIe" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Yia-R7-5ih"/>
                     <constraint firstItem="rGu-fW-f5x" firstAttribute="leading" secondItem="K9a-ay-fBs" secondAttribute="leading" id="aLL-jQ-59f"/>
                     <constraint firstItem="rGu-fW-f5x" firstAttribute="top" secondItem="K9a-ay-fBs" secondAttribute="bottom" constant="5" id="bPq-VH-kRN"/>
                     <constraint firstItem="tt3-dz-LUb" firstAttribute="top" secondItem="Wis-ba-Ip2" secondAttribute="bottom" constant="8" id="dQb-Nw-sab"/>
+                    <constraint firstItem="YB0-oN-nFo" firstAttribute="top" secondItem="ygh-Iv-aIe" secondAttribute="bottom" constant="-10" id="fxS-Jr-KFE"/>
                     <constraint firstItem="tt3-dz-LUb" firstAttribute="top" secondItem="lQk-Np-DFZ" secondAttribute="bottom" constant="5" id="kiF-g4-pil"/>
                 </constraints>
             </tableViewCellContentView>
@@ -89,6 +92,7 @@
                 <outlet property="lblUserMessage" destination="rGu-fW-f5x" id="gJF-mq-MvR"/>
                 <outlet property="lblUsername" destination="K9a-ay-fBs" id="tyY-ax-csW"/>
                 <outlet property="messageCounterIcon" destination="lQk-Np-DFZ" id="dN6-t3-0Ic"/>
+                <outlet property="onlineIcon" destination="YB0-oN-nFo" id="VgT-op-60k"/>
                 <outlet property="userImage" destination="ygh-Iv-aIe" id="kvO-f6-W6n"/>
             </connections>
             <point key="canvasLocation" x="159.42028985507247" y="133.25892857142856"/>
@@ -96,6 +100,7 @@
     </objects>
     <resources>
         <image name="messageCounter" width="17.5" height="17.5"/>
+        <image name="onlineIcon" width="11" height="11"/>
         <image name="profilePic" width="143" height="143"/>
     </resources>
 </document>

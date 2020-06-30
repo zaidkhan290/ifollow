@@ -18,6 +18,7 @@ class AllChatsListViewController: UIViewController {
     @IBOutlet weak var chatListTableView: UITableView!
     
     var chatRef = rootRef
+    var usersRef = rootRef
     var allChatsArray = [RecentChatsModel]()
     var chatsArray = [RecentChatsModel]()
     var searchChatsArray = [RecentChatsModel]()
@@ -42,6 +43,7 @@ class AllChatsListViewController: UIViewController {
             Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
         }
         
+        usersRef = usersRef.child("Users")
         let cellNib = UINib(nibName: "ChatListTableViewCell", bundle: nil)
         chatListTableView.register(cellNib, forCellReuseIdentifier: "ChatListCell")
         chatListTableView.rowHeight = 80
@@ -141,11 +143,14 @@ class AllChatsListViewController: UIViewController {
                                     return model1.lastMessageTime > model2.lastMessageTime
                                 })
                                 self.chatListTableView.reloadData()
+                                self.getOnlineStatus()
                             })
                         }
                         
                     }
+                    
                     Utility.showOrHideLoader(shouldShow: false)
+                    
                     
                 }
                 else if (status == .failure){
@@ -164,6 +169,21 @@ class AllChatsListViewController: UIViewController {
             
         }
         
+    }
+    
+    func getOnlineStatus(){
+        for chat in chatsArray{
+            let chatUserRef = usersRef.child("\(chat.chatUserId)")
+            chatUserRef.observe(.value) { (snapshot) in
+                if let chatUser = self.chatsArray.first(where: {$0.chatUserId == Int(snapshot.key)}){
+                    if snapshot.hasChild("isActive"){
+                        let isOnline = snapshot.childSnapshot(forPath: "isActive").value as! Bool
+                        chatUser.isUserOnline = isOnline
+                        self.chatListTableView.reloadData()
+                    }
+                }
+            }
+        }
     }
     
     @objc func searchTextFieldTextChanged(){
@@ -228,6 +248,7 @@ extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate
         let lastMessageDate = Date(timeIntervalSince1970: (chat.lastMessageTime / 1000))
         cell.lblTime.text = Utility.timeAgoSince(lastMessageDate)
         cell.lblUserMessage.font = chat.isRead ? Theme.getLatoRegularFontOfSize(size: 13) : Theme.getLatoBoldFontOfSize(size: 13)
+        cell.onlineIcon.isHidden = !chat.isUserOnline
         return cell
         
     }

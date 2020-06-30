@@ -18,6 +18,7 @@ class RecentChatsModel: NSObject{
     var lastMessage: String = ""
     var lastMessageTime: Double = 0.0
     var isRead: Bool = false
+    var isUserOnline: Bool = false
     
     func updateModelWithJSON(json: JSON){
         chatId = json["chat_room_id"].stringValue

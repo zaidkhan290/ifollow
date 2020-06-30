@@ -53,6 +53,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     var lastMessageKey = ""
     var isAllMessagesLoad = false
     var messageKeys = [String]()
+    var isLastMessageSeen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,6 +208,13 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                      let chatToUpdate = self.chatRef.child(chatNode)
                      chatToUpdate.updateChildValues(["isRead": true])
                  }
+                 else{
+                    let lastMessageRef = self.chatRef.child(chatNode)
+                    lastMessageRef.observe(.value) { (lastMessageSnapshot) in
+                        self.isLastMessageSeen = lastMessageSnapshot.childSnapshot(forPath: "isRead").value as! Bool
+                        self.collectionView.reloadData()
+                    }
+                }
              }
              
              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateMessagesCounterAfterReadChat"), object: nil)
@@ -286,6 +294,13 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 if (userId != "\(Utility.getLoginUserId())"){
                     let chatToUpdate = self.chatRef.child(chatNode)
                     chatToUpdate.updateChildValues(["isRead": true])
+                }
+                else{
+                    let lastMessageRef = self.chatRef.child(chatNode)
+                    lastMessageRef.observe(.value) { (lastMessageSnapshot) in
+                        self.isLastMessageSeen = lastMessageSnapshot.childSnapshot(forPath: "isRead").value as! Bool
+                        self.collectionView.reloadData()
+                    }
                 }
             }
             
@@ -821,6 +836,14 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     }
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAt indexPath: IndexPath!) -> CGFloat {
         
+        if (indexPath.row == messages.count - 1){
+            if (messages[indexPath.row].senderId == self.senderId && isLastMessageSeen){
+                return 20
+            }
+            else{
+                return 5
+            }
+        }
         return 5
         
     }
@@ -841,6 +864,8 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             cell.avatarImageView.layer.cornerRadius = cell.avatarImageView.frame.height / 2
             cell.avatarImageView.clipsToBounds = true
             cell.cellBottomLabel.font = Theme.getLatoRegularFontOfSize(size: 11)
+            cell.cellTopLabel.font = Theme.getLatoRegularFontOfSize(size: 11)
+            cell.cellTopLabel.textAlignment = .right
             
             if cell.textView != nil{
              //   cell.textView.font = Theme.getLatoRegularFontOfSize(size: 18)
@@ -855,9 +880,17 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             }
             
             if data.senderId == self.senderId{
-                cell.cellBottomLabel.text = "\(Utility.timeAgoSince(data.date))"
+                if (indexPath.row == self.messages.count - 1 && self.isLastMessageSeen){
+                    cell.cellTopLabel.text = "\(Utility.timeAgoSince(data.date))"
+                    cell.cellBottomLabel.text = "Seen"
+                }
+                else{
+                    cell.cellTopLabel.text = ""
+                    cell.cellBottomLabel.text = "\(Utility.timeAgoSince(data.date))"
+                }
             }
             else{
+                cell.cellTopLabel.text = ""
                 cell.cellBottomLabel.text = "\(Utility.timeAgoSince(data.date))"
             }
             
