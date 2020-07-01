@@ -1,16 +1,16 @@
 //
-//  PrivacyViewController.swift
+//  TimeSettingViewController.swift
 //  iFollow
 //
-//  Created by Shahzeb siddiqui on 24/03/2020.
+//  Created by Shahzeb siddiqui on 01/07/2020.
 //  Copyright © 2020 Shahzeb siddiqui. All rights reserved.
 //
 
 import UIKit
-import Loaf
 import RealmSwift
+import Loaf
 
-class PrivacyViewController: UIViewController {
+class TimeSettingViewController: UIViewController {
 
     @IBOutlet weak var privacyTableView: UITableView!
     var menuItems = [String]()
@@ -22,8 +22,8 @@ class PrivacyViewController: UIViewController {
         let menuItemCellNib = UINib(nibName: "MenuTableViewCell", bundle: nil)
         privacyTableView.register(menuItemCellNib, forCellReuseIdentifier: "MenuCell")
         
-        menuIcons = ["private_profile", "story_view", "post_trend", "display_trenders", /*"story_view", "post_trend"*/]
-        menuItems = ["Private Profile", "Story View", "Post Trend Views", "Display Trenders/Trendees", /*"Story Expires Time", "Post Expires Time"*/]
+        menuIcons = [/*"private_profile", "story_view", "post_trend", "display_trenders",*/ "story_view", "post_trend"]
+        menuItems = [/*"Private Profile", "Story View", "Post Trend Views", "Display Trenders/Trendees",*/ "Story Expires Time", "Post Expires Time"]
         
     }
     
@@ -70,7 +70,7 @@ class PrivacyViewController: UIViewController {
 
 }
 
-extension PrivacyViewController: UITableViewDataSource, UITableViewDelegate{
+extension TimeSettingViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menuItems.count
@@ -86,40 +86,40 @@ extension PrivacyViewController: UITableViewDataSource, UITableViewDelegate{
         cell.delegate = self
         cell.indexPath = indexPath
         
+//        if (indexPath.row == 0){
+//            cell.menuSwitch.isHidden = false
+//            cell.menuSwitch.isOn = false
+//            cell.lblDuration.isHidden = true
+//            cell.btnMinus.isHidden = true
+//            cell.btnPlus.isHidden = true
+//            cell.menuSwitch.isOn = Utility.getLoginUserProfileType() == "private"
+//        }
+//        else if (indexPath.row == 1){
+//            cell.menuSwitch.isHidden = false
+//            cell.menuSwitch.isOn = false
+//            cell.lblDuration.isHidden = true
+//            cell.btnMinus.isHidden = true
+//            cell.btnPlus.isHidden = true
+//            cell.menuSwitch.isOn = Utility.getLoginUserIsStoryViewEnable() == 0
+//        }
+//        else if (indexPath.row == 2){
+//            cell.menuSwitch.isHidden = false
+//            cell.menuSwitch.isOn = false
+//            cell.lblDuration.isHidden = true
+//            cell.btnMinus.isHidden = true
+//            cell.btnPlus.isHidden = true
+//            cell.menuSwitch.isOn = Utility.getLoginUserIsPostViewEnable() == 0
+//
+//        }
+//        else if (indexPath.row == 3){
+//            cell.menuSwitch.isHidden = false
+//            cell.menuSwitch.isOn = false
+//            cell.lblDuration.isHidden = true
+//            cell.btnMinus.isHidden = true
+//            cell.btnPlus.isHidden = true
+//            cell.menuSwitch.isOn = Utility.getLoginUserDisplayTrendStatus() == "public"
+//        }
         if (indexPath.row == 0){
-            cell.menuSwitch.isHidden = false
-            cell.menuSwitch.isOn = false
-            cell.lblDuration.isHidden = true
-            cell.btnMinus.isHidden = true
-            cell.btnPlus.isHidden = true
-            cell.menuSwitch.isOn = Utility.getLoginUserProfileType() == "private"
-        }
-        else if (indexPath.row == 1){
-            cell.menuSwitch.isHidden = false
-            cell.menuSwitch.isOn = false
-            cell.lblDuration.isHidden = true
-            cell.btnMinus.isHidden = true
-            cell.btnPlus.isHidden = true
-            cell.menuSwitch.isOn = Utility.getLoginUserIsStoryViewEnable() == 0
-        }
-        else if (indexPath.row == 2){
-            cell.menuSwitch.isHidden = false
-            cell.menuSwitch.isOn = false
-            cell.lblDuration.isHidden = true
-            cell.btnMinus.isHidden = true
-            cell.btnPlus.isHidden = true
-            cell.menuSwitch.isOn = Utility.getLoginUserIsPostViewEnable() == 0
-            
-        }
-        else if (indexPath.row == 3){
-            cell.menuSwitch.isHidden = false
-            cell.menuSwitch.isOn = false
-            cell.lblDuration.isHidden = true
-            cell.btnMinus.isHidden = true
-            cell.btnPlus.isHidden = true
-            cell.menuSwitch.isOn = Utility.getLoginUserDisplayTrendStatus() == "public"
-        }
-        else if (indexPath.row == 4){
             cell.menuSwitch.isHidden = true
             cell.menuSwitch.isOn = true
             cell.lblDuration.isHidden = false
@@ -129,7 +129,7 @@ extension PrivacyViewController: UITableViewDataSource, UITableViewDelegate{
             cell.btnMinus.isEnabled = Utility.getLoginUserStoryExpireHours() > 24
             cell.btnPlus.isEnabled = Utility.getLoginUserStoryExpireHours() < 72
         }
-        else if (indexPath.row == 5){
+        else if (indexPath.row == 1){
             cell.menuSwitch.isHidden = true
             cell.menuSwitch.isOn = true
             cell.lblDuration.isHidden = false
@@ -149,34 +149,34 @@ extension PrivacyViewController: UITableViewDataSource, UITableViewDelegate{
     }
 }
 
-extension PrivacyViewController: MenuTableViewCellDelegate{
+extension TimeSettingViewController: MenuTableViewCellDelegate{
     
     func switchChanged(isOn: Bool, indexPath: IndexPath) {
         
-        let realm = try! Realm()
-        try! realm.safeWrite {
-            if (indexPath.row == 0){
-                if let model = UserModel.getCurrentUser(){
-                    model.userProfileStatus = isOn ? "private" : "public"
-                }
-            }
-            else if (indexPath.row == 1){
-                if let model = UserModel.getCurrentUser(){
-                    model.isUserStoryViewEnable = isOn ? 0 : 1
-                }
-            }
-            else if (indexPath.row == 2){
-                if let model = UserModel.getCurrentUser(){
-                    model.isUserPostViewEnable = isOn ? 0 : 1
-                }
-            }
-            else if (indexPath.row == 3){
-                if let model = UserModel.getCurrentUser(){
-                    model.userTrendStatus = isOn ? "public" : "private"
-                }
-            }
-        }
-        self.privacyTableView.reloadData()
+//        let realm = try! Realm()
+//        try! realm.safeWrite {
+//            if (indexPath.row == 0){
+//                if let model = UserModel.getCurrentUser(){
+//                    model.userProfileStatus = isOn ? "private" : "public"
+//                }
+//            }
+//            else if (indexPath.row == 1){
+//                if let model = UserModel.getCurrentUser(){
+//                    model.isUserStoryViewEnable = isOn ? 0 : 1
+//                }
+//            }
+//            else if (indexPath.row == 2){
+//                if let model = UserModel.getCurrentUser(){
+//                    model.isUserPostViewEnable = isOn ? 0 : 1
+//                }
+//            }
+//            else if (indexPath.row == 3){
+//                if let model = UserModel.getCurrentUser(){
+//                    model.userTrendStatus = isOn ? "public" : "private"
+//                }
+//            }
+//        }
+//        self.privacyTableView.reloadData()
     }
     
     func durationChanged(isPlus: Bool, indexPath: IndexPath) {
@@ -185,7 +185,7 @@ extension PrivacyViewController: MenuTableViewCellDelegate{
             if let user = UserModel.getCurrentUser(){
                 
                 if (isPlus){
-                    if (indexPath.row == 4){
+                    if (indexPath.row == 0){
                         if (user.userStoryExpireHours == 24){
                             user.userStoryExpireHours = 48
                         }
@@ -193,7 +193,7 @@ extension PrivacyViewController: MenuTableViewCellDelegate{
                             user.userStoryExpireHours = 72
                         }
                     }
-                    else if (indexPath.row == 5){
+                    else if (indexPath.row == 1){
                         if (user.userPostExpireHours == 24){
                             user.userPostExpireHours = 48
                         }
@@ -203,7 +203,7 @@ extension PrivacyViewController: MenuTableViewCellDelegate{
                     }
                 }
                 else{
-                    if (indexPath.row == 4){
+                    if (indexPath.row == 0){
                         if (user.userStoryExpireHours == 72){
                             user.userStoryExpireHours = 48
                         }
@@ -211,7 +211,7 @@ extension PrivacyViewController: MenuTableViewCellDelegate{
                             user.userStoryExpireHours = 24
                         }
                     }
-                    else if (indexPath.row == 5){
+                    else if (indexPath.row == 1){
                         if (user.userPostExpireHours == 72){
                             user.userPostExpireHours = 48
                         }

@@ -78,6 +78,7 @@
 		18847A59237C3010004D500A /* MediaCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18847A57237C3010004D500A /* MediaCollectionViewCell.xib */; };
 		18847A5B237C5A52004D500A /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18847A5A237C5A52004D500A /* MediaViewController.swift */; };
 		1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885744A2372B91900985AC8 /* CameraViewController.swift */; };
+		188577FB24ACB85400677B0A /* TimeSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188577FA24ACB85400677B0A /* TimeSettingViewController.swift */; };
 		1889F2DE23DF41100079DB72 /* ViewersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1889F2DD23DF41100079DB72 /* ViewersViewController.swift */; };
 		188CB374244DA57200B0C2B9 /* MessagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB373244DA57200B0C2B9 /* MessagesModel.swift */; };
 		1890CB81242136060096044E /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1890CB80242136060096044E /* UserModel.swift */; };
@@ -237,6 +238,7 @@
 		18847A57237C3010004D500A /* MediaCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaCollectionViewCell.xib; sourceTree = "<group>"; };
 		18847A5A237C5A52004D500A /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		1885744A2372B91900985AC8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		188577FA24ACB85400677B0A /* TimeSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSettingViewController.swift; sourceTree = "<group>"; };
 		1889F2DD23DF41100079DB72 /* ViewersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewersViewController.swift; sourceTree = "<group>"; };
 		188CB373244DA57200B0C2B9 /* MessagesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesModel.swift; sourceTree = "<group>"; };
 		1890CB80242136060096044E /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 				185640DF23741B7800CC2777 /* MenuViewController.swift */,
 				185AFE2E242A462500AC38FB /* PrivacyViewController.swift */,
 				18B92DD5244080F20099272D /* BlockUsersViewController.swift */,
+				188577FA24ACB85400677B0A /* TimeSettingViewController.swift */,
 			);
 			path = "Menu Controller";
 			sourceTree = "<group>";
@@ -1037,6 +1040,7 @@
 				18847A53237BF2FA004D500A /* ChatViewController.swift in Sources */,
 				1885744B2372B91900985AC8 /* CameraViewController.swift in Sources */,
 				185640EA2374444D00CC2777 /* PrivateChatBoxViewController.swift in Sources */,
+				188577FB24ACB85400677B0A /* TimeSettingViewController.swift in Sources */,
 				18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */,
 				18A3262C241010AE00CF329E /* EmojisViewController.swift in Sources */,
 				18DF118D246C2E2600D0F89E /* WatermarkViewController.swift in Sources */,

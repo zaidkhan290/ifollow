@@ -104,6 +104,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "PrivacyViewController") as! PrivacyViewController
     }
     
+    static func getTimeSettingViewController() -> TimeSettingViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "TimeSettingViewController") as! TimeSettingViewController
+    }
+    
     static func getBlockUsersViewController() -> BlockUsersViewController{
         return storyBoard.instantiateViewController(withIdentifier: "BlockUsersViewController") as! BlockUsersViewController
     }
