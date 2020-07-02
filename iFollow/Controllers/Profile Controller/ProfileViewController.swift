@@ -38,6 +38,7 @@ class ProfileViewController: UIViewController {
     var isFullScreen = false
     var videoURL: URL!
     var optionsPopupIndex = 0
+    var boostPostAmount: Float = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,6 +137,7 @@ class ProfileViewController: UIViewController {
                 
                 if (status == .success){
                     
+                    self.boostPostAmount = Float(result["post_amount"].stringValue)!
                     let realm = try! Realm()
                     let userData = result["message"].arrayValue.first!
                     UserDefaults.standard.set(userData["notification_count"].intValue, forKey: "notificationCount")
@@ -356,6 +358,8 @@ extension ProfileViewController: OptionsViewControllerDelegate{
             let vc = Utility.getNewPostViewController()
             isFullScreen = true
             vc.isForEdit = true
+            vc.budget = boostPostAmount
+            vc.totalBudget = boostPostAmount
             vc.editablePostId = post.postId
             vc.editablePostText = post.postDescription
             vc.editablePostImage = post.postMedia
@@ -518,6 +522,8 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         vc.isForBoostEdit = post.postStatus == "boost"
         vc.editablePostStatus = post.postStatus
         vc.editablePostLink = post.postBoostLink
+        vc.budget = boostPostAmount
+        vc.totalBudget = boostPostAmount
         vc.delegate = self
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
@@ -571,6 +577,8 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
             vc.isVideo = false
             isFullScreen = true
             vc.delegate = self
+            vc.budget = boostPostAmount
+            vc.totalBudget = boostPostAmount
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             self.present(vc, animated: false, completion: nil)
@@ -582,6 +590,8 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
                     vc.postSelectedImage = videoScreenShot
                     vc.videoURL = video
                     vc.isVideo = true
+                    vc.budget = self.boostPostAmount
+                    vc.totalBudget = self.boostPostAmount
                     self.isFullScreen = true
                     vc.delegate = self
                     vc.modalPresentationStyle = .custom
@@ -627,6 +637,8 @@ extension ProfileViewController: CameraViewControllerDelegate{
         vc.postSelectedImage = image
         vc.isVideo = false
         isFullScreen = true
+        vc.budget = boostPostAmount
+        vc.totalBudget = boostPostAmount
         vc.delegate = self
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
@@ -640,6 +652,8 @@ extension ProfileViewController: CameraViewControllerDelegate{
                 let vc = Utility.getNewPostViewController()
                 vc.postSelectedImage = videoScreenShot
                 vc.videoURL = videoURL
+                vc.budget = self.boostPostAmount
+                vc.totalBudget = self.boostPostAmount
                 vc.isVideo = true
                 self.isFullScreen = true
                 vc.delegate = self

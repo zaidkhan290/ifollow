@@ -52,8 +52,8 @@ class NewPostViewController: UIViewController {
     var delegate: PostViewControllerDelegate!
     var days = 1
     var userAddress = ""
-    var budget: Float = 10.0
-    var totalBudget: Float = 10.0
+    var budget: Float = 0.0
+    var totalBudget: Float = 0.0
     var isForEdit = false
     var editablePostId = 0
     var editablePostText = ""
@@ -73,6 +73,7 @@ class NewPostViewController: UIViewController {
         super.viewDidLoad()
 
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
+        setTotalBudget()
         
         postView.layer.cornerRadius = 20
         btnBoost.isHidden = isForEdit
