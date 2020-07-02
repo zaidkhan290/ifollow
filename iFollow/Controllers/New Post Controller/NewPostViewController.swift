@@ -65,6 +65,8 @@ class NewPostViewController: UIViewController {
     var editablePostStatus = ""
     var editablePostLink = ""
     var braintreeClient: BTAPIClient!
+    var paymentId = ""
+    
     @IBOutlet weak var txtFieldLinkTopConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
@@ -113,6 +115,12 @@ class NewPostViewController: UIViewController {
             }
             self.view.updateConstraintsIfNeeded()
             self.view.layoutSubviews()
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { (notification) in
+            if (self.paymentId != ""){
+                self.getPaymentStatus()
+            }
         }
     }
     
@@ -236,30 +244,94 @@ class NewPostViewController: UIViewController {
     
     func payWithPaypal(){
         self.isDetail = true
-        let payPalDriver = BTPayPalDriver(apiClient: self.braintreeClient)
-        payPalDriver.viewControllerPresentingDelegate = self
-        payPalDriver.appSwitchDelegate = self
         
-        let request = BTPayPalRequest(amount: "\(totalBudget)")
-        request.currencyCode = "USD"
-        payPalDriver.requestOneTimePayment(request) { (tokenizedPayPalAccount, error) -> Void in
-            guard let tokenizedPayPalAccount = tokenizedPayPalAccount else {
-                if let error = error {
-                    Loaf(error.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["amount": totalBudget]
+        
+        API.sharedInstance.executeAPI(type: .payWithPaypal, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    self.paymentId = result["payment_id"].stringValue
+                    let paymentUrl = result["data"].stringValue
+                    if UIApplication.shared.canOpenURL(URL(string: paymentUrl)!){
+                        UIApplication.shared.open(URL(string: paymentUrl)!)
+                    }
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                         
                     }
-                } else {
-                    // User canceled
                 }
-                return
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
             }
-         //   print("Got a nonce! \(tokenizedPayPalAccount.nonce)")
-            Loaf("Payment Success", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+            
+        }
+        
+    }
+    
+    func getPaymentStatus(){
+         
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["payment_id": paymentId]
+        
+        API.sharedInstance.executeAPI(type: .getPaymentStatus, method: .get, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    self.savePostMediaToFirebase(image: self.postSelectedImage)
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
                 
             }
-            self.savePostMediaToFirebase(image: self.postSelectedImage)
+            
         }
+        
     }
+    
+//    func payWithPaypal(){
+//        self.isDetail = true
+//        let payPalDriver = BTPayPalDriver(apiClient: self.braintreeClient)
+//        payPalDriver.viewControllerPresentingDelegate = self
+//        payPalDriver.appSwitchDelegate = self
+//
+//        let request = BTPayPalRequest(amount: "\(totalBudget)")
+//        request.currencyCode = "USD"
+//        payPalDriver.requestOneTimePayment(request) { (tokenizedPayPalAccount, error) -> Void in
+//            guard let tokenizedPayPalAccount = tokenizedPayPalAccount else {
+//                if let error = error {
+//                    Loaf(error.localizedDescription, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+//
+//                    }
+//                } else {
+//                    // User canceled
+//                }
+//                return
+//            }
+//         //   print("Got a nonce! \(tokenizedPayPalAccount.nonce)")
+//            Loaf("Payment Success", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+//
+//            }
+//            self.savePostMediaToFirebase(image: self.postSelectedImage)
+//        }
+//    }
     
     @objc func postImageTapped(){
         if (isVideo){

@@ -69,6 +69,8 @@ enum EndPoint: String {
     case clearGroupChatMessage = "chat_clear"
     case viewPost = "post_view"
     case getSetting = "setting_details"
+    case payWithPaypal = "pay"
+    case getPaymentStatus = "payment_status"
     case logout = "logout"
 }
 
