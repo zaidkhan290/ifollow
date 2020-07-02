@@ -238,8 +238,11 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                  else{
                     let lastMessageRef = self.chatRef.child(chatNode)
                     lastMessageRef.observe(.value) { (lastMessageSnapshot) in
-                        self.isLastMessageSeen = lastMessageSnapshot.childSnapshot(forPath: "isRead").value as! Bool
-                        self.collectionView.reloadData()
+                        if (lastMessageSnapshot.childrenCount > 0){
+                            self.isLastMessageSeen = lastMessageSnapshot.childSnapshot(forPath: "isRead").value as! Bool
+                            self.collectionView.reloadData()
+                        }
+                        
                     }
                 }
              }
@@ -325,8 +328,11 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 else{
                     let lastMessageRef = self.chatRef.child(chatNode)
                     lastMessageRef.observe(.value) { (lastMessageSnapshot) in
-                        self.isLastMessageSeen = lastMessageSnapshot.childSnapshot(forPath: "isRead").value as! Bool
-                        self.collectionView.reloadData()
+                        if (lastMessageSnapshot.childrenCount > 0){
+                            self.isLastMessageSeen = lastMessageSnapshot.childSnapshot(forPath: "isRead").value as! Bool
+                            self.collectionView.reloadData()
+                        }
+                        
                     }
                 }
             }
