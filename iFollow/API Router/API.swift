@@ -71,6 +71,7 @@ enum EndPoint: String {
     case getSetting = "setting_details"
     case payWithPaypal = "pay"
     case getPaymentStatus = "payment_status"
+    case convertVideo = "media_upload"
     case logout = "logout"
 }
 
@@ -99,7 +100,7 @@ class API: NSObject {
                        "x-access-token": "\(user.userToken)"]
         }
         else{
-            if (type == .signup){
+            if (type == .signup || type == .updateProfilePicture || type == .convertVideo){
                 headers = ["Content-Type":"multipart/form-data"]
             }
             else{
@@ -110,10 +111,17 @@ class API: NSObject {
         
         let endPoint = type.rawValue
         
-        if (type == .signup || type == .updateProfilePicture){
+        if (type == .signup || type == .updateProfilePicture || type == .convertVideo){
             Alamofire.upload(multipartFormData: { (multipart) in
                 if let data = imageData{
-                    multipart.append(data, withName: "image", fileName: "\(Date().timeIntervalSince1970).jpeg", mimeType: "image/jpeg")
+                    
+                    if (type == .convertVideo){
+                        multipart.append(data, withName: "image", fileName: "\(Date().timeIntervalSince1970).mov", mimeType: "video/quicktime")
+                    }
+                    else{
+                        multipart.append(data, withName: "image", fileName: "\(Date().timeIntervalSince1970).jpeg", mimeType: "image/jpeg")
+                    }
+                    
                 }
                 if params != nil{
                     for (key, value) in params!{

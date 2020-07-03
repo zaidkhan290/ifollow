@@ -2281,7 +2281,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="04:57 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Pg-kA-5PV">
-                                                <rect key="frame" x="46" y="9.3333333333333712" width="84" height="21"/>
+                                                <rect key="frame" x="46" y="9.0000000000000018" width="84" height="21.666666666666671"/>
                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="18"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -2309,7 +2309,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parsa Tower" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="KYI-YN-Jeb">
-                                                <rect key="frame" x="55" y="12" width="95" height="21"/>
+                                                <rect key="frame" x="55" y="11.666666666666687" width="95" height="21.666666666666671"/>
                                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="18"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -2349,13 +2349,13 @@
                                     <constraint firstAttribute="width" constant="25" id="6jE-k7-hY6"/>
                                     <constraint firstAttribute="height" constant="25" id="rxu-6M-gfp"/>
                                 </constraints>
-                                <state key="normal" image="select_down"/>
+                                <state key="normal" image="back-1"/>
                                 <connections>
                                     <action selector="btnBackTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="Sij-PY-XqG"/>
                                 </connections>
                             </button>
                             <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="30" minValue="25" maxValue="70" translatesAutoresizingMaskIntoConstraints="NO" id="D3w-Qz-cp8">
-                                <rect key="frame" x="81.666666666666686" y="471" width="251" height="31"/>
+                                <rect key="frame" x="81.666666666666686" y="526" width="251" height="31"/>
                                 <color key="minimumTrackTintColor" red="0.94509803920000002" green="0.67843137249999996" blue="0.1019607843" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <color key="maximumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="thumbTintColor" red="0.94509803920000002" green="0.67843137249999996" blue="0.1019607843" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -2390,7 +2390,7 @@
                                 </constraints>
                             </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJR-IE-oQh">
-                                <rect key="frame" x="111" y="272" width="192" height="192"/>
+                                <rect key="frame" x="159" y="320" width="96" height="96"/>
                                 <state key="normal" image="play_Icon"/>
                                 <connections>
                                     <action selector="btnPlayVideoTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="3HO-mP-R3W"/>
@@ -2402,7 +2402,7 @@
                                     <constraint firstAttribute="height" constant="40" id="elP-2N-Oro"/>
                                     <constraint firstAttribute="width" constant="40" id="zG1-ga-Wba"/>
                                 </constraints>
-                                <state key="normal" image="rotate"/>
+                                <state key="normal" image="camera"/>
                                 <connections>
                                     <action selector="btnRotateTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="MvT-uL-LYn"/>
                                 </connections>
@@ -2413,7 +2413,7 @@
                                     <constraint firstAttribute="height" constant="40" id="BcN-vT-Twx"/>
                                     <constraint firstAttribute="width" constant="40" id="ff3-2A-uQ2"/>
                                 </constraints>
-                                <state key="normal" image="flash_off"/>
+                                <state key="normal" image="flash_off-1"/>
                                 <connections>
                                     <action selector="btnFlashTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="cHH-eS-23B"/>
                                 </connections>
@@ -2424,7 +2424,7 @@
                                     <constraint firstAttribute="width" constant="40" id="EgH-CK-MvN"/>
                                     <constraint firstAttribute="height" constant="40" id="k2B-Vu-eOO"/>
                                 </constraints>
-                                <state key="normal" image="location-unfill"/>
+                                <state key="normal" image="location-1"/>
                                 <connections>
                                     <action selector="btnLocationTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="7ma-2p-hdN"/>
                                 </connections>
@@ -2435,7 +2435,7 @@
                                     <constraint firstAttribute="width" constant="40" id="NDX-sR-l4l"/>
                                     <constraint firstAttribute="height" constant="40" id="wGS-lN-nKu"/>
                                 </constraints>
-                                <state key="normal" image="text"/>
+                                <state key="normal" image="text-1"/>
                                 <connections>
                                     <action selector="btnTextTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="wFG-E8-MYj"/>
                                 </connections>
@@ -2446,36 +2446,36 @@
                                     <constraint firstAttribute="width" constant="40" id="TvQ-7s-77y"/>
                                     <constraint firstAttribute="height" constant="40" id="bjC-eh-kds"/>
                                 </constraints>
-                                <state key="normal" image="clock-outline"/>
+                                <state key="normal" image="time"/>
                                 <connections>
                                     <action selector="btnClockTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="qMw-Ho-FQG"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sw2-9r-yua">
-                                <rect key="frame" x="152" y="561" width="110" height="110"/>
+                                <rect key="frame" x="179.66666666666666" y="616" width="55" height="55"/>
                                 <state key="normal" image="capture"/>
                                 <connections>
                                     <action selector="btnCaptureTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="SXF-KF-PHI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZdE-8t-qjH">
-                                <rect key="frame" x="83.666666666666671" y="596" width="40" height="40"/>
+                                <rect key="frame" x="83.666666666666671" y="623.66666666666663" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="84L-Q0-Qu1"/>
                                     <constraint firstAttribute="height" constant="40" id="bhC-0h-PqV"/>
                                 </constraints>
-                                <state key="normal" image="attach-1"/>
+                                <state key="normal" image="gallery"/>
                                 <connections>
                                     <action selector="btnGalleryTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="tAM-9A-49E"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hw-sH-gi9">
-                                <rect key="frame" x="290.66666666666669" y="596" width="40" height="40"/>
+                                <rect key="frame" x="290.66666666666669" y="623.66666666666663" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="9Am-Hh-GKy"/>
                                     <constraint firstAttribute="width" constant="40" id="A5o-3B-pJA"/>
                                 </constraints>
-                                <state key="normal" image="emotions"/>
+                                <state key="normal" image="emoticon"/>
                                 <connections>
                                     <action selector="btnEmojiTapped:" destination="S2Q-oF-kr8" eventType="touchUpInside" id="gsK-X8-Q5k"/>
                                 </connections>
@@ -2507,7 +2507,7 @@
                                 </constraints>
                             </stackView>
                             <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add caption..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9NT-ju-crZ">
-                                <rect key="frame" x="20" y="511" width="374" height="35"/>
+                                <rect key="frame" x="20" y="566" width="374" height="35"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="bTa-lc-ACv"/>
@@ -5820,28 +5820,31 @@
         <image name="Rectangle 59" width="199.66667175292969" height="31"/>
         <image name="addGroup" width="21.333333969116211" height="21.333333969116211"/>
         <image name="attach" width="17.666666030883789" height="17.666666030883789"/>
-        <image name="attach-1" width="25" height="25"/>
         <image name="back" width="18.666666030883789" height="15.333333015441895"/>
+        <image name="back-1" width="31" height="31"/>
         <image name="block" width="20.666666030883789" height="20.666666030883789"/>
+        <image name="camera" width="31" height="31"/>
         <image name="capture" width="55" height="55"/>
         <image name="chatBackIcon" width="18.666666030883789" height="15.333333015441895"/>
         <image name="chatUserIcon" width="44" height="44"/>
-        <image name="clock-outline" width="26" height="26"/>
         <image name="clock-unfill" width="25.333333969116211" height="25.333333969116211"/>
         <image name="close" width="12.666666984558105" height="12.666666984558105"/>
         <image name="delete" width="64" height="64"/>
         <image name="editIcon" width="8.6666669845581055" height="8.6666669845581055"/>
         <image name="editProfilePlaceholder" width="105" height="105"/>
         <image name="email" width="17" height="10.333333015441895"/>
+        <image name="emoticon" width="40" height="40"/>
         <image name="emotions" width="31" height="31"/>
         <image name="eye-icon" width="32.666667938232422" height="21"/>
         <image name="fedora" width="18.666666030883789" height="19.333333969116211"/>
-        <image name="flash_off" width="21" height="25"/>
+        <image name="flash_off-1" width="31" height="31"/>
         <image name="footprint" width="244.33332824707031" height="267.33334350585938"/>
         <image name="footprint_login" width="163" height="178.33332824707031"/>
+        <image name="gallery" width="40" height="40"/>
         <image name="homeSelected" width="24" height="21.666666030883789"/>
         <image name="iFollow-white-logo" width="263" height="90"/>
         <image name="iFollow-white-logo-1" width="136" height="53"/>
+        <image name="location-1" width="31" height="31"/>
         <image name="location-unfill" width="44" height="45"/>
         <image name="menu" width="22.333333969116211" height="16.666666030883789"/>
         <image name="menuUserImage" width="83" height="83"/>
@@ -5858,14 +5861,14 @@
         <image name="plus" width="23.666666030883789" height="23.666666030883789"/>
         <image name="profile" width="24" height="24"/>
         <image name="profilePic" width="143" height="143"/>
-        <image name="rotate" width="37.333332061767578" height="35.333332061767578"/>
         <image name="search" width="24" height="24"/>
         <image name="searchSelected" width="24" height="24"/>
         <image name="select_down" width="15.333333015441895" height="18.666666030883789"/>
         <image name="send" width="36" height="36"/>
         <image name="send-1" width="18.333333969116211" height="17"/>
         <image name="share-icon" width="19" height="19"/>
-        <image name="text" width="38" height="37"/>
+        <image name="text-1" width="31" height="31"/>
+        <image name="time" width="37" height="37"/>
         <image name="unselect" width="24.333333969116211" height="24"/>
         <image name="upload_photo-1" width="44.666667938232422" height="35.666667938232422"/>
         <image name="username" width="17" height="17"/>
