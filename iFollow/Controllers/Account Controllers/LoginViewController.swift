@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: signupText.nsRange(from: range2!))
         btnSignup.setAttributedTitle(attributedString, for: .normal)
         
-        Utility.setTextFieldPlaceholder(textField: txtFieldUsername, placeholder: "Username", color: Theme.textFieldColor)
+        Utility.setTextFieldPlaceholder(textField: txtFieldUsername, placeholder: "Username or Email Address", color: Theme.textFieldColor)
         Utility.setTextFieldPlaceholder(textField: txtFieldPassword, placeholder: "Password", color: Theme.textFieldColor)
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
 

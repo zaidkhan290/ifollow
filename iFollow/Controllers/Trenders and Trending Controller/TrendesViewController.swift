@@ -8,6 +8,7 @@
 
 import UIKit
 import Loaf
+import EmptyDataSet_Swift
 
 class TrendesViewController: UIViewController {
 
@@ -22,6 +23,8 @@ class TrendesViewController: UIViewController {
         let cellNib = UINib(nibName: "FriendsTableViewCell", bundle: nil)
         trendesTableView.register(cellNib, forCellReuseIdentifier: "FriendsTableViewCell")
         trendesTableView.rowHeight = 60
+        trendesTableView.emptyDataSetSource = self
+        trendesTableView.emptyDataSetDelegate = self
         
     }
     
@@ -207,6 +210,18 @@ extension TrendesViewController: FriendsTableViewCellDelegate{
         else{
             showUnTrendPopup()
         }
+    }
+    
+}
+
+extension TrendesViewController: EmptyDataSetSource, EmptyDataSetDelegate{
+    
+    func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
+        return UIImage(named: "no-trendees")
+    }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        return NSAttributedString(string: "No Trenders")
     }
     
 }

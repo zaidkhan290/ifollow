@@ -1184,20 +1184,27 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     @objc func showImagePicker(){
         
         myTypingRef.child(chatId).child(self.senderId).updateChildValues(["isTyping": false])
-        let alertVC = UIAlertController(title: "Select Action", message: "", preferredStyle: .actionSheet)
-        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
-            self.imagePicker.sourceType = .camera
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }
-        let galleryAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
-            self.imagePicker.sourceType = .photoLibrary
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertVC.addAction(cameraAction)
-        alertVC.addAction(galleryAction)
-        alertVC.addAction(cancelAction)
-        self.present(alertVC, animated: true, completion: nil)
+        let vc = Utility.getCameraViewController()
+        vc.isForPost = true
+        vc.delegate = self
+        let navigationVC = UINavigationController(rootViewController: vc)
+        navigationVC.isNavigationBarHidden = true
+        navigationVC.modalPresentationStyle = .fullScreen
+        self.present(navigationVC, animated: true, completion: nil)
+//        let alertVC = UIAlertController(title: "Select Action", message: "", preferredStyle: .actionSheet)
+//        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
+//            self.imagePicker.sourceType = .camera
+//            self.present(self.imagePicker, animated: true, completion: nil)
+//        }
+//        let galleryAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
+//            self.imagePicker.sourceType = .photoLibrary
+//            self.present(self.imagePicker, animated: true, completion: nil)
+//        }
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        alertVC.addAction(cameraAction)
+//        alertVC.addAction(galleryAction)
+//        alertVC.addAction(cancelAction)
+//        self.present(alertVC, animated: true, completion: nil)
         
     }
     
@@ -1232,5 +1239,18 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ChatViewController: CameraViewControllerDelegate{
+    func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
+        self.saveImageToFireBaseStorage(image: image)
+    }
+    
+    func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
+        DispatchQueue.main.async {
+            self.videoURL = videoURL
+            self.saveVideoToFireBaseStorage()
+        }
     }
 }

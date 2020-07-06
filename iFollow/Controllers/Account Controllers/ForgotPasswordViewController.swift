@@ -21,7 +21,7 @@ class ForgotPasswordViewController: UIViewController {
         super.viewDidLoad()
 
         self.lblResetPassword.setShadow(color: UIColor.white)
-        Utility.setTextFieldPlaceholder(textField: txtFieldEmail, placeholder: "Your email address", color: Theme.textFieldColor)
+        Utility.setTextFieldPlaceholder(textField: txtFieldEmail, placeholder: "Username or Email Address", color: Theme.textFieldColor)
         
         let signupText = "Still haven't an Account? Sign Up"
         let range1 = signupText.range(of: "Still haven't an Account?")
