@@ -14,8 +14,9 @@ import Firebase
 
 class ExploreViewController: UIViewController {
 
-    @IBOutlet weak var searchView: UIView!
-    @IBOutlet weak var txtFieldSearch: UITextField!
+//    @IBOutlet weak var searchView: UIView!
+//    @IBOutlet weak var txtFieldSearch: UITextField!
+    @IBOutlet weak var searchIcon: UIImageView!
     @IBOutlet weak var recentStoriesCollectionView: UICollectionView!
     @IBOutlet weak var allStoriesCollectionView: UICollectionView!
     
@@ -30,11 +31,12 @@ class ExploreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        searchView.dropShadow(color: .white)
-        searchView.layer.cornerRadius = 25
-        txtFieldSearch.isUserInteractionEnabled = false
-        searchView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
-        Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
+//        searchView.dropShadow(color: .white)
+//        searchView.layer.cornerRadius = 25
+//        txtFieldSearch.isUserInteractionEnabled = false
+//        searchView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
+//        Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
+        searchIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
         
         let storyCell = UINib(nibName: "StoryCollectionViewCell", bundle: nil)
         self.recentStoriesCollectionView.register(storyCell, forCellWithReuseIdentifier: "StoryCell")
