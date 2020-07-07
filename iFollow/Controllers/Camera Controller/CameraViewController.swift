@@ -164,6 +164,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(_:)))
         swipeRightGesture.direction = .right
         
+//        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUpToGetStickers))
+//        swipeUpGesture.direction = .up
+//        self.view.addGestureRecognizer(swipeUpGesture)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -224,6 +228,14 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.captureSession.stopRunning()
+    }
+    
+    @objc func swipeUpToGetStickers(){
+        let vc = Utility.getEmojisViewController()
+        vc.delegate = self
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
     }
     
     func changeView(isVideoSelected: Bool){

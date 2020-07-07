@@ -35,6 +35,10 @@ class EmojisViewController: UIViewController {
             .compactMap { String($0).image() }
         setupCollectionView()
         stickers = StickersModel.getAllStickers()
+        
+        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownToDismiss))
+        swipeUpGesture.direction = .down
+        self.view.addGestureRecognizer(swipeUpGesture)
     }
 
     func setupCollectionView(){
@@ -42,9 +46,10 @@ class EmojisViewController: UIViewController {
         
         emojisCollectionView.register(UINib(nibName: "EmojisCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "EmojisCollectionViewCell")
         
-        stickersLayout.itemSize = CGSize(width: (UIScreen.main.bounds.width - 30) / 3, height: 110)
+        let width = (UIScreen.main.bounds.width - 20) / 2
+        stickersLayout.itemSize = CGSize(width: width, height: width)
         stickersLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 5)
-        stickersLayout.minimumLineSpacing = 5
+        stickersLayout.minimumLineSpacing = 0
         stickersLayout.minimumInteritemSpacing = 5
         stickersLayout.scrollDirection = .vertical
         
@@ -63,8 +68,11 @@ class EmojisViewController: UIViewController {
         self.emojisCollectionView.reloadData()
     }
     
-    
     @IBAction func btnCloseTapped(_ sender: UIButton){
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func swipeDownToDismiss(){
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -94,7 +102,7 @@ extension EmojisViewController: UICollectionViewDataSource, UICollectionViewDele
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojisCollectionViewCell", for: indexPath) as! EmojisCollectionViewCell
             let sticker = stickers[indexPath.row]
             cell.emojiImageView.sd_setImage(with: URL(string: sticker.stickerImage))
-            cell.emojiImageView.contentMode = .scaleAspectFill
+            cell.emojiImageView.contentMode = .scaleAspectFit
             return cell
         }
     }

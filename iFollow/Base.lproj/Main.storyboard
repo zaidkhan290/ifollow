@@ -5232,7 +5232,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jLe-Mb-sTh">
-                                <rect key="frame" x="374" y="30" width="20" height="20"/>
+                                <rect key="frame" x="379" y="30" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Sdh-j6-Ybm"/>
                                     <constraint firstAttribute="width" constant="20" id="fGD-Po-Ry0"/>
@@ -5244,7 +5244,7 @@
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ugD-RZ-HXE">
                                 <rect key="frame" x="0.0" y="85.666666666666657" width="414" height="323.66666666666674"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fKc-Uu-hmy">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -5258,28 +5258,29 @@
                                 </connections>
                             </collectionView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="f2J-D5-1Ry">
-                                <rect key="frame" x="103.66666666666669" y="24.666666666666671" width="207" height="32"/>
+                                <rect key="frame" x="51.666666666666657" y="24.666666666666671" width="310.66666666666674" height="32"/>
                                 <segments>
                                     <segment title="Stickers"/>
                                     <segment title="Emojis"/>
                                 </segments>
                                 <color key="tintColor" red="0.94509803920000002" green="0.67843137249999996" blue="0.1019607843" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="selectedSegmentTintColor" red="0.94509803921568625" green="0.67843137254901964" blue="0.10196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="segmentControllChanged:" destination="jDP-Nw-dRF" eventType="valueChanged" id="nSO-c8-ayt"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="jLe-Mb-sTh" firstAttribute="top" secondItem="Qpy-IN-vhe" secondAttribute="top" constant="30" id="0do-gw-d54"/>
                             <constraint firstItem="ugD-RZ-HXE" firstAttribute="leading" secondItem="Qpy-IN-vhe" secondAttribute="leading" id="AQj-Bq-XbO"/>
                             <constraint firstItem="ugD-RZ-HXE" firstAttribute="top" secondItem="f2J-D5-1Ry" secondAttribute="bottom" constant="30" id="POK-so-R7U"/>
                             <constraint firstItem="f2J-D5-1Ry" firstAttribute="centerX" secondItem="rsO-wB-Exw" secondAttribute="centerX" id="dY0-t6-VeL"/>
                             <constraint firstItem="ugD-RZ-HXE" firstAttribute="height" secondItem="rsO-wB-Exw" secondAttribute="height" multiplier="0.44" id="hZZ-iA-vUI"/>
-                            <constraint firstItem="Qpy-IN-vhe" firstAttribute="trailing" secondItem="jLe-Mb-sTh" secondAttribute="trailing" constant="20" id="ha5-Zr-p1E"/>
+                            <constraint firstItem="Qpy-IN-vhe" firstAttribute="trailing" secondItem="jLe-Mb-sTh" secondAttribute="trailing" constant="15" id="ha5-Zr-p1E"/>
                             <constraint firstItem="f2J-D5-1Ry" firstAttribute="centerY" secondItem="jLe-Mb-sTh" secondAttribute="centerY" id="oKv-en-rUe"/>
                             <constraint firstItem="Qpy-IN-vhe" firstAttribute="trailing" secondItem="ugD-RZ-HXE" secondAttribute="trailing" id="s0u-uC-M5d"/>
-                            <constraint firstItem="f2J-D5-1Ry" firstAttribute="width" secondItem="rsO-wB-Exw" secondAttribute="width" multiplier="0.5" id="svM-7C-aB7"/>
+                            <constraint firstItem="f2J-D5-1Ry" firstAttribute="width" secondItem="rsO-wB-Exw" secondAttribute="width" multiplier="0.75" id="svM-7C-aB7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Qpy-IN-vhe"/>
                     </view>
