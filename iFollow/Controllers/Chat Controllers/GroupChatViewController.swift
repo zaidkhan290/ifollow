@@ -77,7 +77,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         let rightContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 130, height: 42))
         
         sendButton = UIButton(frame: CGRect(x: -3, y: -5, width: 40, height: 42  ))
-        sendButton.setImage(UIImage(named: "send"), for: .normal)
+        sendButton.setImage(UIImage(named: "send-2"), for: .normal)
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         rightContainerView.backgroundColor = .clear
         rightContainerView.addSubview(sendButton)
@@ -87,7 +87,7 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
         let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 42))
         
         recordButton = UIButton(frame: CGRect(x: 0, y: -5, width: 60, height: 42  ))
-        recordButton.setImage(UIImage(named: "microphone"), for: .normal)
+        recordButton.setImage(UIImage(named: "mic"), for: .normal)
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(recordButtonPressed(gesture:)))
         longPressGesture.minimumPressDuration = 0.2
         longPressGesture.allowableMovement = 0

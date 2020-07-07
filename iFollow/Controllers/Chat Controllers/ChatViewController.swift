@@ -95,7 +95,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         let rightContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 130, height: 42))
         
         sendButton = UIButton(frame: CGRect(x: -3, y: -5, width: 40, height: 42  ))
-        sendButton.setImage(UIImage(named: "send"), for: .normal)
+        sendButton.setImage(UIImage(named: "send-2"), for: .normal)
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         rightContainerView.backgroundColor = .clear
         rightContainerView.addSubview(sendButton)
@@ -105,7 +105,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         let leftContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 42))
         
         recordButton = UIButton(frame: CGRect(x: 0, y: -5, width: 60, height: 42  ))
-        recordButton.setImage(UIImage(named: "microphone"), for: .normal)
+        recordButton.setImage(UIImage(named: "mic"), for: .normal)
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(recordButtonPressed(gesture:)))
         longPressGesture.minimumPressDuration = 0.2
         longPressGesture.allowableMovement = 0
@@ -250,7 +250,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateMessagesCounterAfterReadChat"), object: nil)
             
             chatRef.queryLimited(toLast: 100).observe(.childAdded, with: { (snapshot) in
-                 self.messageKeys.append(snapshot.key)
+                 
                  if (self.isPrivateChat){
                      let type = snapshot.childSnapshot(forPath: "type").value as! Int
                      let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
@@ -263,6 +263,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                      let currentTime = Int64(Date().timeIntervalSince1970 * 1000)
                      
                      if (Int64(expireTime) > currentTime){
+                         self.messageKeys.append(snapshot.key)
                          if(type == 1){
                              self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date, isFirstTime: isFirstTime)
                          }else if (type == 2){
@@ -279,6 +280,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                      
                  }
                  else{
+                     self.messageKeys.append(snapshot.key)
                      let type = snapshot.childSnapshot(forPath: "type").value as! Int
                      let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
                      let message = snapshot.childSnapshot(forPath: "message").value as! String
@@ -343,7 +345,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             self.messageKeys.removeAll()
             
             chatRef.observe(.childAdded, with: { (snapshot) in
-                self.messageKeys.append(snapshot.key)
+                
                 if (self.isPrivateChat){
                     let type = snapshot.childSnapshot(forPath: "type").value as! Int
                     let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
@@ -356,6 +358,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     let currentTime = Int64(Date().timeIntervalSince1970 * 1000)
                     
                     if (Int64(expireTime) > currentTime){
+                        self.messageKeys.append(snapshot.key)
                         if(type == 1){
                             self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date, isFirstTime: isFirstTime)
                         }else if (type == 2){
@@ -372,6 +375,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     
                 }
                 else{
+                    self.messageKeys.append(snapshot.key)
                     let type = snapshot.childSnapshot(forPath: "type").value as! Int
                     let sender = snapshot.childSnapshot(forPath: "senderId").value as! String
                     let message = snapshot.childSnapshot(forPath: "message").value as! String
@@ -418,7 +422,10 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 self.collectionView.deleteItems(at: [IndexPath(row: indexOfDeleteMessageKey, section: 0)])
                 self.messageKeys.remove(at: indexOfDeleteMessageKey)
                 self.messages.remove(at: indexOfDeleteMessageKey)
-                self.messagesModel.remove(at: indexOfDeleteMessageKey)
+                if ((self.messagesModel.count - 1) >= indexOfDeleteMessageKey){
+                    self.messagesModel.remove(at: indexOfDeleteMessageKey)
+                }
+                
                 self.collectionView.reloadData()
             }
         }
