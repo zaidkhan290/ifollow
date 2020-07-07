@@ -252,7 +252,7 @@ extension AddMembersViewController: FriendsTableViewCellDelegate{
         }
         else{
             if (isForChat){
-                self.showTalkPopup(userId: searchTrendingArray[indexPath.row].userId, userFullName: trendingArray[indexPath.row].userFullName, userImage: trendingArray[indexPath.row].userImage)
+                self.showTalkPopup(userId: searchTrendingArray[indexPath.row].userId, userFullName: searchTrendingArray[indexPath.row].userFullName, userImage: searchTrendingArray[indexPath.row].userImage)
             }
             else{
                 searchTrendingArray[indexPath.row].userSelected = !searchTrendingArray[indexPath.row].userSelected
