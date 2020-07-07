@@ -297,7 +297,7 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
         optionsPopupIndex = sender.view!.tag
         
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let trendersActions = UIAlertAction(title: "Share with Trenders", style: .default) { (action) in
+        let trendersActions = UIAlertAction(title: "Share with Trendees", style: .default) { (action) in
             DispatchQueue.main.async {
                 let vc = Utility.getShareViewController()
                 vc.postId = self.postsArray[self.optionsPopupIndex].postId

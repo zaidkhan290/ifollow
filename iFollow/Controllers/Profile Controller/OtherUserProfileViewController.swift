@@ -617,7 +617,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         optionsPopupIndex = sender.view!.tag
         
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let trendersActions = UIAlertAction(title: "Share with Trenders", style: .default) { (action) in
+        let trendersActions = UIAlertAction(title: "Share with Trendees", style: .default) { (action) in
             DispatchQueue.main.async {
                 let vc = Utility.getShareViewController()
                 vc.postId = self.otherUserProfile.userPosts[self.optionsPopupIndex].postId
