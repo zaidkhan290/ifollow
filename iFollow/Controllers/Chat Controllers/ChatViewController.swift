@@ -53,7 +53,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     var lastMessageKey = ""
     var isAllMessagesLoad = false
     var messageKeys = [String]()
-    var isLastMessageSeen = false
+//    var isLastMessageSeen = false
     var myTypingRef = rootRef
     var userTypingRef = rootRef
     
@@ -235,16 +235,16 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                      let chatToUpdate = self.chatRef.child(chatNode)
                      chatToUpdate.updateChildValues(["isRead": true])
                  }
-                 else{
-                    let lastMessageRef = self.chatRef.child(chatNode)
-                    lastMessageRef.observe(.value) { (lastMessageSnapshot) in
-                        if (lastMessageSnapshot.childrenCount > 0){
-                            self.isLastMessageSeen = lastMessageSnapshot.childSnapshot(forPath: "isRead").value as! Bool
-                            self.collectionView.reloadData()
-                        }
-                        
-                    }
-                }
+//                 else{
+//                    let lastMessageRef = self.chatRef.child(chatNode)
+//                    lastMessageRef.observe(.value) { (lastMessageSnapshot) in
+//                        if (lastMessageSnapshot.childrenCount > 0){
+//                            self.isLastMessageSeen = lastMessageSnapshot.childSnapshot(forPath: "isRead").value as! Bool
+//                            self.collectionView.reloadData()
+//                        }
+//
+//                    }
+//                }
              }
              
              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateMessagesCounterAfterReadChat"), object: nil)
@@ -327,16 +327,16 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     let chatToUpdate = self.chatRef.child(chatNode)
                     chatToUpdate.updateChildValues(["isRead": true])
                 }
-                else{
-                    let lastMessageRef = self.chatRef.child(chatNode)
-                    lastMessageRef.observe(.value) { (lastMessageSnapshot) in
-                        if (lastMessageSnapshot.childrenCount > 0){
-                            self.isLastMessageSeen = lastMessageSnapshot.childSnapshot(forPath: "isRead").value as! Bool
-                            self.collectionView.reloadData()
-                        }
-                        
-                    }
-                }
+//                else{
+//                    let lastMessageRef = self.chatRef.child(chatNode)
+//                    lastMessageRef.observe(.value) { (lastMessageSnapshot) in
+//                        if (lastMessageSnapshot.childrenCount > 0){
+//                            self.isLastMessageSeen = lastMessageSnapshot.childSnapshot(forPath: "isRead").value as! Bool
+//                            self.collectionView.reloadData()
+//                        }
+//
+//                    }
+//                }
             }
             
             Utility.showOrHideLoader(shouldShow: true)
@@ -887,12 +887,12 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAt indexPath: IndexPath!) -> CGFloat {
         
         if (indexPath.row == messages.count - 1){
-            if (messages[indexPath.row].senderId == self.senderId && isLastMessageSeen){
-                return 20
-            }
-            else{
-                return 5
-            }
+//            if (messages[indexPath.row].senderId == self.senderId && isLastMessageSeen){
+//                return 20
+//            }
+//            else{
+//                return 5
+//            }
         }
         return 5
         
@@ -929,20 +929,20 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                 }
             }
             
-            if data.senderId == self.senderId{
-                if (indexPath.row == self.messages.count - 1 && self.isLastMessageSeen){
-                    cell.cellTopLabel.text = "\(Utility.timeAgoSince(data.date))"
-                    cell.cellBottomLabel.text = "Seen"
-                }
-                else{
-                    cell.cellTopLabel.text = ""
-                    cell.cellBottomLabel.text = "\(Utility.timeAgoSince(data.date))"
-                }
-            }
-            else{
+//            if data.senderId == self.senderId{
+//                if (indexPath.row == self.messages.count - 1 && self.isLastMessageSeen){
+//                    cell.cellTopLabel.text = "\(Utility.timeAgoSince(data.date))"
+//                    cell.cellBottomLabel.text = "Seen"
+//                }
+//                else{
+//                    cell.cellTopLabel.text = ""
+//                    cell.cellBottomLabel.text = "\(Utility.timeAgoSince(data.date))"
+//                }
+//            }
+//            else{
                 cell.cellTopLabel.text = ""
                 cell.cellBottomLabel.text = "\(Utility.timeAgoSince(data.date))"
-            }
+//            }
             
         }
         
