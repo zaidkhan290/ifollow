@@ -43,5 +43,6 @@ pod 'PullToRefresher', '3.1'
 pod 'FaveButton'
 pod 'Braintree/PayPal'
 pod 'Braintree'
+pod 'OpenTok'
 
 end

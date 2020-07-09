@@ -16,6 +16,7 @@ import Siren
 import SwiftyJSON
 import RealmSwift
 import Braintree
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {

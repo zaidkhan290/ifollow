@@ -770,8 +770,8 @@ class StoriesViewController: UIViewController {
     
     func animateToNextUserStory(vc: UIViewController){
         UIView.beginAnimations("", context: nil)
-        UIView.setAnimationDuration(1.0)
-        UIView.setAnimationCurve(UIView.AnimationCurve.easeInOut)
+        UIView.setAnimationDuration(0.5)
+        UIView.setAnimationCurve(UIView.AnimationCurve.linear)
         UIView.setAnimationTransition(UIView.AnimationTransition.flipFromRight, for: (self.navigationController?.view)!, cache: false)
         self.navigationController?.pushViewController(vc, animated: true)
         UIView.commitAnimations()
@@ -817,8 +817,8 @@ class StoriesViewController: UIViewController {
                         self.videoPlayer.pause()
                     }
                     UIView.beginAnimations("", context: nil)
-                    UIView.setAnimationDuration(1.0)
-                    UIView.setAnimationCurve(UIView.AnimationCurve.easeInOut)
+                    UIView.setAnimationDuration(0.5)
+                    UIView.setAnimationCurve(UIView.AnimationCurve.linear)
                     UIView.setAnimationTransition(UIView.AnimationTransition.flipFromLeft, for: (self.navigationController?.view)!, cache: false)
                     self.navigationController?.pushViewController(vc, animated: true)
                     UIView.commitAnimations()
@@ -850,7 +850,7 @@ extension StoriesViewController: SegmentedProgressBarDelegate{
             self.imageView.image = nil
             self.imageView.backgroundColor = .black
             let storiesArray = Array(storiesUsersArray[storyUserIndex].userStories)
-            if (isFromExplore && index % 10 == 0 && loadedAddIndex != index){
+            if (isFromExplore && index % 5 == 0 && loadedAddIndex != index){
                 if (interstitial.isReady){
                     loadedAddIndex = index
                     interstitial.present(fromRootViewController: self)

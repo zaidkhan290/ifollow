@@ -13,6 +13,7 @@ import ColorSlider
 import GooglePlaces
 import AVKit
 import Photos
+import OpenTok
 
 protocol CameraViewControllerDelegate: class {
     func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel])
@@ -88,6 +89,16 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     
     var isForPost = false
     var shouldSaveToGallery = false
+    
+    // Replace with your OpenTok API key
+    var kApiKey = "46828384"
+    // Replace with your generated session ID
+    var kSessionId = "2_MX40NjgyODM4NH5-MTU5NDIwMzgzNTc1MX5JNllPczFHVHljRzZYQlBLS0ZUcHpEb0h-fg"
+    // Replace with your generated token
+    var kToken = "T1==cGFydG5lcl9pZD00NjgyODM4NCZzaWc9MjA5MmUzMjFkNzA1MmY3YjhhOGZlOTk3OGVmYjYwNzcyYzA4OWE5YTpzZXNzaW9uX2lkPTJfTVg0ME5qZ3lPRE00Tkg1LU1UVTVOREl3TXpnek5UYzFNWDVKTmxsUGN6RkhWSGxqUnpaWVFsQkxTMFpVY0hwRWIwaC1mZyZjcmVhdGVfdGltZT0xNTk0MjAzODcyJm5vbmNlPTAuNDU4MTMwMzk2OTMxODgxMDcmcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTU5NDIwNzQ3MCZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ=="
+    var session: OTSession?
+    var publisher: OTPublisher?
+    var subscriber: OTSubscriber?
 
     
     //MARK:- Methods
@@ -164,59 +175,28 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(_:)))
         swipeRightGesture.direction = .right
         
-//        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUpToGetStickers))
-//        swipeUpGesture.direction = .up
-//        self.view.addGestureRecognizer(swipeUpGesture)
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { (notification) in
+            DispatchQueue.main.async {
+                self.captureSession.stopRunning()
+            }
+            
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) { (notification) in
+            DispatchQueue.main.async {
+                self.initCustomCamera()
+            }
+            
+        }
+        
+      //  connectToAnOpenTokSession()
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        //----- For AVCaptureSession Start-----//
-        
-        captureSession = AVCaptureSession()
-        captureSession.sessionPreset = .hd1280x720
-       // captureSession.automaticallyConfiguresApplicationAudioSession = false
-    
-        captureSession.usesApplicationAudioSession = true
-        
-        guard let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
-            else {
-                print("Unable to access back camera!")
-                return
-        }
-        
-        do {
-
-            let input = try AVCaptureDeviceInput(device: backCamera)
-            stillImageOutput = AVCapturePhotoOutput()
-            movieOutput = AVCaptureMovieFileOutput()
-            
-            if let microphone = AVCaptureDevice.default(for: AVMediaType.audio){
-                do {
-                    let micInput = try AVCaptureDeviceInput(device: microphone)
-                    if captureSession.canAddInput(micInput) {
-                        captureSession.addInput(micInput)
-                    }
-                } catch {
-                    print("Error setting device audio input: \(error)")
-                }
-            }
-            
-            if captureSession.canAddInput(input) && captureSession.canAddOutput(stillImageOutput) {
-                captureSession.addInput(input)
-                captureSession.addOutput(stillImageOutput)
-                captureSession.addOutput(movieOutput)
-                setupLivePreview()
-            }
-            
-        }
-        catch let error  {
-            print("Error Unable to initialize back camera:  \(error.localizedDescription)")
-        }
-        
-        //----- For AVCaptureSession End-----//
+        initCustomCamera()
         
         colorSlider = ColorSlider(orientation: .vertical, previewSide: .right)
         colorSlider.frame = CGRect(x: 20, y: (UIScreen.main.bounds.height / 2) - 150, width: 15, height: 300)
@@ -228,6 +208,68 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.captureSession.stopRunning()
+    }
+    
+    func initCustomCamera(){
+        //----- For AVCaptureSession Start-----//
+            
+            captureSession = AVCaptureSession()
+            captureSession.sessionPreset = .hd1280x720
+            captureSession.automaticallyConfiguresApplicationAudioSession = false
+        
+            //captureSession.usesApplicationAudioSession = true
+            
+            
+            guard let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
+                else {
+                    print("Unable to access back camera!")
+                    return
+            }
+            
+            do {
+
+                
+                let input = try AVCaptureDeviceInput(device: backCamera)
+                stillImageOutput = AVCapturePhotoOutput()
+                movieOutput = AVCaptureMovieFileOutput()
+                
+                if let microphone = AVCaptureDevice.default(for: AVMediaType.audio){
+                    do {
+                        let micInput = try AVCaptureDeviceInput(device: microphone)
+                        if captureSession.canAddInput(micInput) {
+                            captureSession.addInput(micInput)
+                        }
+                    } catch {
+                        print("Error setting device audio input: \(error)")
+                    }
+                }
+                let audioSession = AVAudioSession.sharedInstance();
+                try audioSession.setCategory(.playAndRecord, mode: .default, options: .mixWithOthers);
+                try audioSession.setActive(true);
+                try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker);
+                if captureSession.canAddInput(input) && captureSession.canAddOutput(stillImageOutput) {
+                    captureSession.addInput(input)
+                    captureSession.addOutput(stillImageOutput)
+                    captureSession.addOutput(movieOutput)
+                    setupLivePreview()
+                }
+
+
+            }
+            catch let error  {
+                print("Error Unable to initialize back camera:  \(error.localizedDescription)")
+            }
+            
+            //----- For AVCaptureSession End-----//
+    }
+    
+    func connectToAnOpenTokSession() {
+        session = OTSession(apiKey: kApiKey, sessionId: kSessionId, delegate: self)
+        var error: OTError?
+        session?.connect(withToken: kToken, error: &error)
+        if error != nil {
+            print(error!)
+        }
     }
     
     @objc func swipeUpToGetStickers(){
@@ -1154,3 +1196,83 @@ extension CameraViewController: ShareStoriesViewControllerDelegate{
     }
 }
 
+// MARK: - OTSessionDelegate callbacks
+extension CameraViewController: OTSessionDelegate {
+   func sessionDidConnect(_ session: OTSession) {
+       print("The client connected to the OpenTok session.")
+        
+        let settings = OTPublisherSettings()
+        settings.name = UIDevice.current.name
+        guard let publisher = OTPublisher(delegate: self, settings: settings) else {
+            return
+        }
+
+        var error: OTError?
+        session.publish(publisher, error: &error)
+        guard error == nil else {
+            print(error!)
+            return
+        }
+
+        guard let publisherView = publisher.view else {
+            return
+        }
+        let screenBounds = UIScreen.main.bounds
+        publisherView.frame = cameraView.frame
+        view.addSubview(publisherView)
+    
+   }
+
+   func sessionDidDisconnect(_ session: OTSession) {
+       print("The client disconnected from the OpenTok session.")
+   }
+
+   func session(_ session: OTSession, didFailWithError error: OTError) {
+       print("The client failed to connect to the OpenTok session: \(error).")
+   }
+
+   func session(_ session: OTSession, streamCreated stream: OTStream) {
+       print("A stream was created in the session.")
+    
+        subscriber = OTSubscriber(stream: stream, delegate: self)
+        guard let subscriber = subscriber else {
+            return
+        }
+
+        var error: OTError?
+        session.subscribe(subscriber, error: &error)
+        guard error == nil else {
+            print(error!)
+            return
+        }
+
+        guard let subscriberView = subscriber.view else {
+            return
+        }
+        subscriberView.frame = UIScreen.main.bounds
+        view.insertSubview(subscriberView, at: 0)
+    
+   }
+
+   func session(_ session: OTSession, streamDestroyed stream: OTStream) {
+       print("A stream was destroyed in the session.")
+   }
+}
+
+// MARK: - OTPublisherDelegate callbacks
+extension CameraViewController: OTPublisherDelegate {
+   func publisher(_ publisher: OTPublisherKit, didFailWithError error: OTError) {
+       print("The publisher failed: \(error)")
+   }
+}
+
+// MARK: - OTSubscriberDelegate callbacks
+extension CameraViewController: OTSubscriberDelegate {
+   public func subscriberDidConnect(toStream subscriber: OTSubscriberKit) {
+       print("The subscriber did connect to the stream.")
+   }
+
+   public func subscriber(_ subscriber: OTSubscriberKit, didFailWithError error: OTError) {
+       print("The subscriber failed to connect to the stream.")
+   }
+}

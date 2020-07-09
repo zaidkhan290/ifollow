@@ -228,7 +228,7 @@ class NewPostViewController: UIViewController {
     @IBAction func btnBoosPostTapped(_ sender: UIButton) {
         if (linkSwitch.isOn){
             if (isValidURL){
-                payWithPaypal()
+                showPaypalPopup()
             }
             else{
                 Loaf("Please enter the valid URL", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
@@ -238,9 +238,20 @@ class NewPostViewController: UIViewController {
         }
         else{
             isValidURL = false
-            payWithPaypal()
+            showPaypalPopup()
         }
         
+    }
+    
+    func showPaypalPopup(){
+        let alertVC = UIAlertController(title: "Caution", message: "Please do not close iFollow during payment process.", preferredStyle: .alert)
+        let continueAction = UIAlertAction(title: "Continue", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.payWithPaypal()
+            }
+        }
+        alertVC.addAction(continueAction)
+        self.present(alertVC, animated: true, completion: nil)
     }
     
     func payWithPaypal(){
