@@ -189,6 +189,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             
         }
         
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(rotateCamera))
+        doubleTapGesture.numberOfTapsRequired = 2
+        self.previewView.addGestureRecognizer(doubleTapGesture)
+        
       //  connectToAnOpenTokSession()
         
     }
@@ -448,7 +452,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             else { return }
         
         shouldSaveToGallery = true
-        let image = UIImage(data: imageData)
+        var image = UIImage(data: imageData)
+        if (isFrontCamera){
+            image = image?.sd_flippedImage(withHorizontal: true, vertical: false)
+        }
         cameraView.isHidden = false
         selectedImage = image!
         cameraView.contentMode = .scaleAspectFill
@@ -806,66 +813,70 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     }
     
     @IBAction func btnRotateTapped(_ sender: UIButton) {
-        if let session = captureSession {
-            //Remove existing input
-//            guard let currentCameraInput: AVCaptureInput = session.inputs.first else {
-//                return
-//            }
-            
-            //Indicate that some changes will be made to the session
-            session.beginConfiguration()
-            for input in session.inputs{
-                session.removeInput(input)
-            }
-            
-            //Get new input
-            var newCamera: AVCaptureDevice! = nil
-            
-            if (!isFrontCamera) {
-                newCamera = cameraWithPosition(position: .front)
-                session.sessionPreset = .hd1280x720
-                isFrontCamera = true
-                btnFlash.isEnabled = false
-            } else {
-                newCamera = cameraWithPosition(position: .back)
-                session.sessionPreset = .high
-                isFrontCamera = false
-                btnFlash.isEnabled = true
-            }
-            
-            //Add input to session
-            var err: NSError?
-            var newVideoInput: AVCaptureDeviceInput!
-            do {
-                newVideoInput = try AVCaptureDeviceInput(device: newCamera)
-            } catch let err1 as NSError {
-                err = err1
-                newVideoInput = nil
-            }
-            
-            if newVideoInput == nil || err != nil {
-                print("Error creating capture device input: \(err?.localizedDescription)")
-            } else {
-                if let microphone = AVCaptureDevice.default(for: AVMediaType.audio){
-                    do {
-                        let micInput = try AVCaptureDeviceInput(device: microphone)
-                        if session.canAddInput(micInput) {
-                            session.addInput(micInput)
-                        }
-                    } catch {
-                        print("Error setting device audio input: \(error)")
-                    }
-                }
-                session.addInput(newVideoInput)
-            }
-            
-            session.commitConfiguration()
-        }
+        rotateCamera()
     }
     
     @IBAction func fontSliderValueChanged(_ sender: UISlider) {
         fontSize = sender.value.rounded()
         editableTextField.font = selectedFont == "" ? Theme.getLatoBoldFontOfSize(size: CGFloat(fontSize)) : Theme.getPictureEditFonts(fontName: selectedFont, size: CGFloat(fontSize))
+    }
+    
+    @objc func rotateCamera(){
+        if let session = captureSession {
+                    //Remove existing input
+        //            guard let currentCameraInput: AVCaptureInput = session.inputs.first else {
+        //                return
+        //            }
+                    
+                    //Indicate that some changes will be made to the session
+                    session.beginConfiguration()
+                    for input in session.inputs{
+                        session.removeInput(input)
+                    }
+                    
+                    //Get new input
+                    var newCamera: AVCaptureDevice! = nil
+                    
+                    if (!isFrontCamera) {
+                        newCamera = cameraWithPosition(position: .front)
+                        session.sessionPreset = .hd1280x720
+                        isFrontCamera = true
+                        btnFlash.isEnabled = false
+                    } else {
+                        newCamera = cameraWithPosition(position: .back)
+                        session.sessionPreset = .high
+                        isFrontCamera = false
+                        btnFlash.isEnabled = true
+                    }
+                    
+                    //Add input to session
+                    var err: NSError?
+                    var newVideoInput: AVCaptureDeviceInput!
+                    do {
+                        newVideoInput = try AVCaptureDeviceInput(device: newCamera)
+                    } catch let err1 as NSError {
+                        err = err1
+                        newVideoInput = nil
+                    }
+                    
+                    if newVideoInput == nil || err != nil {
+                        print("Error creating capture device input: \(err?.localizedDescription)")
+                    } else {
+                        if let microphone = AVCaptureDevice.default(for: AVMediaType.audio){
+                            do {
+                                let micInput = try AVCaptureDeviceInput(device: microphone)
+                                if session.canAddInput(micInput) {
+                                    session.addInput(micInput)
+                                }
+                            } catch {
+                                print("Error setting device audio input: \(error)")
+                            }
+                        }
+                        session.addInput(newVideoInput)
+                    }
+                    
+                    session.commitConfiguration()
+                }
     }
     
     @objc func lblFontsTapped(){
