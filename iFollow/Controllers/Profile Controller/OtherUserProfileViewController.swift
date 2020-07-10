@@ -175,16 +175,33 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     
     func showOptionsPopup(){
         
-        let vc = Utility.getOptionsViewController()
-        vc.delegate = self
-        vc.modalPresentationStyle = .popover
-        vc.preferredContentSize = CGSize(width: 150, height: 100)
+//        let vc = Utility.getOptionsViewController()
+//        vc.delegate = self
+//        vc.modalPresentationStyle = .popover
+//        vc.preferredContentSize = CGSize(width: 150, height: 100)
+//
+//        let popup = vc.popoverPresentationController
+//        popup?.permittedArrowDirections = UIPopoverArrowDirection.up
+//        popup?.sourceView = optionsView
+//        popup?.delegate = self
+//        self.present(vc, animated: true, completion: nil)
         
-        let popup = vc.popoverPresentationController
-        popup?.permittedArrowDirections = UIPopoverArrowDirection.up
-        popup?.sourceView = optionsView
-        popup?.delegate = self
-        self.present(vc, animated: true, completion: nil)
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let blockAction = UIAlertAction(title: "Block", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.showBlockUserPopup()
+            }
+        }
+        let reportAction = UIAlertAction(title: "Report", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.showReportDescriptionPopup()
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(blockAction)
+        alertVC.addAction(reportAction)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
         
     }
     
@@ -417,7 +434,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     func showReportDescriptionPopup(){
-        let vc = UIAlertController(title: "Report Description", message: "Please enter your description", preferredStyle: .alert)
+        let vc = UIAlertController(title: "Report", message: "Please enter your description", preferredStyle: .alert)
         vc.addTextField { (textfield) in
             textfield.placeholder = "Description"
             textfield.autocorrectionType = .no

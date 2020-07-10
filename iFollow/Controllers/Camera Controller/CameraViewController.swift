@@ -14,6 +14,7 @@ import GooglePlaces
 import AVKit
 import Photos
 import OpenTok
+import SwiftGifOrigin
 
 protocol CameraViewControllerDelegate: class {
     func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel])
@@ -53,6 +54,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @IBOutlet weak var btnPlay: UIButton!
     @IBOutlet weak var txtFieldCaption: UITextField!
     @IBOutlet weak var lblVideoTimer: UILabel!
+    @IBOutlet weak var captureAnimationImg: UIImageView!
     
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
@@ -99,7 +101,15 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     var session: OTSession?
     var publisher: OTPublisher?
     var subscriber: OTSubscriber?
-
+    
+    var player: AVPlayer!
+    let minimumZoom: CGFloat = 1.0
+    let maximumZoom: CGFloat = 15.0
+    var lastZoomFactor: CGFloat = 1.0
+    var latestDirection: Int = 0
+    var gestRecognizer : UIPinchGestureRecognizer?;
+    private var initialZoom: CGFloat = 1.0
+    
     
     //MARK:- Methods
     
@@ -193,6 +203,14 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         doubleTapGesture.numberOfTapsRequired = 2
         self.previewView.addGestureRecognizer(doubleTapGesture)
         
+        let panGestureRecognizer = InstantPanGestureRecognizer(target: self, action: #selector(panGesture))
+        self.btnCapture.addGestureRecognizer(panGestureRecognizer)
+        
+        gestRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.pinch(sender:)));
+        //self.cameraView.addGestureRecognizer(gestRecognizer!);
+        self.previewView.addGestureRecognizer(gestRecognizer!)
+        self.captureAnimationImg.loadGif(name: "capture_animation")
+        
       //  connectToAnOpenTokSession()
         
     }
@@ -212,6 +230,15 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.captureSession.stopRunning()
+    }
+    
+    func connectToAnOpenTokSession() {
+        session = OTSession(apiKey: kApiKey, sessionId: kSessionId, delegate: self)
+        var error: OTError?
+        session?.connect(withToken: kToken, error: &error)
+        if error != nil {
+            print(error!)
+        }
     }
     
     func initCustomCamera(){
@@ -267,12 +294,179 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             //----- For AVCaptureSession End-----//
     }
     
-    func connectToAnOpenTokSession() {
-        session = OTSession(apiKey: kApiKey, sessionId: kSessionId, delegate: self)
-        var error: OTError?
-        session?.connect(withToken: kToken, error: &error)
-        if error != nil {
-            print(error!)
+    @objc func pinch(sender: UIPinchGestureRecognizer){
+        
+        var device : AVCaptureDevice!
+        
+        let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInDuoCamera], mediaType: AVMediaType.video, position: .unspecified)
+        let devices = videoDeviceDiscoverySession.devices
+        device = devices.first!
+        
+
+        func update(scale factor: CGFloat) {
+            do {
+                try device.lockForConfiguration()
+                defer { device.unlockForConfiguration() }
+                device.videoZoomFactor = factor
+            } catch {
+                print("\(error.localizedDescription)")
+            }
+        }
+        func minMaxZoom(_ factor: CGFloat) -> CGFloat {
+            return min(min(max(factor, minimumZoom), maximumZoom), device.activeFormat.videoMaxZoomFactor)
+        }
+        let newScaleFactor = minMaxZoom(gestRecognizer!.scale * lastZoomFactor)
+        switch gestRecognizer!.state {
+        case .began: fallthrough
+        case .changed: update(scale: newScaleFactor)
+        case .ended:
+            lastZoomFactor = minMaxZoom(newScaleFactor)
+            update(scale: lastZoomFactor)
+        default: break
+        }
+    }
+    
+    fileprivate func swapCamera() {
+
+        // Get current input
+        guard let input = captureSession.inputs[0] as? AVCaptureDeviceInput else { return }
+
+        // Begin new session configuration and defer commit
+        captureSession.beginConfiguration()
+        defer { captureSession.commitConfiguration() }
+
+        // Create new capture device
+        var newDevice: AVCaptureDevice?
+        if input.device.position == .back {
+            newDevice = captureDevice(with: .front)
+        } else {
+            newDevice = captureDevice(with: .back)
+        }
+
+        // Create new capture input
+        var deviceInput: AVCaptureDeviceInput!
+        do {
+            deviceInput = try AVCaptureDeviceInput(device: newDevice!)
+        } catch let error {
+            print(error.localizedDescription)
+            return
+        }
+
+        // Swap capture device inputs
+        captureSession.removeInput(input)
+        captureSession.addInput(deviceInput)
+    }
+    
+    /// Create new capture device with requested position
+    fileprivate func captureDevice(with position: AVCaptureDevice.Position) -> AVCaptureDevice? {
+
+        let devices = AVCaptureDevice.DiscoverySession(deviceTypes: [ .builtInWideAngleCamera, .builtInMicrophone, .builtInDualCamera, .builtInTelephotoCamera ], mediaType: AVMediaType.video, position: .unspecified).devices
+        for device in devices {
+            if device.position == position {
+                return device
+            }
+        }
+
+
+        return nil
+    }
+    
+    @objc func panGesture(_ sender: UIPanGestureRecognizer) {
+        
+        // note that 'view' here is the overall video preview
+        let velocity = sender.velocity(in: view)
+        
+        if velocity.y >= 0 || velocity.y <= 0 {
+            
+            _ = captureSession
+            var devitce : AVCaptureDevice!
+            
+            let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInDuoCamera], mediaType: AVMediaType.video, position: .unspecified)
+            let devices = videoDeviceDiscoverySession.devices
+            if (isFrontCamera)
+            {
+                devitce = devices.last!
+            }
+            else
+            {
+                devitce = devices.first!
+            }
+            
+            guard let device = devitce else { return }
+            
+            let minimumZoomFactor: CGFloat = minimumZoom;
+            let maximumZoomFactor: CGFloat = min(device.activeFormat.videoMaxZoomFactor, maximumZoom) // artificially set a max useable zoom of 15x
+            
+            // clamp a zoom factor between minimumZoom and maximumZoom
+            func clampZoomFactor(_ factor: CGFloat) -> CGFloat {
+                return min(max(factor, minimumZoomFactor), maximumZoomFactor)
+            }
+            
+            func update(scale factor: CGFloat) {
+                do {
+                    
+                    try device.lockForConfiguration()
+                    defer { device.unlockForConfiguration() }
+                    device.videoZoomFactor = factor
+                } catch {
+                    print("\(error.localizedDescription)")
+                }
+            }
+            
+            switch sender.state {
+            case .began:
+                initialZoom = device.videoZoomFactor
+                //startRecording() /// call to start recording your video
+                if (!movieOutput.isRecording)
+                {
+                    OnTappRecording();
+                }
+                break;
+            case .changed:
+                
+                // distance in points for the full zoom range (e.g. min to max), could be view.frame.height
+                let fullRangeDistancePoints: CGFloat = 300.0
+                
+                // extract current distance travelled, from gesture start
+                let currentYTranslation: CGFloat = sender.translation(in: view).y
+                
+                // calculate a normalized zoom factor between [-1,1], where up is positive (ie zooming in)
+                let normalizedZoomFactor = -1 * max(-1,min(1,currentYTranslation / fullRangeDistancePoints))
+                
+                // calculate effective zoom scale to use
+                let newZoomFactor = clampZoomFactor(initialZoom + normalizedZoomFactor * (maximumZoomFactor - minimumZoomFactor))
+                
+                lastZoomFactor = newZoomFactor
+                // update device's zoom factor'
+                update(scale: newZoomFactor)
+                break;
+            case .ended, .cancelled:
+                //stopRecording() /// call to start recording your video
+                if (movieOutput.isRecording)
+                {
+                    OnTappRecording();
+                }
+                break;
+                
+            default:
+                break
+            }
+        }
+    }
+    
+    func addVideoPlayer(videoUrl: URL, to view: UIView) {
+        player = AVPlayer(url: videoUrl)
+        let layer: AVPlayerLayer = AVPlayerLayer(player: player)
+        layer.frame = view.bounds
+        layer.videoGravity = .resizeAspectFill
+        view.layer.sublayers?
+            .filter { $0 is AVPlayerLayer }
+            .forEach { $0.removeFromSuperlayer() }
+        view.layer.addSublayer(layer)
+        player.play();
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak self] _ in
+            self!.player.seek(to: CMTime.zero)
+            self!.player.play()
         }
     }
     
@@ -291,7 +485,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         btnLocation.isHidden = isVideoSelected
         btnFlash.isHidden = isVideoSelected
         btnRotate.isHidden = isVideoSelected
-        btnPlay.isHidden = !isVideoSelected
+       // btnPlay.isHidden = !isVideoSelected
         if (!isForPost){
             txtFieldCaption.isHidden = false
         }
@@ -451,6 +645,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         guard let imageData = photo.fileDataRepresentation()
             else { return }
         
+        captureAnimationImg.isHidden = true
         shouldSaveToGallery = true
         var image = UIImage(data: imageData)
         if (isFrontCamera){
@@ -481,6 +676,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         if error == nil {
             DispatchQueue.main.async {
+                self.captureAnimationImg.isHidden = true
                 self.shouldSaveToGallery = true
                 if let videoScreenShot = Utility.imageFromVideo(url: outputFileURL, at: 0, totalTime: 60){
                     self.videoURL = outputFileURL
@@ -499,6 +695,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     self.lblNormal.isHidden = true
                     self.lblVideo.isHidden = true
                     self.changeView(isVideoSelected: true)
+                    self.addVideoPlayer(videoUrl: self.videoURL, to: self.cameraView)
                     
                 }
             }
@@ -622,6 +819,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
         if (isPictureCaptured){
+            captureAnimationImg.isHidden = true
             isPictureCaptured = false
             filterView.isHidden = true
             emojiesMainView.isHidden = true
@@ -654,7 +852,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             colorSlider.isHidden = true
            // fontSlider.isHidden = true
             lblFont.isHidden = true
-            lblNormalTapped()
+            if (self.player != nil){
+                self.player.pause()
+            }
+            //lblNormalTapped()
             for emojiView in emojiesMainView.subviews{
                 if (emojiView == editableTextField || emojiView == editableTextFieldView){
                     
@@ -683,7 +884,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         if (!isPictureCaptured){
             if (!isLive && !isVideo){
                 let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
-                settings.flashMode = isFrontCamera ? .off : flashMode
+                settings.flashMode = flashMode//isFrontCamera ? .off : flashMode
                 stillImageOutput.capturePhoto(with: settings, delegate: self)
                 isPictureCaptured = true
                 btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
@@ -733,7 +934,12 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     }
     
     @IBAction func btnPlayVideoTapped(_ sender: UIButton){
-        let player = AVPlayer(url: videoURL)
+        let player = AVPlayer(url: videoURL);
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak self] _ in
+            player.seek(to: CMTime.zero)
+            player.play()
+        }
+        
         
         let playerViewController = AVPlayerViewController()
         playerViewController.player = player
@@ -823,60 +1029,120 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     
     @objc func rotateCamera(){
         if let session = captureSession {
-                    //Remove existing input
-        //            guard let currentCameraInput: AVCaptureInput = session.inputs.first else {
-        //                return
-        //            }
-                    
-                    //Indicate that some changes will be made to the session
-                    session.beginConfiguration()
-                    for input in session.inputs{
-                        session.removeInput(input)
-                    }
-                    
-                    //Get new input
-                    var newCamera: AVCaptureDevice! = nil
-                    
-                    if (!isFrontCamera) {
-                        newCamera = cameraWithPosition(position: .front)
-                        session.sessionPreset = .hd1280x720
-                        isFrontCamera = true
-                        btnFlash.isEnabled = false
-                    } else {
-                        newCamera = cameraWithPosition(position: .back)
-                        session.sessionPreset = .high
-                        isFrontCamera = false
-                        btnFlash.isEnabled = true
-                    }
-                    
-                    //Add input to session
-                    var err: NSError?
-                    var newVideoInput: AVCaptureDeviceInput!
+            //Remove existing input
+            //            guard let currentCameraInput: AVCaptureInput = session.inputs.first else {
+            //                return
+            //            }
+            
+            //Indicate that some changes will be made to the session
+            session.beginConfiguration()
+            for input in session.inputs{
+                session.removeInput(input)
+            }
+            
+            //Get new input
+            var newCamera: AVCaptureDevice! = nil
+            
+            if (!isFrontCamera) {
+                newCamera = cameraWithPosition(position: .front)
+                session.sessionPreset = .hd1280x720
+                isFrontCamera = true
+                btnFlash.isEnabled = false
+            } else {
+                newCamera = cameraWithPosition(position: .back)
+                session.sessionPreset = .high
+                isFrontCamera = false
+                btnFlash.isEnabled = true
+            }
+            
+            //Add input to session
+            var err: NSError?
+            var newVideoInput: AVCaptureDeviceInput!
+            do {
+                newVideoInput = try AVCaptureDeviceInput(device: newCamera)
+            } catch let err1 as NSError {
+                err = err1
+                newVideoInput = nil
+            }
+            
+            if newVideoInput == nil || err != nil {
+                print("Error creating capture device input: \(err?.localizedDescription)")
+            } else {
+                if let microphone = AVCaptureDevice.default(for: AVMediaType.audio){
                     do {
-                        newVideoInput = try AVCaptureDeviceInput(device: newCamera)
-                    } catch let err1 as NSError {
-                        err = err1
-                        newVideoInput = nil
-                    }
-                    
-                    if newVideoInput == nil || err != nil {
-                        print("Error creating capture device input: \(err?.localizedDescription)")
-                    } else {
-                        if let microphone = AVCaptureDevice.default(for: AVMediaType.audio){
-                            do {
-                                let micInput = try AVCaptureDeviceInput(device: microphone)
-                                if session.canAddInput(micInput) {
-                                    session.addInput(micInput)
-                                }
-                            } catch {
-                                print("Error setting device audio input: \(error)")
-                            }
+                        let micInput = try AVCaptureDeviceInput(device: microphone)
+                        if session.canAddInput(micInput) {
+                            session.addInput(micInput)
                         }
-                        session.addInput(newVideoInput)
+                    } catch {
+                        print("Error setting device audio input: \(error)")
                     }
-                    
-                    session.commitConfiguration()
                 }
+                session.addInput(newVideoInput)
+            }
+            
+            session.commitConfiguration()
+        }
+
+    }
+    
+    func OnTappRecording(){
+        
+        if (!isPictureCaptured){
+            if (!isLive && !isVideo){
+                captureAnimationImg.isHidden = true
+                let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
+                settings.flashMode = isFrontCamera ? .off : flashMode
+                stillImageOutput.capturePhoto(with: settings, delegate: self)
+                isPictureCaptured = true
+                btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
+                btnGallery.setImage(UIImage(named: "colors"), for: .normal)
+                btnBack.setImage(UIImage(named: "close-1"), for: .normal)
+            }
+            else if (isVideo){
+                if movieOutput.isRecording {
+                    captureAnimationImg.isHidden = true
+                    movieOutput.stopRecording()
+                    timer.invalidate()
+                    seconds = 0
+                    self.lblVideoTimer.text = ""
+                    btnRotate.isHidden = false
+                }
+                else {
+                    captureAnimationImg.isHidden = false
+                    btnRotate.isHidden = true
+                    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+                    let fileUrl = paths[0].appendingPathComponent("output.mov")
+                    try? FileManager.default.removeItem(at: fileUrl)
+                    movieOutput.startRecording(to: fileUrl, recordingDelegate: self)
+                    
+                    self.runTimer()
+                }
+            }
+        }
+        else{
+            captureAnimationImg.isHidden = true
+            if (self.player != nil){
+                self.player.pause()
+            }
+            if (self.videoURL == nil){
+                self.storyImageToSend = self.filterView.screenshot()
+            }
+            if (isForPost){
+                self.dismiss(animated: true, completion: nil)
+                if (self.videoURL == nil){
+                    self.delegate.getStoryImage(image: self.storyImageToSend, caption: "", isToSendMyStory: true, friendsArray: [])
+                }
+                else{
+                    self.delegate.getStoryVideo(videoURL: self.videoURL, caption: "", isToSendMyStory: true, friendsArray: [])
+                }
+            }
+            else{
+                let vc = Utility.getShareStoriesViewController()
+                vc.delegate = self
+                self.pushToVC(vc: vc)
+            }
+        }
     }
     
     @objc func lblFontsTapped(){
@@ -1028,6 +1294,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        captureAnimationImg.isHidden = true
         picker.dismiss(animated: true, completion: nil)
         self.shouldSaveToGallery = false
         
@@ -1092,6 +1359,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        captureAnimationImg.isHidden = true
         self.dismiss(animated: true, completion: nil)
         lblNormalTapped()
     }

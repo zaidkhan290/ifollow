@@ -44,5 +44,6 @@ pod 'FaveButton'
 pod 'Braintree/PayPal'
 pod 'Braintree'
 pod 'OpenTok'
+pod 'SwiftGifOrigin'
 
 end

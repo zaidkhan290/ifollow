@@ -29,6 +29,7 @@
 		18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390895236C70DA009A28E6 /* LaunchScreen.storyboard */; };
 		183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839089F236C7A99009A28E6 /* MainViewController.swift */; };
 		183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */; };
+		1842901B24B87791004ABEEB /* InstantPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1842901A24B87791004ABEEB /* InstantPanGestureRecognizer.swift */; };
 		1855080F23795352008EAC2E /* SegmentProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855080E23795352008EAC2E /* SegmentProgressBar.swift */; };
 		185508122379696E008EAC2E /* sampleVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 185508112379696E008EAC2E /* sampleVideo.mp4 */; };
 		1855081423796E5E008EAC2E /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1855081323796E5E008EAC2E /* video.mp4 */; };
@@ -163,6 +164,7 @@
 		18DF1198246C2E2600D0F89E /* StateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF117D246C2E2600D0F89E /* StateHelper.swift */; };
 		18E198F1243B140900511296 /* HomePostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E198F0243B140900511296 /* HomePostsModel.swift */; };
 		18E198F3243B5BDD00511296 /* PostLikesUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E198F2243B5BDD00511296 /* PostLikesUserModel.swift */; };
+		18ED61BC24B8B0D600C7E7D8 /* capture_animation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18ED61BB24B8B0D600C7E7D8 /* capture_animation.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -189,6 +191,7 @@
 		18390898236C70DA009A28E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1839089F236C7A99009A28E6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		1842901A24B87791004ABEEB /* InstantPanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstantPanGestureRecognizer.swift; sourceTree = "<group>"; };
 		1855080E23795352008EAC2E /* SegmentProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentProgressBar.swift; sourceTree = "<group>"; };
 		185508112379696E008EAC2E /* sampleVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampleVideo.mp4; sourceTree = "<group>"; };
 		1855081323796E5E008EAC2E /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
@@ -325,6 +328,7 @@
 		18DF117D246C2E2600D0F89E /* StateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateHelper.swift; sourceTree = "<group>"; };
 		18E198F0243B140900511296 /* HomePostsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostsModel.swift; sourceTree = "<group>"; };
 		18E198F2243B5BDD00511296 /* PostLikesUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLikesUserModel.swift; sourceTree = "<group>"; };
+		18ED61BB24B8B0D600C7E7D8 /* capture_animation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = capture_animation.gif; sourceTree = "<group>"; };
 		262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.release.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.release.xcconfig"; sourceTree = "<group>"; };
 		2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.debug.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.debug.xcconfig"; sourceTree = "<group>"; };
 		5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iFollow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -433,6 +437,7 @@
 		1839088B236C70D6009A28E6 /* iFollow */ = {
 			isa = PBXGroup;
 			children = (
+				18ED61BB24B8B0D600C7E7D8 /* capture_animation.gif */,
 				18DF115B246C2E2600D0F89E /* MobilePlayer */,
 				18D6BBD22437572C004D90EB /* AudioRecorderSingleton */,
 				186CD0D3242391BF004E7D90 /* GoogleService-Info.plist */,
@@ -543,6 +548,7 @@
 		188574492372B8FB00985AC8 /* Camera Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1842901A24B87791004ABEEB /* InstantPanGestureRecognizer.swift */,
 				1885744A2372B91900985AC8 /* CameraViewController.swift */,
 				18A3262B241010AE00CF329E /* EmojisViewController.swift */,
 			);
@@ -897,6 +903,7 @@
 				182F62602372EB4E00A55E52 /* ChatListTableViewCell.xib in Resources */,
 				185640E8237426B600CC2777 /* MenuSeperatorTableViewCell.xib in Resources */,
 				189329C4237020910067077F /* Lato-Semibold_0.ttf in Resources */,
+				18ED61BC24B8B0D600C7E7D8 /* capture_animation.gif in Resources */,
 				186A98A1241A9BA7000AD9AB /* Cream Cake.ttf in Resources */,
 				1855081423796E5E008EAC2E /* video.mp4 in Resources */,
 				183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */,
@@ -1004,6 +1011,7 @@
 				18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */,
 				18DF1198246C2E2600D0F89E /* StateHelper.swift in Sources */,
 				189329BA237014E90067077F /* Utility.swift in Sources */,
+				1842901B24B87791004ABEEB /* InstantPanGestureRecognizer.swift in Sources */,
 				18DF117F246C2E2600D0F89E /* YoutubeParser.swift in Sources */,
 				189329C7237023860067077F /* Theme.swift in Sources */,
 				189329BF23701EE50067077F /* SignupViewController.swift in Sources */,
