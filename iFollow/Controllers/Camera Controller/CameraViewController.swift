@@ -48,6 +48,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @IBOutlet weak var timeView: UIView!
     @IBOutlet weak var clockIcon: UIImageView!
     @IBOutlet weak var lblTime: UILabel!
+    @IBOutlet weak var recordingIcon: UIView!
     @IBOutlet weak var locationView: UIView!
     @IBOutlet weak var locationIcon: UIImageView!
     @IBOutlet weak var lblLocation: UILabel!
@@ -61,6 +62,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     var videoPreviewLayer: AVCaptureVideoPreviewLayer!
     var movieOutput: AVCaptureMovieFileOutput!
     var flashMode = AVCaptureDevice.FlashMode.off
+    var torchMode = AVCaptureDevice.TorchMode.off
     var audioDeviceInput: AVCaptureDeviceInput!
     var isFrontCamera = false
     var isPictureCaptured = false
@@ -127,6 +129,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         //------ For loading Emojis ------
         
      
+        recordingIcon.layer.cornerRadius = recordingIcon.frame.height / 2
+        
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         imagePicker.videoMaximumDuration = 60//isForPost ? 60 : 15
@@ -381,21 +385,40 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             _ = captureSession
             var devitce : AVCaptureDevice!
             
-            let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInDuoCamera], mediaType: AVMediaType.video, position: .unspecified)
-            let devices = videoDeviceDiscoverySession.devices
             if (isFrontCamera)
             {
-                devitce = devices.last!
+                devitce = cameraWithPosition(position: .front)
+                
             }
             else
             {
-                devitce = devices.first!
+                devitce = cameraWithPosition(position: .back)
             }
             
             guard let device = devitce else { return }
             
             let minimumZoomFactor: CGFloat = minimumZoom;
             let maximumZoomFactor: CGFloat = min(device.activeFormat.videoMaxZoomFactor, maximumZoom) // artificially set a max useable zoom of 15x
+        
+            var videoConnection:AVCaptureConnection?
+            for connection in self.movieOutput.connections {
+              for port in connection.inputPorts {
+                  if port.mediaType == AVMediaType.video {
+                  videoConnection = connection as? AVCaptureConnection
+                      if videoConnection!.isVideoMirroringSupported {
+                        if (isFrontCamera)
+                        {
+                          videoConnection!.isVideoMirrored = true
+                        }
+                        else
+                        {
+                            videoConnection!.isVideoMirrored = false
+                        }
+                          
+                    }
+                  }
+                }
+             }
             
             // clamp a zoom factor between minimumZoom and maximumZoom
             func clampZoomFactor(_ factor: CGFloat) -> CGFloat {
@@ -646,6 +669,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             else { return }
         
         captureAnimationImg.isHidden = true
+        btnCapture.alpha = 1
         shouldSaveToGallery = true
         var image = UIImage(data: imageData)
         if (isFrontCamera){
@@ -677,6 +701,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         if error == nil {
             DispatchQueue.main.async {
                 self.captureAnimationImg.isHidden = true
+                self.btnCapture.alpha = 1
                 self.shouldSaveToGallery = true
                 if let videoScreenShot = Utility.imageFromVideo(url: outputFileURL, at: 0, totalTime: 60){
                     self.videoURL = outputFileURL
@@ -820,6 +845,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @IBAction func btnBackTapped(_ sender: UIButton) {
         if (isPictureCaptured){
             captureAnimationImg.isHidden = true
+            btnCapture.alpha = 1
             isPictureCaptured = false
             filterView.isHidden = true
             emojiesMainView.isHidden = true
@@ -897,6 +923,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     timer.invalidate()
                     seconds = 0
                     self.lblVideoTimer.text = ""
+                    self.recordingIcon.isHidden = true
                     btnRotate.isHidden = false
                 }
                 else {
@@ -964,14 +991,17 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         
         if (flashMode == .off){
             flashMode = .on
+            torchMode = .on
             btnFlash.setImage(UIImage(named: "flash-1"), for: .normal)
         }
         else if (flashMode == .on){
             flashMode = .auto
+            torchMode = .auto
             btnFlash.setImage(UIImage(named: "flash_auto"), for: .normal)
         }
         else if (flashMode == .auto){
             flashMode = .off
+            torchMode = .off
             btnFlash.setImage(UIImage(named: "flash_off-1"), for: .normal)
         }
     }
@@ -1088,9 +1118,20 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     
     func OnTappRecording(){
         
+        var device : AVCaptureDevice!
+        if (isFrontCamera)
+        {
+            device = cameraWithPosition(position: .front)
+        }
+        else
+        {
+            device = cameraWithPosition(position: .back)
+        }
+        
         if (!isPictureCaptured){
             if (!isLive && !isVideo){
                 captureAnimationImg.isHidden = true
+                btnCapture.alpha = 1
                 let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
                 settings.flashMode = isFrontCamera ? .off : flashMode
                 stillImageOutput.capturePhoto(with: settings, delegate: self)
@@ -1102,18 +1143,45 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             else if (isVideo){
                 if movieOutput.isRecording {
                     captureAnimationImg.isHidden = true
+                    btnCapture.alpha = 1
                     movieOutput.stopRecording()
+                    
+                    if (device.hasTorch && device.hasFlash ){
+                        do {
+                            try device.lockForConfiguration()
+                            defer { device.unlockForConfiguration() }
+                            device.torchMode = .off
+                        } catch {
+                            print("\(error.localizedDescription)")
+                        }
+                    }
+                    
                     timer.invalidate()
                     seconds = 0
                     self.lblVideoTimer.text = ""
+                    self.recordingIcon.isHidden = true
                     btnRotate.isHidden = false
                 }
                 else {
                     captureAnimationImg.isHidden = false
+                    btnCapture.alpha = 0
                     btnRotate.isHidden = true
                     let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
                     let fileUrl = paths[0].appendingPathComponent("output.mov")
                     try? FileManager.default.removeItem(at: fileUrl)
+                    
+                    if (device.hasTorch && device.hasFlash )
+                    {
+                        do {
+                            try device.lockForConfiguration()
+                            defer { device.unlockForConfiguration() }
+                            device.torchMode = torchMode
+                            
+                        } catch {
+                            print("\(error.localizedDescription)")
+                        }
+                    }
+                    
                     movieOutput.startRecording(to: fileUrl, recordingDelegate: self)
                     
                     self.runTimer()
@@ -1122,6 +1190,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         }
         else{
             captureAnimationImg.isHidden = true
+            btnCapture.alpha = 1
             if (self.player != nil){
                 self.player.pause()
             }
@@ -1222,10 +1291,12 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @objc func updateTimer(){
         seconds += 1
         self.lblVideoTimer.text = timeString(time: TimeInterval(seconds))
+        self.recordingIcon.isHidden = false
         if (seconds == (60/*isForPost ? 60 : 15*/)){
             timer.invalidate()
             seconds = 0
             self.lblVideoTimer.text = ""
+            self.recordingIcon.isHidden = true
             if movieOutput.isRecording {
                 movieOutput.stopRecording()
             }
@@ -1233,8 +1304,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     }
     
     func timeString(time:TimeInterval) -> String {
+        let minutes = Int(time) / 60 % 60
         let seconds = Int(time) % 60
-        return String(format:"%02i",seconds)
+        return String(format:"%02i:%02i", minutes, seconds)
     }
 
     func playVideo() {
@@ -1295,6 +1367,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         captureAnimationImg.isHidden = true
+        btnCapture.alpha = 1
         picker.dismiss(animated: true, completion: nil)
         self.shouldSaveToGallery = false
         
@@ -1360,6 +1433,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         captureAnimationImg.isHidden = true
+        btnCapture.alpha = 1
         self.dismiss(animated: true, completion: nil)
         lblNormalTapped()
     }

@@ -651,7 +651,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
                     }
                     
                     let params = ["media": self.otherUserProfile.userPosts[self.optionsPopupIndex].postMedia,
-                                  "description": "",
+                                  "description": "Original post by \(self.otherUserProfile.userFullName)",
                                   "location": "",
                                   "expire_hours": Utility.getLoginUserPostExpireHours(),
                                   "duration": 0,

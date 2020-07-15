@@ -928,7 +928,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
                     }
                     
                     let params = ["media": self.postsArray[self.optionsPopupIndex].postMedia,
-                                  "description": "",
+                                  "description": "Original post by \(self.postsArray[self.optionsPopupIndex].postUserFullName)",
                                   "location": "",
                                   "expire_hours": Utility.getLoginUserPostExpireHours(),
                                   "duration": 0,
