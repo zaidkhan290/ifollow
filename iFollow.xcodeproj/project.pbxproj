@@ -29,6 +29,9 @@
 		18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390895236C70DA009A28E6 /* LaunchScreen.storyboard */; };
 		183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839089F236C7A99009A28E6 /* MainViewController.swift */; };
 		183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */; };
+		184059DC24C6F5EA00433355 /* LiveVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184059DB24C6F5EA00433355 /* LiveVideoViewController.swift */; };
+		184059DF24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184059DD24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.swift */; };
+		184059E024C6FA2A00433355 /* LiveVideoCommentsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184059DE24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.xib */; };
 		1842901B24B87791004ABEEB /* InstantPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1842901A24B87791004ABEEB /* InstantPanGestureRecognizer.swift */; };
 		1855080F23795352008EAC2E /* SegmentProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855080E23795352008EAC2E /* SegmentProgressBar.swift */; };
 		185508122379696E008EAC2E /* sampleVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 185508112379696E008EAC2E /* sampleVideo.mp4 */; };
@@ -191,6 +194,9 @@
 		18390898236C70DA009A28E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1839089F236C7A99009A28E6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		184059DB24C6F5EA00433355 /* LiveVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVideoViewController.swift; sourceTree = "<group>"; };
+		184059DD24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVideoCommentsTableViewCell.swift; sourceTree = "<group>"; };
+		184059DE24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LiveVideoCommentsTableViewCell.xib; sourceTree = "<group>"; };
 		1842901A24B87791004ABEEB /* InstantPanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstantPanGestureRecognizer.swift; sourceTree = "<group>"; };
 		1855080E23795352008EAC2E /* SegmentProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentProgressBar.swift; sourceTree = "<group>"; };
 		185508112379696E008EAC2E /* sampleVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampleVideo.mp4; sourceTree = "<group>"; };
@@ -464,6 +470,7 @@
 		1839089E236C7865009A28E6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				184059DA24C6F5CF00433355 /* Live Controller */,
 				18CD2D8A237EE14C007A2C3B /* Comment Controller */,
 				1825A526237AEA06002811E7 /* Trenders and Trending Controller */,
 				185CC0C32379A058006BDC9D /* New Post Controller */,
@@ -480,6 +487,14 @@
 				18307AB0236C86AF00A0A7C6 /* Account Controllers */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		184059DA24C6F5CF00433355 /* Live Controller */ = {
+			isa = PBXGroup;
+			children = (
+				184059DB24C6F5EA00433355 /* LiveVideoViewController.swift */,
+			);
+			path = "Live Controller";
 			sourceTree = "<group>";
 		};
 		1855080D23795330008EAC2E /* Segment Progress Bar */ = {
@@ -642,6 +657,8 @@
 				18A3262D241010D300CF329E /* EmojisCollectionViewCell.swift */,
 				18A3262E241010D300CF329E /* EmojisCollectionViewCell.xib */,
 				181A0B66245184BB00E137CB /* UnifiedNativeAdView.xib */,
+				184059DD24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.swift */,
+				184059DE24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -917,6 +934,7 @@
 				18390892236C70D6009A28E6 /* Main.storyboard in Resources */,
 				1855081A23798976008EAC2E /* FriendsTableViewCell.xib in Resources */,
 				186A98A3241A9BBF000AD9AB /* JandaCurlygirlSerif.ttf in Resources */,
+				184059E024C6FA2A00433355 /* LiveVideoCommentsTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1033,6 +1051,7 @@
 				18DF1183246C2E2600D0F89E /* LabelConfig.swift in Sources */,
 				1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */,
 				18C89E0A243F2DD40032A663 /* SearchUserModel.swift in Sources */,
+				184059DC24C6F5EA00433355 /* LiveVideoViewController.swift in Sources */,
 				1825A52A237AEA50002811E7 /* TrendesViewController.swift in Sources */,
 				18E198F1243B140900511296 /* HomePostsModel.swift in Sources */,
 				189329BC237015D80067077F /* ViewControllerExtension.swift in Sources */,
@@ -1066,6 +1085,7 @@
 				18DF118F246C2E2600D0F89E /* MobilePlayerControlsView.swift in Sources */,
 				18DF1192246C2E2600D0F89E /* Element.swift in Sources */,
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
+				184059DF24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.swift in Sources */,
 				18847A5B237C5A52004D500A /* MediaViewController.swift in Sources */,
 				1855081623797DA8008EAC2E /* SendStoryViewController.swift in Sources */,
 				185640E7237426B600CC2777 /* MenuSeperatorTableViewCell.swift in Sources */,
@@ -1283,7 +1303,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.15;
+				MARKETING_VERSION = 1.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mou.iFollow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1308,7 +1328,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.15;
+				MARKETING_VERSION = 1.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mou.iFollow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -204,6 +204,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "ShareViewController") as! ShareViewController
     }
     
+    static func getLiveVideoViewController() -> LiveVideoViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "LiveVideoViewController") as! LiveVideoViewController
+    }
+    
     static func getLoginUserId() -> Int{
         if let user = UserModel.getCurrentUser(){
             return user.userId

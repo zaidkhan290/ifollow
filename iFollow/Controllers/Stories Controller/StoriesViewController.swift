@@ -231,13 +231,6 @@ class StoriesViewController: UIViewController {
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let videoURL = documentsURL.appendingPathComponent("\(storyModel.storyId).mp4")
         if (try? Data(contentsOf: videoURL)) != nil{
-            self.videoView.isHidden = false
-            self.imageView.isHidden = true
-            self.videoPlayer = AVPlayer(url: videoURL)
-            let playerLayer = AVPlayerLayer(player: self.videoPlayer)
-            playerLayer.frame = self.videoView.frame
-            self.videoView.layer.addSublayer(playerLayer)
-            Utility.showOrHideLoader(shouldShow: false)
             
             if (!self.isForMyStory){
                 API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId, "user_id": currentUserId], completion: { (status, result, message) in
@@ -251,6 +244,15 @@ class StoriesViewController: UIViewController {
                     }
                 })
             }
+            
+            self.videoView.isHidden = false
+            self.imageView.isHidden = true
+            self.videoPlayer = AVPlayer(url: videoURL)
+            let playerLayer = AVPlayerLayer(player: self.videoPlayer)
+            playerLayer.frame = self.videoView.frame
+            self.videoView.layer.addSublayer(playerLayer)
+            Utility.showOrHideLoader(shouldShow: false)
+            
             let videoItem = self.videoPlayer.currentItem!
             let totalDuration = videoItem.duration.seconds
             self.videoPlayer.play()
@@ -350,8 +352,6 @@ class StoriesViewController: UIViewController {
             self.imageView.isHidden = false
             if let downloadedImageData = try? Data(contentsOf: photoURL){
                 let downloadedImage = UIImage(data: downloadedImageData)
-                self.imageView.image = downloadedImage
-                self.isVideoPlaying = false
                 
                 if (!self.isForMyStory){
                     API.sharedInstance.executeAPI(type: .viewStory, method: .post, params: ["post_id": storyModel.storyId, "user_id": currentUserId], completion: { (status, result, message) in
@@ -365,6 +365,9 @@ class StoriesViewController: UIViewController {
                         }
                     })
                 }
+                
+                self.imageView.image = downloadedImage
+                self.isVideoPlaying = false
                 
                 if (isFirstStory){
                     self.spb.startAnimation()

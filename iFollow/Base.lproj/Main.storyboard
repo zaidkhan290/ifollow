@@ -5822,6 +5822,67 @@
             </objects>
             <point key="canvasLocation" x="4458" y="3457"/>
         </scene>
+        <!--Live Video View Controller-->
+        <scene sceneID="FKT-Qw-sTk">
+            <objects>
+                <viewController storyboardIdentifier="LiveVideoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MfC-Fz-vEi" customClass="LiveVideoViewController" customModule="iFollow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JHu-nS-ShE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="amt-Ve-JeM">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dMU-Yy-KXc">
+                                        <rect key="frame" x="0.0" y="317" width="414" height="368"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="MfC-Fz-vEi" id="Yi8-60-MCR"/>
+                                            <outlet property="delegate" destination="MfC-Fz-vEi" id="xEi-VP-Fuy"/>
+                                        </connections>
+                                    </tableView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VJn-XS-oCH">
+                                        <rect key="frame" x="10" y="686" width="394" height="40"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="Fd3-Lh-zcy"/>
+                                        </constraints>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="dMU-Yy-KXc" firstAttribute="leading" secondItem="amt-Ve-JeM" secondAttribute="leading" id="FRf-IE-dFR"/>
+                                    <constraint firstAttribute="bottom" secondItem="VJn-XS-oCH" secondAttribute="bottom" constant="10" id="Fsu-XN-TRD"/>
+                                    <constraint firstAttribute="trailing" secondItem="dMU-Yy-KXc" secondAttribute="trailing" id="Hmo-St-r7t"/>
+                                    <constraint firstItem="VJn-XS-oCH" firstAttribute="leading" secondItem="amt-Ve-JeM" secondAttribute="leading" constant="10" id="NO5-jm-q5N"/>
+                                    <constraint firstItem="dMU-Yy-KXc" firstAttribute="height" secondItem="amt-Ve-JeM" secondAttribute="height" multiplier="0.5" id="Rdg-jB-nSP"/>
+                                    <constraint firstAttribute="trailing" secondItem="VJn-XS-oCH" secondAttribute="trailing" constant="10" id="cfi-vB-Amj"/>
+                                    <constraint firstItem="VJn-XS-oCH" firstAttribute="top" secondItem="dMU-Yy-KXc" secondAttribute="bottom" constant="1" id="dNX-oS-2Mb"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="JCS-Mx-8YS" firstAttribute="trailing" secondItem="amt-Ve-JeM" secondAttribute="trailing" id="5Zi-MW-DRk"/>
+                            <constraint firstItem="JCS-Mx-8YS" firstAttribute="bottom" secondItem="amt-Ve-JeM" secondAttribute="bottom" id="7MW-5c-RcN"/>
+                            <constraint firstItem="amt-Ve-JeM" firstAttribute="leading" secondItem="JCS-Mx-8YS" secondAttribute="leading" id="Ahz-1K-ngc"/>
+                            <constraint firstItem="amt-Ve-JeM" firstAttribute="top" secondItem="JCS-Mx-8YS" secondAttribute="top" id="tly-y3-FX8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="JCS-Mx-8YS"/>
+                    </view>
+                    <connections>
+                        <outlet property="commentsTableView" destination="dMU-Yy-KXc" id="lLI-av-5cn"/>
+                        <outlet property="txtViewComment" destination="VJn-XS-oCH" id="YgW-0s-oJv"/>
+                        <outlet property="videoView" destination="amt-Ve-JeM" id="ddi-IG-d1N"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2yR-69-bjH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5129" y="3457"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Bg" width="380" height="815"/>

@@ -51,7 +51,12 @@ class ChatContainerViewController: UIViewController {
        
         if (isFromGroupChat){
             btnBlock.isHidden = true
-            userImage.sd_setImage(with: URL(string: groupChatModel.groupImage)!)
+            if (groupChatModel.groupImage == ""){
+                userImage.image = UIImage(named: "Rectangle 108")
+            }
+            else{
+                userImage.sd_setImage(with: URL(string: groupChatModel.groupImage)!)
+            }
             lblOnlineStatus.text = groupChatModel.groupUsers.map{$0.userFullName}.joined(separator: ", ")
             lblOnlineStatusLeadingConstraint.constant = 10
             self.view.updateConstraintsIfNeeded()
