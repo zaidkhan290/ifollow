@@ -45,5 +45,6 @@ pod 'Braintree/PayPal'
 pod 'Braintree'
 pod 'OpenTok'
 pod 'SwiftGifOrigin'
+pod 'Hakawai'
 
 end
