@@ -17,8 +17,8 @@ import OpenTok
 import SwiftGifOrigin
 
 protocol CameraViewControllerDelegate: class {
-    func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel])
-    func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel])
+    func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel])
+    func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel] )
 }
 
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVCaptureFileOutputRecordingDelegate {
@@ -36,6 +36,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @IBOutlet weak var btnLocation: UIButton!
     @IBOutlet weak var btnClock: UIButton!
     @IBOutlet weak var btnText: UIButton!
+    @IBOutlet weak var btnTag: UIButton!
     @IBOutlet weak var deleteView: UIView!
     @IBOutlet weak var deleteIcon: UIImageView!
     @IBOutlet weak var lblLive: UILabel!
@@ -54,6 +55,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var btnPlay: UIButton!
     @IBOutlet weak var txtFieldCaption: UITextField!
+    @IBOutlet weak var lblUserTags: UILabel!
     @IBOutlet weak var lblVideoTimer: UILabel!
     @IBOutlet weak var captureAnimationImg: UIImageView!
     
@@ -85,6 +87,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     var selectedImage = UIImage()
     var delegate: CameraViewControllerDelegate!
     var videoURL: URL!
+    var tagUsersArrray = [PostLikesUserModel]()
+    var tagUsersString = ""
     
     var timer = Timer()
     var seconds = 0
@@ -146,6 +150,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         btnLocation.isHidden = true
         btnText.isHidden = true
         btnClock.isHidden = true
+        btnTag.isHidden = true
         txtFieldCaption.isHidden = true
         
         lblLive.isUserInteractionEnabled = true
@@ -689,6 +694,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             txtFieldCaption.isHidden = false
         }
         btnClock.isHidden = false
+        btnTag.isHidden = false
         lblLive.isHidden = true
         lblNormal.isHidden = true
         lblVideo.isHidden = true
@@ -861,6 +867,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             btnText.isHidden = true
             txtFieldCaption.isHidden = true
             btnClock.isHidden = true
+            btnTag.isHidden = true
             btnEmoji.isEnabled = false
             timeView.isHidden = true
             locationView.isHidden = true
@@ -876,6 +883,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             btnFlash.isHidden = false
             editableTextField.text = ""
             colorSlider.isHidden = true
+            tagUsersString = ""
+            tagUsersArrray.removeAll()
+            lblUserTags.text = ""
+            lblUserTags.isHidden = true
            // fontSlider.isHidden = true
             lblFont.isHidden = true
             if (self.player != nil){
@@ -945,10 +956,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             if (isForPost){
                 self.dismiss(animated: true, completion: nil)
                 if (self.videoURL == nil){
-                    self.delegate.getStoryImage(image: self.storyImageToSend, caption: "", isToSendMyStory: true, friendsArray: [])
+                    self.delegate.getStoryImage(image: self.storyImageToSend, caption: "", isToSendMyStory: true, friendsArray: [], selectedTagsUserString: tagUsersString, selectedTagUsersArray: tagUsersArrray)
                 }
                 else{
-                    self.delegate.getStoryVideo(videoURL: self.videoURL, caption: "", isToSendMyStory: true, friendsArray: [])
+                    self.delegate.getStoryVideo(videoURL: self.videoURL, caption: "", isToSendMyStory: true, friendsArray: [], selectedTagsUserString: tagUsersString, selectedTagUsersArray: tagUsersArrray)
                 }
             }
             else{
@@ -1050,6 +1061,14 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     
     @IBAction func btnRotateTapped(_ sender: UIButton) {
         rotateCamera()
+    }
+    
+    @IBAction func btnTagTapped(_ sender: UIButton){
+        let vc = Utility.getAddMembersViewController()
+        vc.delegate = self
+        vc.isForTagging = true
+        vc.selectedUsersIds = self.tagUsersArrray.map{$0.userId}
+        self.pushToVC(vc: vc)
     }
     
     @IBAction func fontSliderValueChanged(_ sender: UISlider) {
@@ -1200,10 +1219,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             if (isForPost){
                 self.dismiss(animated: true, completion: nil)
                 if (self.videoURL == nil){
-                    self.delegate.getStoryImage(image: self.storyImageToSend, caption: "", isToSendMyStory: true, friendsArray: [])
+                    self.delegate.getStoryImage(image: self.storyImageToSend, caption: "", isToSendMyStory: true, friendsArray: [], selectedTagsUserString: tagUsersString, selectedTagUsersArray: tagUsersArrray)
                 }
                 else{
-                    self.delegate.getStoryVideo(videoURL: self.videoURL, caption: "", isToSendMyStory: true, friendsArray: [])
+                    self.delegate.getStoryVideo(videoURL: self.videoURL, caption: "", isToSendMyStory: true, friendsArray: [], selectedTagsUserString: tagUsersString, selectedTagUsersArray: tagUsersArrray)
                 }
             }
             else{
@@ -1394,6 +1413,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
                 txtFieldCaption.isHidden = false
             }
             btnClock.isHidden = false
+            btnTag.isHidden = false
             btnCapture.setImage(UIImage(named: "send-story"), for: .normal)
             btnGallery.setImage(UIImage(named: "colors"), for: .normal)
             btnBack.setImage(UIImage(named: "close-1"), for: .normal)
@@ -1530,7 +1550,7 @@ extension CameraViewController: ShareStoriesViewControllerDelegate{
             if (isToSendMyStory && shouldSaveToGallery){
                 UIImageWriteToSavedPhotosAlbum(storyImageToSend, self, nil, nil)
             }
-            self.delegate.getStoryImage(image: storyImageToSend, caption: self.txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
+            self.delegate.getStoryImage(image: storyImageToSend, caption: self.txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray, selectedTagsUserString: tagUsersString, selectedTagUsersArray: tagUsersArrray)
         }
         else{
             if (isToSendMyStory && shouldSaveToGallery){
@@ -1542,11 +1562,32 @@ extension CameraViewController: ShareStoriesViewControllerDelegate{
                 }
             }
             
-            self.delegate.getStoryVideo(videoURL: self.videoURL, caption: txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
+            self.delegate.getStoryVideo(videoURL: self.videoURL, caption: txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray, selectedTagsUserString: tagUsersString, selectedTagUsersArray: tagUsersArrray)
         }
         self.dismiss(animated: true, completion: nil)
 
     }
+}
+
+extension CameraViewController: AddMembersViewControllerDelegate{
+    
+    func membersAdded(membersArray: [PostLikesUserModel]) {
+        
+        self.tagUsersArrray = membersArray
+        tagUsersString = ""
+        for tagUser in self.tagUsersArrray{
+            if (tagUsersString == ""){
+                tagUsersString = "@\(tagUser.userFullName)"
+            }
+            else{
+                tagUsersString = tagUsersString + ", " + "@\(tagUser.userFullName)"
+            }
+        }
+        lblUserTags.isHidden = false
+        lblUserTags.text = tagUsersString
+        
+    }
+    
 }
 
 // MARK: - OTSessionDelegate callbacks

@@ -631,7 +631,7 @@ extension ProfileViewController: LightboxControllerPageDelegate, LightboxControl
 }
 
 extension ProfileViewController: CameraViewControllerDelegate{
-    func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
+    func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel]) {
         
         let vc = Utility.getNewPostViewController()
         vc.postSelectedImage = image
@@ -646,7 +646,7 @@ extension ProfileViewController: CameraViewControllerDelegate{
         
     }
     
-    func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
+    func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel]) {
         DispatchQueue.main.async {
             if let videoScreenShot = Utility.imageFromVideo(url: videoURL, at: 0, totalTime: 60){
                 let vc = Utility.getNewPostViewController()

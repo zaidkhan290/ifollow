@@ -15,6 +15,7 @@ import AVKit
 import PassKit
 import IQKeyboardManagerSwift
 import Braintree
+import Hakawai
 
 protocol PostViewControllerDelegate: class {
     func postTapped(postView: UIViewController)
@@ -24,6 +25,7 @@ protocol PostViewControllerDelegate: class {
 class NewPostViewController: UIViewController {
 
     @IBOutlet weak var postView: UIView!
+    @IBOutlet weak var txtViewStatus: HKWTextView!
     @IBOutlet weak var txtFieldStatus: UITextField!
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var postImage: UIImageView!

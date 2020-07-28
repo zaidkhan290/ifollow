@@ -967,11 +967,11 @@ extension GroupChatViewController: UIImagePickerControllerDelegate, UINavigation
 }
 
 extension GroupChatViewController: CameraViewControllerDelegate{
-    func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
+    func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel]) {
         self.saveImageToFireBaseStorage(image: image)
     }
     
-    func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel]) {
+    func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel]) {
         DispatchQueue.main.async {
             self.videoURL = videoURL
             self.saveVideoToFireBaseStorage()

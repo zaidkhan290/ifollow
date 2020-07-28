@@ -17,6 +17,7 @@ import SwiftyJSON
 import RealmSwift
 import Braintree
 import AVFoundation
+import ATAppUpdater
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -108,9 +109,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         UIApplication.shared.applicationIconBadgeNumber = 0
-        let siren = Siren.shared
-        siren.rulesManager = RulesManager(globalRules: .critical, showAlertAfterCurrentVersionHasBeenReleasedForDays: 0)
-        siren.wail()
+        
+//        let siren = Siren.shared
+//        siren.rulesManager = RulesManager(globalRules: .critical, showAlertAfterCurrentVersionHasBeenReleasedForDays: 1)
+//        siren.wail()
+        ATAppUpdater.init().showUpdateWithForce()
         
         if (Utility.getLoginUserId() != 0){
             let usersRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")

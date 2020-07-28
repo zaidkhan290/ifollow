@@ -27,12 +27,21 @@ class AddMembersViewController: UIViewController {
     var searchTrendingArray = [PostLikesUserModel]()
     var selectedUsersIds = [Int]()
     var delegate: AddMembersViewControllerDelegate?
+    var isForTagging = false
     var isForChat = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        lblTopTitle.text = isForChat ? "Trendees" : "Add Members"
+        if (isForTagging){
+            lblTopTitle.text = "Tag Members"
+        }
+        else if (isForChat){
+            lblTopTitle.text = "Trendees"
+        }
+        else{
+           lblTopTitle.text = "Add Members"
+        }
         btnAdd.isHidden = isForChat
         btnAddWidthConstraint.constant = isForChat ? 0 : 60
         self.view.updateConstraintsIfNeeded()
