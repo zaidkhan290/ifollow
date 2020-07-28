@@ -20,6 +20,7 @@ class StoriesViewController: UIViewController {
     @IBOutlet weak var hiddenView: UIView!
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var btnTags: UIButton!
     @IBOutlet weak var btnSend: UIButton!
     @IBOutlet weak var btnEmoji: UIButton!
     @IBOutlet weak var messageInputView: UIView!
@@ -495,6 +496,20 @@ class StoriesViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    @IBAction func btnTagsTapped(_ sender: UIButton){
+        spb.isPaused = true
+        if (isVideoPlaying){
+            videoPlayer.pause()
+        }
+        let vc = Utility.getViewersViewController()
+        vc.postId = currentStoryId
+        vc.isForStoryTag = true
+        vc.delegate = self
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func btnSendTapped(_ sender: UIButton) {

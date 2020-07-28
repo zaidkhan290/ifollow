@@ -46,6 +46,7 @@ class HomeViewController: UIViewController {
     var isFromPush = false
     var pushTitle = ""
     var pushDesc = ""
+    var tagUserIds = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -417,6 +418,7 @@ class HomeViewController: UIViewController {
         let params = ["media": mediaUrl,
                       "expire_hours": Utility.getLoginUserStoryExpireHours(),
                       "caption":caption,
+                      "tags": tagUserIds,
                       "media_type": postType] as [String : Any]
         
         API.sharedInstance.executeAPI(type: .createStory, method: .post, params: params) { (status, result, message) in
@@ -820,6 +822,9 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
 //                itemView.likeButton.setSelected(selected: false, animated: false)
 //            }
             
+            itemView.postTagIcon.isUserInteractionEnabled = true
+            itemView.postTagIcon.tag = index - (index / 15)
+            itemView.postTagIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postTagIconTapped(_:))))
             itemView.userImage.isUserInteractionEnabled = true
             itemView.userImage.tag = index - (index / 15)
             itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped(_:))))
@@ -883,6 +888,17 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             }
         }
         
+    }
+    
+    @objc func postTagIconTapped(_ sender: UITapGestureRecognizer){
+        let vc = Utility.getViewersViewController()
+        vc.isForTag = true
+      //  vc.numberOfTrends = postsArray[sender.view!.tag].postLikes
+        vc.postId = postsArray[sender.view!.tag].postId
+        isFullScreen = true
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc func userImageTapped(_ sender: UITapGestureRecognizer) {
@@ -1105,11 +1121,13 @@ extension HomeViewController: UIAdaptivePresentationControllerDelegate, UIPopove
 
 extension HomeViewController: CameraViewControllerDelegate{
     func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel]) {
+        tagUserIds = selectedTagUsersArray.map{$0.userId}
         storyImage = image
         saveStoryImageToFirebase(image: storyImage, caption: caption, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
     }
     
     func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel]) {
+        tagUserIds = selectedTagUsersArray.map{$0.userId}
         saveStoryVideoToFirebase(videoURL: videoURL, caption: caption, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
     }
 }

@@ -22,6 +22,8 @@ class ViewersViewController: UIViewController {
     @IBOutlet weak var friendsTableView: UITableView!
     var delegate: ViewersControllerDelegate!
     var isForLike = false
+    var isForTag = false
+    var isForStoryTag = false
     var numberOfTrends = 0
     var postId = 0
     var trendUsers = [PostLikesUserModel]()
@@ -41,6 +43,16 @@ class ViewersViewController: UIViewController {
             lblHeading.text = "Post Trend Views"
             lblViews.text = numberOfTrends > 1 ? "\(numberOfTrends) trends" : "\(numberOfTrends) trend"
             getPostTrends()
+        }
+        else if (isForTag){
+            lblHeading.text = "Tagged Users"
+            lblViews.text = ""
+            getPostUserTags()
+        }
+        else if (isForStoryTag){
+            lblHeading.text = "Tagged Users"
+            lblViews.text = ""
+            getStoryUserTags()
         }
         else{
             lblViews.text = ""
@@ -106,6 +118,76 @@ class ViewersViewController: UIViewController {
         let params = ["id": postId]
         
         API.sharedInstance.executeAPI(type: .getPostTrends, method: .get, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    let posts = result["message"].arrayValue
+                    for post in posts{
+                        let model = PostLikesUserModel()
+                        model.updateModelWithJSON(json: post)
+                        self.trendUsers.append(model)
+                    }
+                    self.friendsTableView.reloadData()
+                }
+                else if (status == .failure){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+        }
+    }
+    
+    func getPostUserTags(){
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        let params = ["id": postId]
+        
+        API.sharedInstance.executeAPI(type: .getPostTags, method: .get, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    let posts = result["message"].arrayValue
+                    for post in posts{
+                        let model = PostLikesUserModel()
+                        model.updateModelWithJSON(json: post)
+                        self.trendUsers.append(model)
+                    }
+                    self.friendsTableView.reloadData()
+                }
+                else if (status == .failure){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+        }
+    }
+    
+    func getStoryUserTags(){
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        let params = ["id": postId]
+        
+        API.sharedInstance.executeAPI(type: .getStoryTags, method: .get, params: params) { (status, result, message) in
             
             DispatchQueue.main.async {
                 Utility.showOrHideLoader(shouldShow: false)
@@ -232,7 +314,7 @@ extension ViewersViewController: UITableViewDataSource, UITableViewDelegate{
         cell.userImage.sd_setImage(with: URL(string: user.userImage), placeholderImage: UIImage(named: "img_placeholder"))
         cell.lblLastSeen.isHidden = true
         
-        if (isForLike){
+        if (isForLike || isForTag || isForStoryTag){
             cell.btnSend.isHidden = true
         }
         else{

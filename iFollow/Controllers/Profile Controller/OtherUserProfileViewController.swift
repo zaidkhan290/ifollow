@@ -576,6 +576,16 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         
     }
     
+    @objc func postTagIconTapped(_ sender: UITapGestureRecognizer){
+        let vc = Utility.getViewersViewController()
+        vc.isForTag = true
+       // vc.numberOfTrends = otherUserProfile.userPosts[sender.view!.tag].postLikes
+        vc.postId = otherUserProfile.userPosts[sender.view!.tag].postId
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     @objc func postLikeViewTapped(_ sender: UITapGestureRecognizer){
         let vc = Utility.getViewersViewController()
         vc.isForLike = true
@@ -813,6 +823,9 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
 //        }
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
+        itemView.postTagIcon.isUserInteractionEnabled = true
+        itemView.postTagIcon.tag = index
+        itemView.postTagIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postTagIconTapped(_:))))
         itemView.likeView.isUserInteractionEnabled = true
         itemView.likeView.tag = index
         itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))

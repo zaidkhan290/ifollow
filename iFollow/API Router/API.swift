@@ -72,6 +72,8 @@ enum EndPoint: String {
     case payWithPaypal = "pay"
     case getPaymentStatus = "payment_status"
     case convertVideo = "media_upload"
+    case getPostTags = "post_tags"
+    case getStoryTags = "story_tags"
     case logout = "logout"
 }
 

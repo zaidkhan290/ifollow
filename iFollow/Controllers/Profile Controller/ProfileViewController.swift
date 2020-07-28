@@ -443,6 +443,9 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.feedImage.contentMode = .scaleAspectFill
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
+        itemView.postTagIcon.isUserInteractionEnabled = true
+        itemView.postTagIcon.tag = index
+        itemView.postTagIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postTagIconTapped(_:))))
         itemView.likeView.isUserInteractionEnabled = true
         itemView.likeView.tag = index
         itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
@@ -494,6 +497,17 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         let vc = Utility.getShareViewController()
         vc.postId = self.userPosts[optionsPopupIndex].postId
         vc.postUserId = Utility.getLoginUserId()
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func postTagIconTapped(_ sender: UITapGestureRecognizer){
+        let vc = Utility.getViewersViewController()
+        vc.isForTag = true
+       // vc.numberOfTrends = userPosts[sender.view!.tag].postLikes
+        vc.postId = userPosts[sender.view!.tag].postId
+        isFullScreen = true
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -638,6 +652,7 @@ extension ProfileViewController: CameraViewControllerDelegate{
         vc.isVideo = false
         isFullScreen = true
         vc.budget = boostPostAmount
+        vc.tagUserIds = selectedTagUsersArray.map{$0.userId}
         vc.totalBudget = boostPostAmount
         vc.delegate = self
         vc.modalPresentationStyle = .custom
@@ -655,6 +670,7 @@ extension ProfileViewController: CameraViewControllerDelegate{
                 vc.budget = self.boostPostAmount
                 vc.totalBudget = self.boostPostAmount
                 vc.isVideo = true
+                vc.tagUserIds = selectedTagUsersArray.map{$0.userId}
                 self.isFullScreen = true
                 vc.delegate = self
                 vc.modalPresentationStyle = .custom

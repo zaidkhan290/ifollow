@@ -559,6 +559,13 @@
                                     <constraint firstAttribute="height" constant="40" id="yuX-7F-4N2"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btP-59-xRB">
+                                <rect key="frame" x="341" y="24.666666666666671" width="31" height="31"/>
+                                <state key="normal" image="tag_orange"/>
+                                <connections>
+                                    <action selector="btnTagsTapped:" destination="avW-mP-0gq" eventType="touchUpInside" id="fn9-hd-VTh"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2E-iQ-Abt">
                                 <rect key="frame" x="75" y="36" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
@@ -575,7 +582,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRO-dB-E36">
-                                <rect key="frame" x="372" y="25" width="22" height="22"/>
+                                <rect key="frame" x="382" y="29" width="22" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="ITn-mb-edw"/>
                                     <constraint firstAttribute="width" constant="22" id="xCE-F5-WWu"/>
@@ -626,6 +633,7 @@
                             <constraint firstItem="Uqr-hH-4hI" firstAttribute="top" secondItem="y2E-iQ-Abt" secondAttribute="bottom" id="3GO-zc-Ebz"/>
                             <constraint firstItem="hbO-4v-Aqo" firstAttribute="centerY" secondItem="y2E-iQ-Abt" secondAttribute="centerY" id="3VV-qa-TXt"/>
                             <constraint firstItem="4Xh-vp-2DW" firstAttribute="top" secondItem="DXr-JL-xqr" secondAttribute="top" constant="20" id="4ee-Iq-UT9"/>
+                            <constraint firstItem="SRO-dB-E36" firstAttribute="centerY" secondItem="btP-59-xRB" secondAttribute="centerY" id="5NT-7b-2GA"/>
                             <constraint firstItem="uXH-xU-ISL" firstAttribute="leading" secondItem="raR-Wp-Nl4" secondAttribute="trailing" constant="15" id="5uk-MI-hgv"/>
                             <constraint firstItem="DXr-JL-xqr" firstAttribute="bottom" secondItem="4QN-V1-cgG" secondAttribute="bottom" constant="20" id="6RN-QU-C9o"/>
                             <constraint firstItem="eOX-G4-zPT" firstAttribute="leading" secondItem="uXH-xU-ISL" secondAttribute="trailing" constant="10" id="7JS-Vl-zhQ"/>
@@ -638,10 +646,10 @@
                             <constraint firstItem="DXr-JL-xqr" firstAttribute="trailing" secondItem="Fez-QY-f2r" secondAttribute="trailing" id="EWO-dX-evb"/>
                             <constraint firstItem="y2E-iQ-Abt" firstAttribute="leading" secondItem="4Xh-vp-2DW" secondAttribute="trailing" constant="15" id="FUU-9y-pqe"/>
                             <constraint firstAttribute="bottom" secondItem="NPd-CF-WGm" secondAttribute="bottom" id="KP9-Ux-WDZ"/>
-                            <constraint firstItem="SRO-dB-E36" firstAttribute="centerY" secondItem="y2E-iQ-Abt" secondAttribute="centerY" id="Nja-bq-ZMm"/>
                             <constraint firstItem="ckG-Yj-E0Q" firstAttribute="top" secondItem="y2E-iQ-Abt" secondAttribute="bottom" id="Qv6-jh-Zvn"/>
                             <constraint firstAttribute="bottom" secondItem="zSk-hV-Hkt" secondAttribute="bottom" id="T0g-j8-Tqh"/>
                             <constraint firstItem="5Ed-mZ-Sfq" firstAttribute="leading" secondItem="DXr-JL-xqr" secondAttribute="leading" id="TFz-rV-7Fg"/>
+                            <constraint firstItem="btP-59-xRB" firstAttribute="centerY" secondItem="4Xh-vp-2DW" secondAttribute="centerY" id="TnS-tt-kNy"/>
                             <constraint firstItem="ff4-HZ-xJ7" firstAttribute="leading" secondItem="4Xh-vp-2DW" secondAttribute="trailing" constant="15" id="USM-Yu-qxy"/>
                             <constraint firstAttribute="bottom" secondItem="Fez-QY-f2r" secondAttribute="bottom" id="UgZ-N2-gAf"/>
                             <constraint firstItem="NPd-CF-WGm" firstAttribute="leading" secondItem="DXr-JL-xqr" secondAttribute="leading" id="VYV-UF-8VX"/>
@@ -655,9 +663,10 @@
                             <constraint firstItem="Fez-QY-f2r" firstAttribute="leading" secondItem="DXr-JL-xqr" secondAttribute="leading" id="kYH-YC-Nuh"/>
                             <constraint firstItem="y2E-iQ-Abt" firstAttribute="centerY" secondItem="4Xh-vp-2DW" secondAttribute="centerY" multiplier="0.9" id="lZc-ig-Gyn"/>
                             <constraint firstItem="5Ed-mZ-Sfq" firstAttribute="top" secondItem="y2E-iQ-Abt" secondAttribute="bottom" id="pRh-BE-y0w"/>
+                            <constraint firstItem="SRO-dB-E36" firstAttribute="leading" secondItem="btP-59-xRB" secondAttribute="trailing" constant="10" id="scP-ZW-KgK"/>
                             <constraint firstItem="eOX-G4-zPT" firstAttribute="top" secondItem="5Ed-mZ-Sfq" secondAttribute="bottom" id="sib-T5-RmS"/>
                             <constraint firstItem="NPd-CF-WGm" firstAttribute="top" secondItem="jWo-PD-a6d" secondAttribute="top" id="xFF-Ca-7q5"/>
-                            <constraint firstItem="DXr-JL-xqr" firstAttribute="trailing" secondItem="SRO-dB-E36" secondAttribute="trailing" constant="20" id="xvT-C9-Dji"/>
+                            <constraint firstItem="DXr-JL-xqr" firstAttribute="trailing" secondItem="SRO-dB-E36" secondAttribute="trailing" constant="10" id="xvT-C9-Dji"/>
                             <constraint firstItem="DXr-JL-xqr" firstAttribute="bottom" secondItem="eOX-G4-zPT" secondAttribute="bottom" constant="20" id="zFN-DQ-6T0"/>
                             <constraint firstItem="eOX-G4-zPT" firstAttribute="top" secondItem="ckG-Yj-E0Q" secondAttribute="bottom" id="zII-CQ-eTh"/>
                             <constraint firstItem="4Xh-vp-2DW" firstAttribute="leading" secondItem="DXr-JL-xqr" secondAttribute="leading" constant="20" id="zgF-B1-QIs"/>
@@ -669,6 +678,7 @@
                         <outlet property="btnOptions" destination="SRO-dB-E36" id="gTd-99-chm"/>
                         <outlet property="btnSend" destination="uXH-xU-ISL" id="ubz-U1-Ioy"/>
                         <outlet property="btnSendWidthConstraint" destination="X99-u5-Kxo" id="UX4-yk-Rh5"/>
+                        <outlet property="btnTags" destination="btP-59-xRB" id="hcd-Z8-lqc"/>
                         <outlet property="btnView" destination="4QN-V1-cgG" id="eOQ-Ie-9UY"/>
                         <outlet property="btnViewWidthConstraint" destination="i9l-Th-rGw" id="Vhg-Gc-GNq"/>
                         <outlet property="hiddenView" destination="5Ed-mZ-Sfq" id="z4I-9J-NoG"/>
@@ -1527,7 +1537,7 @@
                                 <rect key="frame" x="20.666666666666657" y="20" width="372.66666666666674" height="50"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sRh-iw-pPZ">
-                                        <rect key="frame" x="20" y="15" width="264.66666666666669" height="20"/>
+                                        <rect key="frame" x="20" y="15" width="288.66666666666669" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Bpq-aw-H3D"/>
                                         </constraints>
@@ -1535,7 +1545,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchSelected" translatesAutoresizingMaskIntoConstraints="NO" id="kZJ-Z6-EJ5">
-                                        <rect key="frame" x="304.66666666666663" y="1" width="48" height="48"/>
+                                        <rect key="frame" x="328.66666666666663" y="13" width="24" height="24"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1549,7 +1559,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages will be deleted if not read in 3 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jp6-cy-4dF">
-                                <rect key="frame" x="82.666666666666686" y="90" width="249" height="14"/>
+                                <rect key="frame" x="85.333333333333329" y="90" width="243.33333333333337" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.12156862745098039" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1710,7 +1720,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchSelected" translatesAutoresizingMaskIntoConstraints="NO" id="ZwN-Cc-3sc">
-                                <rect key="frame" x="346" y="5.6666666666666679" width="48" height="48"/>
+                                <rect key="frame" x="370" y="17.666666666666668" width="24" height="24.000000000000004"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trending" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHT-yt-CCU">
                                 <rect key="frame" x="10" y="20" width="62" height="19.333333333333329"/>
@@ -1798,7 +1808,7 @@
                                 <rect key="frame" x="-2" y="-3" width="420" height="739"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiG-G6-TmD">
-                                <rect key="frame" x="137" y="20" width="140" height="30"/>
+                                <rect key="frame" x="134.66666666666669" y="20" width="144.66666666666669" height="30"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -2534,7 +2544,7 @@
                             </textField>
                             <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WcK-Cr-Hfq">
                                 <rect key="frame" x="186" y="24.666666666666671" width="16" height="16"/>
-                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="16" id="iVP-sM-GyB"/>
                                     <constraint firstAttribute="height" constant="16" id="qHY-z5-ox9"/>
@@ -3731,7 +3741,7 @@
                                 <rect key="frame" x="20.666666666666657" y="20" width="372.66666666666674" height="50"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YIg-zC-J4S">
-                                        <rect key="frame" x="20" y="15" width="264.66666666666669" height="20"/>
+                                        <rect key="frame" x="20" y="15" width="288.66666666666669" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="oFA-wB-YM7"/>
                                         </constraints>
@@ -3739,7 +3749,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchSelected" translatesAutoresizingMaskIntoConstraints="NO" id="Bcd-j2-je7">
-                                        <rect key="frame" x="304.66666666666663" y="1" width="48" height="48"/>
+                                        <rect key="frame" x="328.66666666666663" y="13" width="24" height="24"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3753,7 +3763,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages will be deleted if not read in 3 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iey-Xz-Ghm">
-                                <rect key="frame" x="82.666666666666686" y="90" width="249" height="14"/>
+                                <rect key="frame" x="85.333333333333329" y="90" width="243.33333333333337" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.1215686275" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -5969,6 +5979,7 @@
         <image name="send-1" width="18.333333969116211" height="17"/>
         <image name="share-icon" width="19" height="19"/>
         <image name="tag-user" width="31" height="31"/>
+        <image name="tag_orange" width="31" height="31"/>
         <image name="text-1" width="31" height="31"/>
         <image name="time" width="37" height="37"/>
         <image name="unselect" width="24.333333969116211" height="24"/>

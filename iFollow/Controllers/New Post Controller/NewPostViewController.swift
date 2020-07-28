@@ -68,6 +68,7 @@ class NewPostViewController: UIViewController {
     var editablePostLink = ""
     var braintreeClient: BTAPIClient!
     var paymentId = ""
+    var tagUserIds = [Int]()
     
     @IBOutlet weak var txtFieldLinkTopConstraint: NSLayoutConstraint!
     
@@ -410,6 +411,7 @@ class NewPostViewController: UIViewController {
                                               "duration": self.days,
                                               "media_type": "video",
                                               "budget": self.budget,
+                                              "tags": self.tagUserIds,
                                               "link": self.isValidURL ? self.txtFieldLink.text! : ""] as [String: Any]
                                 }
                                 else{
@@ -419,6 +421,7 @@ class NewPostViewController: UIViewController {
                                               "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": 0,
                                               "media_type": "video",
+                                              "tags": self.tagUserIds,
                                               "budget": 0] as [String: Any]
                                 }
                                 self.addPostWithRequest(params: params)
@@ -477,6 +480,7 @@ class NewPostViewController: UIViewController {
                                               "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": self.days,
                                               "media_type": "image",
+                                              "tags": self.tagUserIds,
                                               "budget": self.budget,
                                               "link": self.isValidURL ? self.txtFieldLink.text! : ""] as [String: Any]
                                 }
@@ -487,6 +491,7 @@ class NewPostViewController: UIViewController {
                                               "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": 0,
                                               "media_type": "image",
+                                              "tags": self.tagUserIds,
                                               "budget": 0] as [String: Any]
                                 }
                                 self.addPostWithRequest(params: params)

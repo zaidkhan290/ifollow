@@ -202,7 +202,9 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
 //        else{
 //            itemView.likeButton.setSelected(selected: false, animated: false)
 //        }
-        
+        itemView.postTagIcon.isUserInteractionEnabled = true
+        itemView.postTagIcon.tag = index
+        itemView.postTagIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postTagIconTapped(_:))))
         itemView.userImage.isUserInteractionEnabled = true
         itemView.userImage.tag = index
         itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped(_:))))
@@ -340,6 +342,18 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
         alertVC.addAction(cancelAction)
         self.present(alertVC, animated: true, completion: nil)
         
+    }
+    
+    @objc func postTagIconTapped(_ sender: UITapGestureRecognizer){
+        optionsPopupIndex = sender.view!.tag
+        let vc = Utility.getViewersViewController()
+        vc.isForTag = true
+        //vc.numberOfTrends = postsArray[sender.view!.tag].postLikes
+        vc.postId = postsArray[sender.view!.tag].postId
+        isFullScreen = true
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc func hideViewTapped(_ sender: UITapGestureRecognizer){

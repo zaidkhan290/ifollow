@@ -27,6 +27,7 @@ class ExploreViewController: UIViewController {
     var myStoryArray = [StoryUserModel]()
     var followersStoriesArray = [StoryUserModel]()
     var publicStoriesArray = [StoryUserModel]()
+    var tagUserIds = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -464,6 +465,7 @@ class ExploreViewController: UIViewController {
         let params = ["media": mediaUrl,
                       "expire_hours": Utility.getLoginUserStoryExpireHours(),
                       "caption": caption,
+                      "tags": tagUserIds,
                       "media_type": postType] as [String : Any]
         
         API.sharedInstance.executeAPI(type: .createStory, method: .post, params: params) { (status, result, message) in
@@ -678,10 +680,12 @@ extension ExploreViewController: UIImagePickerControllerDelegate, UINavigationCo
 extension ExploreViewController: CameraViewControllerDelegate{
     func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel]) {
         storyImage = image
+        tagUserIds = selectedTagUsersArray.map{$0.userId}
         self.saveStoryImageToFirebase(image: storyImage, caption: caption, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
     }
     
     func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel]) {
+        tagUserIds = selectedTagUsersArray.map{$0.userId}
         self.saveStoryVideoToFirebase(videoURL: videoURL, caption: caption, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray)
     }
 }

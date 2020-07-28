@@ -84,6 +84,9 @@
                             <rect key="frame" x="5" y="65" width="363" height="304"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tag_orange" translatesAutoresizingMaskIntoConstraints="NO" id="H9T-vV-16e">
+                            <rect key="frame" x="20" y="287" width="62" height="62"/>
+                        </imageView>
                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Jf1-8q-ctc">
                             <rect key="frame" x="90.5" y="121" width="192" height="192"/>
                         </imageView>
@@ -235,9 +238,11 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="boW-Jw-bsH" firstAttribute="top" secondItem="H9T-vV-16e" secondAttribute="bottom" constant="20" id="06I-1i-RO7"/>
                         <constraint firstItem="WEY-jN-7kQ" firstAttribute="top" secondItem="Nyn-7Y-rJs" secondAttribute="bottom" constant="5" id="1e1-m8-ghK"/>
                         <constraint firstAttribute="trailing" secondItem="boW-Jw-bsH" secondAttribute="trailing" id="6I4-yk-av2"/>
                         <constraint firstItem="Jf1-8q-ctc" firstAttribute="centerY" secondItem="bJa-sC-NoZ" secondAttribute="centerY" id="6P6-Lg-iR3"/>
+                        <constraint firstItem="H9T-vV-16e" firstAttribute="leading" secondItem="g0t-Ra-yTE" secondAttribute="leading" constant="20" id="8TP-UK-eJV"/>
                         <constraint firstItem="Nkn-yd-dyh" firstAttribute="centerY" secondItem="Nyn-7Y-rJs" secondAttribute="centerY" id="AJw-98-W2m"/>
                         <constraint firstAttribute="bottom" secondItem="boW-Jw-bsH" secondAttribute="bottom" id="AyB-JJ-wyk"/>
                         <constraint firstItem="iwh-tD-z17" firstAttribute="leading" secondItem="qsY-B6-WiC" secondAttribute="trailing" constant="5" id="C2N-MH-pDB"/>
@@ -295,6 +300,7 @@
                 <outlet property="postLinkView" destination="KKg-4D-Afr" id="sZJ-Wz-OyP"/>
                 <outlet property="postShareImageView" destination="9hL-vZ-6zs" id="9Ng-Iz-hc9"/>
                 <outlet property="postShareView" destination="nc4-be-k0Z" id="nza-Nd-lGK"/>
+                <outlet property="postTagIcon" destination="H9T-vV-16e" id="5ce-tc-Utz"/>
                 <outlet property="postTrendLikeIcon" destination="qsY-B6-WiC" id="R40-Cw-4xj"/>
                 <outlet property="postlikeView" destination="TYm-a8-VUl" id="CSP-DH-EHI"/>
                 <outlet property="userImage" destination="K99-P7-8ug" id="d1T-zx-Emx"/>
@@ -314,6 +320,7 @@
         <image name="play_Icon" width="96" height="96"/>
         <image name="post_link" width="20" height="20"/>
         <image name="share-1" width="20" height="18.5"/>
+        <image name="tag_orange" width="31" height="31"/>
         <image name="verify" width="14" height="14"/>
     </resources>
 </document>
