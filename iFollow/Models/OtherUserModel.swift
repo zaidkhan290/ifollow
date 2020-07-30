@@ -64,6 +64,7 @@ class OtherUserPostModel: NSObject{
     var shouldShowPostTrends: Int = 0
     var postBoostLink: String = ""
     var postStatus: String = ""
+    var postTags: String = ""
     
     func updateModelWithJSON(json: JSON){
         postId = json["post_id"].intValue
@@ -78,6 +79,7 @@ class OtherUserPostModel: NSObject{
         shouldShowPostTrends = json["post_view_settings"].intValue
         postBoostLink = json["post_boost_link"].stringValue
         postStatus = json["status"].stringValue
+        postTags = json["tags"].stringValue
     }
     
 }

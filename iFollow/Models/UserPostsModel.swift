@@ -23,6 +23,7 @@ class UserPostsModel: Object{
     @objc dynamic var isPostLike: Int = 0
     @objc dynamic var postBoostLink: String = ""
     @objc dynamic var postStatus: String = ""
+    @objc dynamic var postTags: String = ""
     
     func updateModelWithJSON(json: JSON){
         postId = json["post_id"].intValue
@@ -35,6 +36,7 @@ class UserPostsModel: Object{
         postComments = json["post_comments"].intValue
         isPostLike = json["isLiked"].intValue
         postBoostLink = json["post_boost_link"].stringValue
+        postTags = json["tags"].stringValue
         postStatus = json["status"].stringValue
     }
     

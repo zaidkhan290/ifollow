@@ -29,6 +29,7 @@ class HomePostsModel: Object{
     @objc dynamic var shouldShowPostTrends: Int = 0
     @objc dynamic var isBoostPost: Bool = false
     @objc dynamic var postBoostLink: String = ""
+    @objc dynamic var postTags: String = ""
     @objc dynamic var isPostUserVerified: Int = 0
     
     func updateModelWithJSON(json: JSON){
@@ -49,6 +50,7 @@ class HomePostsModel: Object{
         shouldShowPostTrends = json["post_view_settings"].intValue
         isBoostPost = json["isBoost"].boolValue
         postBoostLink = json["post_boost_link"].stringValue
+        postTags = json["tags"].stringValue
         isPostUserVerified = json["verified"].intValue
     }
     

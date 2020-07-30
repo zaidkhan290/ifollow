@@ -206,6 +206,7 @@ class StoriesViewController: UIViewController {
         currentStoryId = storyModel.storyId
         currentStoryMedia = storyModel.storyURL
         currentStoryMediaType = storyModel.storyMediaType
+        btnTags.isHidden = storyModel.storyTags == ""
         btnView.isHidden = isForMyStory ? false : storyModel.shouldShowStoryViews == 1
         if (isForMyStory){
             btnViewWidthConstraint.constant = 35

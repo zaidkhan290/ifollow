@@ -821,7 +821,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
 //            else{
 //                itemView.likeButton.setSelected(selected: false, animated: false)
 //            }
-            
+            itemView.postTagIcon.isHidden = post.postTags == ""
             itemView.postTagIcon.isUserInteractionEnabled = true
             itemView.postTagIcon.tag = index - (index / 10)
             itemView.postTagIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postTagIconTapped(_:))))

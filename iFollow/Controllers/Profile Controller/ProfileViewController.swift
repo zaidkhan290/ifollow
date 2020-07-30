@@ -443,6 +443,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.feedImage.contentMode = .scaleAspectFill
         itemView.mainView.dropShadow(color: .white)
         itemView.mainView.layer.cornerRadius = 10
+        itemView.postTagIcon.isHidden = post.postTags == ""
         itemView.postTagIcon.isUserInteractionEnabled = true
         itemView.postTagIcon.tag = index
         itemView.postTagIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postTagIconTapped(_:))))

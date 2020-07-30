@@ -268,7 +268,6 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             }
             
             do {
-
                 
                 let input = try AVCaptureDeviceInput(device: backCamera)
                 stillImageOutput = AVCapturePhotoOutput()
