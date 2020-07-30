@@ -31,6 +31,10 @@ class GroupChatModel: NSObject {
         groupImage = json["image"].stringValue
         userClearChatTime = json["chat_clear_time"].doubleValue
         groupCreatedAt = json["created_at"].stringValue
+        let groupCreatedDate = Utility.getNotificationDateFrom(dateString: json["created_at"].stringValue)
+        let groupDateTimeStamp = groupCreatedDate.timeIntervalSince1970
+        let groupCreatedTimeInMillisecods = groupDateTimeStamp * 1000
+        groupLastMessageTime = groupCreatedTimeInMillisecods
         
         let groupMembers = json["user_list"].arrayValue
         for member in groupMembers{
