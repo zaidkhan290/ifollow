@@ -59,6 +59,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @IBOutlet weak var lblVideoTimer: UILabel!
     @IBOutlet weak var captureAnimationImg: UIImageView!
     
+    var isBackTapped = false
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
     var videoPreviewLayer: AVCaptureVideoPreviewLayer!
@@ -284,7 +285,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     }
                 }
                 let audioSession = AVAudioSession.sharedInstance();
-                try audioSession.setCategory(.playAndRecord, mode: .default, options: .mixWithOthers);
+                try audioSession.setCategory(.playAndRecord, mode: .default, options: [.mixWithOthers, .allowBluetooth, .allowBluetoothA2DP]);
                 try audioSession.setActive(true);
                 try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker);
                 if captureSession.canAddInput(input) && captureSession.canAddOutput(stillImageOutput) {
@@ -383,6 +384,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @objc func panGesture(_ sender: UIPanGestureRecognizer) {
         
         // note that 'view' here is the overall video preview
+        isBackTapped = false
         let velocity = sender.velocity(in: view)
         
         if velocity.y >= 0 || velocity.y <= 0 {
@@ -468,7 +470,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                 // update device's zoom factor'
                 update(scale: newZoomFactor)
                 break;
-            case .ended, .cancelled:
+            case .ended, .cancelled, .failed:
                 //stopRecording() /// call to start recording your video
                 if (movieOutput.isRecording)
                 {
@@ -483,18 +485,20 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     }
     
     func addVideoPlayer(videoUrl: URL, to view: UIView) {
-        player = AVPlayer(url: videoUrl)
-        let layer: AVPlayerLayer = AVPlayerLayer(player: player)
-        layer.frame = view.bounds
-        layer.videoGravity = .resizeAspectFill
-        view.layer.sublayers?
-            .filter { $0 is AVPlayerLayer }
-            .forEach { $0.removeFromSuperlayer() }
-        view.layer.addSublayer(layer)
-        player.play();
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak self] _ in
-            self!.player.seek(to: CMTime.zero)
-            self!.player.play()
+        if (!isBackTapped){
+            player = AVPlayer(url: videoUrl)
+            let layer: AVPlayerLayer = AVPlayerLayer(player: player)
+            layer.frame = view.bounds
+            layer.videoGravity = .resizeAspectFill
+            view.layer.sublayers?
+                .filter { $0 is AVPlayerLayer }
+                .forEach { $0.removeFromSuperlayer() }
+            view.layer.addSublayer(layer)
+            player.play();
+            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak self] _ in
+                self!.player.seek(to: CMTime.zero)
+                self!.player.play()
+            }
         }
     }
     
@@ -849,6 +853,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     //MARK:- Actions
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
+        isBackTapped = true
+        if (self.player != nil){
+            self.player.pause()
+        }
         if (isPictureCaptured){
             captureAnimationImg.isHidden = true
             btnCapture.alpha = 1
@@ -889,9 +897,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             lblUserTags.isHidden = true
            // fontSlider.isHidden = true
             lblFont.isHidden = true
-            if (self.player != nil){
-                self.player.pause()
-            }
+            
             //lblNormalTapped()
             for emojiView in emojiesMainView.subviews{
                 if (emojiView == editableTextField || emojiView == editableTextFieldView){
