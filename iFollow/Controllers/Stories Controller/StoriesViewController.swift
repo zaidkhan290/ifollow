@@ -251,6 +251,7 @@ class StoriesViewController: UIViewController {
             self.videoPlayer = AVPlayer(url: videoURL)
             let playerLayer = AVPlayerLayer(player: self.videoPlayer)
             playerLayer.frame = self.videoView.frame
+            playerLayer.videoGravity = .resizeAspectFill
             self.videoView.layer.addSublayer(playerLayer)
             Utility.showOrHideLoader(shouldShow: false)
             
@@ -324,6 +325,7 @@ class StoriesViewController: UIViewController {
                     self.videoPlayer = AVPlayer(url: videoURL)
                     let playerLayer = AVPlayerLayer(player: self.videoPlayer)
                     playerLayer.frame = self.videoView.frame
+                    playerLayer.videoGravity = .resizeAspectFill
                     self.videoView.layer.addSublayer(playerLayer)
                     Utility.showOrHideLoader(shouldShow: false)
                     
