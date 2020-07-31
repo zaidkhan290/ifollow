@@ -286,7 +286,14 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                 let audioSession = AVAudioSession.sharedInstance();
                 try audioSession.setCategory(.playAndRecord, mode: .default, options: [.mixWithOthers, .allowBluetooth, .allowBluetoothA2DP]);
                 try audioSession.setActive(true);
-                try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker);
+                
+                if (detectBluetoothAudioConnected(audioSession: audioSession)){
+                    try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.none)
+                }
+                else{
+                    try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
+                }
+                
                 if captureSession.canAddInput(input) && captureSession.canAddOutput(stillImageOutput) {
                     captureSession.addInput(input)
                     captureSession.addOutput(stillImageOutput)
@@ -301,6 +308,16 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             }
             
             //----- For AVCaptureSession End-----//
+    }
+    
+    func detectBluetoothAudioConnected(audioSession: AVAudioSession) -> Bool{
+        let outputs = audioSession.currentRoute.outputs
+        for output in outputs{
+            if output.portType == .bluetoothA2DP || output.portType == .bluetoothHFP || output.portType == .bluetoothLE || output.portType == .headphones || output.portType == .carAudio{
+                return true
+          }
+        }
+        return false
     }
     
     @objc func pinch(sender: UIPinchGestureRecognizer){
