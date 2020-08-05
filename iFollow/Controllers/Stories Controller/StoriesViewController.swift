@@ -252,7 +252,14 @@ class StoriesViewController: UIViewController {
             self.videoPlayer = AVPlayer(url: videoURL)
             let playerLayer = AVPlayerLayer(player: self.videoPlayer)
             playerLayer.frame = self.videoView.frame
-            playerLayer.videoGravity = .resizeAspectFill
+            let width = self.videoPlayer.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.width.rounded()
+            let height = self.videoPlayer.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.height.rounded()
+            if (Int(width!) > Int(height!)){
+                playerLayer.videoGravity = .resizeAspect
+            }
+            else{
+                playerLayer.videoGravity = .resizeAspectFill
+            }
             self.videoView.layer.addSublayer(playerLayer)
             Utility.showOrHideLoader(shouldShow: false)
             
@@ -326,7 +333,14 @@ class StoriesViewController: UIViewController {
                     self.videoPlayer = AVPlayer(url: videoURL)
                     let playerLayer = AVPlayerLayer(player: self.videoPlayer)
                     playerLayer.frame = self.videoView.frame
-                    playerLayer.videoGravity = .resizeAspectFill
+                    let width = self.videoPlayer.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.width.rounded()
+                    let height = self.videoPlayer.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.height.rounded()
+                    if (Int(width!) > Int(height!)){
+                        playerLayer.videoGravity = .resizeAspect
+                    }
+                    else{
+                        playerLayer.videoGravity = .resizeAspectFill
+                    }
                     self.videoView.layer.addSublayer(playerLayer)
                     Utility.showOrHideLoader(shouldShow: false)
                     
