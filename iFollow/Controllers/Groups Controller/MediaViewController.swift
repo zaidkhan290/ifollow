@@ -11,6 +11,7 @@ import AppImageViewer
 import DTPhotoViewerController
 import AVKit
 import AVFoundation
+import Photos
 
 class MediaViewController: UIViewController {
 
@@ -42,6 +43,58 @@ class MediaViewController: UIViewController {
         self.goBack()
     }
     
+    @objc func showSaveMediaPopup(_ sender: UILongPressGestureRecognizer){
+        
+        if (mediaArray[sender.view!.tag].mediaType != 3){
+            let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let saveMedia = UIAlertAction(title: "Save Media", style: .default) { (action) in
+                DispatchQueue.main.async {
+                    self.saveMediaToPhone(index: sender.view!.tag)
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alertVC.addAction(saveMedia)
+            alertVC.addAction(cancelAction)
+            self.present(alertVC, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func saveMediaToPhone(index: Int){
+        let mediaModel = self.mediaArray[index]
+        if (mediaModel.mediaType == 2){
+            //image
+            DispatchQueue.global(qos: .background).async {
+                if let imageData = try? Data(contentsOf: URL(string: mediaModel.mediaUrl)!){
+                    if let image = UIImage(data: imageData){
+                        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                    }
+                }
+            }
+            
+        }
+        else if (mediaModel.mediaType == 4){
+            //video
+            DispatchQueue.global(qos: .background).async {
+                if let url = URL(string: mediaModel.mediaUrl),
+                    let urlData = NSData(contentsOf: url) {
+                    let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
+                    let filePath="\(documentsPath)/\(UUID().uuidString).mp4"
+                    DispatchQueue.main.async {
+                        urlData.write(toFile: filePath, atomically: true)
+                        PHPhotoLibrary.shared().performChanges({
+                            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
+                        }) { completed, error in
+                            if completed {
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
 }
 
 extension MediaViewController: UICollectionViewDataSource, UICollectionViewDelegate{
@@ -60,6 +113,10 @@ extension MediaViewController: UICollectionViewDataSource, UICollectionViewDeleg
         let media = mediaArray[indexPath.row]
         cell.mediaImage.contentMode = .scaleAspectFill
         cell.mediaImage.layer.cornerRadius = 8
+        cell.tag = indexPath.row
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showSaveMediaPopup(_:)))
+        longPressGesture.minimumPressDuration = 0.5
+        cell.addGestureRecognizer(longPressGesture)
         
         if (media.mediaType == 2){
             cell.mediaImage.sd_setImage(with: URL(string: media.mediaUrl))

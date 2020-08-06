@@ -47,5 +47,6 @@ pod 'OpenTok'
 pod 'SwiftGifOrigin'
 pod 'Hakawai'
 pod 'ATAppUpdater'
+pod 'Cloudinary'
 
 end

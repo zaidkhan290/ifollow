@@ -17,6 +17,7 @@ import Loaf
 import DTPhotoViewerController
 import AVFoundation
 import AVKit
+import Photos
 
 enum RecordingEnum {
     case startRecording
@@ -259,11 +260,21 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                      let date = snapshot.childSnapshot(forPath: "timestamp").value as! Double
                      let isRead = snapshot.childSnapshot(forPath: "isRead").value as! Bool
                      let expireTime = snapshot.childSnapshot(forPath: "expireTime").value as! Double
+                    
+                     
                      
                      let currentTime = Int64(Date().timeIntervalSince1970 * 1000)
                      
                      if (Int64(expireTime) > currentTime){
                          self.messageKeys.append(snapshot.key)
+                         let model = MessagesModel()
+                         model.senderId = sender
+                         model.senderDisplayName = user_name
+                         model.messageType = type
+                         model.messageTimeStamp = date
+                         model.message = message
+                         model.postId = 0
+                        self.messagesModel.append(model)
                          if(type == 1){
                              self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date, isFirstTime: isFirstTime)
                          }else if (type == 2){
@@ -359,6 +370,16 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
                     
                     if (Int64(expireTime) > currentTime){
                         self.messageKeys.append(snapshot.key)
+                        
+                        let model = MessagesModel()
+                        model.senderId = sender
+                        model.senderDisplayName = user_name
+                        model.messageType = type
+                        model.messageTimeStamp = date
+                        model.message = message
+                        model.postId = 0
+                        self.messagesModel.append(model)
+                        
                         if(type == 1){
                             self.addDemoMessages(sender_Id: sender, senderName: user_name, textMsg: message,date: date, isFirstTime: isFirstTime)
                         }else if (type == 2){
@@ -961,20 +982,74 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     }
     
     @objc func showDeleteMessagePopup(_ sender: UILongPressGestureRecognizer){
-        if ((messages[sender.view!.tag].senderId == self.senderId) && (messageKeys.count == messages.count)){
-            let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let deleteMessage = UIAlertAction(title: "Remove Message", style: .default) { (action) in
-                DispatchQueue.main.async {
-                    let messageKey = self.messageKeys[sender.view!.tag]
-                    self.chatRef.child(messageKey).removeValue()
-                }
+        
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let deleteMessage = UIAlertAction(title: "Remove Message", style: .default) { (action) in
+            DispatchQueue.main.async {
+                let messageKey = self.messageKeys[sender.view!.tag]
+                self.chatRef.child(messageKey).removeValue()
             }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        }
+        let saveMedia = UIAlertAction(title: "Save Media", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.saveMediaToPhone(index: sender.view!.tag)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        if ((messages[sender.view!.tag].senderId == self.senderId) && (messageKeys.count == messages.count)){
+            
             alertVC.addAction(deleteMessage)
+            if (messages[sender.view!.tag].isMediaMessage && messagesModel[sender.view!.tag].messageType != 1 && messagesModel[sender.view!.tag].messageType != 3){
+                alertVC.addAction(saveMedia)
+            }
             alertVC.addAction(cancelAction)
             self.present(alertVC, animated: true, completion: nil)
         }
+        else if ((messages[sender.view!.tag].senderId != self.senderId) && (messageKeys.count == messages.count) && (messagesModel[sender.view!.tag].messageType != 1) && (messagesModel[sender.view!.tag].messageType != 3)){
+            
+            alertVC.addAction(saveMedia)
+            alertVC.addAction(cancelAction)
+            self.present(alertVC, animated: true, completion: nil)
+            
+        }
         
+    }
+    
+    func saveMediaToPhone(index: Int){
+        let messageModel = self.messagesModel[index]
+        if (messageModel.messageType == 2){
+            //image
+            DispatchQueue.global(qos: .background).async {
+                if let imageData = try? Data(contentsOf: URL(string: messageModel.message)!){
+                    if let image = UIImage(data: imageData){
+                        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                      
+                    }
+                }
+            }
+            
+        }
+        else if (messageModel.messageType == 4){
+            //video
+            DispatchQueue.global(qos: .background).async {
+                if let url = URL(string: messageModel.message),
+                    let urlData = NSData(contentsOf: url) {
+                    let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
+                    let filePath="\(documentsPath)/\(UUID().uuidString).mp4"
+                    DispatchQueue.main.async {
+                        urlData.write(toFile: filePath, atomically: true)
+                        PHPhotoLibrary.shared().performChanges({
+                            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
+                        }) { completed, error in
+                            if completed {
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func audioMediaItem(_ audioMediaItem: JSQAudioMediaItem, didChangeAudioCategory category: String, options: AVAudioSession.CategoryOptions = [], error: Error?) {
