@@ -59,6 +59,16 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @IBOutlet weak var lblVideoTimer: UILabel!
     @IBOutlet weak var captureAnimationImg: UIImageView!
     
+    @IBOutlet var m_overlayView: UIView!
+    
+    @IBOutlet var timeViewCenterYConstraint: NSLayoutConstraint!
+    @IBOutlet var timeViewCenterXConstraint: NSLayoutConstraint!
+    @IBOutlet var locationViewCenterYConstraint: NSLayoutConstraint!
+    @IBOutlet var locationViewCenterXConstraint: NSLayoutConstraint!
+    
+    @IBOutlet var editableTextViewCenterYConstraint: NSLayoutConstraint!
+    @IBOutlet var editableTextViewCenterXConstraint: NSLayoutConstraint!
+    
     var isBackTapped = false
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
@@ -88,6 +98,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     var selectedImage = UIImage()
     var delegate: CameraViewControllerDelegate!
     var videoURL: URL!
+    var finalEditedVideoURL: URL!
     var tagUsersArrray = [PostLikesUserModel]()
     var tagUsersString = ""
     
@@ -115,7 +126,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     var lastZoomFactor: CGFloat = 1.0
     var latestDirection: Int = 0
     var gestRecognizer : UIPinchGestureRecognizer?;
+    var longPressGesture : UILongPressGestureRecognizer?
+    var panGestureRecognizer : InstantPanGestureRecognizer?
     private var initialZoom: CGFloat = 1.0
+    private var isStartedRecording : Bool = false
     
     
     //MARK:- Methods
@@ -197,14 +211,14 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         
         NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { (notification) in
             DispatchQueue.main.async {
-                self.captureSession.stopRunning()
+                //self.captureSession.stopRunning()
             }
             
         }
         
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) { (notification) in
             DispatchQueue.main.async {
-                self.initCustomCamera()
+                //self.initCustomCamera()
             }
             
         }
@@ -213,8 +227,14 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         doubleTapGesture.numberOfTapsRequired = 2
         self.previewView.addGestureRecognizer(doubleTapGesture)
         
-        let panGestureRecognizer = InstantPanGestureRecognizer(target: self, action: #selector(panGesture))
-        self.btnCapture.addGestureRecognizer(panGestureRecognizer)
+        panGestureRecognizer = InstantPanGestureRecognizer(target: self, action: #selector(panGesture))
+        self.btnCapture.addGestureRecognizer(self.panGestureRecognizer!)
+        self.panGestureRecognizer?.delegate = self
+        
+        self.longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGesture))
+        self.btnCapture.addGestureRecognizer(self.longPressGesture!)
+        self.longPressGesture?.delegate = self
+        
         
         gestRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.pinch(sender:)));
         //self.cameraView.addGestureRecognizer(gestRecognizer!);
@@ -310,6 +330,191 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             //----- For AVCaptureSession End-----//
     }
     
+    func deleteFile(filePath:NSURL) {
+        guard FileManager.default.fileExists(atPath: filePath.path!) else {
+            return
+        }
+        
+        do { try FileManager.default.removeItem(atPath: filePath.path!)
+        } catch { fatalError("Unable to delete file: \(error)") }
+    }
+    
+    func convertVideoAndSaveTophotoLibrary(videoURL: URL) {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        let myDocumentPath = URL(fileURLWithPath: documentsDirectory).appendingPathComponent("temp.mp4").absoluteString
+        _ = NSURL(fileURLWithPath: myDocumentPath)
+        let documentsDirectory2 = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] as URL
+        let filePath = documentsDirectory2.appendingPathComponent("video.mp4")
+        deleteFile(filePath: filePath as NSURL)
+
+        //Check if the file already exists then remove the previous file
+        if FileManager.default.fileExists(atPath: myDocumentPath) {
+            do { try FileManager.default.removeItem(atPath: myDocumentPath)
+            } catch let error { print(error) }
+        }
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        // File to composit
+        let asset = AVURLAsset(url: videoURL as URL)
+        let composition = AVMutableComposition.init()
+        composition.addMutableTrack(withMediaType: AVMediaType.video, preferredTrackID: kCMPersistentTrackID_Invalid)
+        
+        var clipVideoTrack = asset.tracks(withMediaType: AVMediaType.video)[0]
+
+        // Rotate to potrait
+        let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
+        let videoTransform:CGAffineTransform = clipVideoTrack.preferredTransform
+    
+        //fix orientation
+        var videoAssetOrientation_  = UIImage.Orientation.up
+        
+        var isVideoAssetPortrait_  = false
+        
+        if videoTransform.a == 0 && videoTransform.b == 1.0 && videoTransform.c == -1.0 && videoTransform.d == 0 {
+            videoAssetOrientation_ = UIImage.Orientation.right
+            isVideoAssetPortrait_ = true
+        }
+        if videoTransform.a == 0 && videoTransform.b == -1.0 && videoTransform.c == 1.0 && videoTransform.d == 0 {
+            videoAssetOrientation_ =  UIImage.Orientation.left
+            isVideoAssetPortrait_ = true
+        }
+        if videoTransform.a == 1.0 && videoTransform.b == 0 && videoTransform.c == 0 && videoTransform.d == 1.0 {
+            videoAssetOrientation_ =  UIImage.Orientation.up
+        }
+        if videoTransform.a == -1.0 && videoTransform.b == 0 && videoTransform.c == 0 && videoTransform.d == -1.0 {
+            videoAssetOrientation_ = UIImage.Orientation.down;
+        }
+        
+        let transform = CGAffineTransform(a: videoTransform.a, b: videoTransform.b, c: videoTransform.c, d: videoTransform.d, tx: videoTransform.tx, ty: 0)
+        
+        //transformer.setTransform(clipVideoTrack.preferredTransform, at: CMTime.zero)
+        transformer.setTransform(transform, at: CMTime.zero)
+        transformer.setOpacity(0.0, at: asset.duration)
+        
+        //adjust the render size if neccessary
+        var naturalSize: CGSize
+        
+        if(isVideoAssetPortrait_){
+            naturalSize = CGSize(width: clipVideoTrack.naturalSize.height, height: clipVideoTrack.naturalSize.width)
+        } else {
+            if (isFrontCamera)
+            {
+                naturalSize = CGSize(width: clipVideoTrack.naturalSize.height, height: clipVideoTrack.naturalSize.width)
+            }
+            else
+            {
+                naturalSize = clipVideoTrack.naturalSize;
+            }
+        }
+        
+        var renderWidth: CGFloat!
+        var renderHeight: CGFloat!
+        
+        renderWidth = naturalSize.width
+        renderHeight = naturalSize.height
+        
+        let parentlayer = CALayer()
+        let videoLayer = CALayer()
+        let watermarkLayer = CALayer()
+        
+        
+        //let videoComposition = AVMutableVideoComposition()
+        let watermarkImage = CIImage(image:self.m_overlayView.asImage())
+        let watermarkFilter = CIFilter(name: "CISourceOverCompositing")!
+        let videoComposition = AVMutableVideoComposition(asset: asset,  applyingCIFiltersWithHandler: { request in
+            //let source = request.sourceImage.clampedToExtent()
+            let source = request.sourceImage
+            var filteredImg = source
+            if self.selectedFilter > 0
+            {
+                let filter = CIFilter(name: self.filters[self.selectedFilter])
+                filter!.setValue(source , forKey: kCIInputImageKey)
+                let context = CIContext(options:nil)
+                let cgimg = context.createCGImage(filter!.outputImage!, from: filter!.outputImage!.extent)
+                filteredImg = CIImage(cgImage: cgimg!)
+                //request.finish(with: filteredImag, context: nil)
+     
+            }
+            watermarkFilter.setValue(filteredImg, forKey: "inputBackgroundImage")
+            let transform = CGAffineTransform(translationX: filteredImg.extent.width - (watermarkImage?.extent.width)! - 2, y: 0)
+            watermarkFilter.setValue(watermarkImage?.transformed(by: transform), forKey: "inputImage")
+            request.finish(with: watermarkFilter.outputImage!, context: nil)
+            
+        })
+        videoComposition.renderSize = CGSize(width: renderWidth, height: renderHeight)
+        videoComposition.frameDuration = CMTimeMake(value: 1, timescale: 30)
+        videoComposition.renderScale = 1.0
+        
+        watermarkLayer.contents = m_overlayView.asImage().cgImage
+        
+        parentlayer.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: naturalSize)
+        videoLayer.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: naturalSize)
+        watermarkLayer.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: naturalSize)
+        
+        parentlayer.addSublayer(videoLayer)
+        parentlayer.addSublayer(watermarkLayer)
+        
+        // Add watermark to video
+        videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayers: [videoLayer], in: parentlayer)
+        
+        let instruction = AVMutableVideoCompositionInstruction()
+        instruction.timeRange = CMTimeRangeMake(start: CMTime.zero, duration: CMTimeMakeWithSeconds(60, preferredTimescale: 30))
+        
+        
+        instruction.layerInstructions = [transformer]
+        //videoComposition.instructions = [instruction]
+        
+        let exporter = AVAssetExportSession.init(asset: asset, presetName: AVAssetExportPresetHighestQuality)
+        exporter?.outputFileType = AVFileType.mov
+        exporter?.outputURL = filePath
+        exporter?.videoComposition = videoComposition
+        
+        exporter!.exportAsynchronously(completionHandler: {() -> Void in
+            if exporter?.status == .completed {
+                print("Completed")
+                let outputURL: URL? = exporter?.outputURL
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputURL!)
+                }) { saved, error in
+                    Utility.showOrHideLoader(shouldShow: false)
+                    if saved {
+                        let fetchOptions = PHFetchOptions()
+                        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+                        let fetchResult = PHAsset.fetchAssets(with: .video, options: fetchOptions).lastObject
+                        PHImageManager().requestAVAsset(forVideo: fetchResult!, options: nil, resultHandler: { (avurlAsset, audioMix, dict) in
+                            let newObj = avurlAsset as! AVURLAsset
+                            print(newObj.url)
+                            DispatchQueue.main.async(execute: {
+                                self.finalEditedVideoURL = newObj.url
+                                print(newObj.url.absoluteString)
+                                if (self.player != nil){
+                                    self.player.pause()
+                                }
+                                if (self.isForPost){
+                                    self.dismiss(animated: true, completion: nil)
+                                    if (self.videoURL == nil){
+                                        self.delegate.getStoryImage(image: self.storyImageToSend, caption: "", isToSendMyStory: true, friendsArray: [], selectedTagsUserString: self.tagUsersString, selectedTagUsersArray: self.tagUsersArrray)
+                                    }
+                                    else{
+                                        self.delegate.getStoryVideo(videoURL: self.finalEditedVideoURL, caption: "", isToSendMyStory: true, friendsArray: [], selectedTagsUserString: self.tagUsersString, selectedTagUsersArray: self.tagUsersArrray)
+                                    }
+                                }
+                                else{
+                                    let vc = Utility.getShareStoriesViewController()
+                                    vc.delegate = self
+                                    self.pushToVC(vc: vc)
+                                }
+                            })
+                        })
+                        print (fetchResult!)
+                    }
+                }
+            }
+        })
+        
+        
+    }
+    
     func detectBluetoothAudioConnected(audioSession: AVAudioSession) -> Bool{
         let outputs = audioSession.currentRoute.outputs
         for output in outputs{
@@ -318,6 +523,31 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
           }
         }
         return false
+    }
+    
+    @objc func longGesture(sender: UILongPressGestureRecognizer){
+        
+        print("Long")
+        if (sender.state == .began)
+        {
+            if (isVideo)
+            {
+                if (!isStartedRecording)
+                {
+                    OnTappRecording()
+                }
+            }
+        }
+        else if (sender.state == .ended)
+        {
+            if (isVideo)
+            {
+                if (isStartedRecording)
+                {
+                    OnTappRecording()
+                }
+            }
+        }
     }
     
     @objc func pinch(sender: UIPinchGestureRecognizer){
@@ -338,7 +568,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                 print("\(error.localizedDescription)")
             }
         }
-        func minMaxZoom(_ factor: CGFloat) -> CGFloat {
+    func minMaxZoom(_ factor: CGFloat) -> CGFloat {
             return min(min(max(factor, minimumZoom), maximumZoom), device.activeFormat.videoMaxZoomFactor)
         }
         let newScaleFactor = minMaxZoom(gestRecognizer!.scale * lastZoomFactor)
@@ -351,8 +581,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         default: break
         }
     }
-    
-    fileprivate func swapCamera() {
+    fileprivate func swapCamera(){
 
         // Get current input
         guard let input = captureSession.inputs[0] as? AVCaptureDeviceInput else { return }
@@ -400,7 +629,6 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     @objc func panGesture(_ sender: UIPanGestureRecognizer) {
         
         // note that 'view' here is the overall video preview
-        isBackTapped = false
         let velocity = sender.velocity(in: view)
         
         if velocity.y >= 0 || velocity.y <= 0 {
@@ -463,7 +691,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             case .began:
                 initialZoom = device.videoZoomFactor
                 //startRecording() /// call to start recording your video
-                if (!movieOutput.isRecording)
+                if (!isStartedRecording && isVideo)
                 {
                     OnTappRecording();
                 }
@@ -486,11 +714,15 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                 // update device's zoom factor'
                 update(scale: newZoomFactor)
                 break;
-            case .ended, .cancelled, .failed:
+            case .ended, .cancelled:
                 //stopRecording() /// call to start recording your video
-                if (movieOutput.isRecording)
+                if (isStartedRecording && isVideo)
                 {
-                    OnTappRecording();
+                    OnTappRecording()
+                }
+                else if (!isVideo && !isLive)
+                {
+                    OnTappRecording()
                 }
                 break;
                 
@@ -500,22 +732,103 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         }
     }
     
-    func addVideoPlayer(videoUrl: URL, to view: UIView) {
-        if (!isBackTapped){
-            player = AVPlayer(url: videoUrl)
-            let layer: AVPlayerLayer = AVPlayerLayer(player: player)
-            layer.frame = view.bounds
-            layer.videoGravity = .resizeAspectFill
-            view.layer.sublayers?
-                .filter { $0 is AVPlayerLayer }
-                .forEach { $0.removeFromSuperlayer() }
-            view.layer.addSublayer(layer)
-            player.play();
-            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak self] _ in
-                self!.player.seek(to: CMTime.zero)
-                self!.player.play()
+    func setZoomFactor(scale factor: CGFloat){
+        var devitce : AVCaptureDevice!
+        if (isFrontCamera)
+        {
+            devitce = cameraWithPosition(position: .front)
+            
+        }
+        else
+        {
+            devitce = cameraWithPosition(position: .back)
+        }
+        guard let device = devitce else { return }
+        
+        func update(scale factor: CGFloat) {
+            do {
+                
+                try device.lockForConfiguration()
+                defer { device.unlockForConfiguration() }
+                device.videoZoomFactor = factor
+            } catch {
+                print("\(error.localizedDescription)")
             }
         }
+        
+        lastZoomFactor = factor
+
+        update(scale: factor)
+        
+    }
+    func convert(cmage:CIImage) -> UIImage{
+        let context:CIContext = CIContext.init(options: nil)
+        let cgImage:CGImage = context.createCGImage(cmage, from: cmage.extent)!
+        let image:UIImage = UIImage.init(cgImage: cgImage)
+        return image
+    }
+    
+    func addVideoPlayer(videoUrl: URL, to view: UIView) {
+        
+        let asset = AVAsset(url: videoUrl)
+        let item = AVPlayerItem(asset: asset)
+        item.videoComposition = AVVideoComposition(asset: asset,  applyingCIFiltersWithHandler: { request in
+            //let source = request.sourceImage.clampedToExtent()
+            let source = request.sourceImage
+            if self.selectedFilter > 0
+            {
+                //let filter = CIFilter(name: "CIGaussianBlur")!
+                /*let filter = CIFilter(name: self.filters[self.selectedFilter])
+                // Clamp to avoid blurring transparent pixels at the image edges
+                                   let source = request.sourceImage.clampedToExtent()
+                if (filter != nil)
+                {
+                     // Vary filter parameters based on video timing
+                    filter!.setValue(source, forKey: kCIInputImageKey)
+                    let seconds = CMTimeGetSeconds(request.compositionTime)
+                    // Crop the blurred output to the bounds of the original image
+                    filter!.setValue(seconds * 10.0, forKey: kCIInputRadiusKey)
+                    let output = filter!.outputImage!.cropped(to: request.sourceImage.extent)
+                    request.finish(with: output, context: nil)
+                }
+                
+                else
+                {
+                    request.finish(with: source, context: nil)
+                }*/
+                
+                
+                let filter = CIFilter(name: self.filters[self.selectedFilter])
+                filter!.setValue(source , forKey: kCIInputImageKey)
+
+                let context = CIContext(options:nil)
+                let cgimg = context.createCGImage(filter!.outputImage!, from: filter!.outputImage!.extent)
+                let filteredImag = CIImage(cgImage: cgimg!)
+                
+                request.finish(with: filteredImag, context: nil)
+            }
+            else
+            {
+                request.finish(with: source, context: nil)
+            }
+        })
+        player = AVPlayer(playerItem: item)
+        
+        //player = AVPlayer(url: videoUrl)
+        let layer: AVPlayerLayer = AVPlayerLayer(player: player)
+        layer.frame = view.bounds
+        layer.videoGravity = .resizeAspectFill
+        view.layer.sublayers?
+            .filter { $0 is AVPlayerLayer }
+            .forEach { $0.removeFromSuperlayer() }
+        view.layer.sublayers?.removeAll()
+        view.layer.addSublayer(layer)
+        player.play();
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak self] _ in
+            self!.player.seek(to: CMTime.zero)
+            self!.player.play()
+        }
+        
     }
     
     @objc func swipeUpToGetStickers(){
@@ -527,13 +840,26 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     }
     
     func changeView(isVideoSelected: Bool){
-        btnGallery.isHidden = isVideoSelected
-        btnEmoji.isHidden = isVideoSelected
-        btnText.isHidden = isVideoSelected
-        btnLocation.isHidden = isVideoSelected
+        //btnGallery.isHidden = isVideoSelected
+        btnGallery.isHidden = false
+        //btnEmoji.isHidden = isVideoSelected
+        //btnText.isHidden = isVideoSelected
+        btnEmoji.isEnabled = true
+        btnLocation.isEnabled = true
+        btnLocation.isHidden = false
+        btnClock.isHidden = false
+        btnText.isHidden = false
+        btnTag.isHidden = false
+        //btnLocation.isHidden = isVideoSelected
         btnFlash.isHidden = isVideoSelected
         btnRotate.isHidden = isVideoSelected
-       // btnPlay.isHidden = !isVideoSelected
+        timeViewCenterYConstraint.constant = 0
+        timeViewCenterXConstraint.constant = 0
+        locationViewCenterYConstraint.constant = 0
+        locationViewCenterXConstraint.constant = 0
+        editableTextViewCenterXConstraint.constant = 0
+        editableTextViewCenterYConstraint.constant = 0
+        // btnPlay.isHidden = !isVideoSelected
         if (!isForPost){
             txtFieldCaption.isHidden = false
         }
@@ -768,11 +1094,30 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             lblFont.isHidden = true
         }
         
-        let translation = gestureRecognizer.translation(in: self.filterView)
+        //let translation = gestureRecognizer.translation(in: self.filterView)
+        let translation = gestureRecognizer.translation(in: self.m_overlayView)
         
-        gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
-        gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
         
+        gestureRecognizer.setTranslation(CGPoint.zero, in: self.m_overlayView)
+        if (gestureRecognizer.view! == timeView)
+        {
+            timeViewCenterXConstraint.constant += translation.x
+            timeViewCenterYConstraint.constant += translation.y
+        }
+        else if (gestureRecognizer.view! == locationView)
+        {
+            locationViewCenterXConstraint.constant += translation.x
+            locationViewCenterYConstraint.constant += translation.y
+        }
+        else if (gestureRecognizer.view! == editableTextField)
+        {
+            editableTextViewCenterYConstraint.constant += translation.y
+            editableTextViewCenterXConstraint.constant += translation.x
+        }
+        else
+        {
+            gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
+        }
         if ((deleteView.frame.intersects(gestureRecognizer.view!.frame))){
             deleteIcon.image = UIImage(named: "delete-selected")
             gestureRecognizer.view?.alpha = 0.6
@@ -791,12 +1136,16 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     timeView.isHidden = true
                     timeView.alpha = 1
                     timeView.frame = timeViewFrame
+                    timeViewCenterXConstraint.constant = 0
+                    timeViewCenterYConstraint.constant = 0
                     timeViewStyle = 0
                 }
                 else if (gestureRecognizer.view! == locationView){
                     locationView.isHidden = true
                     locationView.alpha = 1
                     locationView.frame = locationViewFrame
+                    locationViewCenterXConstraint.constant = 0
+                    locationViewCenterYConstraint.constant = 0
                     locationViewStyle = 0
                 }
                 else{
@@ -829,7 +1178,6 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             recognizer.rotation = 0
         }
     }
-    
     
     @objc func swipeLeft(_ gesture: UISwipeGestureRecognizer){
         if (selectedFilter < filters.count - 1){
@@ -925,15 +1273,17 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                 
             }
             for subView in filterView.subviews{
-                if (subView == cameraView || subView == timeView || subView == editableTextField || subView == locationView || subView == emojiesMainView || subView == editableTextFieldView){
+                if (subView == cameraView || subView == timeView || subView == editableTextField || subView == locationView || subView == emojiesMainView || subView == editableTextFieldView || subView == m_overlayView){
                     
                 }
                 else{
                     subView.removeFromSuperview()
                 }
             }
+            setZoomFactor(scale: 1.0)
         }
         else{
+            setZoomFactor(scale: 1.0)
             self.dismiss(animated: true, completion: nil)
         }
         
@@ -950,45 +1300,34 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                 btnGallery.setImage(UIImage(named: "colors"), for: .normal)
                 btnBack.setImage(UIImage(named: "close-1"), for: .normal)
             }
-            else if (isVideo){
-                if movieOutput.isRecording {
-                    movieOutput.stopRecording()
-                    timer.invalidate()
-                    seconds = 0
-                    self.lblVideoTimer.text = ""
-                    self.recordingIcon.isHidden = true
-                    btnRotate.isHidden = false
-                }
-                else {
-
-                    btnRotate.isHidden = true
-                    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-                    let fileUrl = paths[0].appendingPathComponent("output.mov")
-                    try? FileManager.default.removeItem(at: fileUrl)
-                    movieOutput.startRecording(to: fileUrl, recordingDelegate: self)
-
-                    self.runTimer()
-                }
-            }
         }
         else{
             if (self.videoURL == nil){
                 self.storyImageToSend = self.filterView.screenshot()
             }
-            if (isForPost){
-                self.dismiss(animated: true, completion: nil)
-                if (self.videoURL == nil){
-                    self.delegate.getStoryImage(image: self.storyImageToSend, caption: "", isToSendMyStory: true, friendsArray: [], selectedTagsUserString: tagUsersString, selectedTagUsersArray: tagUsersArrray)
-                }
-                else{
-                    self.delegate.getStoryVideo(videoURL: self.videoURL, caption: "", isToSendMyStory: true, friendsArray: [], selectedTagsUserString: tagUsersString, selectedTagUsersArray: tagUsersArrray)
-                }
+            if (videoURL != nil){
+                convertVideoAndSaveTophotoLibrary(videoURL: videoURL!)
             }
             else{
-                let vc = Utility.getShareStoriesViewController()
-                vc.delegate = self
-                self.pushToVC(vc: vc)
+                if (self.isForPost){
+                    if (self.player != nil){
+                        self.player.pause()
+                    }
+                    self.dismiss(animated: true, completion: nil)
+                    if (self.videoURL == nil){
+                        self.delegate.getStoryImage(image: self.storyImageToSend, caption: "", isToSendMyStory: true, friendsArray: [], selectedTagsUserString: self.tagUsersString, selectedTagUsersArray: self.tagUsersArrray)
+                    }
+                    else{
+                        self.delegate.getStoryVideo(videoURL: self.finalEditedVideoURL, caption: "", isToSendMyStory: true, friendsArray: [], selectedTagsUserString: self.tagUsersString, selectedTagUsersArray: self.tagUsersArrray)
+                    }
+                }
+                else{
+                    let vc = Utility.getShareStoriesViewController()
+                    vc.delegate = self
+                    self.pushToVC(vc: vc)
+                }
             }
+            
         }
         
     }
@@ -1049,20 +1388,20 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         lblTime.text = Utility.getCurrentTime()
         timeView.isHidden = false
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-                gestureRecognizer.delegate = self
-                gestureRecognizer.require(toFail: timeViewTapGesture)
-                timeView.gestureRecognizers?.removeAll()
-                timeView.addGestureRecognizer(gestureRecognizer)
+        gestureRecognizer.delegate = self
+        gestureRecognizer.require(toFail: timeViewTapGesture)
+        timeView.gestureRecognizers?.removeAll()
+        timeView.addGestureRecognizer(gestureRecognizer)
 
-                //add pinch gesture
-                let pinchGesture = UIPinchGestureRecognizer(target: self, action:#selector(pinchRecognized(pinch:)))
-                pinchGesture.delegate = self
-                timeView.addGestureRecognizer(pinchGesture)
+        //add pinch gesture
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action:#selector(pinchRecognized(pinch:)))
+        pinchGesture.delegate = self
+        timeView.addGestureRecognizer(pinchGesture)
 
-                //add rotate gesture.
-                let rotate = UIRotationGestureRecognizer.init(target: self, action: #selector(handleRotate(recognizer:)))
-                rotate.delegate = self
-                timeView.addGestureRecognizer(rotate)
+        //add rotate gesture.
+        let rotate = UIRotationGestureRecognizer.init(target: self, action: #selector(handleRotate(recognizer:)))
+        rotate.delegate = self
+        timeView.addGestureRecognizer(rotate)
         
     }
     
@@ -1182,7 +1521,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                 btnBack.setImage(UIImage(named: "close-1"), for: .normal)
             }
             else if (isVideo){
-                if movieOutput.isRecording {
+                if isStartedRecording {
+                    isStartedRecording = false
                     captureAnimationImg.isHidden = true
                     btnCapture.alpha = 1
                     movieOutput.stopRecording()
@@ -1204,6 +1544,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     btnRotate.isHidden = false
                 }
                 else {
+                    isStartedRecording = true
                     captureAnimationImg.isHidden = false
                     btnCapture.alpha = 0
                     btnRotate.isHidden = true
@@ -1466,6 +1807,7 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
                     self.lblNormal.isHidden = true
                     self.lblVideo.isHidden = true
                     self.changeView(isVideoSelected: true)
+                    self.addVideoPlayer(videoUrl: self.videoURL, to: self.cameraView)
                 }
             }
 
@@ -1523,8 +1865,20 @@ extension CameraViewController: UITextViewDelegate{
 }
 
 extension CameraViewController: UIGestureRecognizerDelegate{
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
+        -> Bool {
+            // If the gesture recognizer's view isn't one of the squares, do not
+            // allow simultaneous recognition.
+            if (gestureRecognizer is InstantPanGestureRecognizer)
+            {
+                print("Pan Gesture")
+            }
+            else if (gestureRecognizer is UILongPressGestureRecognizer)
+            {
+                print("Long Gesture")
+            }
+            return true
     }
 }
 
@@ -1537,21 +1891,24 @@ extension CameraViewController: GMSAutocompleteViewControllerDelegate{
             locationView.isHidden = false
     
             let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-                    gestureRecognizer.delegate = self
-                    locationView.gestureRecognizers?.removeAll()
-                    locationView.addGestureRecognizer(gestureRecognizer)
+            gestureRecognizer.delegate = self
+            gestureRecognizer.require(toFail: locationViewTapGesture)
+            locationView.gestureRecognizers?.removeAll()
+            locationView.addGestureRecognizer(gestureRecognizer)
 
-                    //add pinch gesture
-                    let pinchGesture = UIPinchGestureRecognizer(target: self, action:#selector(pinchRecognized(pinch:)))
-                    pinchGesture.delegate = self
-                    locationView.addGestureRecognizer(pinchGesture)
+            //add pinch gesture
+            let pinchGesture = UIPinchGestureRecognizer(target: self, action:#selector(pinchRecognized(pinch:)))
+            pinchGesture.delegate = self
+            locationView.addGestureRecognizer(pinchGesture)
 
-                    //add rotate gesture.
-                    let rotate = UIRotationGestureRecognizer.init(target: self, action: #selector(handleRotate(recognizer:)))
-                    rotate.delegate = self
-                    locationView.addGestureRecognizer(rotate)
+            //add rotate gesture.
+            let rotate = UIRotationGestureRecognizer.init(target: self, action: #selector(handleRotate(recognizer:)))
+            rotate.delegate = self
+            locationView.addGestureRecognizer(rotate)
+            
         }
         dismiss(animated: true, completion: nil)
+        
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
@@ -1575,16 +1932,19 @@ extension CameraViewController: ShareStoriesViewControllerDelegate{
             self.delegate.getStoryImage(image: storyImageToSend, caption: self.txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray, selectedTagsUserString: tagUsersString, selectedTagUsersArray: tagUsersArrray)
         }
         else{
-            if (isToSendMyStory && shouldSaveToGallery){
-                PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: self.videoURL)
-                }) { saved, error in
-                    if saved {
-                    }
-                }
-            }
+//            if (isToSendMyStory && shouldSaveToGallery){
+//                PHPhotoLibrary.shared().performChanges({
+//                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: self.videoURL)
+//                }) { saved, error in
+//                    if saved {
+//                    }
+//                }
+//            }
             
-            self.delegate.getStoryVideo(videoURL: self.videoURL, caption: txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray, selectedTagsUserString: tagUsersString, selectedTagUsersArray: tagUsersArrray)
+            self.delegate.getStoryVideo(videoURL: self.finalEditedVideoURL, caption: txtFieldCaption.text!, isToSendMyStory: isToSendMyStory, friendsArray: friendsArray, selectedTagsUserString: tagUsersString, selectedTagUsersArray: tagUsersArrray)
+        }
+        if (player != nil){
+            player.pause()
         }
         self.dismiss(animated: true, completion: nil)
 
