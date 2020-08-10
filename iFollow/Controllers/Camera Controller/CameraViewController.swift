@@ -777,26 +777,6 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             let source = request.sourceImage
             if self.selectedFilter > 0
             {
-                //let filter = CIFilter(name: "CIGaussianBlur")!
-                /*let filter = CIFilter(name: self.filters[self.selectedFilter])
-                // Clamp to avoid blurring transparent pixels at the image edges
-                                   let source = request.sourceImage.clampedToExtent()
-                if (filter != nil)
-                {
-                     // Vary filter parameters based on video timing
-                    filter!.setValue(source, forKey: kCIInputImageKey)
-                    let seconds = CMTimeGetSeconds(request.compositionTime)
-                    // Crop the blurred output to the bounds of the original image
-                    filter!.setValue(seconds * 10.0, forKey: kCIInputRadiusKey)
-                    let output = filter!.outputImage!.cropped(to: request.sourceImage.extent)
-                    request.finish(with: output, context: nil)
-                }
-                
-                else
-                {
-                    request.finish(with: source, context: nil)
-                }*/
-                
                 
                 let filter = CIFilter(name: self.filters[self.selectedFilter])
                 filter!.setValue(source , forKey: kCIInputImageKey)
@@ -817,7 +797,16 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         //player = AVPlayer(url: videoUrl)
         let layer: AVPlayerLayer = AVPlayerLayer(player: player)
         layer.frame = view.bounds
-        layer.videoGravity = .resizeAspectFill
+        
+        let width = player.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.width.rounded()
+        let height = player.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.height.rounded()
+        if (Int(width!) > Int(height!)){
+            layer.videoGravity = .resizeAspect
+        }
+        else{
+            layer.videoGravity = .resizeAspectFill
+        }
+        
         view.layer.sublayers?
             .filter { $0 is AVPlayerLayer }
             .forEach { $0.removeFromSuperlayer() }
