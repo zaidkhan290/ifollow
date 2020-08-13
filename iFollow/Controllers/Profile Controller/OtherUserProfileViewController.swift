@@ -661,11 +661,14 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
                     }
                     
                     let params = ["media": self.otherUserProfile.userPosts[self.optionsPopupIndex].postMedia,
-                                  "description": "Original post by \(self.otherUserProfile.userFullName)",
+                                  "description": "Original post by \(self.otherUserProfile.userPosts[self.optionsPopupIndex].postOriginalUserFullName)",
                                   "location": "",
                                   "expire_hours": Utility.getLoginUserPostExpireHours(),
                                   "duration": 0,
                                   "media_type": self.otherUserProfile.userPosts[self.optionsPopupIndex].postMediaType,
+                                  "original_id": self.otherUserProfile.userPosts[self.optionsPopupIndex].postOriginalUserId,
+                                  "original_name": self.otherUserProfile.userPosts[self.optionsPopupIndex].postOriginalUserFullName,
+                                  "tags": [self.otherUserProfile.userPosts[self.optionsPopupIndex].postOriginalUserId],
                                   "budget": 0] as [String: Any]
                     
                     API.sharedInstance.executeAPI(type: .createPost, method: .post, params: params) { (status, result, message) in

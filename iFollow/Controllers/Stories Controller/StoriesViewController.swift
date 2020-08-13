@@ -252,10 +252,16 @@ class StoriesViewController: UIViewController {
             self.videoPlayer = AVPlayer(url: videoURL)
             let playerLayer = AVPlayerLayer(player: self.videoPlayer)
             playerLayer.frame = self.videoView.frame
+            
             let width = self.videoPlayer.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.width.rounded()
             let height = self.videoPlayer.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.height.rounded()
-            if (Int(width!) > Int(height!)){
-                playerLayer.videoGravity = .resizeAspect
+            if (width != nil && height != nil){
+                if (Int(width!) > Int(height!)){
+                    playerLayer.videoGravity = .resizeAspect
+                }
+                else{
+                    playerLayer.videoGravity = .resizeAspectFill
+                }
             }
             else{
                 playerLayer.videoGravity = .resizeAspectFill
@@ -335,8 +341,13 @@ class StoriesViewController: UIViewController {
                     playerLayer.frame = self.videoView.frame
                     let width = self.videoPlayer.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.width.rounded()
                     let height = self.videoPlayer.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.height.rounded()
-                    if (Int(width!) > Int(height!)){
-                        playerLayer.videoGravity = .resizeAspect
+                    if (width != nil && height != nil){
+                        if (Int(width!) > Int(height!)){
+                            playerLayer.videoGravity = .resizeAspect
+                        }
+                        else{
+                            playerLayer.videoGravity = .resizeAspectFill
+                        }
                     }
                     else{
                         playerLayer.videoGravity = .resizeAspectFill
@@ -815,6 +826,11 @@ class StoriesViewController: UIViewController {
     @objc func goToNextUserStory(){
         
         if (!isForMyStory){
+            
+            if (isVideoPlaying){
+                self.videoPlayer.pause()
+            }
+            
             let nextUserIndex = storyUserIndex + 1
             if (self.storiesUsersArray.count - nextUserIndex == 0){
                 self.dismissStory()
@@ -825,9 +841,7 @@ class StoriesViewController: UIViewController {
                 vc.isFromExplore = isFromExplore
                 vc.isForPublicStory = isForPublicStory
                 vc.storyUserIndex = nextUserIndex
-                if (isVideoPlaying){
-                    self.videoPlayer.pause()
-                }
+                
                 self.animateToNextUserStory(vc: vc)
             }
         }
@@ -836,6 +850,10 @@ class StoriesViewController: UIViewController {
     @objc func backToPrevUserStory(){
         
         if (!isForMyStory){
+            
+            if (isVideoPlaying){
+                self.videoPlayer.pause()
+            }
            
             if (storyUserIndex > 0){
                 let prevUserIndex = storyUserIndex - 1
@@ -848,9 +866,6 @@ class StoriesViewController: UIViewController {
                     vc.isFromExplore = isFromExplore
                     vc.isForPublicStory = isForPublicStory
                     vc.storyUserIndex = prevUserIndex
-                    if (isVideoPlaying){
-                        self.videoPlayer.pause()
-                    }
                     UIView.beginAnimations("", context: nil)
                     UIView.setAnimationDuration(0.5)
                     UIView.setAnimationCurve(UIView.AnimationCurve.linear)

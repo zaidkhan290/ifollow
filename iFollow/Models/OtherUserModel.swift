@@ -65,7 +65,9 @@ class OtherUserPostModel: NSObject{
     var postBoostLink: String = ""
     var postStatus: String = ""
     var postTags: String = ""
-    
+    var postOriginalUserId: Int = 0
+    var postOriginalUserFullName: String = ""
+
     func updateModelWithJSON(json: JSON){
         postId = json["post_id"].intValue
         postMedia = json["media"].stringValue
@@ -80,6 +82,8 @@ class OtherUserPostModel: NSObject{
         postBoostLink = json["post_boost_link"].stringValue
         postStatus = json["status"].stringValue
         postTags = json["tags"].stringValue
+        postOriginalUserId = json["original_id"].intValue
+        postOriginalUserFullName = json["original_name"].stringValue
     }
     
 }

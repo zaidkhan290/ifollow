@@ -30,6 +30,8 @@ class HomePostsModel: Object{
     @objc dynamic var isBoostPost: Bool = false
     @objc dynamic var postBoostLink: String = ""
     @objc dynamic var postTags: String = ""
+    @objc dynamic var postOriginalUserId: Int = 0
+    @objc dynamic var postOriginalUserFullName: String = ""
     @objc dynamic var isPostUserVerified: Int = 0
     
     func updateModelWithJSON(json: JSON){
@@ -51,6 +53,8 @@ class HomePostsModel: Object{
         isBoostPost = json["isBoost"].boolValue
         postBoostLink = json["post_boost_link"].stringValue
         postTags = json["tags"].stringValue
+        postOriginalUserId = json["original_id"].intValue
+        postOriginalUserFullName = json["original_name"].stringValue
         isPostUserVerified = json["verified"].intValue
     }
     

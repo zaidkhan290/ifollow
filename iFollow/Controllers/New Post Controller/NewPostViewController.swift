@@ -412,6 +412,8 @@ class NewPostViewController: UIViewController {
                                               "media_type": "video",
                                               "budget": self.budget,
                                               "tags": self.tagUserIds,
+                                              "original_id": Utility.getLoginUserId(),
+                                              "original_name": Utility.getLoginUserFullName(),
                                               "link": self.isValidURL ? self.txtFieldLink.text! : ""] as [String: Any]
                                 }
                                 else{
@@ -422,6 +424,8 @@ class NewPostViewController: UIViewController {
                                               "duration": 0,
                                               "media_type": "video",
                                               "tags": self.tagUserIds,
+                                              "original_id": Utility.getLoginUserId(),
+                                              "original_name": Utility.getLoginUserFullName(),
                                               "budget": 0] as [String: Any]
                                 }
                                 self.addPostWithRequest(params: params)
@@ -481,6 +485,8 @@ class NewPostViewController: UIViewController {
                                               "duration": self.days,
                                               "media_type": "image",
                                               "tags": self.tagUserIds,
+                                              "original_id": Utility.getLoginUserId(),
+                                              "original_name": Utility.getLoginUserFullName(),
                                               "budget": self.budget,
                                               "link": self.isValidURL ? self.txtFieldLink.text! : ""] as [String: Any]
                                 }
@@ -492,6 +498,8 @@ class NewPostViewController: UIViewController {
                                               "duration": 0,
                                               "media_type": "image",
                                               "tags": self.tagUserIds,
+                                              "original_id": Utility.getLoginUserId(),
+                                              "original_name": Utility.getLoginUserFullName(),
                                               "budget": 0] as [String: Any]
                                 }
                                 self.addPostWithRequest(params: params)

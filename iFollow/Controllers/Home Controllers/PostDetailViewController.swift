@@ -317,11 +317,14 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
                     }
                     
                     let params = ["media": self.postsArray[self.optionsPopupIndex].postMedia,
-                                  "description": "Original post by \(self.postsArray[self.optionsPopupIndex].postUserFullName)",
+                                  "description": "Original post by \(self.postsArray[self.optionsPopupIndex].postOriginalUserFullName)",
                                   "location": "",
                                   "expire_hours": Utility.getLoginUserPostExpireHours(),
                                   "duration": 0,
                                   "media_type": self.postsArray[self.optionsPopupIndex].postMediaType,
+                                  "original_id": self.postsArray[self.optionsPopupIndex].postOriginalUserId,
+                                  "original_name": self.postsArray[self.optionsPopupIndex].postOriginalUserFullName,
+                                  "tags": [self.postsArray[self.optionsPopupIndex].postOriginalUserId],
                                   "budget": 0] as [String: Any]
                     
                     API.sharedInstance.executeAPI(type: .createPost, method: .post, params: params) { (status, result, message) in

@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         
         let config = Realm.Configuration(
-            schemaVersion: 6,
+            schemaVersion: 7,
             migrationBlock: { migration, oldSchemaVersion in
                 if (oldSchemaVersion < 1){
                     migration.enumerateObjects(ofType: UserModel.className()) { (oldObject, newObject) in
@@ -70,6 +70,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     }
                     migration.enumerateObjects(ofType: UserStoryModel.className()) { (oldObject, newObject) in
                         newObject?["storyTags"] = ""
+                    }
+                }
+                if (oldSchemaVersion < 7){
+                    migration.enumerateObjects(ofType: HomePostsModel.className()) { (oldObject, newObject) in
+                        newObject?["postOriginalUserId"] = 0
+                        newObject?["postOriginalUserFullName"] = ""
+                    }
+                    migration.enumerateObjects(ofType: UserPostsModel.className()) { (oldObject, newObject) in
+                        newObject?["postOriginalUserId"] = 0
+                        newObject?["postOriginalUserFullName"] = ""
                     }
                 }
                 
