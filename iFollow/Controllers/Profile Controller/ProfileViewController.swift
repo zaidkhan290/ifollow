@@ -157,6 +157,7 @@ class ProfileViewController: UIViewController {
                         }
                     }
                     self.verifiedIcon.isHidden = result["message"].arrayValue.first!["verified"].intValue == 0
+                    kIsUserVerified = result["message"].arrayValue.first!["verified"].intValue == 1
                     self.setUserPosts(isAfterNewPost: isAfterNewPost)
                 }
                 else if (status == .failure){

@@ -36,4 +36,5 @@ let interstitialAddUnitID = "ca-app-pub-7830642545217251/6770817204" // Live..
 //let adUnitID = "ca-app-pub-3940256099942544/3986624511" // Testing Native
 //let interstitialAddUnitID = "ca-app-pub-3940256099942544/4411468910" // Testing Intestrial
 let BT_AUTHORIZATION_KEY = "sandbox_rzxh3y9w_vgv2k4dn6fj3dqmx"
+var kIsUserVerified = false
 //let BT_AUTHORIZATION_KEY = "production_yk8knskb_7v7bfwgqbgd65w4p"

@@ -135,9 +135,15 @@ extension TimeSettingViewController: UITableViewDataSource, UITableViewDelegate{
             cell.lblDuration.isHidden = false
             cell.btnMinus.isHidden = false
             cell.btnPlus.isHidden = false
-            cell.lblDuration.text = "\(Utility.getLoginUserPostExpireHours())"
+            cell.lblDuration.text = Utility.getLoginUserPostExpireHours() == 99999 ? "Forever" : "\(Utility.getLoginUserPostExpireHours())"
+            if (kIsUserVerified){
+                cell.btnPlus.isEnabled = Utility.getLoginUserPostExpireHours() < 99999
+            }
+            else{
+                cell.btnPlus.isEnabled = Utility.getLoginUserPostExpireHours() < 72
+            }
             cell.btnMinus.isEnabled = Utility.getLoginUserPostExpireHours() > 24
-            cell.btnPlus.isEnabled = Utility.getLoginUserPostExpireHours() < 72
+            
         }
         
         return cell
@@ -200,6 +206,9 @@ extension TimeSettingViewController: MenuTableViewCellDelegate{
                         else if (user.userPostExpireHours == 48){
                             user.userPostExpireHours = 72
                         }
+                        else if (user.userPostExpireHours == 72 && kIsUserVerified){
+                            user.userPostExpireHours = 99999
+                        }
                     }
                 }
                 else{
@@ -212,7 +221,10 @@ extension TimeSettingViewController: MenuTableViewCellDelegate{
                         }
                     }
                     else if (indexPath.row == 1){
-                        if (user.userPostExpireHours == 72){
+                        if (user.userPostExpireHours == 99999){
+                            user.userPostExpireHours = 72
+                        }
+                        else if (user.userPostExpireHours == 72){
                             user.userPostExpireHours = 48
                         }
                         else if (user.userPostExpireHours == 48){
