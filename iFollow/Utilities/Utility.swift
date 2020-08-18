@@ -140,6 +140,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "StoriesViewController") as! StoriesViewController
     }
     
+    static func getSingleStoryViewController() -> SingleStoryViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "SingleStoryViewController") as! SingleStoryViewController
+    }
+    
     static func getSendStoryViewController() -> SendStoryViewController{
         return storyBoard.instantiateViewController(withIdentifier: "SendStoryViewController") as! SendStoryViewController
     }

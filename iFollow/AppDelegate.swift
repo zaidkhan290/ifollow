@@ -223,6 +223,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 vc.isFromPush = true
                 UIWINDOW!.rootViewController = vc
             }
+            else if (json["tag"].intValue == 7){
+                let vc = Utility.getTabBarViewController()
+                vc.selectedIndex = 3
+                UIWINDOW!.rootViewController = vc
+            }
             else if (json["tag"].intValue == 11){
                 let vc = Utility.getChatContainerViewController()
                 vc.isFromGroupChat = true

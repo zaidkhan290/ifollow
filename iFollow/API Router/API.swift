@@ -74,6 +74,7 @@ enum EndPoint: String {
     case convertVideo = "media_upload"
     case getPostTags = "post_tags"
     case getStoryTags = "story_tags"
+    case getSingleStory = "story"
     case logout = "logout"
 }
 
