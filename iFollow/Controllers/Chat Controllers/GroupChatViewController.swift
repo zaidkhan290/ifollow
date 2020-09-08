@@ -138,8 +138,15 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
                 
             }
         }
-        
+        setupColors()
     } 
+    
+    func setupColors(){
+        self.collectionView.setColor()
+        self.inputToolbar.contentView.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
+        self.inputToolbar.contentView.textView.textColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+        self.inputToolbar.contentView.textView.backgroundColor = .clear
+    }
     
     func mediaPlaceholderView() -> UIView! {
         
@@ -571,6 +578,10 @@ class GroupChatViewController: JSQMessagesViewController, JSQMessageMediaData, J
             })
             
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
     }
     
     //MARK:- Collection View Delegates

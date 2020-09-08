@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="334" height="98"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="334" height="97.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="334" height="98"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setting" translatesAutoresizingMaskIntoConstraints="NO" id="2dj-HD-FKB">
@@ -49,7 +47,7 @@
                             <constraint firstAttribute="width" constant="24" id="Ggk-xB-81K"/>
                             <constraint firstAttribute="height" constant="24" id="c7a-FA-Mu6"/>
                         </constraints>
-                        <state key="normal" image="minus"/>
+                        <state key="normal" image="minus-icon"/>
                         <connections>
                             <action selector="btnMinusTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="um1-Ho-wKI"/>
                         </connections>
@@ -66,7 +64,7 @@
                             <constraint firstAttribute="width" constant="24" id="Yju-Kd-lu8"/>
                             <constraint firstAttribute="height" constant="24" id="iLw-2B-oEi"/>
                         </constraints>
-                        <state key="normal" image="plus"/>
+                        <state key="normal" image="plus-icon"/>
                         <connections>
                             <action selector="btnPlusTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bw1-NX-3D9"/>
                         </connections>
@@ -102,8 +100,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="minus" width="23.5" height="23.5"/>
-        <image name="plus" width="23.5" height="23.5"/>
+        <image name="minus-icon" width="23.5" height="23.5"/>
+        <image name="plus-icon" width="23.5" height="23.5"/>
         <image name="setting" width="13" height="13"/>
     </resources>
 </document>

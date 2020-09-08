@@ -31,6 +31,7 @@ class TrendersContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupColor()
         mainView.roundTopCorners(radius: 30)
         
         trendesController = Utility.getTrendesViewController()
@@ -49,6 +50,10 @@ class TrendersContainerViewController: UIViewController {
     }
    
     //MARK:- Actions
+    
+    func setupColor(){
+        self.mainView.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
+    }
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
@@ -95,6 +100,10 @@ class TrendersContainerViewController: UIViewController {
             viewController.removeFromParent()
         }
         
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColor()
     }
     
 }

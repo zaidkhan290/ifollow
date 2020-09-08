@@ -28,11 +28,17 @@ class PostDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupColors()
         self.carouselView.type = .rotary
         self.carouselView.isScrollEnabled = false
         self.carouselView.dataSource = self
         self.carouselView.delegate = self
         getPostDetail()
+    }
+    
+    func setupColors(){
+        self.view.setColor()
+        self.carouselView.reloadData()
     }
     
     //MARK:- Actions and Methods
@@ -140,6 +146,10 @@ class PostDetailViewController: UIViewController {
         alertVC.addAction(noAction)
         self.present(alertVC, animated: true, completion: nil)
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
+    }
 }
 
 
@@ -152,7 +162,7 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
         
         let view = UIView(frame: CGRect(x: 0, y: 0, width: carouselView.frame.width, height: carouselView.frame.height))
-        view.backgroundColor = .clear
+        view.setColor()
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
         itemView.backgroundColor = .clear
@@ -223,7 +233,7 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.frame = view.frame
         itemView.userImage.layer.cornerRadius = 25
         itemView.feedImage.clipsToBounds = true
-        itemView.mainView.dropShadow(color: .white)
+        itemView.mainView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
         itemView.mainView.layer.cornerRadius = 10
         itemView.btnOptions.isHidden = true
         itemView.likeView.isHidden = post.postUserId == Utility.getLoginUserId()
@@ -239,6 +249,7 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.postLinkView.tag = index
         itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
         view.clipsToBounds = true
+        view.setColor()
         view.addSubview(itemView)
         
         return view

@@ -142,7 +142,7 @@ extension SendStoryViewController: UITableViewDataSource, UITableViewDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsTableViewCell", for: indexPath) as! FriendsTableViewCell
         
         let sendImage = UIImage(named: "storySend")?.withRenderingMode(.alwaysOriginal)
-        cell.btnSend.backgroundColor = .white
+        cell.btnSend.backgroundColor = .clear
         cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
         cell.btnSend.isUserInteractionEnabled = false
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2

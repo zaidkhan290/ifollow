@@ -51,6 +51,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setHomeScreenColor()
         let storyCell = UINib(nibName: "StoryCollectionViewCell", bundle: nil)
         self.storyCollectionView.register(storyCell, forCellWithReuseIdentifier: "StoryCell")
         
@@ -96,6 +97,16 @@ class HomeViewController: UIViewController {
     }
     
     //MARK:- Methods
+    
+    func setHomeScreenColor(){
+        if (traitCollection.userInterfaceStyle == .dark){
+            self.view.backgroundColor = Theme.darkModeBlackColor
+        }
+        else{
+            self.view.backgroundColor = .white
+        }
+        self.carouselView.reloadData()
+    }
     
     func openCamera(){
         let vc = Utility.getCameraViewController()
@@ -647,6 +658,10 @@ class HomeViewController: UIViewController {
         
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setHomeScreenColor()
+    }
+    
 }
 
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate{
@@ -767,7 +782,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
         
         if (index % 10 == 0 && index != 0){
             
-            view.backgroundColor = .white
+            view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
             view.clipsToBounds = true
             view.addSubview(addView)
             
@@ -843,7 +858,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             itemView.frame = view.frame
             itemView.userImage.layer.cornerRadius = 25
             itemView.feedImage.clipsToBounds = true
-            itemView.mainView.dropShadow(color: .white)
+            itemView.mainView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
             itemView.mainView.layer.cornerRadius = 10
             itemView.btnOptions.tag = index - (index / 10)
             itemView.btnOptions.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
@@ -853,7 +868,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideViewTapped(_:))))
             itemView.postLinkView.tag = index - (index / 10)
             itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
-            view.backgroundColor = .white
+            view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
             view.clipsToBounds = true
             view.addSubview(itemView)
             

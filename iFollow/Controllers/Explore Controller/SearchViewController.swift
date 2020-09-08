@@ -21,7 +21,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        searchView.dropShadow(color: .white)
+        setupColors()
         searchView.layer.cornerRadius = 25
         Utility.setTextFieldPlaceholder(textField: txtfieldSearch, placeholder: "Search users", color: Theme.searchFieldColor)
         txtfieldSearch.delegate = self
@@ -37,6 +37,12 @@ class SearchViewController: UIViewController {
     }
     
     //MARK:- Actions and Methods
+    
+    func setupColors(){
+        self.view.setColor()
+        searchView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
+        self.searchTableView.reloadData()
+    }
 
     @IBAction func btnBackTapped(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
@@ -84,6 +90,10 @@ class SearchViewController: UIViewController {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
+    }
+    
 }
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
@@ -96,6 +106,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as! ChatListTableViewCell
         cell.backgroundColor = .clear
         let user = searchUsersArray[indexPath.row]
+        cell.lblUsername.textColor = traitCollection.userInterfaceStyle == .dark ? .white : Theme.memberNameColor
+        cell.lblUserMessage.textColor = traitCollection.userInterfaceStyle == .dark ? .white : Theme.memberNameColor
         cell.lblUsername.text = user.userFullName
         cell.lblUserMessage.text = user.userName
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2

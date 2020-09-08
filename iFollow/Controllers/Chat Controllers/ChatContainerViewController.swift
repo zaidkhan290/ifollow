@@ -79,19 +79,8 @@ class ChatContainerViewController: UIViewController {
         }
         topView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(topViewTapped)))
         
+        setupColor()
         
-        if (isPrivateChat){
-            self.lblMessage.backgroundColor = .clear
-            lblUsername.textColor = .white
-            self.view.backgroundColor = Theme.privateChatBackgroundColor
-            self.alertView.backgroundColor = Theme.privateChatBackgroundColor
-            self.alertViewHeightConstraint.constant = 40
-            self.lblMessage.isHidden = false
-        }
-        else{
-            self.alertViewHeightConstraint.constant = 0
-            self.lblMessage.isHidden = true
-        }
         self.view.updateConstraintsIfNeeded()
         self.view.layoutSubviews()
         
@@ -120,6 +109,23 @@ class ChatContainerViewController: UIViewController {
         let userRef = rootRef.child("Users").child("\(Utility.getLoginUserId())")
         userRef.updateChildValues(["lastSeen": ServerValue.timestamp(),
                                    "isOnChat": false])
+    }
+    
+    func setupColor(){
+        if (isPrivateChat){
+            self.lblMessage.backgroundColor = .clear
+            lblUsername.textColor = .white
+            self.view.setPrivateChatColor()
+            self.alertView.setPrivateChatColor()
+            self.alertViewHeightConstraint.constant = 40
+            self.lblMessage.isHidden = false
+        }
+        else{
+            self.view.setColor()
+            self.alertView.setColor()
+            self.alertViewHeightConstraint.constant = 0
+            self.lblMessage.isHidden = true
+        }
     }
     
     //MARK:- Actions
@@ -216,4 +222,7 @@ class ChatContainerViewController: UIViewController {
         viewController.didMove(toParent: self)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColor()
+    }
 }

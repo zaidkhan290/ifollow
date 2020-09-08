@@ -20,6 +20,7 @@ class TrendingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupColor()
         let cellNib = UINib(nibName: "FriendsTableViewCell", bundle: nil)
         trendingTableView.register(cellNib, forCellReuseIdentifier: "FriendsTableViewCell")
         trendingTableView.rowHeight = 60
@@ -31,6 +32,11 @@ class TrendingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         getTrendings()
+    }
+    
+    func setupColor(){
+        self.view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
+        self.trendingTableView.reloadData()
     }
     
     func getTrendings(){
@@ -142,6 +148,10 @@ class TrendingViewController: UIViewController {
         
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColor()
+    }
+    
 }
 
 extension TrendingViewController: UITableViewDataSource, UITableViewDelegate{
@@ -166,6 +176,7 @@ extension TrendingViewController: UITableViewDataSource, UITableViewDelegate{
         cell.userImage.sd_setImage(with: URL(string: user.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         cell.lblUsername.text = user.userFullName
         cell.lblLastSeen.text = user.userCountry
+        cell.lblLastSeen.textColor = traitCollection.userInterfaceStyle == .dark ? .white : Theme.privateChatBoxSearchBarColor
         
         if (user.userId == Utility.getLoginUserId()){
             cell.btnSend.isHidden = true
@@ -174,7 +185,7 @@ extension TrendingViewController: UITableViewDataSource, UITableViewDelegate{
             cell.btnSend.isHidden = false
             if (user.userRequestStatus == ""){
                 cell.btnSend.setTitle("Trend", for: .normal)
-                cell.btnSend.backgroundColor = .white
+                cell.btnSend.backgroundColor = traitCollection.userInterfaceStyle == .dark ? .clear : .white
                 cell.btnSend.layer.borderWidth = 1
                 cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
                 cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
@@ -186,7 +197,7 @@ extension TrendingViewController: UITableViewDataSource, UITableViewDelegate{
             }
             else{
                 cell.btnSend.setTitle("Untrend", for: .normal)
-                cell.btnSend.backgroundColor = .white
+                cell.btnSend.backgroundColor = traitCollection.userInterfaceStyle == .dark ? .clear : .white
                 cell.btnSend.layer.borderWidth = 1
                 cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
                 cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)

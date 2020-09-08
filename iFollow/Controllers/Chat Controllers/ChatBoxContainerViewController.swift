@@ -28,6 +28,7 @@ class ChatBoxContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupColor()
         chatListView.roundTopCorners(radius: 30)
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -51,6 +52,11 @@ class ChatBoxContainerViewController: UIViewController {
        // carbonTabSwipeNavigation.setSelectedColor(.clear)
         //carbonTabSwipeNavigation.color
         
+    }
+    
+    func setupColor(){
+        self.view.setColor()
+        self.chatListView.setColor()
     }
   
     //MARK:- Actions
@@ -117,6 +123,10 @@ class ChatBoxContainerViewController: UIViewController {
             viewController.removeFromParent()
         }
         
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColor()
     }
 }
 

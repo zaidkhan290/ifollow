@@ -275,7 +275,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         //----- For AVCaptureSession Start-----//
             
             captureSession = AVCaptureSession()
-            captureSession.sessionPreset = .hd1280x720
+            captureSession.sessionPreset = .high
             captureSession.automaticallyConfiguresApplicationAudioSession = false
         
             //captureSession.usesApplicationAudioSession = true
@@ -435,8 +435,15 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                 //request.finish(with: filteredImag, context: nil)
      
             }
+            
+            print("filtred image ", filteredImg.extent.width , " Height = ", filteredImg.extent.height);
+            print("watermak image " ,watermarkImage?.extent.width, "Height = ", watermarkImage?.extent.height);
+            
             watermarkFilter.setValue(filteredImg, forKey: "inputBackgroundImage")
-            let transform = CGAffineTransform(translationX: filteredImg.extent.width - (watermarkImage?.extent.width)! - 2, y: 0)
+            //let transform = CGAffineTransform(translationX: filteredImg.extent.width - (watermarkImage?.extent.width)! - 2, y: 0)
+            
+            let transform = CGAffineTransform(scaleX: filteredImg.extent.width / (watermarkImage?.extent.width)!, y: filteredImg.extent.height / (watermarkImage?.extent.height)!)
+            
             watermarkFilter.setValue(watermarkImage?.transformed(by: transform), forKey: "inputImage")
             request.finish(with: watermarkFilter.outputImage!, context: nil)
             
@@ -1444,7 +1451,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
             
             if (!isFrontCamera) {
                 newCamera = cameraWithPosition(position: .front)
-                session.sessionPreset = .hd1280x720
+                session.sessionPreset = .high
                 isFrontCamera = true
                 btnFlash.isEnabled = false
             } else {

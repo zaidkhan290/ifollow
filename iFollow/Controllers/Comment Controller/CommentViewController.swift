@@ -35,14 +35,13 @@ class CommentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setCommentBoxColor()
         commetView.layer.cornerRadius = 20
-        commetView.dropShadow(color: .white)
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.contentMode = .scaleAspectFill
         feedImage.contentMode = .scaleAspectFill
         feedImage.clipsToBounds = true
         commentFeedView.layer.cornerRadius = 10
-        commentFeedView.dropShadow(color: .white)
         Utility.setTextFieldPlaceholder(textField: txtFieldComment, placeholder: "Type a Feedback", color: Theme.searchFieldColor)
         
         let swipeDonwGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownGesture))
@@ -58,6 +57,12 @@ class CommentViewController: UIViewController {
         else{
             feedImage.image = UIImage(named: "post_video")
         }
+    }
+    
+    func setCommentBoxColor(){
+        self.commetView.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
+        commetView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
+        commentFeedView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
     }
     
     //MARK:- Actions
@@ -152,5 +157,9 @@ class CommentViewController: UIViewController {
 
     @IBAction func btnCloseTapped(_ sender: UIButton){
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setCommentBoxColor()
     }
 }

@@ -18,6 +18,7 @@ class BlockUsersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupColors()
         mainView.roundTopCorners(radius: 30)
         let cellNib = UINib(nibName: "FriendsTableViewCell", bundle: nil)
         blockedUsersTableView.register(cellNib, forCellReuseIdentifier: "FriendsTableViewCell")
@@ -27,6 +28,11 @@ class BlockUsersViewController: UIViewController {
     }
     
     //MARK:- Actions and Methods
+    
+    func setupColors(){
+        mainView.setColor()
+        self.blockedUsersTableView.reloadData()
+    }
     
     @IBAction func btnBackTapped(_ sender: UIButton){
         self.goBack()
@@ -92,6 +98,10 @@ class BlockUsersViewController: UIViewController {
         self.present(alertVC, animated: true, completion: nil)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
+    }
+    
 }
 
 extension BlockUsersViewController: UITableViewDataSource, UITableViewDelegate{
@@ -106,12 +116,13 @@ extension BlockUsersViewController: UITableViewDataSource, UITableViewDelegate{
         cell.indexPath = indexPath
         cell.delegate = self
         cell.btnSend.setTitle("Unblock", for: .normal)
-        cell.btnSend.backgroundColor = .white
+        cell.btnSend.setColor()
         cell.btnSend.layer.borderWidth = 1
         cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
         cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
         cell.lblUsername.text = user.userFullName
         cell.lblLastSeen.text = user.userName
+        cell.lblLastSeen.textColor = traitCollection.userInterfaceStyle == .dark ? .white : Theme.memberNameColor
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
         cell.userImage.sd_setImage(with: URL(string: user.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))

@@ -33,6 +33,7 @@ class AddMembersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupColor()
         if (isForTagging){
             lblTopTitle.text = "Tag Members"
         }
@@ -47,7 +48,6 @@ class AddMembersViewController: UIViewController {
         self.view.updateConstraintsIfNeeded()
         self.view.layoutSubviews()
         membersView.roundTopCorners(radius: 30)
-        searchView.dropShadow(color: .white)
         searchView.layer.cornerRadius = 25
         Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "Search", color: Theme.searchFieldColor)
         
@@ -57,6 +57,13 @@ class AddMembersViewController: UIViewController {
         txtFieldSearch.addTarget(self, action: #selector(searchTextFieldTextChanged), for: .editingChanged)
         getTrendings()
         
+    }
+    
+    func setupColor(){
+        self.membersView.setColor()
+        self.searchView.setColor()
+        searchView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
+        self.membersTableView.reloadData()
     }
     
     //MARK:- Actions
@@ -189,6 +196,10 @@ class AddMembersViewController: UIViewController {
             
         }
         
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColor()
     }
     
 }

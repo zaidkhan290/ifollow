@@ -22,6 +22,7 @@ class MediaViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupColor()
         let mediaCellNib = UINib(nibName: "MediaCollectionViewCell", bundle: nil)
         mediaCollectionView.register(mediaCellNib, forCellWithReuseIdentifier: "MediaCell")
         
@@ -35,6 +36,10 @@ class MediaViewController: UIViewController {
         self.mediaCollectionView.collectionViewLayout = layout
         self.mediaCollectionView.showsVerticalScrollIndicator = false
         
+    }
+    
+    func setupColor(){
+        self.mediaView.setColor()
     }
     
     //MARK:- Actions
@@ -93,6 +98,10 @@ class MediaViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColor()
     }
     
 }

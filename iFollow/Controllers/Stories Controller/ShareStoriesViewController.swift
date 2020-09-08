@@ -25,6 +25,7 @@ class ShareStoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupColor()
         mainView.roundTopCorners(radius: 30)
         let cellNib = UINib(nibName: "FriendsTableViewCell", bundle: nil)
         shareTableView.register(cellNib, forCellReuseIdentifier: "FriendsTableViewCell")
@@ -32,6 +33,11 @@ class ShareStoriesViewController: UIViewController {
         shareTableView.tableFooterView = UIView()
         getRecentChats()
         
+    }
+    
+    func setupColor(){
+        self.mainView.setColor()
+        self.shareTableView.reloadData()
     }
     
     @IBAction func btnBackTapped(_ sender: UIButton){
@@ -116,6 +122,10 @@ class ShareStoriesViewController: UIViewController {
             
         }
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColor()
+    }
 }
 
 extension ShareStoriesViewController: UITableViewDataSource, UITableViewDelegate{
@@ -151,7 +161,7 @@ extension ShareStoriesViewController: UITableViewDataSource, UITableViewDelegate
             cell.userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "img_placeholder"))
             cell.lblUsername.text = "My Story"
             cell.selectImage.image = UIImage(named: isSendToMyStory ? "select" : "unselect")
-            cell.backgroundColor = isSendToMyStory ? UIColor.lightGray.withAlphaComponent(0.2) : UIColor.white
+            cell.backgroundColor = isSendToMyStory ? UIColor.lightGray.withAlphaComponent(0.2) : .clear
         }
         else{
             let user = recentChatsArray[indexPath.row]
@@ -163,7 +173,7 @@ extension ShareStoriesViewController: UITableViewDataSource, UITableViewDelegate
             }
             else{
                 cell.selectImage.image = UIImage(named: "unselect")
-                cell.backgroundColor = .white
+                cell.backgroundColor = .clear
             }
         }
         

@@ -39,6 +39,7 @@ class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupColors()
         editView.roundTopCorners(radius: 30)
         
         let imageCellNib = UINib(nibName: "EditProfileImageTableViewCell", bundle: nil)
@@ -76,6 +77,11 @@ class EditProfileViewController: UIViewController {
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func setupColors(){
+        editView.setColor()
+        self.editProfileTableView.reloadData()
     }
     
     @objc func textfieldDidBeginEditing(_ sender: UITextField){
@@ -231,7 +237,10 @@ class EditProfileViewController: UIViewController {
             
         }
         
-        
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
     }
 }
 
@@ -259,16 +268,19 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditProfileGenderTableViewCell", for: indexPath) as! EditProfileGenderTableViewCell
             cell.delegate = self
             
+            cell.manImage.layer.borderWidth = 2
+            cell.girlImage.layer.borderWidth = 2
+            
             if (userGender == ""){
                 cell.manImage.layer.borderColor = UIColor.clear.cgColor
                 cell.girlImage.layer.borderColor = UIColor.clear.cgColor
             }
             else if (userGender == "male"){
-                cell.manImage.layer.borderColor = UIColor.black.cgColor
+                cell.manImage.layer.borderColor = traitCollection.userInterfaceStyle == .dark ? UIColor.white.cgColor : UIColor.black.cgColor
                 cell.girlImage.layer.borderColor = UIColor.clear.cgColor
             }
             else{
-                cell.girlImage.layer.borderColor = UIColor.black.cgColor
+                cell.girlImage.layer.borderColor = traitCollection.userInterfaceStyle == .dark ? UIColor.white.cgColor : UIColor.black.cgColor
                 cell.manImage.layer.borderColor = UIColor.clear.cgColor
             }
             return cell
@@ -288,7 +300,7 @@ extension EditProfileViewController: UITableViewDataSource, UITableViewDelegate{
             cell.txtField.addTarget(self, action: #selector(textFieldTextChanged(_:)), for: .editingChanged)
             cell.txtView.delegate = self
             cell.txtView.layer.borderWidth = 0.5
-            cell.txtView.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
+            cell.txtView.layer.borderColor = traitCollection.userInterfaceStyle == .dark ? UIColor.white.withAlphaComponent(0.5).cgColor : UIColor.black.withAlphaComponent(0.5).cgColor
             
             if (indexPath.row == 1){
                 cell.txtField.text = firstName

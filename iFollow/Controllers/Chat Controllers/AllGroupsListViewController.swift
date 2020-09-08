@@ -26,6 +26,17 @@ class AllGroupsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupColors()
+        chatRef = chatRef.child("GroupChats")
+        let cellNib = UINib(nibName: "ChatListTableViewCell", bundle: nil)
+        chatListTableView.register(cellNib, forCellReuseIdentifier: "ChatListCell")
+        chatListTableView.rowHeight = 80
+        txtFieldSearch.addTarget(self, action: #selector(searchTextFieldTextChanged), for: .editingChanged)
+        getGroupsList()
+        NotificationCenter.default.addObserver(self, selector: #selector(getGroupsList), name: NSNotification.Name(rawValue: "RefreshGroupsList"), object: nil)
+    }
+    
+    func setupColors(){
         if (isPrivateChat){
             searchView.dropShadow(color: Theme.privateChatBoxSearchBarColor)
             searchView.layer.cornerRadius = 25
@@ -34,19 +45,13 @@ class AllGroupsListViewController: UIViewController {
             lblAlert.text = "Messages will be deleted if not read in 12 hours"
         }
         else{
-            searchView.dropShadow(color: .white)
+            self.view.setColor()
+            searchView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
             searchView.layer.cornerRadius = 25
             Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
             lblAlert.text = ""
         }
-        
-        chatRef = chatRef.child("GroupChats")
-        let cellNib = UINib(nibName: "ChatListTableViewCell", bundle: nil)
-        chatListTableView.register(cellNib, forCellReuseIdentifier: "ChatListCell")
-        chatListTableView.rowHeight = 80
-        txtFieldSearch.addTarget(self, action: #selector(searchTextFieldTextChanged), for: .editingChanged)
-        getGroupsList()
-        NotificationCenter.default.addObserver(self, selector: #selector(getGroupsList), name: NSNotification.Name(rawValue: "RefreshGroupsList"), object: nil)
+        self.chatListTableView.reloadData()
     }
     
     @objc func getGroupsList(){
@@ -190,6 +195,10 @@ class AllGroupsListViewController: UIViewController {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
+    }
+    
 }
 
 extension AllGroupsListViewController: UITableViewDataSource, UITableViewDelegate{
@@ -203,10 +212,11 @@ extension AllGroupsListViewController: UITableViewDataSource, UITableViewDelegat
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as! ChatListTableViewCell
         let group = txtFieldSearch.text == "" ? groupsList[indexPath.row] : searchGroupArray[indexPath.row]
         
-        cell.backgroundColor = isPrivateChat ? .clear : .white
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.sd_setImage(with: URL(string: group.groupImage)!)
+        cell.lblUsername.textColor = traitCollection.userInterfaceStyle == .dark ? .white : Theme.memberNameColor
+        cell.lblUserMessage.textColor = traitCollection.userInterfaceStyle == .dark ? .white : Theme.memberNameColor
         cell.lblUsername.text = group.groupName
         cell.lblTime.text = group.groupLastMessage == "" ? Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: group.groupCreatedAt)) : Utility.timeAgoSince(Date(timeIntervalSince1970: (group.groupLastMessageTime / 1000)))
         if (group.groupAdminId == Utility.getLoginUserId()){

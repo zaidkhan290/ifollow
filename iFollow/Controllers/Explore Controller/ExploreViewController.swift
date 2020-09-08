@@ -32,11 +32,7 @@ class ExploreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        searchView.dropShadow(color: .white)
-//        searchView.layer.cornerRadius = 25
-//        txtFieldSearch.isUserInteractionEnabled = false
-//        searchView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
-//        Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
+        setExploreScreenColor()
         searchIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
         
         let storyCell = UINib(nibName: "StoryCollectionViewCell", bundle: nil)
@@ -81,6 +77,14 @@ class ExploreViewController: UIViewController {
     }
     
     //MARK:- Methods
+    func setExploreScreenColor(){
+        if (traitCollection.userInterfaceStyle == .dark){
+            self.view.backgroundColor = Theme.darkModeBlackColor
+        }
+        else{
+            self.view.backgroundColor = .white
+        }
+    }
     
     @objc func refreshDiscoverData(){
         getDiscoverData()
@@ -496,6 +500,9 @@ class ExploreViewController: UIViewController {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setExploreScreenColor()
+    }
 }
 
 extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDelegate{

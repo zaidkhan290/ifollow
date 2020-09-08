@@ -27,9 +27,9 @@ class CreateGroupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupColors()
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         bottomView.layer.cornerRadius = 10
-        bottomView.dropShadow(color: .white)
         groupImage.roundBottomCorners(radius: 20)
         notificationSwitch.isOn = false
         notificationSwitch.tintColor = Theme.profileLabelsYellowColor
@@ -41,6 +41,12 @@ class CreateGroupViewController: UIViewController {
         txtFieldGroupName.delegate = self
         lblDate.isHidden = true
         
+    }
+    
+    func setupColors(){
+        self.view.setColor()
+        self.bottomView.setColor()
+        bottomView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
     }
     
     //MARK:- Actions
@@ -199,6 +205,10 @@ class CreateGroupViewController: UIViewController {
         API.sharedInstance.executeAPI(type: .sendPushNotification, method: .post, params: params) { (status, result, message) in
             
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
     }
 }
 

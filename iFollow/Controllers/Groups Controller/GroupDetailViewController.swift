@@ -49,14 +49,13 @@ class GroupDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupColors()
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         groupImage.roundBottomCorners(radius: 20)
         groupImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(groupImageTapped)))
         
         mediaAndMembersView.layer.cornerRadius = 10
-        mediaAndMembersView.dropShadow(color: .white)
         deactivateGroupView.layer.cornerRadius = 10
-        deactivateGroupView.dropShadow(color: .white)
         deactivateGroupView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(deactivateGroupTapped)))
         
         notificationSwitch.isOn = false
@@ -181,6 +180,15 @@ class GroupDetailViewController: UIViewController {
         
     }
     
+    func setupColors(){
+        self.view.setColor()
+        self.mediaAndMembersView.setColor()
+        self.deactivateGroupView.setColor()
+        self.mediaAndMembersView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
+        self.deactivateGroupView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
+        self.membersTableView.reloadData()
+        self.mediaCollectionView.reloadData()
+    }
     
     func openImagePicker(){
         
@@ -438,6 +446,10 @@ class GroupDetailViewController: UIViewController {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
+    }
+    
 }
 
 extension GroupDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate{
@@ -516,7 +528,8 @@ extension GroupDetailViewController: UITableViewDataSource, UITableViewDelegate{
         let user = groupMembersArray[indexPath.row]
         cell.btnSend.isHidden = true
         cell.btnOption.isHidden = false
-        cell.lblUsername.textColor = Theme.memberNameColor
+        cell.lblUsername.textColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+        cell.lblLastSeen.textColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
         cell.lblUsername.text = user.userFullName
         cell.lblLastSeen.text = groupModel.groupAdminId == user.userId ? "Admin" : ""
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2

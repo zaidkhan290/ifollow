@@ -69,20 +69,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: isPrivateChat ? Theme.privateChatIncomingMessage : Theme.profileLabelsYellowColor)
         outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: isPrivateChat ? Theme.privateChatOutgoingMessage : Theme.privateChatBoxSearchBarColor)
         
-        if (isPrivateChat){
-            chatRef = chatRef.child("PrivateChats").child(chatId)
-            self.collectionView.backgroundColor = Theme.privateChatBackgroundColor
-            self.inputToolbar.contentView.backgroundColor = Theme.privateChatBackgroundColor
-            self.inputToolbar.contentView.textView.textColor = .white
-            self.inputToolbar.contentView.textView.backgroundColor = Theme.privateChatBackgroundColor
-            
-        }
-        else{
-            chatRef = chatRef.child("NormalChats").child(chatId)
-            self.inputToolbar.contentView.backgroundColor = .white
-            self.inputToolbar.contentView.textView.textColor = .black
-            self.inputToolbar.contentView.textView.backgroundColor = .clear
-        }
+        setupColors()
         myTypingRef = myTypingRef.child("Typing")
         userTypingRef = userTypingRef.child("Typing")
         self.showUserTypingIndicator()
@@ -180,6 +167,24 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         super.viewWillDisappear(true)
         myTypingRef.child(chatId).child(self.senderId).updateChildValues(["isTyping": false])
         
+    }
+    
+    func setupColors(){
+        if (isPrivateChat){
+            chatRef = chatRef.child("PrivateChats").child(chatId)
+            self.collectionView.setPrivateChatColor()
+            self.inputToolbar.contentView.setPrivateChatColor()
+            self.inputToolbar.contentView.textView.textColor = .white
+            self.inputToolbar.contentView.textView.setPrivateChatColor()
+            
+        }
+        else{
+            chatRef = chatRef.child("NormalChats").child(chatId)
+            self.collectionView.setColor()
+            self.inputToolbar.contentView.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
+            self.inputToolbar.contentView.textView.textColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+            self.inputToolbar.contentView.textView.backgroundColor = .clear
+        }
     }
     
     func mediaPlaceholderView() -> UIView! {
@@ -789,6 +794,10 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             })
             
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
     }
     
     //MARK:- Collection View Delegates

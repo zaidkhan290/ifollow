@@ -25,6 +25,7 @@ class NotificationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupColor()
         lblTitle.setShadow(color: .white)
         notificationView.roundTopCorners(radius: 30)
         
@@ -42,6 +43,10 @@ class NotificationViewController: UIViewController {
         super.viewWillAppear(true)
         resetNotificationCount()
         getNotifications(isForRefresh: false)
+    }
+    
+    func setupColor(){
+        notificationView.setColor()
     }
     
     func resetNotificationCount(){
@@ -174,6 +179,10 @@ class NotificationViewController: UIViewController {
             }
         }
         
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColor()
     }
     
 }

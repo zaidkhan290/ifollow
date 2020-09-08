@@ -75,13 +75,13 @@ class NewPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupColors()
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         setTotalBudget()
         
         postView.layer.cornerRadius = 20
         btnBoost.isHidden = isForEdit
         btnPic.isHidden = isForEdit
-        postView.dropShadow(color: .white)
         if (isForEdit){
             txtFieldStatus.text = editablePostText
             if (editablePostMediaType == "image"){
@@ -157,6 +157,11 @@ class NewPostViewController: UIViewController {
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
         present(autocompleteController, animated: true, completion: nil)
+    }
+    
+    func setupColors(){
+        self.postView.setColor()
+        postView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
     }
     
     @objc func budgetSliderValueChange(){
@@ -617,6 +622,10 @@ class NewPostViewController: UIViewController {
                 
             }
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
     }
 }
 

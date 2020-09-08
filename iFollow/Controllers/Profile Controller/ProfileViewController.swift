@@ -43,6 +43,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setProfileScreenColor()
         profileView.roundTopCorners(radius: 30)
         trendingView.layer.cornerRadius = 15
         trendingView.layer.borderWidth = 1
@@ -61,7 +62,6 @@ class ProfileViewController: UIViewController {
         privateTalkView.layer.borderColor = UIColor.white.cgColor
         privateTalkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(privateChatTapped)))
         
-        searchView.dropShadow(color: .white)
         searchView.layer.cornerRadius = 25
         txtFiledSearch.isUserInteractionEnabled = false
         searchView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchViewTapped)))
@@ -93,6 +93,12 @@ class ProfileViewController: UIViewController {
     }
     
     //MARK:- Actions and Methods
+    
+    func setProfileScreenColor(){
+        searchView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
+        self.profileView.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
+        self.carouselView.reloadData()
+    }
     
     func setUserData(){
         profileImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
@@ -347,6 +353,10 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setProfileScreenColor()
+    }
+    
 }
 
 extension ProfileViewController: OptionsViewControllerDelegate{
@@ -395,6 +405,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
         
         let view = UIView(frame: CGRect(x: 0, y: 0, width: carouselView.frame.width, height: carouselView.frame.height))
+        view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
         let post = userPosts[index]
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
@@ -442,7 +453,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
 //            itemView.likeButton.setSelected(selected: false, animated: false)
 //        }
         itemView.feedImage.contentMode = .scaleAspectFill
-        itemView.mainView.dropShadow(color: .white)
+        itemView.mainView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
         itemView.mainView.layer.cornerRadius = 10
         itemView.postTagIcon.isHidden = post.postTags == ""
         itemView.postTagIcon.isUserInteractionEnabled = true
@@ -462,7 +473,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.postLinkView.tag = index
         itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
         
-        view.backgroundColor = .white
+        view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
         view.clipsToBounds = true
         view.addSubview(itemView)
         

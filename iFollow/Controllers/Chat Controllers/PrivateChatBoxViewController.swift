@@ -32,6 +32,7 @@ class PrivateChatBoxViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupColor()
         allChatsController = Utility.getAllChatsListViewController()
         (allChatsController as! AllChatsListViewController).isPrivateChat = true
         groupsChatController = Utility.getAllGroupsListViewController()
@@ -42,6 +43,10 @@ class PrivateChatBoxViewController: UIViewController {
         groupsView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(groupsTapped)))
         changeTab()
         
+    }
+    
+    func setupColor(){
+        self.view.setPrivateChatColor()
     }
    
     //MARK: Actions
@@ -136,5 +141,9 @@ class PrivateChatBoxViewController: UIViewController {
             viewController.removeFromParent()
         }
         
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColor()
     }
 }

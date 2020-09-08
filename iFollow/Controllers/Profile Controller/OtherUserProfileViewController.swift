@@ -52,6 +52,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setProfileScreenColor()
         profileView.roundTopCorners(radius: 30)
         privateTalkView.layer.cornerRadius = 5
         privateTalkView.layer.borderWidth = 1
@@ -89,6 +90,11 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     }
     
     //MARK:- Actions and Methods
+    
+    func setProfileScreenColor(){
+        self.profileView.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
+        self.carouselView.reloadData()
+    }
     
     @IBAction func optionsTapped(_ sender: Any) {
         showOptionsPopup()
@@ -753,6 +759,9 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         return UIModalPresentationStyle.none
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setProfileScreenColor()
+    }
 
 }
 
@@ -783,6 +792,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
         
         let view = UIView(frame: CGRect(x: 0, y: 0, width: carouselView.frame.width, height: carouselView.frame.height))
+        view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
         let post = otherUserProfile.userPosts[index]
         
         let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
@@ -824,7 +834,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
 //        else{
 //            itemView.likeButton.setSelected(selected: false, animated: false)
 //        }
-        itemView.mainView.dropShadow(color: .white)
+        itemView.mainView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
         itemView.mainView.layer.cornerRadius = 10
         
         itemView.postTagIcon.isHidden = post.postTags == ""
@@ -851,7 +861,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideViewTapped(_:))))
         itemView.postLinkView.tag = index
         itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
-        view.backgroundColor = .white
+        view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
         view.clipsToBounds = true
         view.addSubview(itemView)
         

@@ -27,6 +27,17 @@ class AllChatsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupColors()
+        usersRef = usersRef.child("Users")
+        let cellNib = UINib(nibName: "ChatListTableViewCell", bundle: nil)
+        chatListTableView.register(cellNib, forCellReuseIdentifier: "ChatListCell")
+        chatListTableView.rowHeight = 80
+        txtFieldSearch.addTarget(self, action: #selector(searchTextFieldTextChanged), for: .editingChanged)
+        getChatList()
+        
+    }
+    
+    func setupColors(){
         if (isPrivateChat){
             chatRef = chatRef.child("PrivateChats")
             lblAlert.text = "Messages will be deleted in 12 hours"
@@ -36,20 +47,14 @@ class AllChatsListViewController: UIViewController {
             self.view.backgroundColor = .clear
         }
         else{
+            self.view.setColor()
             chatRef = chatRef.child("NormalChats")
             lblAlert.text = ""
-            searchView.dropShadow(color: .white)
+            searchView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
             searchView.layer.cornerRadius = 25
             Utility.setTextFieldPlaceholder(textField: txtFieldSearch, placeholder: "What are you looking for?", color: Theme.searchFieldColor)
         }
-        
-        usersRef = usersRef.child("Users")
-        let cellNib = UINib(nibName: "ChatListTableViewCell", bundle: nil)
-        chatListTableView.register(cellNib, forCellReuseIdentifier: "ChatListCell")
-        chatListTableView.rowHeight = 80
-        txtFieldSearch.addTarget(self, action: #selector(searchTextFieldTextChanged), for: .editingChanged)
-        getChatList()
-        
+        self.chatListTableView.reloadData()
     }
     
     func getChatList(){
@@ -222,6 +227,10 @@ class AllChatsListViewController: UIViewController {
         vc.addAction(noAction)
         self.present(vc, animated: true, completion: nil)
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
+    }
 
 }
 
@@ -234,13 +243,22 @@ extension AllChatsListViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as! ChatListTableViewCell
-        cell.backgroundColor = isPrivateChat ? .clear : .white
         cell.lblUsername.font = Theme.getLatoBoldFontOfSize(size: 18)
         
         let chat = txtFieldSearch.text == "" ? chatsArray[indexPath.row] : searchChatsArray[indexPath.row]
         cell.userImage.layer.cornerRadius = cell.userImage.frame.height / 2
         cell.userImage.contentMode = .scaleAspectFill
         cell.userImage.sd_setImage(with: URL(string: chat.chatUserImage), placeholderImage: UIImage(named: "img_placeholder"))
+        
+        if (isPrivateChat){
+            cell.lblUsername.textColor = Theme.memberNameColor
+            cell.lblUserMessage.textColor = Theme.memberNameColor
+        }
+        else{
+            cell.lblUsername.textColor = traitCollection.userInterfaceStyle == .dark ? .white : Theme.memberNameColor
+            cell.lblUserMessage.textColor = traitCollection.userInterfaceStyle == .dark ? .white : Theme.memberNameColor
+        }
+        
         cell.lblUsername.text = chat.chatUserName
         cell.lblUserMessage.text = chat.lastMessage
         cell.lblMessageCounter.isHidden = true

@@ -56,8 +56,8 @@ class TabBarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabView.dropShadow(color: .white)
-       
+        
+        setTabViewColor()
         homeTab.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(homeTabTapped)))
         searchTab.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchTabTapped)))
         cameraTab.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cameraTabTapped)))
@@ -89,6 +89,29 @@ class TabBarViewController: UIViewController {
     }
     
     //MARK:- Methods
+    
+    func setTabViewColor(){
+        if (traitCollection.userInterfaceStyle == .dark){
+            self.view.backgroundColor = Theme.darkModeBlackColor
+            tabView.backgroundColor = Theme.darkModeBlackColor
+            tabView.dropShadow(color: Theme.darkModeBlackColor)
+            homeTab.backgroundColor = Theme.darkModeBlackColor
+            searchTab.backgroundColor = Theme.darkModeBlackColor
+            cameraTab.backgroundColor = Theme.darkModeBlackColor
+            notificationTab.backgroundColor = Theme.darkModeBlackColor
+            profileTab.backgroundColor = Theme.darkModeBlackColor
+        }
+        else{
+            self.view.backgroundColor = .white
+            tabView.backgroundColor = .white
+            tabView.dropShadow(color: .white)
+            homeTab.backgroundColor = .white
+            searchTab.backgroundColor = .white
+            cameraTab.backgroundColor = .white
+            notificationTab.backgroundColor = .white
+            profileTab.backgroundColor = .white
+        }
+    }
     
     @objc func updateMessagesCounterAfterReadChat(){
         UserDefaults.standard.set(0, forKey: "messagesCount")
@@ -557,6 +580,10 @@ class TabBarViewController: UIViewController {
             
         }
         
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setTabViewColor()
     }
     
 }

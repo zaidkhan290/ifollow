@@ -32,6 +32,7 @@ class ViewersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setViewersViewColor()
         let cellNib = UINib(nibName: "FriendsTableViewCell", bundle: nil)
         friendsTableView.register(cellNib, forCellReuseIdentifier: "FriendsTableViewCell")
         friendsTableView.rowHeight = 60
@@ -66,6 +67,11 @@ class ViewersViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+    }
+    
+    func setViewersViewColor(){
+        self.trendView.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
+        self.friendsTableView.reloadData()
     }
     
     @objc func swipeDownToDimsiss(){
@@ -295,6 +301,9 @@ class ViewersViewController: UIViewController {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setViewersViewColor()
+    }
 }
 
 extension ViewersViewController: UITableViewDataSource, UITableViewDelegate{
@@ -327,7 +336,7 @@ extension ViewersViewController: UITableViewDataSource, UITableViewDelegate{
                 cell.btnSend.isHidden = false
                 if (user.userRequestStatus == ""){
                     cell.btnSend.setTitle("Trend", for: .normal)
-                    cell.btnSend.backgroundColor = .white
+                    cell.btnSend.backgroundColor = .clear
                     cell.btnSend.layer.borderWidth = 1
                     cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
                     cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
@@ -339,7 +348,7 @@ extension ViewersViewController: UITableViewDataSource, UITableViewDelegate{
                 }
                 else{
                     cell.btnSend.setTitle("Untrend", for: .normal)
-                    cell.btnSend.backgroundColor = .white
+                    cell.btnSend.backgroundColor = .clear
                     cell.btnSend.layer.borderWidth = 1
                     cell.btnSend.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
                     cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)

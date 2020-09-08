@@ -56,6 +56,14 @@ extension UIView{
         }
     }
     
+    func setColor(){
+        self.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
+    }
+    
+    func setPrivateChatColor(){
+        self.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModePrivateChatColor : Theme.privateChatBackgroundColor
+    }
+    
 //    func startRotating(duration: Double = 1) {
 //        let kAnimationKey = "rotation"
 //        
