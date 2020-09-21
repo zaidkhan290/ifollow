@@ -49,6 +49,7 @@
 		185640EC23745A3C00CC2777 /* OtherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */; };
 		185640EF2374796300CC2777 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185640EE2374796300CC2777 /* CreateGroupViewController.swift */; };
 		185AFE2F242A462500AC38FB /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185AFE2E242A462500AC38FB /* PrivacyViewController.swift */; };
+		185BF7CE25188EC30054ECBD /* iBuckPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BF7CD25188EC30054ECBD /* iBuckPasswordViewController.swift */; };
 		185CC0C52379A096006BDC9D /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0C42379A096006BDC9D /* NewPostViewController.swift */; };
 		1863EB98241BC548000E5C31 /* LEMONMILK-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1863EB97241BC548000E5C31 /* LEMONMILK-MediumItalic.otf */; };
 		1863EB9A241BC5BD000E5C31 /* Gobold Lowplus.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1863EB99241BC5BD000E5C31 /* Gobold Lowplus.otf */; };
@@ -122,6 +123,14 @@
 		18B14CC52375AB8F005E5CE4 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC42375AB8F005E5CE4 /* OptionsViewController.swift */; };
 		18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC62375ABD6005E5CE4 /* OptionsTableViewCell.swift */; };
 		18B14CCA2375CA85005E5CE4 /* StoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B14CC92375CA85005E5CE4 /* StoriesViewController.swift */; };
+		18B76C7E2514C43C00B2AA61 /* iBucksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B76C7C2514C43C00B2AA61 /* iBucksTableViewCell.swift */; };
+		18B76C7F2514C43C00B2AA61 /* iBucksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B76C7D2514C43C00B2AA61 /* iBucksTableViewCell.xib */; };
+		18B76C822514C90900B2AA61 /* iBuckMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B76C812514C90900B2AA61 /* iBuckMainViewController.swift */; };
+		18B76C842514DE6200B2AA61 /* iBuckBuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B76C832514DE6200B2AA61 /* iBuckBuyViewController.swift */; };
+		18B76C862514F49A00B2AA61 /* iBuckSendViewControllerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B76C852514F49A00B2AA61 /* iBuckSendViewControllerr.swift */; };
+		18B76C882514FA3600B2AA61 /* iBuckSellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B76C872514FA3600B2AA61 /* iBuckSellViewController.swift */; };
+		18B76C8A2514FD2000B2AA61 /* iBuckPaypalViewControllerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B76C892514FD2000B2AA61 /* iBuckPaypalViewControllerr.swift */; };
+		18B76C8C2514FEE900B2AA61 /* CustomAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B76C8B2514FEE900B2AA61 /* CustomAccessoryView.xib */; };
 		18B82A312371CBDB00693F7F /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B82A302371CBDB00693F7F /* NotificationViewController.swift */; };
 		18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */; };
 		18B82A352371D05A00693F7F /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */; };
@@ -215,6 +224,7 @@
 		185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewController.swift; sourceTree = "<group>"; };
 		185640EE2374796300CC2777 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		185AFE2E242A462500AC38FB /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
+		185BF7CD25188EC30054ECBD /* iBuckPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iBuckPasswordViewController.swift; sourceTree = "<group>"; };
 		185CC0C42379A096006BDC9D /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
 		1863EB97241BC548000E5C31 /* LEMONMILK-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LEMONMILK-MediumItalic.otf"; sourceTree = "<group>"; };
 		1863EB99241BC5BD000E5C31 /* Gobold Lowplus.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gobold Lowplus.otf"; sourceTree = "<group>"; };
@@ -289,6 +299,14 @@
 		18B14CC62375ABD6005E5CE4 /* OptionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsTableViewCell.swift; sourceTree = "<group>"; };
 		18B14CC92375CA85005E5CE4 /* StoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesViewController.swift; sourceTree = "<group>"; };
 		18B371DB242D15740068ADE2 /* iFollow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iFollow.entitlements; sourceTree = "<group>"; };
+		18B76C7C2514C43C00B2AA61 /* iBucksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iBucksTableViewCell.swift; sourceTree = "<group>"; };
+		18B76C7D2514C43C00B2AA61 /* iBucksTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = iBucksTableViewCell.xib; sourceTree = "<group>"; };
+		18B76C812514C90900B2AA61 /* iBuckMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iBuckMainViewController.swift; sourceTree = "<group>"; };
+		18B76C832514DE6200B2AA61 /* iBuckBuyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iBuckBuyViewController.swift; sourceTree = "<group>"; };
+		18B76C852514F49A00B2AA61 /* iBuckSendViewControllerr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iBuckSendViewControllerr.swift; sourceTree = "<group>"; };
+		18B76C872514FA3600B2AA61 /* iBuckSellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iBuckSellViewController.swift; sourceTree = "<group>"; };
+		18B76C892514FD2000B2AA61 /* iBuckPaypalViewControllerr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iBuckPaypalViewControllerr.swift; sourceTree = "<group>"; };
+		18B76C8B2514FEE900B2AA61 /* CustomAccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAccessoryView.xib; sourceTree = "<group>"; };
 		18B82A302371CBDB00693F7F /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		18B82A322371D05A00693F7F /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		18B82A332371D05A00693F7F /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
@@ -472,6 +490,7 @@
 		1839089E236C7865009A28E6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				18B76C802514C8E300B2AA61 /* iBucks Controller */,
 				184059DA24C6F5CF00433355 /* Live Controller */,
 				18CD2D8A237EE14C007A2C3B /* Comment Controller */,
 				1825A526237AEA06002811E7 /* Trenders and Trending Controller */,
@@ -661,6 +680,8 @@
 				181A0B66245184BB00E137CB /* UnifiedNativeAdView.xib */,
 				184059DD24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.swift */,
 				184059DE24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.xib */,
+				18B76C7C2514C43C00B2AA61 /* iBucksTableViewCell.swift */,
+				18B76C7D2514C43C00B2AA61 /* iBucksTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -695,6 +716,19 @@
 				18AC07CE24EBEAFE000EA788 /* SingleStoryViewController.swift */,
 			);
 			path = "Stories Controller";
+			sourceTree = "<group>";
+		};
+		18B76C802514C8E300B2AA61 /* iBucks Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18B76C812514C90900B2AA61 /* iBuckMainViewController.swift */,
+				18B76C892514FD2000B2AA61 /* iBuckPaypalViewControllerr.swift */,
+				18B76C872514FA3600B2AA61 /* iBuckSellViewController.swift */,
+				18B76C832514DE6200B2AA61 /* iBuckBuyViewController.swift */,
+				18B76C852514F49A00B2AA61 /* iBuckSendViewControllerr.swift */,
+				185BF7CD25188EC30054ECBD /* iBuckPasswordViewController.swift */,
+			);
+			path = "iBucks Controller";
 			sourceTree = "<group>";
 		};
 		18B82A2F2371CBBA00693F7F /* Notifications Controller */ = {
@@ -804,6 +838,7 @@
 				18DF1177246C2E2600D0F89E /* Slider.swift */,
 				18DF1178246C2E2600D0F89E /* ToggleButton.swift */,
 				18DF1179246C2E2600D0F89E /* Button.swift */,
+				18B76C8B2514FEE900B2AA61 /* CustomAccessoryView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -928,12 +963,14 @@
 				1855081423796E5E008EAC2E /* video.mp4 in Resources */,
 				183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */,
 				18706FFE23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.xib in Resources */,
+				18B76C8C2514FEE900B2AA61 /* CustomAccessoryView.xib in Resources */,
 				189329D5237061A70067077F /* StoryCollectionViewCell.xib in Resources */,
 				1870700623732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.xib in Resources */,
 				18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */,
 				185640E4237423C100CC2777 /* MenuTableViewCell.xib in Resources */,
 				18390894236C70DA009A28E6 /* Assets.xcassets in Resources */,
 				1863EB9C241BC5E8000E5C31 /* PoetsenOne-Regular.ttf in Resources */,
+				18B76C7F2514C43C00B2AA61 /* iBucksTableViewCell.xib in Resources */,
 				18390892236C70D6009A28E6 /* Main.storyboard in Resources */,
 				1855081A23798976008EAC2E /* FriendsTableViewCell.xib in Resources */,
 				186A98A3241A9BBF000AD9AB /* JandaCurlygirlSerif.ttf in Resources */,
@@ -1027,6 +1064,7 @@
 			files = (
 				18C89E0C243F3F120032A663 /* RecentChatsModel.swift in Sources */,
 				18DF1196246C2E2600D0F89E /* Button.swift in Sources */,
+				18B76C7E2514C43C00B2AA61 /* iBucksTableViewCell.swift in Sources */,
 				1870700523732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.swift in Sources */,
 				18BDABBA24322510003B772C /* PrivacyPolicyViewController.swift in Sources */,
 				18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */,
@@ -1041,6 +1079,7 @@
 				18B086432371AA71002D773E /* TabBarViewController.swift in Sources */,
 				18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */,
 				18DF118C246C2E2600D0F89E /* MobilePlayerOverlayViewController.swift in Sources */,
+				18B76C822514C90900B2AA61 /* iBuckMainViewController.swift in Sources */,
 				188073AD242B47E30005CAE4 /* Reachability.swift in Sources */,
 				18DF1190246C2E2600D0F89E /* VolumeView.swift in Sources */,
 				1825A52C237AEA64002811E7 /* TrendingViewController.swift in Sources */,
@@ -1054,6 +1093,7 @@
 				18DF1183246C2E2600D0F89E /* LabelConfig.swift in Sources */,
 				1870700123732CF9007F8BF2 /* EditProfileGenderTableViewCell.swift in Sources */,
 				18C89E0A243F2DD40032A663 /* SearchUserModel.swift in Sources */,
+				185BF7CE25188EC30054ECBD /* iBuckPasswordViewController.swift in Sources */,
 				184059DC24C6F5EA00433355 /* LiveVideoViewController.swift in Sources */,
 				1825A52A237AEA50002811E7 /* TrendesViewController.swift in Sources */,
 				18E198F1243B140900511296 /* HomePostsModel.swift in Sources */,
@@ -1103,10 +1143,12 @@
 				18A32628240FBCE800CF329E /* DSFilterView.swift in Sources */,
 				18AD1C4B2449F70F006AFF67 /* ShareViewController.swift in Sources */,
 				1825A52F237AFDEF002811E7 /* ChatContainerViewController.swift in Sources */,
+				18B76C8A2514FD2000B2AA61 /* iBuckPaypalViewControllerr.swift in Sources */,
 				18DF117E246C2E2600D0F89E /* MobilePlayerNotification.swift in Sources */,
 				18847A58237C3010004D500A /* MediaCollectionViewCell.swift in Sources */,
 				18DF1184246C2E2600D0F89E /* MobilePlayerConfig.swift in Sources */,
 				182F625A2372E96A00A55E52 /* AllChatsListViewController.swift in Sources */,
+				18B76C842514DE6200B2AA61 /* iBuckBuyViewController.swift in Sources */,
 				18B14CC3237580A0005E5CE4 /* SignupDetail2ViewController.swift in Sources */,
 				18DF1191246C2E2600D0F89E /* Bar.swift in Sources */,
 				185CC0C52379A096006BDC9D /* NewPostViewController.swift in Sources */,
@@ -1129,6 +1171,7 @@
 				18DF1195246C2E2600D0F89E /* ToggleButton.swift in Sources */,
 				18DF1187246C2E2600D0F89E /* ToggleButtonConfig.swift in Sources */,
 				18DF1189246C2E2600D0F89E /* UIColor+Hex.swift in Sources */,
+				18B76C862514F49A00B2AA61 /* iBuckSendViewControllerr.swift in Sources */,
 				18A3262A240FBCE800CF329E /* DSFilter.swift in Sources */,
 				188073B1242BA1040005CAE4 /* NotificationModel.swift in Sources */,
 				189329D023705E510067077F /* HomeViewController.swift in Sources */,
@@ -1150,6 +1193,7 @@
 				18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */,
 				1895C31524358036006F3CE7 /* StoryModel.swift in Sources */,
 				18DF1188246C2E2600D0F89E /* ButtonConfig.swift in Sources */,
+				18B76C882514FA3600B2AA61 /* iBuckSellViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1307,7 +1351,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.23;
+				MARKETING_VERSION = 1.24;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mou.iFollow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1332,7 +1376,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.23;
+				MARKETING_VERSION = 1.24;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mou.iFollow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

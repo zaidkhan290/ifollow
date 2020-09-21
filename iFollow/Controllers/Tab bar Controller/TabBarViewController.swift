@@ -26,6 +26,10 @@ class TabBarViewController: UIViewController {
     
     @IBOutlet weak var cameraTab: UIView!
     
+    @IBOutlet weak var iBuckTab: UIView!
+    @IBOutlet weak var buckImage: UIImageView!
+    @IBOutlet weak var buckSelectedView: UIView!
+    
     @IBOutlet weak var notificationTab: UIView!
     @IBOutlet weak var notificationImage: UIImageView!
     @IBOutlet weak var notificationSelectedView: UIView!
@@ -45,6 +49,8 @@ class TabBarViewController: UIViewController {
     
     var homeController = UIViewController()
     var exploreController = UIViewController()
+    var iBuckNavigationController = UINavigationController()
+    var iBuckController = UIViewController()
     var notificationController = UIViewController()
     var profileController = UIViewController()
     
@@ -61,13 +67,17 @@ class TabBarViewController: UIViewController {
         homeTab.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(homeTabTapped)))
         searchTab.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(searchTabTapped)))
         cameraTab.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cameraTabTapped)))
+        iBuckTab.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(iBuckTabTapped)))
         notificationTab.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(notificationTabTapped)))
         profileTab.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileTabTapped)))
         
         homeController = Utility.getHomeViewController()
         exploreController = Utility.getExploreViewController()
+        iBuckController = Utility.getiBuckMainController()
         notificationController = Utility.getNotificationViewController()
         profileController = Utility.getProfileViewController()
+        iBuckNavigationController = UINavigationController(rootViewController: iBuckController)
+        iBuckNavigationController.navigationBar.isHidden = true
         
         changeTab()
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
@@ -77,6 +87,8 @@ class TabBarViewController: UIViewController {
         lblMessagesCount.layer.masksToBounds = true
         lblMessagesCount.layer.cornerRadius = lblMessagesCount.frame.height / 2
         
+        NotificationCenter.default.addObserver(self, selector: #selector(showTabBar), name: NSNotification.Name("showTabBar"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideTabBar), name: NSNotification.Name("hideTabBar"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(logoutUser), name: NSNotification.Name("logoutUser"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(setNotificationsCount), name: NSNotification.Name(rawValue: "setNotificationCount"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateMessagesCounterAfterReadChat), name: NSNotification.Name(rawValue: "updateMessagesCounterAfterReadChat"), object: nil)
@@ -111,6 +123,14 @@ class TabBarViewController: UIViewController {
             notificationTab.backgroundColor = .white
             profileTab.backgroundColor = .white
         }
+    }
+    
+    @objc func showTabBar(){
+        self.tabView.isHidden = false
+    }
+    
+    @objc func hideTabBar(){
+        self.tabView.isHidden = true
     }
     
     @objc func updateMessagesCounterAfterReadChat(){
@@ -159,15 +179,20 @@ class TabBarViewController: UIViewController {
         changeTab()
     }
     
-    @objc func notificationTabTapped(){
-        UserDefaults.standard.set(0, forKey: "notificationCount")
-        setNotificationsCount()
+    @objc func iBuckTabTapped(){
         selectedIndex = 3
         changeTab()
     }
     
-    @objc func profileTabTapped(){
+    @objc func notificationTabTapped(){
+        UserDefaults.standard.set(0, forKey: "notificationCount")
+        setNotificationsCount()
         selectedIndex = 4
+        changeTab()
+    }
+    
+    @objc func profileTabTapped(){
+        selectedIndex = 5
         changeTab()
     }
     
@@ -200,8 +225,10 @@ class TabBarViewController: UIViewController {
             notificationSelectedView.isHidden = true
             profileImage.image = UIImage(named: "profile")
             profileSelectedView.isHidden = true
+            buckImage.image = UIImage(named: "ibucks")
+            buckSelectedView.isHidden = true
             
-            remove(asChildViewController: [exploreController, notificationController, profileController])
+            remove(asChildViewController: [exploreController, notificationController, profileController, iBuckNavigationController])
             (homeController as! HomeViewController).isFromPush = isFromPush
             (homeController as! HomeViewController).pushTitle = pushTitle
             (homeController as! HomeViewController).pushDesc = pushDesc
@@ -220,8 +247,10 @@ class TabBarViewController: UIViewController {
             notificationSelectedView.isHidden = true
             profileImage.image = UIImage(named: "profile")
             profileSelectedView.isHidden = true
+            buckImage.image = UIImage(named: "ibucks")
+            buckSelectedView.isHidden = true
             
-            remove(asChildViewController: [homeController, notificationController, profileController])
+            remove(asChildViewController: [homeController, notificationController, profileController, iBuckNavigationController])
             add(asChildViewController: exploreController)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshDiscoverData"), object: nil)
             
@@ -230,6 +259,22 @@ class TabBarViewController: UIViewController {
             openChatBox()
         }
         else if (selectedIndex == 3){
+            buckImage.image = UIImage(named: "ibucks-selected")
+            buckSelectedView.isHidden = false
+            
+            homeImage.image = UIImage(named: "home")
+            homeSelectedView.isHidden = true
+            searchImage.image = UIImage(named: "search")
+            searchSelectedView.isHidden = true
+            notificationImage.image = UIImage(named: "notification")
+            notificationSelectedView.isHidden = true
+            profileImage.image = UIImage(named: "profile")
+            profileSelectedView.isHidden = true
+            
+            remove(asChildViewController: [homeController, exploreController, notificationController, profileController])
+            add(asChildViewController: iBuckNavigationController)
+        }
+        else if (selectedIndex == 4){
             
             notificationImage.image = UIImage(named: "notificationSelected")
             notificationSelectedView.isHidden = false
@@ -240,12 +285,14 @@ class TabBarViewController: UIViewController {
             searchSelectedView.isHidden = true
             profileImage.image = UIImage(named: "profile")
             profileSelectedView.isHidden = true
+            buckImage.image = UIImage(named: "ibucks")
+            buckSelectedView.isHidden = true
             
-            remove(asChildViewController: [homeController, exploreController, profileController])
+            remove(asChildViewController: [homeController, exploreController, profileController, iBuckNavigationController])
             add(asChildViewController: notificationController)
             
         }
-        else if (selectedIndex == 4){
+        else if (selectedIndex == 5){
             
             profileImage.image = UIImage(named: "profileSelected")
             profileSelectedView.isHidden = false
@@ -256,8 +303,10 @@ class TabBarViewController: UIViewController {
             searchSelectedView.isHidden = true
             notificationImage.image = UIImage(named: "notification")
             notificationSelectedView.isHidden = true
+            buckImage.image = UIImage(named: "ibucks")
+            buckSelectedView.isHidden = true
             
-            remove(asChildViewController: [homeController, exploreController, notificationController])
+            remove(asChildViewController: [homeController, exploreController, notificationController, iBuckNavigationController])
             add(asChildViewController: profileController)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshUserPosts"), object: nil)
             

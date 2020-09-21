@@ -275,7 +275,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         //----- For AVCaptureSession Start-----//
             
             captureSession = AVCaptureSession()
-            captureSession.sessionPreset = .high
+            captureSession.sessionPreset = .photo
             captureSession.automaticallyConfiguresApplicationAudioSession = false
         
             //captureSession.usesApplicationAudioSession = true
@@ -628,8 +628,6 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                 return device
             }
         }
-
-
         return nil
     }
     
@@ -1456,7 +1454,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                 btnFlash.isEnabled = false
             } else {
                 newCamera = cameraWithPosition(position: .back)
-                session.sessionPreset = .high
+                session.sessionPreset = .photo
                 isFrontCamera = false
                 btnFlash.isEnabled = true
             }

@@ -212,6 +212,30 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "LiveVideoViewController") as! LiveVideoViewController
     }
     
+    static func getiBuckMainController() -> iBuckMainViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "iBuckMainViewController") as! iBuckMainViewController
+    }
+    
+    static func getiBuckBuyController() -> iBuckBuyViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "iBuckBuyViewController") as! iBuckBuyViewController
+    }
+    
+    static func getiBuckSendController() -> iBuckSendViewControllerr{
+        return storyBoard.instantiateViewController(withIdentifier: "iBuckSendViewControllerr") as! iBuckSendViewControllerr
+    }
+    
+    static func getiBuckSellController() -> iBuckSellViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "iBuckSellViewController") as! iBuckSellViewController
+    }
+    
+    static func getiBuckPayPalController() -> iBuckPaypalViewControllerr{
+        return storyBoard.instantiateViewController(withIdentifier: "iBuckPaypalViewControllerr") as! iBuckPaypalViewControllerr
+    }
+    
+    static func getiBuckPasswordController() -> iBuckPasswordViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "iBuckPasswordViewController") as! iBuckPasswordViewController
+    }
+    
     static func getLoginUserId() -> Int{
         if let user = UserModel.getCurrentUser(){
             return user.userId
