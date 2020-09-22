@@ -110,6 +110,7 @@ class TabBarViewController: UIViewController {
             homeTab.backgroundColor = Theme.darkModeBlackColor
             searchTab.backgroundColor = Theme.darkModeBlackColor
             cameraTab.backgroundColor = Theme.darkModeBlackColor
+            iBuckTab.backgroundColor = Theme.darkModeBlackColor
             notificationTab.backgroundColor = Theme.darkModeBlackColor
             profileTab.backgroundColor = Theme.darkModeBlackColor
         }
@@ -120,6 +121,7 @@ class TabBarViewController: UIViewController {
             homeTab.backgroundColor = .white
             searchTab.backgroundColor = .white
             cameraTab.backgroundColor = .white
+            iBuckTab.backgroundColor = .white
             notificationTab.backgroundColor = .white
             profileTab.backgroundColor = .white
         }

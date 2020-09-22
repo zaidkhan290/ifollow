@@ -26,6 +26,11 @@ struct Theme {
     static let feedsViewTimeColor = UIColor.init(red: 71.0/255.0, green: 83.0/255.0, blue: 95.0/255.0, alpha: 1.0)
     static let darkModeBlackColor = UIColor.init(red: 36.0/255.0, green: 42.0/255.0, blue: 55.0/255.0, alpha: 1.0)
     static let darkModePrivateChatColor = UIColor.init(red: 30.0/255.0, green: 36.0/255.0, blue: 50.0/255.0, alpha: 1.0)
+    static let lightModeiBuckViewsBackgroundColor = UIColor.init(red: 255.0/255.0, green: 241.0/255.0, blue: 224.0/255.0, alpha: 1.0)
+    static let darkModeiBuckViewsBackgroundColor = UIColor.init(red: 17.0/255.0, green: 22.0/255.0, blue: 35.0/255.0, alpha: 1.0)
+    static let lightModeiBuckButtonTextColor = UIColor.init(red: 221.0/255.0, green: 103.0/255.0, blue: 53.0/255.0, alpha: 1.0)
+    static let darkModeiBuckButtonTextColor = UIColor.init(red: 238.0/255.0, green: 94.0/255.0, blue: 31.0/255.0, alpha: 1.0)
+    
     
     static func getLatoRegularFontOfSize(size: CGFloat) -> UIFont{
         return UIFont(name: "Lato-Regular", size: size)!

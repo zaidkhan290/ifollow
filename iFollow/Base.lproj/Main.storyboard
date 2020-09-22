@@ -1568,7 +1568,7 @@
                                 <rect key="frame" x="20.666666666666657" y="20" width="372.66666666666674" height="50"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sRh-iw-pPZ">
-                                        <rect key="frame" x="20" y="15" width="264.66666666666669" height="20"/>
+                                        <rect key="frame" x="20" y="15" width="288.66666666666669" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Bpq-aw-H3D"/>
                                         </constraints>
@@ -1576,7 +1576,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchSelected" translatesAutoresizingMaskIntoConstraints="NO" id="kZJ-Z6-EJ5">
-                                        <rect key="frame" x="304.66666666666663" y="1" width="48" height="48"/>
+                                        <rect key="frame" x="328.66666666666663" y="13" width="24" height="24"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1590,7 +1590,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages will be deleted if not read in 3 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jp6-cy-4dF">
-                                <rect key="frame" x="82.666666666666686" y="90" width="249" height="14"/>
+                                <rect key="frame" x="85.333333333333329" y="90" width="243.33333333333337" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.12156862745098039" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1749,7 +1749,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchSelected" translatesAutoresizingMaskIntoConstraints="NO" id="ZwN-Cc-3sc">
-                                <rect key="frame" x="346" y="5.6666666666666679" width="48" height="48"/>
+                                <rect key="frame" x="370" y="17.666666666666668" width="24" height="24.000000000000004"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trending" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHT-yt-CCU">
                                 <rect key="frame" x="10" y="20" width="62" height="19.333333333333329"/>
@@ -1835,7 +1835,7 @@
                                 <rect key="frame" x="-2" y="-3" width="420" height="739"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiG-G6-TmD">
-                                <rect key="frame" x="137" y="20" width="140" height="30"/>
+                                <rect key="frame" x="134.66666666666669" y="20" width="144.66666666666669" height="30"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -3327,7 +3327,7 @@
                                 <rect key="frame" x="20.666666666666657" y="20" width="372.66666666666674" height="50"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YIg-zC-J4S">
-                                        <rect key="frame" x="20" y="15" width="264.66666666666669" height="20"/>
+                                        <rect key="frame" x="20" y="15" width="288.66666666666669" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="oFA-wB-YM7"/>
                                         </constraints>
@@ -3335,7 +3335,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchSelected" translatesAutoresizingMaskIntoConstraints="NO" id="Bcd-j2-je7">
-                                        <rect key="frame" x="304.66666666666663" y="1" width="48" height="48"/>
+                                        <rect key="frame" x="328.66666666666663" y="13" width="24" height="24"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3349,7 +3349,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages will be deleted if not read in 3 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iey-Xz-Ghm">
-                                <rect key="frame" x="82.666666666666686" y="90" width="249" height="14"/>
+                                <rect key="frame" x="85.333333333333329" y="90" width="243.33333333333337" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.1215686275" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -5197,6 +5197,8 @@
                     </view>
                     <connections>
                         <outlet property="currentBuckView" destination="zAy-0f-eTD" id="hPe-iG-dNP"/>
+                        <outlet property="lblCurrentBuck" destination="aH9-VA-eOD" id="ZVJ-xr-3CM"/>
+                        <outlet property="lblValue" destination="sYV-4A-dg6" id="cpT-Li-t2L"/>
                         <outlet property="tblView" destination="BKW-An-3P9" id="rFw-bx-Rns"/>
                         <outlet property="valueView" destination="O5h-OS-DNF" id="fDc-fz-llf"/>
                     </connections>
@@ -5970,7 +5972,7 @@
                             </textField>
                             <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uz4-gm-uji">
                                 <rect key="frame" x="186" y="24.666666666666671" width="16" height="16"/>
-                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="16" id="fKN-Dx-nAu"/>
                                     <constraint firstAttribute="height" constant="16" id="x9J-Sr-7y7"/>
@@ -6518,6 +6520,7 @@
                         <viewLayoutGuide key="safeArea" id="aes-cH-LIs"/>
                     </view>
                     <connections>
+                        <outlet property="btnContinue" destination="5AT-Zt-cr5" id="fqA-B9-GiI"/>
                         <outlet property="emailTxtField" destination="YFs-8N-eAC" id="274-zc-5uU"/>
                         <outlet property="keyBoardVoeew" destination="rvS-ZI-rga" id="GeW-rG-mFh"/>
                     </connections>
@@ -6664,7 +6667,6 @@
                                     <constraint firstAttribute="width" constant="79" id="RTw-1y-ivp"/>
                                     <constraint firstAttribute="height" constant="23" id="pvI-iz-94h"/>
                                 </constraints>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="username"/>
                                 <connections>
@@ -6687,7 +6689,6 @@
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="10.00" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DQP-zj-MJR">
                                 <rect key="frame" x="317" y="367" width="46" height="21.666666666666686"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" textContentType="username"/>
                             </textField>
@@ -6746,10 +6747,13 @@
                         <viewLayoutGuide key="safeArea" id="iPO-yu-EVE"/>
                     </view>
                     <connections>
+                        <outlet property="btnContinue" destination="FQM-96-uGC" id="TOB-BA-rKE"/>
                         <outlet property="currentBuckView" destination="2YG-oQ-wei" id="xhm-kF-TbU"/>
                         <outlet property="keyboardView" destination="PYF-8h-VzR" id="nNg-De-uBk"/>
+                        <outlet property="lblCurrentBuck" destination="mJ5-n9-nPH" id="9jB-X5-PwF"/>
                         <outlet property="lblHeading" destination="0gy-R0-089" id="CUS-Jo-avX"/>
                         <outlet property="lblTopTitle" destination="HP2-0k-1UC" id="6eg-Gg-7lb"/>
+                        <outlet property="lblValue" destination="5gN-Fg-RoI" id="a13-q0-PP1"/>
                         <outlet property="valueTxtField" destination="nnf-4Q-3rK" id="q9c-0k-6mH"/>
                         <outlet property="valueView" destination="ZAD-Qf-gJW" id="hwv-ar-NAK"/>
                     </connections>
@@ -6884,6 +6888,7 @@ You will receive $45.00 in you PayPal account.</string>
                         <viewLayoutGuide key="safeArea" id="Zdv-vE-eVQ"/>
                     </view>
                     <connections>
+                        <outlet property="btnContinue" destination="pVH-rd-Zsz" id="2KN-21-I1G"/>
                         <outlet property="emailTxtField" destination="VcU-iJ-FYk" id="TbV-7d-iDZ"/>
                         <outlet property="keyboardView" destination="y0m-oh-2LW" id="Ade-nT-fMw"/>
                         <outlet property="lblBottom" destination="JKJ-rB-HVP" id="1uy-yX-T2F"/>
@@ -7020,6 +7025,7 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                         <viewLayoutGuide key="safeArea" id="R4K-l7-1vO"/>
                     </view>
                     <connections>
+                        <outlet property="btnContinue" destination="sO4-qY-4OD" id="2Vn-md-m8j"/>
                         <outlet property="keyboardView" destination="cZ9-VX-BQK" id="hMO-GR-P40"/>
                         <outlet property="lblBottom" destination="eVc-cZ-VGT" id="u4W-PC-UEm"/>
                         <outlet property="lblTopTitle" destination="Js9-yJ-Hpe" id="MRm-Ut-cnf"/>

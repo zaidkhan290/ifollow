@@ -60,6 +60,10 @@ extension UIView{
         self.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
     }
     
+    func setiBuckViewsBackgroundColor(){
+        self.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeiBuckViewsBackgroundColor : Theme.lightModeiBuckViewsBackgroundColor
+    }
+    
     func setPrivateChatColor(){
         self.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModePrivateChatColor : Theme.privateChatBackgroundColor
     }
@@ -201,4 +205,20 @@ extension UIImageView{
             recognizer.rotation = 0
         }
     }
+}
+
+extension UILabel{
+    
+    func setiBuckTextColor(){
+        self.textColor = traitCollection.userInterfaceStyle == .dark ? UIColor.lightGray : Theme.lightModeiBuckButtonTextColor
+    }
+    
+}
+
+extension UIButton{
+    
+    func setiBuckButtonTextColor(){
+        self.setTitleColor(traitCollection.userInterfaceStyle == .dark ? Theme.darkModeiBuckButtonTextColor : Theme.lightModeiBuckButtonTextColor, for: .normal) 
+    }
+    
 }

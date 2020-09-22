@@ -22,6 +22,7 @@ class ShareViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setColor()
         mainView.roundTopCorners(radius: 30)
         let cellNib = UINib(nibName: "FriendsTableViewCell", bundle: nil)
         trendingTableViews.register(cellNib, forCellReuseIdentifier: "FriendsTableViewCell")
@@ -34,6 +35,11 @@ class ShareViewController: UIViewController {
     
     @IBAction func btnBackTapped(_ sender: UIButton){
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func setColor(){
+        self.mainView.setColor()
+        self.trendingTableViews.reloadData()
     }
     
     func getTrendings(){
@@ -90,6 +96,10 @@ class ShareViewController: UIViewController {
             
         }
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setColor()
+    }
 }
 
 extension ShareViewController: UITableViewDataSource, UITableViewDelegate{
@@ -102,7 +112,7 @@ extension ShareViewController: UITableViewDataSource, UITableViewDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsTableViewCell", for: indexPath) as! FriendsTableViewCell
         let user = trendingArray[indexPath.row]
         
-        cell.btnSend.backgroundColor = .white
+        cell.btnSend.backgroundColor = .clear
         cell.delegate = self
         cell.indexPath = indexPath
         cell.btnSend.setTitleColor(Theme.profileLabelsYellowColor, for: .normal)
@@ -122,6 +132,7 @@ extension ShareViewController: UITableViewDataSource, UITableViewDelegate{
         cell.userImage.sd_setImage(with: URL(string: user.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         cell.lblUsername.text = user.userFullName
         cell.lblLastSeen.text = user.userCountry
+        cell.lblLastSeen.textColor = traitCollection.userInterfaceStyle == .dark ? .white : Theme.memberNameColor
         
         return cell
     }

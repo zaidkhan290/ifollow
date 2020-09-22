@@ -14,12 +14,17 @@ class iBuckMainViewController: UIViewController {
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var valueView: UIView!
     @IBOutlet weak var currentBuckView: UIView!
+    @IBOutlet weak var lblCurrentBuck: UILabel!
+    @IBOutlet weak var lblValue: UILabel!
     
     var buyImages = ["buyIcon", "sendIcon" ,"sellIcon"]
     var buyTile = ["iBuy", "iSend", "iSell"]
     var buyDesc = ["Buy silver, gold & platinium packages", "Send Money to any of your Friends", "Exchange coins with real money"]
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.setColors()
         self.tblView.register(UINib(nibName: "iBucksTableViewCell", bundle: nil), forCellReuseIdentifier: "iBucksTableViewCell")
         self.valueView.layer.cornerRadius = 15
         self.currentBuckView.layer.cornerRadius = 15
@@ -28,6 +33,16 @@ class iBuckMainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showTabBar"), object: nil)
+    }
+    
+    func setColors(){
+        self.view.setColor()
+        tblView.setColor()
+        currentBuckView.setiBuckViewsBackgroundColor()
+        valueView.setiBuckViewsBackgroundColor()
+        lblCurrentBuck.setiBuckTextColor()
+        lblValue.setiBuckTextColor()
+        
     }
 }
 
@@ -63,5 +78,9 @@ extension iBuckMainViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setColors()
     }
 }

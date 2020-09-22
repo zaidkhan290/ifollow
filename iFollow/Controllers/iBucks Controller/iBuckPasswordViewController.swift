@@ -14,16 +14,25 @@ class iBuckPasswordViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var keyboardView: UIView!
     @IBOutlet weak var passwordTxtField: UITextField!
     @IBOutlet weak var lblBottom: UILabel!
+    @IBOutlet weak var btnContinue: UIButton!
     
     var isForSend = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setColors()
         self.keyboardView.isHidden = true
         self.passwordTxtField.inputAccessoryView = keyboardView
-        
         lblBottom.text = isForSend ? "Note:\nMou Navi will receive 45 Bucks in there iFollow account." : "Note:\nYou will receive $45.00 in you PayPal account."
     }
+    
+    func setColors(){
+        self.view.setColor()
+        btnContinue.setiBuckViewsBackgroundColor()
+        btnContinue.setiBuckButtonTextColor()
+    }
+    
     //MARK:- Actions and Methods
     
     @IBAction func onBackClick(_ sender: Any) {
@@ -41,5 +50,9 @@ class iBuckPasswordViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         self.keyboardView.isHidden = true
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setColors()
     }
 }

@@ -18,10 +18,22 @@ class iBuckBuyViewController: UIViewController {
     var buyDesc = ["Silver", "Gold", "Platinium"]
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        setColors()
         self.tblView.register(UINib(nibName: "iBucksTableViewCell", bundle: nil), forCellReuseIdentifier: "iBucksTableViewCell")
     }
+    
+    func setColors(){
+        self.view.setColor()
+        tblView.setColor()
+    }
+    
     @IBAction func onBackClick(_ sender: Any) {
         self.goBack()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setColors()
     }
 }
 
