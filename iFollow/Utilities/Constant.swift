@@ -38,3 +38,5 @@ let interstitialAddUnitID = "ca-app-pub-7830642545217251/6770817204" // Live..
 let BT_AUTHORIZATION_KEY = "sandbox_rzxh3y9w_vgv2k4dn6fj3dqmx"
 var kIsUserVerified = false
 //let BT_AUTHORIZATION_KEY = "production_yk8knskb_7v7bfwgqbgd65w4p"
+
+let kAgoraAppID = "5e879d5990be4a1d834e38110a0e97ab"

@@ -31,7 +31,7 @@ class iBuckSellViewController: UIViewController, UITextFieldDelegate {
         self.keyboardView.isHidden = true
         self.valueTxtField.inputAccessoryView = keyboardView
         
-        valueView.isHidden = isForSend
+        valueView.isHidden = true//isForSend
         lblTopTitle.text = isForSend ? "iSend" : "iSell"
         lblHeading.text = isForSend ? "Enter Bucks you want to send" : "Enter Bucks you want to sell"
     }

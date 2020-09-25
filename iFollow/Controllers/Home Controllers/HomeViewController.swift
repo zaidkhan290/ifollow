@@ -182,7 +182,7 @@ class HomeViewController: UIViewController {
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
             
-            Utility.showOrHideLoader(shouldShow: true)
+        //    Utility.showOrHideLoader(shouldShow: true)
             
             let uploadTask = picRef?.putData(imageData2, metadata: metadata, completion: { (metaData, error) in
                 if(error != nil){
@@ -286,7 +286,7 @@ class HomeViewController: UIViewController {
             
             var i = 0
             uploadTask?.observe(.progress, handler: { (snapshot) in
-                Utility.showOrHideLoader(shouldShow: true)
+              //  Utility.showOrHideLoader(shouldShow: true)
                 if(i == 0){
                     
                 }
@@ -308,7 +308,7 @@ class HomeViewController: UIViewController {
         
         if let videoData = try? Data(contentsOf: videoURL){
             
-            Utility.showOrHideLoader(shouldShow: true)
+        //    Utility.showOrHideLoader(shouldShow: true)
             
             let uploadTask = videoRef?.putData(videoData, metadata: nil, completion: { (metaData, error) in
                 if(error != nil){
@@ -411,7 +411,7 @@ class HomeViewController: UIViewController {
             
             var i = 0
             uploadTask?.observe(.progress, handler: { (snapshot) in
-                Utility.showOrHideLoader(shouldShow: true)
+              //  Utility.showOrHideLoader(shouldShow: true)
                 if(i == 0){
                     
                 }

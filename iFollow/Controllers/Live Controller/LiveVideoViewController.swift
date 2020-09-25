@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AgoraRtcKit
 
 class LiveVideoViewController: UIViewController {
 
@@ -14,6 +15,8 @@ class LiveVideoViewController: UIViewController {
     @IBOutlet weak var commentBoxView: UIView!
     @IBOutlet weak var txtViewComment: UITextView!
     @IBOutlet weak var commentsTableView: UITableView!
+    
+    var agoraKit: AgoraRtcEngineKit!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +33,15 @@ class LiveVideoViewController: UIViewController {
         txtViewComment.returnKeyType = .send
     }
 
+    // Swift
+    func initializeAgoraEngine() {
+       // Initialize the AgoraRtcEngineKit object.
+//       agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: kAgoraAppID, delegate: self)
+//       agoraKit.setChannelProfile(.liveBroadcasting)
+//       agoraKit.setClientRole(.audience)
+//       agoraKit.setClientRole(.broadcaster)
+    }
+    
 }
 
 extension LiveVideoViewController: UITableViewDataSource, UITableViewDelegate{

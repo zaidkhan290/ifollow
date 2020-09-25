@@ -28,6 +28,7 @@ class iBuckMainViewController: UIViewController {
         self.tblView.register(UINib(nibName: "iBucksTableViewCell", bundle: nil), forCellReuseIdentifier: "iBucksTableViewCell")
         self.valueView.layer.cornerRadius = 15
         self.currentBuckView.layer.cornerRadius = 15
+        self.valueView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

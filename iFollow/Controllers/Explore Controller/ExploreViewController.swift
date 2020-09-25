@@ -91,7 +91,14 @@ class ExploreViewController: UIViewController {
     }
     
     func getDiscoverData(){
-        Utility.showOrHideLoader(shouldShow: true)
+        
+        if (publicStoriesArray.count == 0){
+            Utility.showOrHideLoader(shouldShow: true)
+        }
+        else{
+            recentStoriesCollectionView.isUserInteractionEnabled = false
+            allStoriesCollectionView.isUserInteractionEnabled = false
+        }
         
         API.sharedInstance.executeAPI(type: .getDiscover, method: .get, params: nil) { (status, result, message) in
             DispatchQueue.main.async {
@@ -168,6 +175,8 @@ class ExploreViewController: UIViewController {
                     self.myStoryArray = StoryUserModel.getMyStory()
                     self.followersStoriesArray = StoryUserModel.getFollowersUsersStories()
                     self.publicStoriesArray = StoryUserModel.getPublicUsersStories()
+                    self.recentStoriesCollectionView.isUserInteractionEnabled = true
+                    self.allStoriesCollectionView.isUserInteractionEnabled = true
                     self.recentStoriesCollectionView.reloadData()
                     self.allStoriesCollectionView.reloadData()
               
@@ -178,6 +187,8 @@ class ExploreViewController: UIViewController {
                     Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                         self.myStoryArray = StoryUserModel.getMyStory()
                         self.followersStoriesArray = StoryUserModel.getFollowersUsersStories()
+                        self.recentStoriesCollectionView.isUserInteractionEnabled = true
+                        self.allStoriesCollectionView.isUserInteractionEnabled = true
                         self.recentStoriesCollectionView.reloadData()
                         
                     }
@@ -223,7 +234,7 @@ class ExploreViewController: UIViewController {
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
             
-            Utility.showOrHideLoader(shouldShow: true)
+          //  Utility.showOrHideLoader(shouldShow: true)
             
             let uploadTask = picRef?.putData(imageData2, metadata: metadata, completion: { (metaData, error) in
                 if(error != nil){
@@ -326,7 +337,7 @@ class ExploreViewController: UIViewController {
             
             var i = 0
             uploadTask?.observe(.progress, handler: { (snapshot) in
-                Utility.showOrHideLoader(shouldShow: true)
+            //    Utility.showOrHideLoader(shouldShow: true)
                 if(i == 0){
                     
                 }
@@ -348,7 +359,7 @@ class ExploreViewController: UIViewController {
         
         if let videoData = try? Data(contentsOf: videoURL){
             
-            Utility.showOrHideLoader(shouldShow: true)
+         //   Utility.showOrHideLoader(shouldShow: true)
             
             let uploadTask = videoRef?.putData(videoData, metadata: nil, completion: { (metaData, error) in
                 if(error != nil){
@@ -451,7 +462,7 @@ class ExploreViewController: UIViewController {
             
             var i = 0
             uploadTask?.observe(.progress, handler: { (snapshot) in
-                Utility.showOrHideLoader(shouldShow: true)
+               // Utility.showOrHideLoader(shouldShow: true)
                 if(i == 0){
                     
                 }

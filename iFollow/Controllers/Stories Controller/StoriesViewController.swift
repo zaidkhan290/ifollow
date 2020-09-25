@@ -70,7 +70,7 @@ class StoriesViewController: UIViewController {
         interstitial = createAndLoadInterstitial()
         
         messageInputView.layer.cornerRadius = 20
-        messageInputView.dropShadow(color: .white)
+        setupColors()
         txtFieldMessage.delegate = self
         txtFieldMessage.returnKeyType = .send
         btnOptions.isHidden = !isForMyStory
@@ -192,6 +192,11 @@ class StoriesViewController: UIViewController {
     }
     
     //MARK:- Methods and Actions
+    
+    func setupColors(){
+        self.messageInputView.setColor()
+        self.messageInputView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
+    }
     
     func createAndLoadInterstitial() -> GADInterstitial {
       var interstitial = GADInterstitial(adUnitID: interstitialAddUnitID)
@@ -882,6 +887,10 @@ class StoriesViewController: UIViewController {
             self.dismissStory()
         }
         
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
     }
     
 }

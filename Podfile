@@ -48,5 +48,6 @@ pod 'SwiftGifOrigin'
 pod 'Hakawai'
 pod 'ATAppUpdater'
 pod 'Cloudinary'
+pod 'AgoraRtcEngine_iOS'
 
 end
