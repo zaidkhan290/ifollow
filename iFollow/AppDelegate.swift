@@ -265,7 +265,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 vc.chatUserImage = json["request_id"]["image"].stringValue.replacingOccurrences(of: "\\", with: "")
                 UIWINDOW!.rootViewController = vc
             }
-            else if (json["tag"].intValue == 15){
+            else if (json["tag"].intValue == 15 || json["tag"].intValue == 4){
                 let vc = Utility.getTabBarViewController()
                 vc.selectedIndex = 0
                 vc.isFromPush = true
