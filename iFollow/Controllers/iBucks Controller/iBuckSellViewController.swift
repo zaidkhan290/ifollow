@@ -7,6 +7,7 @@
 //
 import Foundation
 import UIKit
+import Loaf
 
 class iBuckSellViewController: UIViewController, UITextFieldDelegate {
     
@@ -16,11 +17,14 @@ class iBuckSellViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var valueTxtField: UITextField!
     @IBOutlet weak var valueView: UIView!
     @IBOutlet weak var currentBuckView: UIView!
+    @IBOutlet weak var lblCurrentValue: UILabel!
     @IBOutlet weak var lblCurrentBuck: UILabel!
     @IBOutlet weak var lblValue: UILabel!
     @IBOutlet weak var btnContinue: UIButton!
     
     var isForSend = false
+    var userId = 0
+    var userName = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +34,19 @@ class iBuckSellViewController: UIViewController, UITextFieldDelegate {
         self.currentBuckView.layer.cornerRadius = 15
         self.keyboardView.isHidden = true
         self.valueTxtField.inputAccessoryView = keyboardView
+        self.valueTxtField.text = ""
         
         valueView.isHidden = true//isForSend
         lblTopTitle.text = isForSend ? "iSend" : "iSell"
         lblHeading.text = isForSend ? "Enter Bucks you want to send" : "Enter Bucks you want to sell"
+        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        lblCurrentValue.text = "\(Utility.getLoginUserBuck())"
+    }
+    
     @IBAction func onBackClick(_ sender: Any) {
         self.goBack()
     }
@@ -50,14 +62,26 @@ class iBuckSellViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func btnContinueTapped(_ sender: UIButton){
-        if (isForSend){
-            let vc = Utility.getiBuckPasswordController()
-            vc.isForSend = isForSend
-            self.pushToVC(vc: vc)
+        
+        let bucks = Int(valueTxtField.text!)!
+        if (bucks > Utility.getLoginUserBuck()){
+            Loaf("Not enough bucks", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+            }
         }
         else{
-            let vc = Utility.getiBuckPayPalController()
-            self.pushToVC(vc: vc)
+            if (isForSend){
+                let vc = Utility.getiBuckPasswordController()
+                vc.isForSend = isForSend
+                vc.userId = userId
+                vc.userName = userName
+                vc.noOfBucks = bucks
+                self.pushToVC(vc: vc)
+            }
+            else{
+                let vc = Utility.getiBuckPayPalController()
+                vc.noOfBucks = bucks
+                self.pushToVC(vc: vc)
+            }
         }
         
     }
@@ -69,6 +93,10 @@ class iBuckSellViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         self.keyboardView.isHidden = true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return true
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

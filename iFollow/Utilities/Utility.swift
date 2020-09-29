@@ -355,6 +355,13 @@ struct Utility {
         return 0
     }
     
+    static func getLoginUserBuck() -> Int{
+        if let user = UserModel.getCurrentUser(){
+            return user.userBuck
+        }
+        return 0
+    }
+    
     static var storyTimeFormatter: DateFormatter{
         get{
             if (timeFormatter == nil){

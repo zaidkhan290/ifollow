@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import RealmSwift
+import Loaf
 
 class iBuckMainViewController: UIViewController {
     
@@ -15,11 +17,12 @@ class iBuckMainViewController: UIViewController {
     @IBOutlet weak var valueView: UIView!
     @IBOutlet weak var currentBuckView: UIView!
     @IBOutlet weak var lblCurrentBuck: UILabel!
+    @IBOutlet weak var lblCurrentValue: UILabel!
     @IBOutlet weak var lblValue: UILabel!
     
     var buyImages = ["buyIcon", "sendIcon" ,"sellIcon"]
     var buyTile = ["iBuy", "iSend", "iSell"]
-    var buyDesc = ["Buy silver, gold & platinium packages", "Send Money to any of your Friends", "Exchange coins with real money"]
+    var buyDesc = ["Buy coins", "Send Money to any of your Friends", "Exchange coins with real money"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +37,7 @@ class iBuckMainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showTabBar"), object: nil)
+        getMyIBuck()
     }
     
     func setColors(){
@@ -43,6 +47,41 @@ class iBuckMainViewController: UIViewController {
         valueView.setiBuckViewsBackgroundColor()
         lblCurrentBuck.setiBuckTextColor()
         lblValue.setiBuckTextColor()
+        
+    }
+    
+    func getMyIBuck(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        
+        API.sharedInstance.executeAPI(type: .getMyiBuck, method: .get, params: nil) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                Utility.showOrHideLoader(shouldShow: false)
+                if (status == .success){
+                    let myBuck = result["ibucks"].intValue
+                    let realm = try! Realm()
+                    try! realm.safeWrite {
+                        if let model = UserModel.getCurrentUser(){
+                            model.userBuck = myBuck
+                        }
+                    }
+                    self.lblCurrentValue.text = "\(Utility.getLoginUserBuck())"
+                }
+                else if (status == .failure){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+
+                    }
+                    self.lblCurrentValue.text = "\(Utility.getLoginUserBuck())"
+                }
+                else if (status == .authError){
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+            }
+            
+        }
         
     }
 }

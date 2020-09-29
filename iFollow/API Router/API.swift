@@ -75,6 +75,11 @@ enum EndPoint: String {
     case getPostTags = "post_tags"
     case getStoryTags = "story_tags"
     case getSingleStory = "story"
+    case getMyiBuck = "get_ibucks"
+    case addBuck = "add_ibucks"
+    case sendBuck = "send_ibucks"
+    case validatePassword = "password_validation"
+    case sellBuck = "request_ibucks_cashout"
     case logout = "logout"
 }
 

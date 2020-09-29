@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Loaf
 
 class iBuckPaypalViewControllerr: UIViewController, UITextFieldDelegate {
     
@@ -18,12 +19,15 @@ class iBuckPaypalViewControllerr: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var btnContinue: UIButton!
     
     var isForSend = false
+    var noOfBucks = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setColors()
         self.keyboardView.isHidden = true
         self.emailTxtField.inputAccessoryView = keyboardView
+        let amount = Float(noOfBucks) * 0.86
+        lblBottom.text = "Note:\nYou will receive $\(amount) in your paypal account"
     }
     
     func setColors(){
@@ -39,9 +43,19 @@ class iBuckPaypalViewControllerr: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func btnContinueTapped(_ sender: UIButton){
-        let vc = Utility.getiBuckPasswordController()
-        vc.isForSend = isForSend
-        self.pushToVC(vc: vc)
+        
+        if (!Utility.isValid(email: emailTxtField.text!)){
+            Loaf("Please enter your paypal email", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+            }
+        }
+        else{
+            let vc = Utility.getiBuckPasswordController()
+            vc.isForSend = isForSend
+            vc.noOfBucks = noOfBucks
+            vc.paypalEmail = emailTxtField.text!
+            self.pushToVC(vc: vc)
+        }
+        
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
