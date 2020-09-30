@@ -27,7 +27,7 @@ class iBuckPaypalViewControllerr: UIViewController, UITextFieldDelegate {
         self.keyboardView.isHidden = true
         self.emailTxtField.inputAccessoryView = keyboardView
         let amount = Float(noOfBucks) * 0.86
-        lblBottom.text = "Note:\nYou will receive $\(amount) in your paypal account"
+        lblBottom.text = "Note:\nYou will receive $\(String(format: "%.2f", amount)) in your paypal account"
     }
     
     func setColors(){

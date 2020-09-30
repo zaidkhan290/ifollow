@@ -236,6 +236,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "iBuckPasswordViewController") as! iBuckPasswordViewController
     }
     
+    static func getPostCommentController() -> PostCommentViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "PostCommentViewController") as! PostCommentViewController
+    }
+    
     static func getLoginUserId() -> Int{
         if let user = UserModel.getCurrentUser(){
             return user.userId

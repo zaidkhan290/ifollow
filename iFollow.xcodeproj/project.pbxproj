@@ -23,6 +23,11 @@
 		18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18307AB4236C97CB00A0A7C6 /* StringExtension.swift */; };
 		1834832A2422313A00200F8C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183483292422313A00200F8C /* API.swift */; };
 		1834832C24223E5500200F8C /* ExtensionOfRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1834832B24223E5500200F8C /* ExtensionOfRealm.swift */; };
+		1838403B25247DC200364B38 /* PostCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1838403A25247DC200364B38 /* PostCommentViewController.swift */; };
+		1838403E25247EA400364B38 /* MainCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1838403C25247EA400364B38 /* MainCommentTableViewCell.swift */; };
+		1838403F25247EA400364B38 /* MainCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1838403D25247EA400364B38 /* MainCommentTableViewCell.xib */; };
+		183840422524901B00364B38 /* ReplyCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183840402524901B00364B38 /* ReplyCommentTableViewCell.swift */; };
+		183840432524901B00364B38 /* ReplyCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183840412524901B00364B38 /* ReplyCommentTableViewCell.xib */; };
 		1839088D236C70D6009A28E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839088C236C70D6009A28E6 /* AppDelegate.swift */; };
 		18390892236C70D6009A28E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390890236C70D6009A28E6 /* Main.storyboard */; };
 		18390894236C70DA009A28E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18390893236C70DA009A28E6 /* Assets.xcassets */; };
@@ -196,6 +201,11 @@
 		18307AB4236C97CB00A0A7C6 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		183483292422313A00200F8C /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		1834832B24223E5500200F8C /* ExtensionOfRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionOfRealm.swift; sourceTree = "<group>"; };
+		1838403A25247DC200364B38 /* PostCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentViewController.swift; sourceTree = "<group>"; };
+		1838403C25247EA400364B38 /* MainCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCommentTableViewCell.swift; sourceTree = "<group>"; };
+		1838403D25247EA400364B38 /* MainCommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainCommentTableViewCell.xib; sourceTree = "<group>"; };
+		183840402524901B00364B38 /* ReplyCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCommentTableViewCell.swift; sourceTree = "<group>"; };
+		183840412524901B00364B38 /* ReplyCommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyCommentTableViewCell.xib; sourceTree = "<group>"; };
 		18390889236C70D6009A28E6 /* iFollow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iFollow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1839088C236C70D6009A28E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18390891236C70D6009A28E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -641,6 +651,7 @@
 				189329CF23705E510067077F /* HomeViewController.swift */,
 				189E3F8E24408F5800244BCD /* PostDetailViewController.swift */,
 				18AD1C4A2449F70F006AFF67 /* ShareViewController.swift */,
+				1838403A25247DC200364B38 /* PostCommentViewController.swift */,
 			);
 			path = "Home Controllers";
 			sourceTree = "<group>";
@@ -682,6 +693,10 @@
 				184059DE24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.xib */,
 				18B76C7C2514C43C00B2AA61 /* iBucksTableViewCell.swift */,
 				18B76C7D2514C43C00B2AA61 /* iBucksTableViewCell.xib */,
+				1838403C25247EA400364B38 /* MainCommentTableViewCell.swift */,
+				1838403D25247EA400364B38 /* MainCommentTableViewCell.xib */,
+				183840402524901B00364B38 /* ReplyCommentTableViewCell.swift */,
+				183840412524901B00364B38 /* ReplyCommentTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -938,6 +953,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18B82A352371D05A00693F7F /* NotificationTableViewCell.xib in Resources */,
+				1838403F25247EA400364B38 /* MainCommentTableViewCell.xib in Resources */,
 				186CD0D4242391BF004E7D90 /* GoogleService-Info.plist in Resources */,
 				186A98A5241A9BDE000AD9AB /* Simplisicky Fill.ttf in Resources */,
 				18781C2023707001001BAF95 /* FeedsView.xib in Resources */,
@@ -968,6 +984,7 @@
 				1870700623732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.xib in Resources */,
 				18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */,
 				185640E4237423C100CC2777 /* MenuTableViewCell.xib in Resources */,
+				183840432524901B00364B38 /* ReplyCommentTableViewCell.xib in Resources */,
 				18390894236C70DA009A28E6 /* Assets.xcassets in Resources */,
 				1863EB9C241BC5E8000E5C31 /* PoetsenOne-Regular.ttf in Resources */,
 				18B76C7F2514C43C00B2AA61 /* iBucksTableViewCell.xib in Resources */,
@@ -1088,6 +1105,7 @@
 				18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */,
 				18B14CC52375AB8F005E5CE4 /* OptionsViewController.swift in Sources */,
 				1834832C24223E5500200F8C /* ExtensionOfRealm.swift in Sources */,
+				1838403B25247DC200364B38 /* PostCommentViewController.swift in Sources */,
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
 				18A32627240FBCE800CF329E /* DSSwipableFilterView.swift in Sources */,
 				18DF1183246C2E2600D0F89E /* LabelConfig.swift in Sources */,
@@ -1118,6 +1136,7 @@
 				189329D4237061A70067077F /* StoryCollectionViewCell.swift in Sources */,
 				18A32629240FBCE800CF329E /* DSSwipableFilterViewDataSource.swift in Sources */,
 				18DF1181246C2E2600D0F89E /* SliderConfig.swift in Sources */,
+				183840422524901B00364B38 /* ReplyCommentTableViewCell.swift in Sources */,
 				18AC39A5237ED0A40044136B /* AddMembersViewController.swift in Sources */,
 				18DF118E246C2E2600D0F89E /* Label.swift in Sources */,
 				1825A528237AEA41002811E7 /* TrendersContainerViewController.swift in Sources */,
@@ -1183,6 +1202,7 @@
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,
 				18D6BBD424375749004D90EB /* AudioRecorderSingleton.swift in Sources */,
 				18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */,
+				1838403E25247EA400364B38 /* MainCommentTableViewCell.swift in Sources */,
 				185AFE2F242A462500AC38FB /* PrivacyViewController.swift in Sources */,
 				185640E3237423C100CC2777 /* MenuTableViewCell.swift in Sources */,
 				18A4C33D244859AB00893D9D /* GroupChatModel.swift in Sources */,

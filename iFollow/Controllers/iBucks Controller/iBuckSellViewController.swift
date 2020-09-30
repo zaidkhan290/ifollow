@@ -63,24 +63,30 @@ class iBuckSellViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func btnContinueTapped(_ sender: UIButton){
         
-        let bucks = Int(valueTxtField.text!)!
-        if (bucks > Utility.getLoginUserBuck()){
-            Loaf("Not enough bucks", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+        if (valueTxtField.text == ""){
+            Loaf("Please enter number of bucks", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
             }
         }
         else{
-            if (isForSend){
-                let vc = Utility.getiBuckPasswordController()
-                vc.isForSend = isForSend
-                vc.userId = userId
-                vc.userName = userName
-                vc.noOfBucks = bucks
-                self.pushToVC(vc: vc)
+            let bucks = Int(valueTxtField.text!)!
+            if (bucks > Utility.getLoginUserBuck()){
+                Loaf("Not enough bucks", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                }
             }
             else{
-                let vc = Utility.getiBuckPayPalController()
-                vc.noOfBucks = bucks
-                self.pushToVC(vc: vc)
+                if (isForSend){
+                    let vc = Utility.getiBuckPasswordController()
+                    vc.isForSend = isForSend
+                    vc.userId = userId
+                    vc.userName = userName
+                    vc.noOfBucks = bucks
+                    self.pushToVC(vc: vc)
+                }
+                else{
+                    let vc = Utility.getiBuckPayPalController()
+                    vc.noOfBucks = bucks
+                    self.pushToVC(vc: vc)
+                }
             }
         }
         

@@ -56,7 +56,7 @@ class iBuckBuyViewController: UIViewController {
         }
         else{
             let amount = Float(txtFieldNumOfBucks.text!)! - 0.01
-            lblNote.text = "Note:\nYou will be charged $\(amount) from your payment account."
+            lblNote.text = "Note:\nYou will be charged $\(String(format: "%.2f", amount)) from your payment account."
         }
     }
     
@@ -191,7 +191,8 @@ class iBuckBuyViewController: UIViewController {
             }
             return
         }
-        showPaypalPopup()
+       // showPaypalPopup()
+        addiBuckInUserAccount()
         
     }
     

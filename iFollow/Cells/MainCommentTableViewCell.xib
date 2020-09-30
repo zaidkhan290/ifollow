@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Bold_0.ttf">
+            <string>Lato-Bold</string>
+        </array>
+        <array key="Lato-Regular_0.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MainCommentTableViewCell" rowHeight="116" id="KGk-i7-Jjw" customClass="MainCommentTableViewCell" customModule="iFollow" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="344" height="116"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="344" height="116"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chatUserIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Vqt-6O-tj7">
+                        <rect key="frame" x="20" y="5" width="36" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="36" id="CN2-2j-me8"/>
+                            <constraint firstAttribute="height" constant="36" id="tJk-YH-9Qq"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S9s-co-RaI">
+                        <rect key="frame" x="66" y="5" width="263" height="81"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.30420590753424659" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sara Alison" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kMw-gn-hnY">
+                        <rect key="frame" x="76" y="10" width="243" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="Jpe-dm-Yny"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wow what a nice view.. I like it too much.  Wow what a nice view.. I like it too much. " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1x0-DG-gYr">
+                        <rect key="frame" x="76" y="30" width="243" height="51"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yesterday" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CaO-vt-feY">
+                        <rect key="frame" x="66" y="91" width="52" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="TOH-8b-nWs"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2k0-z4-n4C">
+                        <rect key="frame" x="138" y="91" width="30" height="17"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="APk-DJ-Mqv"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                        <state key="normal" title="Reply">
+                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="btnReplyTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="PtJ-wd-9uT"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="S9s-co-RaI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="6M2-pg-SMH"/>
+                    <constraint firstItem="Vqt-6O-tj7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="7FE-H1-qf0"/>
+                    <constraint firstItem="kMw-gn-hnY" firstAttribute="leading" secondItem="Vqt-6O-tj7" secondAttribute="trailing" constant="20" id="AxV-zv-XgU"/>
+                    <constraint firstItem="1x0-DG-gYr" firstAttribute="leading" secondItem="Vqt-6O-tj7" secondAttribute="trailing" constant="20" id="BmT-ho-Bwh"/>
+                    <constraint firstItem="2k0-z4-n4C" firstAttribute="leading" secondItem="CaO-vt-feY" secondAttribute="trailing" constant="20" id="EuZ-tU-8TI"/>
+                    <constraint firstAttribute="trailing" secondItem="kMw-gn-hnY" secondAttribute="trailing" constant="25" id="Kh1-mK-fEP"/>
+                    <constraint firstAttribute="trailing" secondItem="1x0-DG-gYr" secondAttribute="trailing" constant="25" id="VaZ-6k-j2p"/>
+                    <constraint firstItem="S9s-co-RaI" firstAttribute="leading" secondItem="Vqt-6O-tj7" secondAttribute="trailing" constant="10" id="Way-uc-dmW"/>
+                    <constraint firstItem="Vqt-6O-tj7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Zdn-zd-Dik"/>
+                    <constraint firstItem="kMw-gn-hnY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="air-YQ-wXK"/>
+                    <constraint firstAttribute="bottom" secondItem="1x0-DG-gYr" secondAttribute="bottom" constant="35" id="f5P-zG-NS4"/>
+                    <constraint firstItem="2k0-z4-n4C" firstAttribute="top" secondItem="S9s-co-RaI" secondAttribute="bottom" constant="5" id="fXA-hG-bdn"/>
+                    <constraint firstItem="S9s-co-RaI" firstAttribute="bottom" secondItem="1x0-DG-gYr" secondAttribute="bottom" constant="5" id="gTi-jI-TPV"/>
+                    <constraint firstItem="CaO-vt-feY" firstAttribute="leading" secondItem="S9s-co-RaI" secondAttribute="leading" id="gy7-Zi-F17"/>
+                    <constraint firstAttribute="trailing" secondItem="S9s-co-RaI" secondAttribute="trailing" constant="15" id="jcr-YZ-xT5"/>
+                    <constraint firstItem="1x0-DG-gYr" firstAttribute="top" secondItem="kMw-gn-hnY" secondAttribute="bottom" id="syb-HL-5vF"/>
+                    <constraint firstItem="CaO-vt-feY" firstAttribute="top" secondItem="S9s-co-RaI" secondAttribute="bottom" constant="5" id="z0n-Za-EPP"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="btnReply" destination="2k0-z4-n4C" id="fsw-eX-6y0"/>
+                <outlet property="commentView" destination="S9s-co-RaI" id="3kn-cF-lu2"/>
+                <outlet property="lblTime" destination="CaO-vt-feY" id="eQD-pY-4Rl"/>
+                <outlet property="lblUserComment" destination="1x0-DG-gYr" id="qh5-bC-p1G"/>
+                <outlet property="lblUsername" destination="kMw-gn-hnY" id="yNl-TU-tQv"/>
+                <outlet property="userImageView" destination="Vqt-6O-tj7" id="tOO-5D-8jM"/>
+            </connections>
+            <point key="canvasLocation" x="155.07246376811597" y="111.16071428571428"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="chatUserIcon" width="44" height="44"/>
+    </resources>
+</document>
