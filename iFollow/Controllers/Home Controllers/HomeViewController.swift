@@ -798,79 +798,81 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             itemView.index = index - (index / 10)
             let post = postsArray[index - (index / 10)]
             
-            itemView.verifiedIcon.isHidden = post.isPostUserVerified == 0
-            itemView.postLinkView.isHidden = post.postBoostLink == ""
-            itemView.lblUsername.text = post.postUserFullName
-            if (post.isBoostPost){
-                itemView.lblTime.text = "SPONSORED"
-                itemView.lblTime.textColor = Theme.profileLabelsYellowColor
-                itemView.lblTime.font = Theme.getLatoBoldFontOfSize(size: 11)
+            if (!postsArray.first!.isInvalidated && !postsArray.last!.isInvalidated){
+                itemView.verifiedIcon.isHidden = post.isPostUserVerified == 0
+                            itemView.postLinkView.isHidden = post.postBoostLink == ""
+                            itemView.lblUsername.text = post.postUserFullName
+                            if (post.isBoostPost){
+                                itemView.lblTime.text = "SPONSORED"
+                                itemView.lblTime.textColor = Theme.profileLabelsYellowColor
+                                itemView.lblTime.font = Theme.getLatoBoldFontOfSize(size: 11)
+                            }
+                            else{
+                                itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postTime))
+                                itemView.lblTime.textColor = Theme.feedsViewTimeColor
+                                itemView.lblTime.font = Theme.getLatoRegularFontOfSize(size: 10)
+                            }
+                            itemView.userImage.sd_setImage(with: URL(string: post.postUserImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+                            itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
+                            itemView.lblUserAddress.text = post.postLocation
+                            itemView.userImage.layer.cornerRadius = 25
+                            if (post.postMediaType == "image"){
+                                itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
+                                itemView.playIcon.isHidden = true
+                            }
+                            else{
+                                itemView.feedImage.image = UIImage(named: "photo_placeholder")
+                                itemView.playIcon.isHidden = false
+                //                Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
+                //                    itemView.feedImage.image = thumbnailImage
+                //                }
+                            }
+                            itemView.feedImage.clipsToBounds = true
+                            itemView.feedImage.contentMode = .scaleAspectFill
+                            itemView.lblLikeComments.text = "\(post.postLikes)"
+                            itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
+                //            if (post.isPostLike == 1){
+                //                itemView.likeButton.setSelected(selected: true, animated: true)
+                //            }
+                //            else{
+                //                itemView.likeButton.setSelected(selected: false, animated: false)
+                //            }
+                            itemView.postTagIcon.isHidden = post.postTags == ""
+                            itemView.postTagIcon.isUserInteractionEnabled = true
+                            itemView.postTagIcon.tag = index - (index / 10)
+                            itemView.postTagIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postTagIconTapped(_:))))
+                            itemView.userImage.isUserInteractionEnabled = true
+                            itemView.userImage.tag = index - (index / 10)
+                            itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped(_:))))
+                            itemView.feedBackView.isUserInteractionEnabled = true
+                            itemView.feedBackView.tag = index - (index / 10)
+                            itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
+                            itemView.postlikeView.isHidden = post.shouldShowPostTrends == 1
+                            itemView.lblLikeComments.isHidden = post.shouldShowPostTrends == 1
+                            itemView.postTrendLikeIcon.isHidden = post.shouldShowPostTrends == 1
+                            itemView.postlikeView.isUserInteractionEnabled = true
+                            itemView.postlikeView.tag = index - (index / 10)
+                            itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
+                            itemView.likeView.isUserInteractionEnabled = true
+                            itemView.likeView.tag = index - (index / 10)
+                            itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
+                            itemView.frame = view.frame
+                            itemView.userImage.layer.cornerRadius = 25
+                            itemView.feedImage.clipsToBounds = true
+                            itemView.mainView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
+                            itemView.mainView.layer.cornerRadius = 10
+                            itemView.btnOptions.tag = index - (index / 10)
+                            itemView.btnOptions.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
+                            itemView.postShareView.tag = index - (index / 10)
+                            itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(shareViewTapped(_:))))
+                            itemView.postHideView.tag = index - (index / 10)
+                            itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideViewTapped(_:))))
+                            itemView.postLinkView.tag = index - (index / 10)
+                            itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
+                            view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
+                            view.clipsToBounds = true
+                            view.addSubview(itemView)
             }
-            else{
-                itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postTime))
-                itemView.lblTime.textColor = Theme.feedsViewTimeColor
-                itemView.lblTime.font = Theme.getLatoRegularFontOfSize(size: 10)
-            }
-            itemView.userImage.sd_setImage(with: URL(string: post.postUserImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
-            itemView.userImage.layer.cornerRadius = itemView.userImage.frame.height / 2
-            itemView.lblUserAddress.text = post.postLocation
-            itemView.userImage.layer.cornerRadius = 25
-            if (post.postMediaType == "image"){
-                itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
-                itemView.playIcon.isHidden = true
-            }
-            else{
-                itemView.feedImage.image = UIImage(named: "photo_placeholder")
-                itemView.playIcon.isHidden = false
-//                Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
-//                    itemView.feedImage.image = thumbnailImage
-//                }
-            }
-            itemView.feedImage.clipsToBounds = true
-            itemView.feedImage.contentMode = .scaleAspectFill
-            itemView.lblLikeComments.text = "\(post.postLikes)"
-            itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
-//            if (post.isPostLike == 1){
-//                itemView.likeButton.setSelected(selected: true, animated: true)
-//            }
-//            else{
-//                itemView.likeButton.setSelected(selected: false, animated: false)
-//            }
-            itemView.postTagIcon.isHidden = post.postTags == ""
-            itemView.postTagIcon.isUserInteractionEnabled = true
-            itemView.postTagIcon.tag = index - (index / 10)
-            itemView.postTagIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postTagIconTapped(_:))))
-            itemView.userImage.isUserInteractionEnabled = true
-            itemView.userImage.tag = index - (index / 10)
-            itemView.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userImageTapped(_:))))
-            itemView.feedBackView.isUserInteractionEnabled = true
-            itemView.feedBackView.tag = index - (index / 10)
-            itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
-            itemView.postlikeView.isHidden = post.shouldShowPostTrends == 1
-            itemView.lblLikeComments.isHidden = post.shouldShowPostTrends == 1
-            itemView.postTrendLikeIcon.isHidden = post.shouldShowPostTrends == 1
-            itemView.postlikeView.isUserInteractionEnabled = true
-            itemView.postlikeView.tag = index - (index / 10)
-            itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
-            itemView.likeView.isUserInteractionEnabled = true
-            itemView.likeView.tag = index - (index / 10)
-            itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
-            itemView.frame = view.frame
-            itemView.userImage.layer.cornerRadius = 25
-            itemView.feedImage.clipsToBounds = true
-            itemView.mainView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
-            itemView.mainView.layer.cornerRadius = 10
-            itemView.btnOptions.tag = index - (index / 10)
-            itemView.btnOptions.addTarget(self, action: #selector(showOptionsPopup(sender:)), for: .touchUpInside)
-            itemView.postShareView.tag = index - (index / 10)
-            itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(shareViewTapped(_:))))
-            itemView.postHideView.tag = index - (index / 10)
-            itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideViewTapped(_:))))
-            itemView.postLinkView.tag = index - (index / 10)
-            itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
-            view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
-            view.clipsToBounds = true
-            view.addSubview(itemView)
             
             return view
         }
@@ -924,18 +926,21 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     
     @objc func feedbackViewTapped(_ sender: UITapGestureRecognizer){
         let post = postsArray[sender.view!.tag]
-        let vc = Utility.getCommentViewController()
+//        let vc = Utility.getCommentViewController()
+//        vc.postId = post.postId
+//        vc.postUserId = post.postUserId
+//        vc.postUserImage = post.postUserImage
+//        vc.postUserName = post.postUserFullName
+//        vc.postUserLocation = post.postLocation
+//        vc.postUserMedia = post.postMedia
+//        vc.postType = post.postMediaType
+//        isFullScreen = true
+//        vc.modalPresentationStyle = .custom
+//        vc.transitioningDelegate = self
+//        self.present(vc, animated: false, completion: nil)
+        let vc = Utility.getPostCommentController()
         vc.postId = post.postId
-        vc.postUserId = post.postUserId
-        vc.postUserImage = post.postUserImage
-        vc.postUserName = post.postUserFullName
-        vc.postUserLocation = post.postLocation
-        vc.postUserMedia = post.postMedia
-        vc.postType = post.postMediaType
-        isFullScreen = true
-        vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = self
-        self.present(vc, animated: false, completion: nil)
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc func shareViewTapped(_ sender: UITapGestureRecognizer){

@@ -80,6 +80,9 @@ enum EndPoint: String {
     case sendBuck = "send_ibucks"
     case validatePassword = "password_validation"
     case sellBuck = "request_ibucks_cashout"
+    case getComments = "comments"
+    case postComment = "post_comment"
+    case replyComment = "comment_reply"
     case logout = "logout"
 }
 

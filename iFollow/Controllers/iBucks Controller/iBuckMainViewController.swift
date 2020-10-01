@@ -113,7 +113,6 @@ extension iBuckMainViewController: UITableViewDataSource, UITableViewDelegate{
             let vc = Utility.getiBuckSellController()
             self.pushToVC(vc: vc)
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

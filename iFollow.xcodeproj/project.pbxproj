@@ -142,6 +142,7 @@
 		18B92DD6244080F20099272D /* BlockUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B92DD5244080F20099272D /* BlockUsersViewController.swift */; };
 		18BDABB82431D8DE003B772C /* ExtensionOfTapGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BDABB72431D8DE003B772C /* ExtensionOfTapGestures.swift */; };
 		18BDABBA24322510003B772C /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BDABB924322510003B772C /* PrivacyPolicyViewController.swift */; };
+		18BE66032525F2E600A1EF6D /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE66022525F2E600A1EF6D /* CommentModel.swift */; };
 		18C88D82237184E2005C739F /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D81237184E2005C739F /* ExploreViewController.swift */; };
 		18C88D85237193DB005C739F /* AllStoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */; };
 		18C88D86237193DB005C739F /* AllStoriesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */; };
@@ -323,6 +324,7 @@
 		18B92DD5244080F20099272D /* BlockUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockUsersViewController.swift; sourceTree = "<group>"; };
 		18BDABB72431D8DE003B772C /* ExtensionOfTapGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionOfTapGestures.swift; sourceTree = "<group>"; };
 		18BDABB924322510003B772C /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
+		18BE66022525F2E600A1EF6D /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		18C88D81237184E2005C739F /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		18C88D83237193DB005C739F /* AllStoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStoriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		18C88D84237193DB005C739F /* AllStoriesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllStoriesCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 				18C970F22445CE5000C4F7C4 /* ChatMediaModel.swift */,
 				18A4C33C244859AB00893D9D /* GroupChatModel.swift */,
 				188CB373244DA57200B0C2B9 /* MessagesModel.swift */,
+				18BE66022525F2E600A1EF6D /* CommentModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1208,6 +1211,7 @@
 				18A4C33D244859AB00893D9D /* GroupChatModel.swift in Sources */,
 				1889F2DE23DF41100079DB72 /* ViewersViewController.swift in Sources */,
 				18DF1197246C2E2600D0F89E /* MobilePlayerControllable.swift in Sources */,
+				18BE66032525F2E600A1EF6D /* CommentModel.swift in Sources */,
 				1834832A2422313A00200F8C /* API.swift in Sources */,
 				18DF1185246C2E2600D0F89E /* WatermarkConfig.swift in Sources */,
 				18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */,
