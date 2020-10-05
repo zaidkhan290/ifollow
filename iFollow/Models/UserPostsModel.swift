@@ -26,6 +26,7 @@ class UserPostsModel: Object{
     @objc dynamic var postTags: String = ""
     @objc dynamic var postOriginalUserId: Int = 0
     @objc dynamic var postOriginalUserFullName: String = ""
+    @objc dynamic var isPublicComment: Int = 0
     
     func updateModelWithJSON(json: JSON){
         postId = json["post_id"].intValue
@@ -42,6 +43,7 @@ class UserPostsModel: Object{
         postOriginalUserId = json["original_id"].intValue
         postOriginalUserFullName = json["original_name"].stringValue
         postStatus = json["status"].stringValue
+        isPublicComment = json["public_comments"].intValue
     }
     
     static func getAllUserPosts() -> [UserPostsModel]{

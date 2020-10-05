@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol MainCommentTableViewCellDelegate: class {
+    func replyComment(indexPath: IndexPath)
+}
+
 class MainCommentTableViewCell: UITableViewCell {
 
     @IBOutlet weak var userImageView: UIImageView!
@@ -16,6 +20,9 @@ class MainCommentTableViewCell: UITableViewCell {
     @IBOutlet weak var lblUserComment: UILabel!
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var btnReply: UIButton!
+    
+    var delegate: MainCommentTableViewCellDelegate!
+    var indexPath = IndexPath()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,7 +36,7 @@ class MainCommentTableViewCell: UITableViewCell {
     }
     
     @IBAction func btnReplyTapped(_ sender: UIButton) {
+        self.delegate.replyComment(indexPath: indexPath)
     }
-    
     
 }

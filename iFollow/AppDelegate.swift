@@ -86,6 +86,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     migration.enumerateObjects(ofType: UserModel.className()) { (oldObject, newObject) in
                         newObject?["userBuck"] = 0
                     }
+                    migration.enumerateObjects(ofType: HomePostsModel.className()) { (oldObject, newObject) in
+                        newObject?["isPublicComment"] = 0
+                    }
+                    migration.enumerateObjects(ofType: UserPostsModel.className()) { (oldObject, newObject) in
+                        newObject?["isPublicComment"] = 0
+                    }
                 }
                 
             }

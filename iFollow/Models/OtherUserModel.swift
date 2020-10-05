@@ -67,6 +67,7 @@ class OtherUserPostModel: NSObject{
     var postTags: String = ""
     var postOriginalUserId: Int = 0
     var postOriginalUserFullName: String = ""
+    var isPublicComment: Int = 0
 
     func updateModelWithJSON(json: JSON){
         postId = json["post_id"].intValue
@@ -84,6 +85,7 @@ class OtherUserPostModel: NSObject{
         postTags = json["tags"].stringValue
         postOriginalUserId = json["original_id"].intValue
         postOriginalUserFullName = json["original_name"].stringValue
+        isPublicComment = json["public_comments"].intValue
     }
     
 }

@@ -408,74 +408,76 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
         let post = userPosts[index]
         
-        let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
-        itemView.postLinkView.isHidden = post.postBoostLink == ""
-        if (post.postStatus == "boost"){
-            itemView.lblTime.text = "SPONSORED"
-            itemView.lblTime.textColor = Theme.profileLabelsYellowColor
-            itemView.lblTime.font = Theme.getLatoBoldFontOfSize(size: 11)
+        if (!userPosts.first!.isInvalidated && !userPosts.last!.isInvalidated){
+            let itemView = Bundle.main.loadNibNamed("FeedsView", owner: self, options: nil)?.first! as! FeedsView
+                    itemView.postLinkView.isHidden = post.postBoostLink == ""
+                    if (post.postStatus == "boost"){
+                        itemView.lblTime.text = "SPONSORED"
+                        itemView.lblTime.textColor = Theme.profileLabelsYellowColor
+                        itemView.lblTime.font = Theme.getLatoBoldFontOfSize(size: 11)
+                    }
+                    else{
+                        itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postCreatedAt))
+                        itemView.lblTime.textColor = Theme.feedsViewTimeColor
+                        itemView.lblTime.font = Theme.getLatoRegularFontOfSize(size: 10)
+                    }
+                    itemView.frame = view.frame
+                    itemView.userImage.layer.cornerRadius = 25
+                    itemView.userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
+                    itemView.lblUsername.text = Utility.getLoginUserFullName()
+                    itemView.lblUserAddress.text = post.postLocation
+                    itemView.feedbackImageView.image = UIImage(named: "share-1")
+                    itemView.feedBackView.isUserInteractionEnabled = true
+                    itemView.feedBackView.tag = index
+                    itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
+                    itemView.postlikeView.isUserInteractionEnabled = true
+                    itemView.postlikeView.tag = index
+                    itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
+                    itemView.lblLikeComments.text = "\(post.postLikes)"
+                    itemView.feedImage.clipsToBounds = true
+                    if (post.postMediaType == "image"){
+                        itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
+                        itemView.playIcon.isHidden = true
+                    }
+                    else{
+                        itemView.feedImage.image = UIImage(named: "photo_placeholder")
+                        itemView.playIcon.isHidden = false
+            //            Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
+            //                itemView.feedImage.image = thumbnailImage
+            //            }
+                    }
+                    itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
+            //        if (post.isPostLike == 1){
+            //            itemView.likeButton.setSelected(selected: true, animated: true)
+            //        }
+            //        else{
+            //            itemView.likeButton.setSelected(selected: false, animated: false)
+            //        }
+                    itemView.feedImage.contentMode = .scaleAspectFill
+                    itemView.mainView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
+                    itemView.mainView.layer.cornerRadius = 10
+                    itemView.postTagIcon.isHidden = post.postTags == ""
+                    itemView.postTagIcon.isUserInteractionEnabled = true
+                    itemView.postTagIcon.tag = index
+                    itemView.postTagIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postTagIconTapped(_:))))
+                    itemView.likeView.isUserInteractionEnabled = true
+                    itemView.likeView.tag = index
+                    itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
+                    itemView.btnOptions.tag = index
+                    itemView.btnOptions.addTarget(self, action: #selector(showFeedsOptionsPopup(sender:)), for: .touchUpInside)
+                    itemView.postShareImageView.image = UIImage(named: "edit-1")
+                    itemView.postShareView.tag = index
+                    itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editViewTapped(_:))))
+                    itemView.postHideImageView.image = UIImage(named: "delete-1")
+                    itemView.postHideView.tag = index
+                    itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(deleteViewTapped(_:))))
+                    itemView.postLinkView.tag = index
+                    itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
+                    
+                    view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
+                    view.clipsToBounds = true
+                    view.addSubview(itemView)
         }
-        else{
-            itemView.lblTime.text = Utility.timeAgoSince(Utility.getNotificationDateFrom(dateString: post.postCreatedAt))
-            itemView.lblTime.textColor = Theme.feedsViewTimeColor
-            itemView.lblTime.font = Theme.getLatoRegularFontOfSize(size: 10)
-        }
-        itemView.frame = view.frame
-        itemView.userImage.layer.cornerRadius = 25
-        itemView.userImage.sd_setImage(with: URL(string: Utility.getLoginUserImage()), placeholderImage: UIImage(named: "editProfilePlaceholder"))
-        itemView.lblUsername.text = Utility.getLoginUserFullName()
-        itemView.lblUserAddress.text = post.postLocation
-        itemView.feedbackImageView.image = UIImage(named: "share-1")
-        itemView.feedBackView.isUserInteractionEnabled = true
-        itemView.feedBackView.tag = index
-        itemView.feedBackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(feedbackViewTapped(_:))))
-        itemView.postlikeView.isUserInteractionEnabled = true
-        itemView.postlikeView.tag = index
-        itemView.postlikeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLikeViewTapped(_:))))
-        itemView.lblLikeComments.text = "\(post.postLikes)"
-        itemView.feedImage.clipsToBounds = true
-        if (post.postMediaType == "image"){
-            itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
-            itemView.playIcon.isHidden = true
-        }
-        else{
-            itemView.feedImage.image = UIImage(named: "photo_placeholder")
-            itemView.playIcon.isHidden = false
-//            Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
-//                itemView.feedImage.image = thumbnailImage
-//            }
-        }
-        itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
-//        if (post.isPostLike == 1){
-//            itemView.likeButton.setSelected(selected: true, animated: true)
-//        }
-//        else{
-//            itemView.likeButton.setSelected(selected: false, animated: false)
-//        }
-        itemView.feedImage.contentMode = .scaleAspectFill
-        itemView.mainView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
-        itemView.mainView.layer.cornerRadius = 10
-        itemView.postTagIcon.isHidden = post.postTags == ""
-        itemView.postTagIcon.isUserInteractionEnabled = true
-        itemView.postTagIcon.tag = index
-        itemView.postTagIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postTagIconTapped(_:))))
-        itemView.likeView.isUserInteractionEnabled = true
-        itemView.likeView.tag = index
-        itemView.likeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likeViewTapped(_:))))
-        itemView.btnOptions.tag = index
-        itemView.btnOptions.addTarget(self, action: #selector(showFeedsOptionsPopup(sender:)), for: .touchUpInside)
-        itemView.postShareImageView.image = UIImage(named: "edit-1")
-        itemView.postShareView.tag = index
-        itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(editViewTapped(_:))))
-        itemView.postHideImageView.image = UIImage(named: "delete-1")
-        itemView.postHideView.tag = index
-        itemView.postHideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(deleteViewTapped(_:))))
-        itemView.postLinkView.tag = index
-        itemView.postLinkView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(linkViewTapped(_:))))
-        
-        view.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
-        view.clipsToBounds = true
-        view.addSubview(itemView)
         
         return view
         

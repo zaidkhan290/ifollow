@@ -604,17 +604,29 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     
     @objc func feedbackViewTapped(_ sender: UITapGestureRecognizer){
         let post = otherUserProfile.userPosts[sender.view!.tag]
-        let vc = Utility.getCommentViewController()
-        vc.postId = post.postId
-        vc.postUserId = self.userId
-        vc.postUserImage = self.otherUserProfile.userImage
-        vc.postUserName = self.otherUserProfile.userFullName
-        vc.postUserLocation = post.postLocation
-        vc.postUserMedia = post.postMedia
-        vc.postType = post.postMediaType
-        vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = self
-        self.present(vc, animated: false, completion: nil)
+        if (post.isPublicComment == 1){
+            let vc = Utility.getPostCommentController()
+            let navVC = UINavigationController(rootViewController: vc)
+            navVC.modalPresentationStyle = .fullScreen
+            navVC.navigationBar.isHidden = true
+            vc.postId = post.postId
+            vc.postUserId = self.userId
+            self.present(navVC, animated: true, completion: nil)
+        }
+        else{
+            let vc = Utility.getCommentViewController()
+            vc.postId = post.postId
+            vc.postUserId = self.userId
+            vc.postUserImage = self.otherUserProfile.userImage
+            vc.postUserName = self.otherUserProfile.userFullName
+            vc.postUserLocation = post.postLocation
+            vc.postUserMedia = post.postMedia
+            vc.postType = post.postMediaType
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            self.present(vc, animated: false, completion: nil)
+        }
+        
     }
     
     @objc func likeViewTapped(_ sender: UITapGestureRecognizer){

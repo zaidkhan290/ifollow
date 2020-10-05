@@ -38,7 +38,7 @@ class iBuckSellViewController: UIViewController, UITextFieldDelegate {
         
         valueView.isHidden = true//isForSend
         lblTopTitle.text = isForSend ? "iSend" : "iSell"
-        lblHeading.text = isForSend ? "Enter Bucks you want to send" : "Enter Bucks you want to sell"
+        lblHeading.text = isForSend ? "Enter iBucks you want to send" : "Enter iBucks you want to sell"
         
     }
     
@@ -64,13 +64,13 @@ class iBuckSellViewController: UIViewController, UITextFieldDelegate {
     @IBAction func btnContinueTapped(_ sender: UIButton){
         
         if (valueTxtField.text == ""){
-            Loaf("Please enter number of bucks", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+            Loaf("Please enter number of iBucks", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
             }
         }
         else{
             let bucks = Int(valueTxtField.text!)!
             if (bucks > Utility.getLoginUserBuck()){
-                Loaf("Not enough bucks", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                Loaf("Not enough iBucks", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
                 }
             }
             else{

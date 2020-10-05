@@ -45,6 +45,8 @@ class NewPostViewController: UIViewController {
     @IBOutlet weak var btnBoostPost: UIButton!
     @IBOutlet weak var seperatorView: UIView!
     @IBOutlet weak var lblBoostYourPost: UILabel!
+    @IBOutlet weak var lblPublicComment: UILabel!
+    @IBOutlet weak var publicCommentSwitch: UISwitch!
     
     var storageRef: StorageReference?
     var isDetail = false
@@ -82,6 +84,8 @@ class NewPostViewController: UIViewController {
         postView.layer.cornerRadius = 20
         btnBoost.isHidden = isForEdit
         btnPic.isHidden = isForEdit
+        lblPublicComment.isHidden = isForEdit
+        publicCommentSwitch.isHidden = isForEdit
         if (isForEdit){
             txtFieldStatus.text = editablePostText
             if (editablePostMediaType == "image"){
@@ -414,6 +418,7 @@ class NewPostViewController: UIViewController {
                                               "location": self.userAddress,
                                               "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": self.days,
+                                              "public_comments": self.publicCommentSwitch.isOn ? 1 : 0,
                                               "media_type": "video",
                                               "budget": self.budget,
                                               "tags": self.tagUserIds,
@@ -427,6 +432,7 @@ class NewPostViewController: UIViewController {
                                               "location": self.userAddress,
                                               "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": 0,
+                                              "public_comments": self.publicCommentSwitch.isOn ? 1 : 0,
                                               "media_type": "video",
                                               "tags": self.tagUserIds,
                                               "original_id": Utility.getLoginUserId(),
@@ -488,6 +494,7 @@ class NewPostViewController: UIViewController {
                                               "location": self.userAddress,
                                               "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": self.days,
+                                              "public_comments": self.publicCommentSwitch.isOn ? 1 : 0,
                                               "media_type": "image",
                                               "tags": self.tagUserIds,
                                               "original_id": Utility.getLoginUserId(),
@@ -501,6 +508,7 @@ class NewPostViewController: UIViewController {
                                               "location": self.userAddress,
                                               "expire_hours": Utility.getLoginUserPostExpireHours(),
                                               "duration": 0,
+                                              "public_comments": self.publicCommentSwitch.isOn ? 1 : 0,
                                               "media_type": "image",
                                               "tags": self.tagUserIds,
                                               "original_id": Utility.getLoginUserId(),

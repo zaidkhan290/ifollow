@@ -32,7 +32,7 @@ class iBuckPasswordViewController: UIViewController {
         self.keyboardView.isHidden = true
         self.passwordTxtField.inputAccessoryView = keyboardView
         let amount = Float(noOfBucks) * 0.86
-        lblBottom.text = isForSend ? "Note:\n\(userName) will receive \(noOfBucks) Bucks in their iFollow account." : "Note:\nYou will receive $\(String(format: "%.2f", amount)) in your paypal account"
+        lblBottom.text = isForSend ? "Note:\n\(userName) will receive \(noOfBucks) iBucks in their iFollow account." : "Note:\nYou will receive $\(String(format: "%.2f", amount)) in your paypal account"
     }
     
     //MARK:- Methods and Actions

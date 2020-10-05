@@ -151,7 +151,7 @@ class iBuckBuyViewController: UIViewController {
                     
                     if (status == .success){
                         
-                        Loaf("Bucks added in your account", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Loaf("iBucks added in your account", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
 
                         }
                         
@@ -186,7 +186,7 @@ class iBuckBuyViewController: UIViewController {
     
     @IBAction func btnContinueTapped(_ sender: UIButton) {
         if (txtFieldNumOfBucks.text == ""){
-            Loaf("Please enter number of bucks", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+            Loaf("Please enter number of iBucks", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
 
             }
             return

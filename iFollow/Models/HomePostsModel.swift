@@ -33,6 +33,7 @@ class HomePostsModel: Object{
     @objc dynamic var postOriginalUserId: Int = 0
     @objc dynamic var postOriginalUserFullName: String = ""
     @objc dynamic var isPostUserVerified: Int = 0
+    @objc dynamic var isPublicComment: Int = 0
     
     func updateModelWithJSON(json: JSON){
         postUserId = json["user_id"].intValue
@@ -56,6 +57,7 @@ class HomePostsModel: Object{
         postOriginalUserId = json["original_id"].intValue
         postOriginalUserFullName = json["original_name"].stringValue
         isPostUserVerified = json["verified"].intValue
+        isPublicComment = json["public_comments"].intValue
     }
     
     static func getAllHomePosts() -> [HomePostsModel]{

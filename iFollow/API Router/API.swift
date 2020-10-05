@@ -83,6 +83,8 @@ enum EndPoint: String {
     case getComments = "comments"
     case postComment = "post_comment"
     case replyComment = "comment_reply"
+    case deleteComment = "delete_comment"
+    case deleteReply = "delete_comment_reply"
     case logout = "logout"
 }
 

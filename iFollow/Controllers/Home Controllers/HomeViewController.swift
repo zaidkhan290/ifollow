@@ -926,21 +926,30 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
     
     @objc func feedbackViewTapped(_ sender: UITapGestureRecognizer){
         let post = postsArray[sender.view!.tag]
-//        let vc = Utility.getCommentViewController()
-//        vc.postId = post.postId
-//        vc.postUserId = post.postUserId
-//        vc.postUserImage = post.postUserImage
-//        vc.postUserName = post.postUserFullName
-//        vc.postUserLocation = post.postLocation
-//        vc.postUserMedia = post.postMedia
-//        vc.postType = post.postMediaType
-//        isFullScreen = true
-//        vc.modalPresentationStyle = .custom
-//        vc.transitioningDelegate = self
-//        self.present(vc, animated: false, completion: nil)
-        let vc = Utility.getPostCommentController()
-        vc.postId = post.postId
-        self.present(vc, animated: true, completion: nil)
+        if (post.isPublicComment == 1){
+            let vc = Utility.getPostCommentController()
+            let navVC = UINavigationController(rootViewController: vc)
+            navVC.modalPresentationStyle = .fullScreen
+            navVC.navigationBar.isHidden = true
+            vc.postId = post.postId
+            vc.postUserId = post.postUserId
+            self.present(navVC, animated: true, completion: nil)
+        }
+        else{
+            let vc = Utility.getCommentViewController()
+            vc.postId = post.postId
+            vc.postUserId = post.postUserId
+            vc.postUserImage = post.postUserImage
+            vc.postUserName = post.postUserFullName
+            vc.postUserLocation = post.postLocation
+            vc.postUserMedia = post.postMedia
+            vc.postType = post.postMediaType
+            isFullScreen = true
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            self.present(vc, animated: false, completion: nil)
+        }
+        
     }
     
     @objc func shareViewTapped(_ sender: UITapGestureRecognizer){
