@@ -236,10 +236,10 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
         itemView.mainView.dropShadow(color: traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white)
         itemView.mainView.layer.cornerRadius = 10
         itemView.btnOptions.isHidden = true
-        itemView.likeView.isHidden = post.postUserId == Utility.getLoginUserId()
-        itemView.feedBackView.isHidden = post.postUserId == Utility.getLoginUserId()
-        itemView.postShareView.isHidden = post.postUserId == Utility.getLoginUserId()
-        itemView.postHideView.isHidden = post.postUserId == Utility.getLoginUserId()
+//        itemView.likeView.isHidden = post.postUserId == Utility.getLoginUserId()
+//        itemView.feedBackView.isHidden = post.postUserId == Utility.getLoginUserId()
+//        itemView.postShareView.isHidden = post.postUserId == Utility.getLoginUserId()
+//        itemView.postHideView.isHidden = post.postUserId == Utility.getLoginUserId()
         itemView.postShareView.tag = index
         itemView.postShareView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(shareViewTapped(_:))))
         itemView.postHideView.tag = index

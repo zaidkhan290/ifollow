@@ -230,7 +230,7 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let notification = notifications[indexPath.row]
         
-        if (notification.notificationTag == "3"){
+        if (notification.notificationTag == "3" || notification.notificationTag == "14" || notification.notificationTag == "15"){
             let vc = Utility.getPostDetailViewController()
             vc.postId = notification.notificationRequestId
             self.present(vc, animated: true, completion: nil)

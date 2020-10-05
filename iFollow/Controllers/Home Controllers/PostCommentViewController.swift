@@ -150,7 +150,8 @@ class PostCommentViewController: UIViewController {
         
         let params = ["comment_id": commentId,
                       "comment": txtfieldComment.text!,
-                      "user_id": commentsArray.first!.userId]
+                      "user_id": commentsArray.first!.userId,
+                      "poster_id": postUserId]
                      as [String : Any]
         
         API.sharedInstance.executeAPI(type: .replyComment, method: .post, params: params) { (status, result, message) in
@@ -242,6 +243,7 @@ class PostCommentViewController: UIViewController {
     }
     
     @IBAction func btnSendTapped(_ sender: UIButton){
+        self.txtfieldComment.endEditing(true)
         if (isForReply){
             replyComment()
         }

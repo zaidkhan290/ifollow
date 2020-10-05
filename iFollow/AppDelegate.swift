@@ -228,7 +228,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func handlePushNotification(json: JSON){
         
         if (UserModel.getCurrentUser() != nil){
-            if (json["tag"].intValue == 3){
+            if (json["tag"].intValue == 3 || json["tag"].intValue == 14){
                 let vc = Utility.getPostDetailViewController()
                 vc.postId = json["request_id"].intValue
                 vc.isFromPush = true
