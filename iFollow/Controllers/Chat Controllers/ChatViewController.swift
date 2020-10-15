@@ -69,6 +69,14 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
         incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: isPrivateChat ? Theme.privateChatIncomingMessage : Theme.profileLabelsYellowColor)
         outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: isPrivateChat ? Theme.privateChatOutgoingMessage : Theme.privateChatBoxSearchBarColor)
         
+        if (isPrivateChat){
+            chatRef = chatRef.child("PrivateChats").child(chatId)
+        }
+        else{
+            chatRef = chatRef.child("NormalChats").child(chatId)
+    
+        }
+        
         setupColors()
         myTypingRef = myTypingRef.child("Typing")
         userTypingRef = userTypingRef.child("Typing")
@@ -171,7 +179,6 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
     
     func setupColors(){
         if (isPrivateChat){
-            chatRef = chatRef.child("PrivateChats").child(chatId)
             self.collectionView.setPrivateChatColor()
             self.inputToolbar.contentView.setPrivateChatColor()
             self.inputToolbar.contentView.textView.textColor = .white
@@ -179,7 +186,6 @@ class ChatViewController: JSQMessagesViewController, JSQMessageMediaData, JSQAud
             
         }
         else{
-            chatRef = chatRef.child("NormalChats").child(chatId)
             self.collectionView.setColor()
             self.inputToolbar.contentView.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Theme.darkModeBlackColor : .white
             self.inputToolbar.contentView.textView.textColor = traitCollection.userInterfaceStyle == .dark ? .white : .black

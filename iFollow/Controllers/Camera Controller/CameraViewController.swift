@@ -341,10 +341,10 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     
     func convertVideoAndSaveTophotoLibrary(videoURL: URL) {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        let myDocumentPath = URL(fileURLWithPath: documentsDirectory).appendingPathComponent("temp.mp4").absoluteString
+        let myDocumentPath = URL(fileURLWithPath: documentsDirectory).appendingPathComponent("temp\(Date().timeIntervalSince1970).mp4").absoluteString
         _ = NSURL(fileURLWithPath: myDocumentPath)
         let documentsDirectory2 = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] as URL
-        let filePath = documentsDirectory2.appendingPathComponent("video.mp4")
+        let filePath = documentsDirectory2.appendingPathComponent("video\(Date().timeIntervalSince1970).mp4")
         deleteFile(filePath: filePath as NSURL)
 
         //Check if the file already exists then remove the previous file
@@ -486,7 +486,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     Utility.showOrHideLoader(shouldShow: false)
                     if saved {
                         let fetchOptions = PHFetchOptions()
-                        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+                        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "modificationDate", ascending: true)]
                         let fetchResult = PHAsset.fetchAssets(with: .video, options: fetchOptions).lastObject
                         PHImageManager().requestAVAsset(forVideo: fetchResult!, options: nil, resultHandler: { (avurlAsset, audioMix, dict) in
                             let newObj = avurlAsset as! AVURLAsset
@@ -525,7 +525,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
     func detectBluetoothAudioConnected(audioSession: AVAudioSession) -> Bool{
         let outputs = audioSession.currentRoute.outputs
         for output in outputs{
-            if output.portType == .bluetoothA2DP || output.portType == .bluetoothHFP || output.portType == .bluetoothLE || output.portType == .headphones || output.portType == .carAudio{
+            if output.portType == .bluetoothA2DP || output.portType == .bluetoothHFP || output.portType == .bluetoothLE || output.portType == .headphones || output.portType == .carAudio || output.portType == .usbAudio{
                 return true
           }
         }
@@ -806,6 +806,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
         let width = player.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.width.rounded()
         let height = player.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.height.rounded()
         if (Int(width!) > Int(height!)){
+            layer.videoGravity = .resizeAspect
+        }
+        else if (Int(width!) == Int(height!)){
             layer.videoGravity = .resizeAspect
         }
         else{

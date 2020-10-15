@@ -85,6 +85,7 @@ enum EndPoint: String {
     case replyComment = "comment_reply"
     case deleteComment = "delete_comment"
     case deleteReply = "delete_comment_reply"
+    case liveStreaming = "live_streaming"
     case logout = "logout"
 }
 

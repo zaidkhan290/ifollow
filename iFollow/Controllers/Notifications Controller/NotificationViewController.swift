@@ -11,6 +11,7 @@ import Loaf
 import RealmSwift
 import EmptyDataSet_Swift
 import PullToRefresh
+import AgoraRtcKit
 
 class NotificationViewController: UIViewController {
 
@@ -21,6 +22,15 @@ class NotificationViewController: UIViewController {
     let refresher = PullToRefresh()
     
     var storyUserArray = [StoryUserModel]()
+    
+    private var agoraKit: AgoraRtcEngineKit! = {
+        let engine = AgoraRtcEngineKit.sharedEngine(withAppId: kAgoraAppID, delegate: nil)
+        engine.setLogFilter(AgoraLogFilter.info.rawValue)
+        engine.setLogFile(FileCenter.logFilePath())
+        return engine
+    }()
+    
+    private var settings = Settings()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +51,13 @@ class NotificationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        if (agoraKit != nil){
+            agoraKit.leaveChannel { (_) in
+                
+            }
+        }
+    
         resetNotificationCount()
         getNotifications(isForRefresh: false)
     }
@@ -181,6 +198,18 @@ class NotificationViewController: UIViewController {
         
     }
     
+    func joinLiveStream(roomID: String){
+        self.settings.roomName = roomID
+        self.settings.role = .audience
+        self.settings.frameRate = .fps30
+        self.settings.dimension = AgoraVideoDimension1280x720
+        let vc = Utility.getLiveRoomController()
+        vc.liveRoomName = "\(roomID)"
+        vc.dataSource = self
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         setupColor()
     }
@@ -232,11 +261,14 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
         
         if (notification.notificationTag == "3" || notification.notificationTag == "14" || notification.notificationTag == "15"){
             let vc = Utility.getPostDetailViewController()
-            vc.postId = notification.notificationRequestId
+            vc.postId = Int(notification.notificationRequestId)!
             self.present(vc, animated: true, completion: nil)
         }
         else if (notification.notificationTag == "7"){
-            self.getSingleStory(storyId: notification.notificationRequestId)
+            self.getSingleStory(storyId: Int(notification.notificationRequestId)!)
+        }
+        else if (notification.notificationTag == "16"){
+            self.joinLiveStream(roomID: notification.notificationRequestId)
         }
         else{
             if notification.notificationFriendId != 0{
@@ -286,5 +318,15 @@ extension NotificationViewController: EmptyDataSetSource, EmptyDataSetDelegate{
     
     func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
         return UIImage(named: "no-notification")
+    }
+}
+
+extension NotificationViewController: LiveVCDataSource {
+    func liveVCNeedSettings() -> Settings {
+        return settings
+    }
+    
+    func liveVCNeedAgoraKit() -> AgoraRtcEngineKit {
+        return agoraKit
     }
 }

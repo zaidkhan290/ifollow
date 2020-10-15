@@ -38,13 +38,20 @@ class SignupDetail2ViewController: UIViewController {
         detailTableView.register(imageCellNib, forCellReuseIdentifier: "EditProfileImageTableViewCell")
         detailTableView.register(txtFieldCellNib, forCellReuseIdentifier: "EditProfileTextFieldsTableViewCell")
         detailTableView.register(doneButtonCellNib, forCellReuseIdentifier: "EditProfileSaveButtonTableViewCell")
+        detailTableView.backgroundColor = .clear
         
         textFieldPlaceholders = ["", "Short Bio", "Hobby", "Country", "Zip Code"]
         textFieldImages = ["", "username-1", "hobby", "country", "zip-code"]
+        setupColors()
         
     }
     
     //MARK:- Actions and Methods
+    
+    func setupColors(){
+        detailView.setColor()
+        detailTableView.reloadData()
+    }
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
         self.goBack()
@@ -103,6 +110,10 @@ class SignupDetail2ViewController: UIViewController {
         
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
+    }
+    
 }
 
 extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegate, EditProfileDelegate{
@@ -140,7 +151,7 @@ extension SignupDetail2ViewController: UITableViewDataSource, UITableViewDelegat
             cell.txtField.autocapitalizationType = .sentences
             cell.txtField.addTarget(self, action: #selector(textFieldTextChanged(_:)), for: .editingChanged)
             cell.txtView.layer.borderWidth = 0.5
-            cell.txtView.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
+            cell.txtView.layer.borderColor = traitCollection.userInterfaceStyle == .dark ? UIColor.white.withAlphaComponent(0.5).cgColor : UIColor.black.withAlphaComponent(0.5).cgColor
             cell.requiredIcon.isHidden = true
             
             if (indexPath.row == 1){

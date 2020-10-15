@@ -19,7 +19,7 @@ class NotificationModel: Object{
     @objc dynamic var notificationFriendName: String = ""
     @objc dynamic var notificationMessage: String = ""
     @objc dynamic var notificationTag: String = ""
-    @objc dynamic var notificationRequestId: Int = 0
+    @objc dynamic var notificationRequestId: String = ""
     @objc dynamic var notificationDate: String = ""
     
     func updateModelWithJSON(json: JSON){
@@ -30,7 +30,7 @@ class NotificationModel: Object{
         notificationFriendName = json["name"].stringValue
         notificationMessage = json["message"].stringValue
         notificationTag = json["tag"].stringValue
-        notificationRequestId = json["request_id"].intValue
+        notificationRequestId = json["request_id"].stringValue
         notificationDate = json["date"].stringValue
     }
     

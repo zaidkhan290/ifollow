@@ -240,6 +240,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "PostCommentViewController") as! PostCommentViewController
     }
     
+    static func getLiveRoomController() -> LiveRoomViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "LiveRoomViewController") as! LiveRoomViewController
+    }
+    
     static func getLoginUserId() -> Int{
         if let user = UserModel.getCurrentUser(){
             return user.userId

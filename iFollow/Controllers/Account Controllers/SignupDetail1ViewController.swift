@@ -42,6 +42,7 @@ class SignupDetail1ViewController: UIViewController {
         detailTableView.register(txtFieldCellNib, forCellReuseIdentifier: "EditProfileTextFieldsTableViewCell")
         detailTableView.register(genderCellNib, forCellReuseIdentifier: "EditProfileGenderTableViewCell")
         detailTableView.register(doneButtonCellNib, forCellReuseIdentifier: "EditProfileSaveButtonTableViewCell")
+        detailTableView.backgroundColor = .clear
         
         textFieldPlaceholders = ["", "First Name", "Last Name", "mm/dd/yy", "Username"]
         textFieldImages = ["", "username-1", "username-1", "calendar", "username-1"]
@@ -52,10 +53,16 @@ class SignupDetail1ViewController: UIViewController {
         
         userImage = UIImage(named: "editProfilePlaceholder")!
         dobDatePicker.datePickerMode = .date
+        setupColors()
         
     }
     
     //MARK:- Actions
+    
+    func setupColors(){
+        detailView.setColor()
+        detailTableView.reloadData()
+    }
     
     @IBAction func btnBackTapped(_ sender: UIButton) {
         self.goBack()
@@ -145,6 +152,10 @@ class SignupDetail1ViewController: UIViewController {
             username = sender.text!
         }
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupColors()
+    }
 }
 
 extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegate, EditProfileDelegate{
@@ -163,6 +174,23 @@ extension SignupDetail1ViewController: UITableViewDataSource, UITableViewDelegat
         }
         else if (indexPath.row == 5){
             let cell = tableView.dequeueReusableCell(withIdentifier: "EditProfileGenderTableViewCell", for: indexPath) as! EditProfileGenderTableViewCell
+            
+            cell.manImage.layer.borderWidth = 2
+            cell.girlImage.layer.borderWidth = 2
+            
+            if (userGender == ""){
+                cell.manImage.layer.borderColor = UIColor.clear.cgColor
+                cell.girlImage.layer.borderColor = UIColor.clear.cgColor
+            }
+            else if (userGender == "male"){
+                cell.manImage.layer.borderColor = traitCollection.userInterfaceStyle == .dark ? UIColor.white.cgColor : UIColor.black.cgColor
+                cell.girlImage.layer.borderColor = UIColor.clear.cgColor
+            }
+            else{
+                cell.girlImage.layer.borderColor = traitCollection.userInterfaceStyle == .dark ? UIColor.white.cgColor : UIColor.black.cgColor
+                cell.manImage.layer.borderColor = UIColor.clear.cgColor
+            }
+            
             return cell
         }
         else if (indexPath.row == 6){

@@ -17,6 +17,7 @@ import AVFoundation
 import RealmSwift
 import Firebase
 import GoogleMobileAds
+import AgoraRtcKit
 
 class HomeViewController: UIViewController {
 
@@ -47,6 +48,15 @@ class HomeViewController: UIViewController {
     var pushTitle = ""
     var pushDesc = ""
     var tagUserIds = [Int]()
+    
+    private lazy var agoraKit: AgoraRtcEngineKit = {
+        let engine = AgoraRtcEngineKit.sharedEngine(withAppId: kAgoraAppID, delegate: nil)
+        engine.setLogFilter(AgoraLogFilter.info.rawValue)
+        engine.setLogFile(FileCenter.logFilePath())
+        return engine
+    }()
+    
+    private var settings = Settings()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -658,6 +668,51 @@ class HomeViewController: UIViewController {
         
     }
     
+    func goLive(){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        var roomID = Utility.getLoginUserId()
+        let timeStamp = Date().timeIntervalSince1970.rounded()
+        roomID = roomID + Int(exactly: timeStamp)!
+        let params = ["room_id": roomID]
+        
+        API.sharedInstance.executeAPI(type: .liveStreaming, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                
+                Utility.showOrHideLoader(shouldShow: false)
+                
+                if (status == .success){
+                    self.settings.roomName = "\(roomID)"
+                    self.settings.role = .broadcaster
+                    self.settings.frameRate = .fps30
+                    self.settings.dimension = AgoraVideoDimension1280x720
+                    let vc = Utility.getLiveRoomController()
+                    vc.liveRoomName = "\(roomID)"
+                    vc.dataSource = self
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true, completion: nil)
+                }
+                else if (status == .failure){
+                    
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                    
+                }
+                else if (status == .authError){
+                    
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                    
+                }
+                
+            }
+            
+        }
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         setHomeScreenColor()
     }
@@ -745,7 +800,24 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
 
 extension HomeViewController: StoryCollectionViewCellDelegate{
     func addStoryButtonTapped() {
-        self.openCamera()
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let liveAction = UIAlertAction(title: "Go Live", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.goLive()
+            }
+        }
+        let storyAction = UIAlertAction(title: "Add Story", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.openCamera()
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(liveAction)
+        alert.addAction(storyAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
+        
     }
 }
 
@@ -1319,5 +1391,15 @@ extension HomeViewController : GADUnifiedNativeAdDelegate {
     
     func nativeAdWillLeaveApplication(_ nativeAd: GADUnifiedNativeAd) {
         print("\(#function) called")
+    }
+}
+
+extension HomeViewController: LiveVCDataSource {
+    func liveVCNeedSettings() -> Settings {
+        return settings
+    }
+    
+    func liveVCNeedAgoraKit() -> AgoraRtcEngineKit {
+        return agoraKit
     }
 }

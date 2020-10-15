@@ -18,18 +18,27 @@ import RealmSwift
 import Braintree
 import AVFoundation
 import ATAppUpdater
+import AgoraRtcKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
-
+    private lazy var agoraKit: AgoraRtcEngineKit = {
+        let engine = AgoraRtcEngineKit.sharedEngine(withAppId: kAgoraAppID, delegate: nil)
+        engine.setLogFilter(AgoraLogFilter.info.rawValue)
+        engine.setLogFile(FileCenter.logFilePath())
+        return engine
+    }()
+    
+    private var settings = Settings()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         let config = Realm.Configuration(
-            schemaVersion: 8,
+            schemaVersion: 9,
             migrationBlock: { migration, oldSchemaVersion in
                 if (oldSchemaVersion < 1){
                     migration.enumerateObjects(ofType: UserModel.className()) { (oldObject, newObject) in
@@ -92,6 +101,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     migration.enumerateObjects(ofType: UserPostsModel.className()) { (oldObject, newObject) in
                         newObject?["isPublicComment"] = 0
                     }
+                }
+                if (oldSchemaVersion < 9){
+                    migration.enumerateObjects(ofType: NotificationModel.className()) { (oldObject, newObject) in
+                        newObject?["notificationRequestId"] = ""
+                    }
+                    
                 }
                 
             }
@@ -279,6 +294,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 vc.pushDesc = json["aps"]["alert"]["body"].stringValue
                 UIWINDOW!.rootViewController = vc
             }
+            else if (json["tag"].intValue == 16){
+                self.joinLiveStream(roomID: "\(json["request_id"].intValue)")
+            }
             else{
                 let vc = Utility.getTabBarViewController()
                 vc.selectedIndex = 3
@@ -288,5 +306,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
     }
     
+    func joinLiveStream(roomID: String){
+        self.settings.roomName = roomID
+        self.settings.role = .audience
+        self.settings.frameRate = .fps30
+        self.settings.dimension = AgoraVideoDimension1280x720
+        let vc = Utility.getLiveRoomController()
+        vc.liveRoomName = "\(roomID)"
+        vc.dataSource = self
+        vc.modalPresentationStyle = .fullScreen
+        UIWINDOW!.rootViewController = vc
+    }
+    
 }
 
+extension AppDelegate: LiveVCDataSource {
+    func liveVCNeedSettings() -> Settings {
+        return settings
+    }
+    
+    func liveVCNeedAgoraKit() -> AgoraRtcEngineKit {
+        return agoraKit
+    }
+}

@@ -21,8 +21,6 @@ class CommentViewController: UIViewController {
     @IBOutlet weak var txtFieldComment: UITextField!
     @IBOutlet weak var btnSend: UIButton!
     
-    var chatRef = rootRef
-    
     var chatId = ""
     var postId = 0
     var postUserId = 0
@@ -88,11 +86,11 @@ class CommentViewController: UIViewController {
                         self.chatId = result["chat_room_id"].stringValue
                         if (self.chatId != ""){
                             
-                            self.chatRef = self.chatRef.child("NormalChats").child(self.chatId)
+                            let chatRef = rootRef.child("NormalChats").child(self.chatId)
                             
                             let timeStamp = ServerValue.timestamp()
                             
-                            self.chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                            chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
                                                                        "senderId": "\(Utility.getLoginUserId())",
                                                                        "message": self.postUserMedia,
                                                                        "type": self.postType == "image" ? 2 : 4,
@@ -100,7 +98,7 @@ class CommentViewController: UIViewController {
                                                                        "postId": self.postId,
                                                                        "timestamp" : timeStamp])
                             
-                            self.chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                            chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
                                                                             "senderId": "\(Utility.getLoginUserId())",
                                                                             "message": "\(Utility.getLoginUserFullName()) left feedback on your post: \(self.txtFieldComment.text!)",
                                                                             "type": 1,

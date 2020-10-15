@@ -264,6 +264,9 @@ class StoriesViewController: UIViewController {
                 if (Int(width!) > Int(height!)){
                     playerLayer.videoGravity = .resizeAspect
                 }
+                else if (Int(width!) == Int(height!)){
+                    playerLayer.videoGravity = .resizeAspect
+                }
                 else{
                     playerLayer.videoGravity = .resizeAspectFill
                 }
@@ -348,6 +351,9 @@ class StoriesViewController: UIViewController {
                     let height = self.videoPlayer.currentItem?.asset.tracks.filter{$0.mediaType == .video}.first?.naturalSize.height.rounded()
                     if (width != nil && height != nil){
                         if (Int(width!) > Int(height!)){
+                            playerLayer.videoGravity = .resizeAspect
+                        }
+                        else if (Int(width!) == Int(height!)){
                             playerLayer.videoGravity = .resizeAspect
                         }
                         else{

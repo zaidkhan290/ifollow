@@ -34,6 +34,19 @@
 		18390897236C70DA009A28E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18390895236C70DA009A28E6 /* LaunchScreen.storyboard */; };
 		183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839089F236C7A99009A28E6 /* MainViewController.swift */; };
 		183A9B7F2371D7AA00ADCD10 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */; };
+		183FB366252C59D9009EB92E /* VideoSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB363252C59D7009EB92E /* VideoSession.swift */; };
+		183FB367252C59D9009EB92E /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB364252C59D8009EB92E /* VideoView.swift */; };
+		183FB368252C59D9009EB92E /* DimensionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB365252C59D9009EB92E /* DimensionCell.swift */; };
+		183FB36E252C5A20009EB92E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB36A252C5A1C009EB92E /* Settings.swift */; };
+		183FB36F252C5A20009EB92E /* AgoraExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB36B252C5A1D009EB92E /* AgoraExtension.swift */; };
+		183FB370252C5A20009EB92E /* FileCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB36C252C5A1E009EB92E /* FileCenter.swift */; };
+		183FB371252C5A20009EB92E /* StatisticsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB36D252C5A20009EB92E /* StatisticsInfo.swift */; };
+		183FB378252C5A59009EB92E /* AGEVideoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB373252C5A59009EB92E /* AGEVideoLayout.swift */; };
+		183FB379252C5A59009EB92E /* AGEVideoConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB374252C5A59009EB92E /* AGEVideoConstraints.swift */; };
+		183FB37A252C5A59009EB92E /* AGEEventsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB375252C5A59009EB92E /* AGEEventsObserver.swift */; };
+		183FB37B252C5A59009EB92E /* AGEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB376252C5A59009EB92E /* AGEView.swift */; };
+		183FB37C252C5A59009EB92E /* AGEVideoContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB377252C5A59009EB92E /* AGEVideoContainer.swift */; };
+		183FB37E252C5B28009EB92E /* LiveRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183FB37D252C5B28009EB92E /* LiveRoomViewController.swift */; };
 		184059DC24C6F5EA00433355 /* LiveVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184059DB24C6F5EA00433355 /* LiveVideoViewController.swift */; };
 		184059DF24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184059DD24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.swift */; };
 		184059E024C6FA2A00433355 /* LiveVideoCommentsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184059DE24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.xib */; };
@@ -119,6 +132,7 @@
 		18A3262F241010D300CF329E /* EmojisCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3262D241010D300CF329E /* EmojisCollectionViewCell.swift */; };
 		18A32630241010D300CF329E /* EmojisCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A3262E241010D300CF329E /* EmojisCollectionViewCell.xib */; };
 		18A4C33D244859AB00893D9D /* GroupChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A4C33C244859AB00893D9D /* GroupChatModel.swift */; };
+		18AB0CF0252F2E15008C5CA9 /* LiveVideoCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB0CEF252F2E15008C5CA9 /* LiveVideoCommentModel.swift */; };
 		18AC07CF24EBEAFE000EA788 /* SingleStoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AC07CE24EBEAFE000EA788 /* SingleStoryViewController.swift */; };
 		18AC39A5237ED0A40044136B /* AddMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AC39A4237ED0A40044136B /* AddMembersViewController.swift */; };
 		18AD1C4B2449F70F006AFF67 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD1C4A2449F70F006AFF67 /* ShareViewController.swift */; };
@@ -215,6 +229,19 @@
 		18390898236C70DA009A28E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1839089F236C7A99009A28E6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		183A9B7E2371D7AA00ADCD10 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		183FB363252C59D7009EB92E /* VideoSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoSession.swift; sourceTree = "<group>"; };
+		183FB364252C59D8009EB92E /* VideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
+		183FB365252C59D9009EB92E /* DimensionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimensionCell.swift; sourceTree = "<group>"; };
+		183FB36A252C5A1C009EB92E /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		183FB36B252C5A1D009EB92E /* AgoraExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgoraExtension.swift; sourceTree = "<group>"; };
+		183FB36C252C5A1E009EB92E /* FileCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCenter.swift; sourceTree = "<group>"; };
+		183FB36D252C5A20009EB92E /* StatisticsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsInfo.swift; sourceTree = "<group>"; };
+		183FB373252C5A59009EB92E /* AGEVideoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGEVideoLayout.swift; sourceTree = "<group>"; };
+		183FB374252C5A59009EB92E /* AGEVideoConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGEVideoConstraints.swift; sourceTree = "<group>"; };
+		183FB375252C5A59009EB92E /* AGEEventsObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGEEventsObserver.swift; sourceTree = "<group>"; };
+		183FB376252C5A59009EB92E /* AGEView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGEView.swift; sourceTree = "<group>"; };
+		183FB377252C5A59009EB92E /* AGEVideoContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGEVideoContainer.swift; sourceTree = "<group>"; };
+		183FB37D252C5B28009EB92E /* LiveRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveRoomViewController.swift; sourceTree = "<group>"; };
 		184059DB24C6F5EA00433355 /* LiveVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVideoViewController.swift; sourceTree = "<group>"; };
 		184059DD24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVideoCommentsTableViewCell.swift; sourceTree = "<group>"; };
 		184059DE24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LiveVideoCommentsTableViewCell.xib; sourceTree = "<group>"; };
@@ -300,6 +327,7 @@
 		18A3262D241010D300CF329E /* EmojisCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojisCollectionViewCell.swift; sourceTree = "<group>"; };
 		18A3262E241010D300CF329E /* EmojisCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojisCollectionViewCell.xib; sourceTree = "<group>"; };
 		18A4C33C244859AB00893D9D /* GroupChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatModel.swift; sourceTree = "<group>"; };
+		18AB0CEF252F2E15008C5CA9 /* LiveVideoCommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVideoCommentModel.swift; sourceTree = "<group>"; };
 		18AC07CE24EBEAFE000EA788 /* SingleStoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStoryViewController.swift; sourceTree = "<group>"; };
 		18AC39A4237ED0A40044136B /* AddMembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMembersViewController.swift; sourceTree = "<group>"; };
 		18AD1C4A2449F70F006AFF67 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -475,6 +503,7 @@
 		1839088B236C70D6009A28E6 /* iFollow */ = {
 			isa = PBXGroup;
 			children = (
+				183FB361252C599A009EB92E /* Agora Helpers */,
 				1887111C24BDA55100FCB30B /* capture_animation.gif */,
 				18DF115B246C2E2600D0F89E /* MobilePlayer */,
 				18D6BBD22437572C004D90EB /* AudioRecorderSingleton */,
@@ -522,9 +551,53 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		183FB361252C599A009EB92E /* Agora Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				183FB372252C5A59009EB92E /* AGEVideoLayout */,
+				183FB369252C5A0B009EB92E /* Models */,
+				183FB362252C59C8009EB92E /* Views */,
+			);
+			path = "Agora Helpers";
+			sourceTree = "<group>";
+		};
+		183FB362252C59C8009EB92E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				183FB365252C59D9009EB92E /* DimensionCell.swift */,
+				183FB363252C59D7009EB92E /* VideoSession.swift */,
+				183FB364252C59D8009EB92E /* VideoView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		183FB369252C5A0B009EB92E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				183FB36B252C5A1D009EB92E /* AgoraExtension.swift */,
+				183FB36C252C5A1E009EB92E /* FileCenter.swift */,
+				183FB36A252C5A1C009EB92E /* Settings.swift */,
+				183FB36D252C5A20009EB92E /* StatisticsInfo.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		183FB372252C5A59009EB92E /* AGEVideoLayout */ = {
+			isa = PBXGroup;
+			children = (
+				183FB373252C5A59009EB92E /* AGEVideoLayout.swift */,
+				183FB374252C5A59009EB92E /* AGEVideoConstraints.swift */,
+				183FB375252C5A59009EB92E /* AGEEventsObserver.swift */,
+				183FB376252C5A59009EB92E /* AGEView.swift */,
+				183FB377252C5A59009EB92E /* AGEVideoContainer.swift */,
+			);
+			path = AGEVideoLayout;
+			sourceTree = "<group>";
+		};
 		184059DA24C6F5CF00433355 /* Live Controller */ = {
 			isa = PBXGroup;
 			children = (
+				183FB37D252C5B28009EB92E /* LiveRoomViewController.swift */,
 				184059DB24C6F5EA00433355 /* LiveVideoViewController.swift */,
 			);
 			path = "Live Controller";
@@ -621,6 +694,7 @@
 				18A4C33C244859AB00893D9D /* GroupChatModel.swift */,
 				188CB373244DA57200B0C2B9 /* MessagesModel.swift */,
 				18BE66022525F2E600A1EF6D /* CommentModel.swift */,
+				18AB0CEF252F2E15008C5CA9 /* LiveVideoCommentModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1085,9 +1159,11 @@
 				18C89E0C243F3F120032A663 /* RecentChatsModel.swift in Sources */,
 				18DF1196246C2E2600D0F89E /* Button.swift in Sources */,
 				18B76C7E2514C43C00B2AA61 /* iBucksTableViewCell.swift in Sources */,
+				18AB0CF0252F2E15008C5CA9 /* LiveVideoCommentModel.swift in Sources */,
 				1870700523732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.swift in Sources */,
 				18BDABBA24322510003B772C /* PrivacyPolicyViewController.swift in Sources */,
 				18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */,
+				183FB367252C59D9009EB92E /* VideoView.swift in Sources */,
 				18DF1198246C2E2600D0F89E /* StateHelper.swift in Sources */,
 				189329BA237014E90067077F /* Utility.swift in Sources */,
 				1842901B24B87791004ABEEB /* InstantPanGestureRecognizer.swift in Sources */,
@@ -1098,8 +1174,11 @@
 				18A1F32A243C9C2A002E542A /* StoryUserModel.swift in Sources */,
 				18B086432371AA71002D773E /* TabBarViewController.swift in Sources */,
 				18307AB5236C97CB00A0A7C6 /* StringExtension.swift in Sources */,
+				183FB378252C5A59009EB92E /* AGEVideoLayout.swift in Sources */,
 				18DF118C246C2E2600D0F89E /* MobilePlayerOverlayViewController.swift in Sources */,
+				183FB379252C5A59009EB92E /* AGEVideoConstraints.swift in Sources */,
 				18B76C822514C90900B2AA61 /* iBuckMainViewController.swift in Sources */,
+				183FB37C252C5A59009EB92E /* AGEVideoContainer.swift in Sources */,
 				188073AD242B47E30005CAE4 /* Reachability.swift in Sources */,
 				18DF1190246C2E2600D0F89E /* VolumeView.swift in Sources */,
 				1825A52C237AEA64002811E7 /* TrendingViewController.swift in Sources */,
@@ -1107,6 +1186,7 @@
 				185640E023741B7800CC2777 /* MenuViewController.swift in Sources */,
 				18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */,
 				18B14CC52375AB8F005E5CE4 /* OptionsViewController.swift in Sources */,
+				183FB37A252C5A59009EB92E /* AGEEventsObserver.swift in Sources */,
 				1834832C24223E5500200F8C /* ExtensionOfRealm.swift in Sources */,
 				1838403B25247DC200364B38 /* PostCommentViewController.swift in Sources */,
 				189329CB237030040067077F /* SetPasswordViewController.swift in Sources */,
@@ -1152,9 +1232,12 @@
 				18307AB2236C86CE00A0A7C6 /* LoginViewController.swift in Sources */,
 				184059DF24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.swift in Sources */,
 				18847A5B237C5A52004D500A /* MediaViewController.swift in Sources */,
+				183FB36F252C5A20009EB92E /* AgoraExtension.swift in Sources */,
 				1855081623797DA8008EAC2E /* SendStoryViewController.swift in Sources */,
 				185640E7237426B600CC2777 /* MenuSeperatorTableViewCell.swift in Sources */,
 				182F625F2372EB4E00A55E52 /* ChatListTableViewCell.swift in Sources */,
+				183FB36E252C5A20009EB92E /* Settings.swift in Sources */,
+				183FB370252C5A20009EB92E /* FileCenter.swift in Sources */,
 				18A32622240FBCD900CF329E /* UIImage+Transform.swift in Sources */,
 				18BDABB82431D8DE003B772C /* ExtensionOfTapGestures.swift in Sources */,
 				18DC8813242127FE00494FAD /* Constant.swift in Sources */,
@@ -1164,6 +1247,7 @@
 				18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */,
 				18A32628240FBCE800CF329E /* DSFilterView.swift in Sources */,
 				18AD1C4B2449F70F006AFF67 /* ShareViewController.swift in Sources */,
+				183FB366252C59D9009EB92E /* VideoSession.swift in Sources */,
 				1825A52F237AFDEF002811E7 /* ChatContainerViewController.swift in Sources */,
 				18B76C8A2514FD2000B2AA61 /* iBuckPaypalViewControllerr.swift in Sources */,
 				18DF117E246C2E2600D0F89E /* MobilePlayerNotification.swift in Sources */,
@@ -1185,7 +1269,9 @@
 				1855081C23799422008EAC2E /* HalfSizePresentation.swift in Sources */,
 				18E198F3243B5BDD00511296 /* PostLikesUserModel.swift in Sources */,
 				18DF1193246C2E2600D0F89E /* PlayerView.swift in Sources */,
+				183FB371252C5A20009EB92E /* StatisticsInfo.swift in Sources */,
 				18706FFD23732835007F8BF2 /* EditProfileTextFieldsTableViewCell.swift in Sources */,
+				183FB37E252C5B28009EB92E /* LiveRoomViewController.swift in Sources */,
 				18DF1194246C2E2600D0F89E /* Slider.swift in Sources */,
 				18B14CC72375ABD6005E5CE4 /* OptionsTableViewCell.swift in Sources */,
 				189E3F8F24408F5800244BCD /* PostDetailViewController.swift in Sources */,
@@ -1202,6 +1288,7 @@
 				18C970F12445B69300C4F7C4 /* GroupChatViewController.swift in Sources */,
 				181709472424D8AB00EE5753 /* StickersModel.swift in Sources */,
 				188073AB242B41EF0005CAE4 /* UserPostsModel.swift in Sources */,
+				183FB368252C59D9009EB92E /* DimensionCell.swift in Sources */,
 				18706FF62373209D007F8BF2 /* EditProfileViewController.swift in Sources */,
 				18D6BBD424375749004D90EB /* AudioRecorderSingleton.swift in Sources */,
 				18706FF9237323DB007F8BF2 /* EditProfileImageTableViewCell.swift in Sources */,
@@ -1213,6 +1300,7 @@
 				18DF1197246C2E2600D0F89E /* MobilePlayerControllable.swift in Sources */,
 				18BE66032525F2E600A1EF6D /* CommentModel.swift in Sources */,
 				1834832A2422313A00200F8C /* API.swift in Sources */,
+				183FB37B252C5A59009EB92E /* AGEView.swift in Sources */,
 				18DF1185246C2E2600D0F89E /* WatermarkConfig.swift in Sources */,
 				18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */,
 				1895C31524358036006F3CE7 /* StoryModel.swift in Sources */,
