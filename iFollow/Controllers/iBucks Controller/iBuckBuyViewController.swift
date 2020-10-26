@@ -151,16 +151,17 @@ class iBuckBuyViewController: UIViewController {
                     
                     if (status == .success){
                         
-                        Loaf("iBucks added in your account", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-
-                        }
-                        
                         let realm = try! Realm()
                         try! realm.safeWrite {
                             if let model = UserModel.getCurrentUser(){
                                 model.userBuck = model.userBuck + result["ibucks"].intValue
                             }
                         }
+                        
+                        Loaf("iBucks added in your account", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                            self.navigationController?.popToRootViewController(animated: true)
+                        }
+                        
                     }
                     else if (status == .failure){
                         Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
@@ -191,8 +192,8 @@ class iBuckBuyViewController: UIViewController {
             }
             return
         }
-       // showPaypalPopup()
-        addiBuckInUserAccount()
+        showPaypalPopup()
+       // addiBuckInUserAccount()
         
     }
     

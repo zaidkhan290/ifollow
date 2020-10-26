@@ -314,6 +314,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let vc = Utility.getLiveRoomController()
         vc.liveRoomName = "\(roomID)"
         vc.dataSource = self
+        vc.isFromPush = true
         vc.modalPresentationStyle = .fullScreen
         UIWINDOW!.rootViewController = vc
     }
