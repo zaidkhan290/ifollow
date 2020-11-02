@@ -14,6 +14,7 @@
 		1825A52A237AEA50002811E7 /* TrendesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825A529237AEA50002811E7 /* TrendesViewController.swift */; };
 		1825A52C237AEA64002811E7 /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825A52B237AEA64002811E7 /* TrendingViewController.swift */; };
 		1825A52F237AFDEF002811E7 /* ChatContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825A52E237AFDEF002811E7 /* ChatContainerViewController.swift */; };
+		182E3EED254FE74F00A0B427 /* StripeCheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182E3EEC254FE74F00A0B427 /* StripeCheckoutViewController.swift */; };
 		182F62582372E94B00A55E52 /* ChatBoxContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F62572372E94B00A55E52 /* ChatBoxContainerViewController.swift */; };
 		182F625A2372E96A00A55E52 /* AllChatsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F62592372E96A00A55E52 /* AllChatsListViewController.swift */; };
 		182F625C2372E97600A55E52 /* AllGroupsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F625B2372E97600A55E52 /* AllGroupsListViewController.swift */; };
@@ -207,6 +208,7 @@
 		1825A529237AEA50002811E7 /* TrendesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendesViewController.swift; sourceTree = "<group>"; };
 		1825A52B237AEA64002811E7 /* TrendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
 		1825A52E237AFDEF002811E7 /* ChatContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContainerViewController.swift; sourceTree = "<group>"; };
+		182E3EEC254FE74F00A0B427 /* StripeCheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeCheckoutViewController.swift; sourceTree = "<group>"; };
 		182F62572372E94B00A55E52 /* ChatBoxContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBoxContainerViewController.swift; sourceTree = "<group>"; };
 		182F62592372E96A00A55E52 /* AllChatsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChatsListViewController.swift; sourceTree = "<group>"; };
 		182F625B2372E97600A55E52 /* AllGroupsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsListViewController.swift; sourceTree = "<group>"; };
@@ -646,6 +648,7 @@
 			isa = PBXGroup;
 			children = (
 				185CC0C42379A096006BDC9D /* NewPostViewController.swift */,
+				182E3EEC254FE74F00A0B427 /* StripeCheckoutViewController.swift */,
 			);
 			path = "New Post Controller";
 			sourceTree = "<group>";
@@ -1233,6 +1236,7 @@
 				184059DF24C6FA2A00433355 /* LiveVideoCommentsTableViewCell.swift in Sources */,
 				18847A5B237C5A52004D500A /* MediaViewController.swift in Sources */,
 				183FB36F252C5A20009EB92E /* AgoraExtension.swift in Sources */,
+				182E3EED254FE74F00A0B427 /* StripeCheckoutViewController.swift in Sources */,
 				1855081623797DA8008EAC2E /* SendStoryViewController.swift in Sources */,
 				185640E7237426B600CC2777 /* MenuSeperatorTableViewCell.swift in Sources */,
 				182F625F2372EB4E00A55E52 /* ChatListTableViewCell.swift in Sources */,
@@ -1463,7 +1467,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.26;
+				MARKETING_VERSION = 1.27;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mou.iFollow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1488,7 +1492,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.26;
+				MARKETING_VERSION = 1.27;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mou.iFollow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

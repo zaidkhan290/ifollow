@@ -34,11 +34,12 @@ class iBuckBuyViewController: UIViewController {
         self.txtFieldNumOfBucks.becomeFirstResponder()
         self.txtFieldNumOfBucks.addTarget(self, action: #selector(txtAmountChanged), for: .editingChanged)
         
-        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { (notification) in
-            if (self.paymentId != ""){
-                self.getPaymentStatus()
-            }
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(addiBuckInUserAccount), name: NSNotification.Name(rawValue: "proceedAfterStripe"), object: nil)
+//        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { (notification) in
+//            if (self.paymentId != ""){
+//                self.getPaymentStatus()
+//            }
+//        }
     }
     
     //MARK:- Methods and Actions
@@ -69,6 +70,15 @@ class iBuckBuyViewController: UIViewController {
         }
         alertVC.addAction(continueAction)
         self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    func payWithStripe(){
+        var iBucks = Float(txtFieldNumOfBucks.text!)!
+        iBucks = iBucks - 0.01
+        let vc = Utility.getStripeCheckoutController()
+        vc.totalAmount = iBucks
+        vc.modalPresentationStyle = .formSheet
+        self.present(vc, animated: true, completion: nil)
     }
 
     func payWithPaypal(){
@@ -136,7 +146,7 @@ class iBuckBuyViewController: UIViewController {
 
     }
     
-    func addiBuckInUserAccount(){
+    @objc func addiBuckInUserAccount(){
         
         if let noOfBucks = Int(txtFieldNumOfBucks.text!){
             
@@ -192,7 +202,8 @@ class iBuckBuyViewController: UIViewController {
             }
             return
         }
-        showPaypalPopup()
+        //showPaypalPopup()
+        payWithStripe()
        // addiBuckInUserAccount()
         
     }

@@ -244,6 +244,10 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "LiveRoomViewController") as! LiveRoomViewController
     }
     
+    static func getStripeCheckoutController() -> StripeCheckoutViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "StripeCheckoutViewController") as! StripeCheckoutViewController
+    }
+    
     static func getLoginUserId() -> Int{
         if let user = UserModel.getCurrentUser(){
             return user.userId

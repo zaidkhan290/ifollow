@@ -125,11 +125,13 @@ class NewPostViewController: UIViewController {
             self.view.layoutSubviews()
         }
         
-        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { (notification) in
-            if (self.paymentId != ""){
-                self.getPaymentStatus()
-            }
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(proceedAfterPayment), name: NSNotification.Name(rawValue: "proceedAfterStripe"), object: nil)
+        
+//        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { (notification) in
+//            if (self.paymentId != ""){
+//                self.getPaymentStatus()
+//            }
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -240,7 +242,8 @@ class NewPostViewController: UIViewController {
     @IBAction func btnBoosPostTapped(_ sender: UIButton) {
         if (linkSwitch.isOn){
             if (isValidURL){
-                showPaypalPopup()
+                //showPaypalPopup()
+                payWithStripe()
             }
             else{
                 Loaf("Please enter the valid URL", state: .info, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
@@ -250,7 +253,8 @@ class NewPostViewController: UIViewController {
         }
         else{
             isValidURL = false
-            showPaypalPopup()
+            //showPaypalPopup()
+            payWithStripe()
         }
         
     }
@@ -264,6 +268,13 @@ class NewPostViewController: UIViewController {
         }
         alertVC.addAction(continueAction)
         self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    func payWithStripe(){
+        let vc = Utility.getStripeCheckoutController()
+        vc.totalAmount = totalBudget
+        vc.modalPresentationStyle = .formSheet
+        self.present(vc, animated: true, completion: nil)
     }
     
     func payWithPaypal(){
@@ -300,33 +311,35 @@ class NewPostViewController: UIViewController {
         
     }
     
-    func getPaymentStatus(){
-         
-        Utility.showOrHideLoader(shouldShow: true)
-        let params = ["payment_id": paymentId]
+    @objc func proceedAfterPayment(){
         
-        API.sharedInstance.executeAPI(type: .getPaymentStatus, method: .get, params: params) { (status, result, message) in
-            
-            DispatchQueue.main.async {
-                Utility.showOrHideLoader(shouldShow: false)
-                
-                if (status == .success){
-                    self.savePostMediaToFirebase(image: self.postSelectedImage)
-                }
-                else if (status == .failure){
-                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-                        
-                    }
-                }
-                else if (status == .authError){
-                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
-                        Utility.logoutUser()
-                    }
-                }
-                
-            }
-            
-        }
+        self.savePostMediaToFirebase(image: self.postSelectedImage)
+         
+//        Utility.showOrHideLoader(shouldShow: true)
+//        let params = ["payment_id": paymentId]
+//
+//        API.sharedInstance.executeAPI(type: .getPaymentStatus, method: .get, params: params) { (status, result, message) in
+//
+//            DispatchQueue.main.async {
+//                Utility.showOrHideLoader(shouldShow: false)
+//
+//                if (status == .success){
+//                    self.savePostMediaToFirebase(image: self.postSelectedImage)
+//                }
+//                else if (status == .failure){
+//                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+//
+//                    }
+//                }
+//                else if (status == .authError){
+//                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+//                        Utility.logoutUser()
+//                    }
+//                }
+//
+//            }
+//
+//        }
         
     }
     

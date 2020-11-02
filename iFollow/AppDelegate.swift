@@ -19,6 +19,7 @@ import Braintree
 import AVFoundation
 import ATAppUpdater
 import AgoraRtcKit
+import Stripe
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -121,6 +122,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         registerForPushNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
+        STPAPIClient.shared().publishableKey = "pk_live_51HhICdKaVNvNNNdfEU9JDliJmNCXk918U5gytm7z8QPIHYwFEP0zTnWsODgijFmrb1namrfkxBbBmTGX7aZgjCUN004dtt45Km"
         
         let notificationOption = launchOptions?[.remoteNotification]
         if notificationOption != nil{

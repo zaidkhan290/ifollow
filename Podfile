@@ -49,5 +49,6 @@ pod 'Hakawai'
 pod 'ATAppUpdater'
 pod 'Cloudinary'
 pod 'AgoraRtcEngine_iOS'
+pod 'Stripe'
 
 end
