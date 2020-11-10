@@ -304,15 +304,20 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVC
                     }
                 }
                 let audioSession = AVAudioSession.sharedInstance();
-                try audioSession.setCategory(.playAndRecord, mode: .default, options: [.mixWithOthers, .allowBluetooth, .allowBluetoothA2DP]);
-                try audioSession.setActive(true);
+//                try audioSession.setCategory(.playAndRecord, mode: .default, options: [.mixWithOthers, .allowBluetooth, .allowBluetoothA2DP]);
+                
                 
                 if (detectBluetoothAudioConnected(audioSession: audioSession)){
+                    
+                    try audioSession.setCategory(.playAndRecord, mode: .default, options: [.mixWithOthers, .allowBluetoothA2DP]);
                     try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.none)
                 }
                 else{
+                    try audioSession.setCategory(.playAndRecord, mode: .default, options: [.mixWithOthers, .allowBluetooth, .allowBluetoothA2DP]);
                     try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
                 }
+                
+                try audioSession.setActive(true);
                 
                 if captureSession.canAddInput(input) && captureSession.canAddOutput(stillImageOutput) {
                     captureSession.addInput(input)
