@@ -12,7 +12,9 @@ import RealmSwift
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var emailView: UIView!
     @IBOutlet weak var txtFieldUsername: UITextField!
+    @IBOutlet weak var passwordView: UIView!
     @IBOutlet weak var txtFieldPassword: UITextField!
     @IBOutlet weak var btnForgotPassword: UIButton!
     @IBOutlet weak var btnSignIn: UIButton!
@@ -21,6 +23,9 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        emailView.layer.cornerRadius = emailView.frame.height / 2
+        passwordView.layer.cornerRadius = passwordView.frame.height / 2
+        
         let signupText = "Don't have an Account? Sign Up"
         let range1 = signupText.range(of: "Don't have an Account?")
         let range2 = signupText.range(of: "Sign Up")
@@ -30,8 +35,8 @@ class LoginViewController: UIViewController {
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: signupText.nsRange(from: range2!))
         btnSignup.setAttributedTitle(attributedString, for: .normal)
         
-        Utility.setTextFieldPlaceholder(textField: txtFieldUsername, placeholder: "Username or Email Address", color: Theme.textFieldColor)
-        Utility.setTextFieldPlaceholder(textField: txtFieldPassword, placeholder: "Password", color: Theme.textFieldColor)
+        Utility.setTextFieldPlaceholder(textField: txtFieldUsername, placeholder: "Username or Email Address", color: .white)
+        Utility.setTextFieldPlaceholder(textField: txtFieldPassword, placeholder: "Password", color: .white)
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
 
     }
