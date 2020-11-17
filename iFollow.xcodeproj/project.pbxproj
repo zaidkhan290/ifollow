@@ -199,6 +199,8 @@
 		18DF1198246C2E2600D0F89E /* StateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF117D246C2E2600D0F89E /* StateHelper.swift */; };
 		18E198F1243B140900511296 /* HomePostsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E198F0243B140900511296 /* HomePostsModel.swift */; };
 		18E198F3243B5BDD00511296 /* PostLikesUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E198F2243B5BDD00511296 /* PostLikesUserModel.swift */; };
+		841786AC2562977E0075D082 /* CreatePost1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841786AB2562977E0075D082 /* CreatePost1ViewController.swift */; };
+		841786AF256297AA0075D082 /* CreatePost2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841786AE256297AA0075D082 /* CreatePost2ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -400,6 +402,8 @@
 		262DC613D8406DA651E72383 /* Pods-iFollow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.release.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.release.xcconfig"; sourceTree = "<group>"; };
 		2F7183439A39CBABAFAC7392 /* Pods-iFollow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iFollow.debug.xcconfig"; path = "Target Support Files/Pods-iFollow/Pods-iFollow.debug.xcconfig"; sourceTree = "<group>"; };
 		5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iFollow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		841786AB2562977E0075D082 /* CreatePost1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePost1ViewController.swift; sourceTree = "<group>"; };
+		841786AE256297AA0075D082 /* CreatePost2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePost2ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -649,6 +653,8 @@
 			children = (
 				185CC0C42379A096006BDC9D /* NewPostViewController.swift */,
 				182E3EEC254FE74F00A0B427 /* StripeCheckoutViewController.swift */,
+				841786AB2562977E0075D082 /* CreatePost1ViewController.swift */,
+				841786AE256297AA0075D082 /* CreatePost2ViewController.swift */,
 			);
 			path = "New Post Controller";
 			sourceTree = "<group>";
@@ -1163,6 +1169,7 @@
 				18DF1196246C2E2600D0F89E /* Button.swift in Sources */,
 				18B76C7E2514C43C00B2AA61 /* iBucksTableViewCell.swift in Sources */,
 				18AB0CF0252F2E15008C5CA9 /* LiveVideoCommentModel.swift in Sources */,
+				841786AC2562977E0075D082 /* CreatePost1ViewController.swift in Sources */,
 				1870700523732F5F007F8BF2 /* EditProfileSaveButtonTableViewCell.swift in Sources */,
 				18BDABBA24322510003B772C /* PrivacyPolicyViewController.swift in Sources */,
 				18781C24237087D3001BAF95 /* UIViewExtension.swift in Sources */,
@@ -1250,6 +1257,7 @@
 				183908A0236C7A99009A28E6 /* MainViewController.swift in Sources */,
 				18B82A342371D05A00693F7F /* NotificationTableViewCell.swift in Sources */,
 				18A32628240FBCE800CF329E /* DSFilterView.swift in Sources */,
+				841786AF256297AA0075D082 /* CreatePost2ViewController.swift in Sources */,
 				18AD1C4B2449F70F006AFF67 /* ShareViewController.swift in Sources */,
 				183FB366252C59D9009EB92E /* VideoSession.swift in Sources */,
 				1825A52F237AFDEF002811E7 /* ChatContainerViewController.swift in Sources */,

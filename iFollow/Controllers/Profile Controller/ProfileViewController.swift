@@ -77,6 +77,7 @@ class ProfileViewController: UIViewController {
         imagePicker.videoQuality = .type640x480
         imagePicker.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(refreshUserPost), name: NSNotification.Name(rawValue: "refreshUserPosts"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshPostAfterNewPost), name: NSNotification.Name(rawValue: "UserPostPostedSuccessfully"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,6 +112,10 @@ class ProfileViewController: UIViewController {
     
     @objc func refreshUserPost(){
         self.getUserPosts(isAfterNewPost: false)
+    }
+    
+    @objc func refreshPostAfterNewPost(){
+        self.getUserPosts(isAfterNewPost: true)
     }
     
     func setUserPosts(isAfterNewPost: Bool){
@@ -219,28 +224,39 @@ class ProfileViewController: UIViewController {
     
     @objc func searchViewTapped(){
         
-//        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-//        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
-//            self.imagePicker.sourceType = .camera
-//            self.present(self.imagePicker, animated: true, completion: nil)
-//        }
-//        let galleryAction = UIAlertAction(title: "Photo Library", style: .default) { (action) in
-//            self.imagePicker.sourceType = .photoLibrary
-//            self.present(self.imagePicker, animated: true, completion: nil)
-//        }
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//        alertVC.addAction(cameraAction)
-//        alertVC.addAction(galleryAction)
-//        alertVC.addAction(cancelAction)
-//        self.present(alertVC, animated: true, completion: nil)
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let vc = Utility.getCameraViewController()
-        vc.isForPost = true
-        vc.delegate = self
-        let navigationVC = UINavigationController(rootViewController: vc)
-        navigationVC.isNavigationBarHidden = true
-        navigationVC.modalPresentationStyle = .fullScreen
-        self.present(navigationVC, animated: true, completion: nil)
+        let statusPostAction = UIAlertAction(title: "Status Post", style: .default) { (action) in
+            
+            DispatchQueue.main.async {
+                let vc = Utility.getCreatePost1Controller()
+                vc.budget = self.boostPostAmount
+                vc.totalBudget = self.boostPostAmount
+                let navigationVC = UINavigationController(rootViewController: vc)
+                navigationVC.isNavigationBarHidden = true
+                navigationVC.modalPresentationStyle = .fullScreen
+                self.present(navigationVC, animated: true, completion: nil)
+            }
+            
+        }
+        let mediaPostAction = UIAlertAction(title: "Media Post", style: .default) { (action) in
+            DispatchQueue.main.async {
+                let vc = Utility.getCameraViewController()
+                vc.isForPost = true
+                vc.delegate = self
+                let navigationVC = UINavigationController(rootViewController: vc)
+                navigationVC.isNavigationBarHidden = true
+                navigationVC.modalPresentationStyle = .fullScreen
+                self.present(navigationVC, animated: true, completion: nil)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(statusPostAction)
+        alertVC.addAction(mediaPostAction)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
+        
+        
         
     }
     
@@ -380,6 +396,7 @@ extension ProfileViewController: OptionsViewControllerDelegate{
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             self.present(vc, animated: false, completion: nil)
+            
 
         }
     }
@@ -539,9 +556,27 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
     
     @objc func editViewTapped(_ sender: UITapGestureRecognizer){
         optionsPopupIndex = sender.view!.tag
+//        let post = self.userPosts[optionsPopupIndex]
+//        let vc = Utility.getNewPostViewController()
+//        isFullScreen = true
+//        vc.isForEdit = true
+//        vc.editablePostId = post.postId
+//        vc.editablePostText = post.postDescription
+//        vc.editablePostImage = post.postMedia
+//        vc.editablePostMediaType = post.postMediaType
+//        vc.editablePostUserLocation = post.postLocation
+//        vc.isForBoostEdit = post.postStatus == "boost"
+//        vc.editablePostStatus = post.postStatus
+//        vc.editablePostLink = post.postBoostLink
+//        vc.budget = boostPostAmount
+//        vc.totalBudget = boostPostAmount
+//        vc.delegate = self
+//        vc.modalPresentationStyle = .custom
+//        vc.transitioningDelegate = self
+//        self.present(vc, animated: false, completion: nil)
+        
         let post = self.userPosts[optionsPopupIndex]
-        let vc = Utility.getNewPostViewController()
-        isFullScreen = true
+        let vc = Utility.getCreatePost1Controller()
         vc.isForEdit = true
         vc.editablePostId = post.postId
         vc.editablePostText = post.postDescription
@@ -553,10 +588,10 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
         vc.editablePostLink = post.postBoostLink
         vc.budget = boostPostAmount
         vc.totalBudget = boostPostAmount
-        vc.delegate = self
-        vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = self
-        self.present(vc, animated: false, completion: nil)
+        let navVC = UINavigationController(rootViewController: vc)
+        navVC.navigationBar.isHidden = true
+        navVC.modalPresentationStyle = .fullScreen
+        self.present(navVC, animated: false, completion: nil)
 
     }
     
@@ -593,6 +628,8 @@ extension ProfileViewController: PostViewControllerDelegate{
         searchViewTapped()
     }
 }
+
+
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
@@ -662,35 +699,58 @@ extension ProfileViewController: LightboxControllerPageDelegate, LightboxControl
 extension ProfileViewController: CameraViewControllerDelegate{
     func getStoryImage(image: UIImage, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel]) {
         
-        let vc = Utility.getNewPostViewController()
+//        let vc = Utility.getNewPostViewController()
+//        vc.postSelectedImage = image
+//        vc.isVideo = false
+//        isFullScreen = true
+//        vc.budget = boostPostAmount
+//        vc.tagUserIds = selectedTagUsersArray.map{$0.userId}
+//        vc.totalBudget = boostPostAmount
+//        vc.delegate = self
+//        vc.modalPresentationStyle = .custom
+//        vc.transitioningDelegate = self
+//        self.present(vc, animated: false, completion: nil)
+        
+        let vc = Utility.getCreatePost1Controller()
         vc.postSelectedImage = image
         vc.isVideo = false
-        isFullScreen = true
         vc.budget = boostPostAmount
         vc.tagUserIds = selectedTagUsersArray.map{$0.userId}
         vc.totalBudget = boostPostAmount
-        vc.delegate = self
-        vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = self
-        self.present(vc, animated: false, completion: nil)
+        let navVc = UINavigationController(rootViewController: vc)
+        navVc.navigationBar.isHidden = true
+        navVc.modalPresentationStyle = .fullScreen
+        self.present(navVc, animated: false, completion: nil)
         
     }
     
     func getStoryVideo(videoURL: URL, caption: String, isToSendMyStory: Bool, friendsArray: [RecentChatsModel], selectedTagsUserString: String, selectedTagUsersArray: [PostLikesUserModel]) {
         DispatchQueue.main.async {
             if let videoScreenShot = Utility.imageFromVideo(url: videoURL, at: 0, totalTime: 60){
-                let vc = Utility.getNewPostViewController()
+//                let vc = Utility.getNewPostViewController()
+//                vc.postSelectedImage = videoScreenShot
+//                vc.videoURL = videoURL
+//                vc.budget = self.boostPostAmount
+//                vc.totalBudget = self.boostPostAmount
+//                vc.isVideo = true
+//                vc.tagUserIds = selectedTagUsersArray.map{$0.userId}
+//                self.isFullScreen = true
+//                vc.delegate = self
+//                vc.modalPresentationStyle = .custom
+//                vc.transitioningDelegate = self
+//                self.present(vc, animated: true, completion: nil)
+                
+                let vc = Utility.getCreatePost1Controller()
                 vc.postSelectedImage = videoScreenShot
                 vc.videoURL = videoURL
                 vc.budget = self.boostPostAmount
                 vc.totalBudget = self.boostPostAmount
                 vc.isVideo = true
                 vc.tagUserIds = selectedTagUsersArray.map{$0.userId}
-                self.isFullScreen = true
-                vc.delegate = self
-                vc.modalPresentationStyle = .custom
-                vc.transitioningDelegate = self
-                self.present(vc, animated: true, completion: nil)
+                let navVc = UINavigationController(rootViewController: vc)
+                navVc.navigationBar.isHidden = true
+                navVc.modalPresentationStyle = .fullScreen
+                self.present(navVc, animated: false, completion: nil)
             }
         }
     }

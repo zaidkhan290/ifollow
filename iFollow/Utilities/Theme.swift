@@ -31,6 +31,7 @@ struct Theme {
     static let lightModeiBuckButtonTextColor = UIColor.init(red: 221.0/255.0, green: 103.0/255.0, blue: 53.0/255.0, alpha: 1.0)
     static let darkModeiBuckButtonTextColor = UIColor.init(red: 238.0/255.0, green: 94.0/255.0, blue: 31.0/255.0, alpha: 1.0)
     static let termsConditionOrangeColor = UIColor.init(red: 239.0/255.0, green: 116.0/255.0, blue: 30.0/255.0, alpha: 1.0)
+    static let captionTextViewPlaceholderColor = UIColor.init(red: 78.0/255.0, green: 88.0/255.0, blue: 110.0/255.0, alpha: 1.0)
     
     
     static func getLatoRegularFontOfSize(size: CGFloat) -> UIFont{

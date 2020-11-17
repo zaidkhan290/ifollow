@@ -248,6 +248,14 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "StripeCheckoutViewController") as! StripeCheckoutViewController
     }
     
+    static func getCreatePost1Controller() -> CreatePost1ViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "CreatePost1ViewController") as! CreatePost1ViewController
+    }
+    
+    static func getCreatePost2Controller() -> CreatePost2ViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "CreatePost2ViewController") as! CreatePost2ViewController
+    }
+    
     static func getLoginUserId() -> Int{
         if let user = UserModel.getCurrentUser(){
             return user.userId
