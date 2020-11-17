@@ -233,10 +233,10 @@ class ProfileViewController: UIViewController {
                 vc.budget = self.boostPostAmount
                 vc.totalBudget = self.boostPostAmount
                 vc.isStatusPost = true
-                let navigationVC = UINavigationController(rootViewController: vc)
-                navigationVC.isNavigationBarHidden = true
-                navigationVC.modalPresentationStyle = .fullScreen
-                self.present(navigationVC, animated: true, completion: nil)
+                let navVc = UINavigationController(rootViewController: vc)
+                navVc.navigationBar.isHidden = true
+                navVc.modalPresentationStyle = .fullScreen
+                self.present(navVc, animated: true, completion: nil)
             }
             
         }

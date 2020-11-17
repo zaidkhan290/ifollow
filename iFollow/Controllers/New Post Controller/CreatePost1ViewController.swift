@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Loaf
 
 class CreatePost1ViewController: UIViewController {
 
@@ -76,6 +77,13 @@ class CreatePost1ViewController: UIViewController {
                 videoURL = URL(string: editablePostImage)
                 postImage.image = UIImage(named: "photo_placeholder")
             }
+            else{
+                postImage.isHidden = true
+                btnPlay.isHidden = true
+                lblTextCount.isHidden = true
+                isStatusPost = true
+                isVideo = false
+            }
         }
         else{
             lblTopTitle.text = "Create Post"
@@ -117,6 +125,14 @@ class CreatePost1ViewController: UIViewController {
             self.pushToVC(vc: vc)
         }
         else{
+            
+            if (isStatusPost && txtViewCaption.text == "Write a caption"){
+                Loaf("Please enter caption", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short) { (handler) in
+                    
+                }
+                return
+            }
+            
             let vc = Utility.getCreatePost2Controller()
             vc.isStatusPost = isStatusPost
             vc.postCaption = txtViewCaption.text == "Write a caption" ? "" : txtViewCaption.text!
