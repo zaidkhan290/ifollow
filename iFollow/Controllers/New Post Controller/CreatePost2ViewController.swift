@@ -157,11 +157,44 @@ class CreatePost2ViewController: UIViewController {
     
     @objc func proceedAfterPayment(){
         if (isStatusPost){
-            
+            self.addStatusPost()
         }
         else{
             self.savePostMediaToFirebase(image: self.postSelectedImage)
         }
+    }
+    
+    func addStatusPost(){
+        var params = [String: Any]()
+        if (self.boostSwitch.isOn){
+            params = ["media": "",
+                      "description": self.postCaption,
+                      "location": self.userAddress,
+                      "expire_hours": Utility.getLoginUserPostExpireHours(),
+                      "duration": self.days,
+                      "public_comments": self.feedbackSwitch.isOn ? 1 : 0,
+                      "media_type": "text",
+                      "budget": self.budget,
+                      "tags": self.tagUserIds,
+                      "original_id": Utility.getLoginUserId(),
+                      "original_name": Utility.getLoginUserFullName(),
+                      "link": self.isValidURL ? self.txtfieldLink.text! : ""] as [String: Any]
+        }
+        else{
+            params = ["media": "",
+                      "description": self.postCaption,
+                      "location": self.userAddress,
+                      "expire_hours": Utility.getLoginUserPostExpireHours(),
+                      "duration": 0,
+                      "public_comments": self.feedbackSwitch.isOn ? 1 : 0,
+                      "media_type": "video",
+                      "tags": self.tagUserIds,
+                      "original_id": Utility.getLoginUserId(),
+                      "original_name": Utility.getLoginUserFullName(),
+                      "budget": 0] as [String: Any]
+        }
+        Utility.showOrHideLoader(shouldShow: true)
+        self.addPostWithRequest(params: params)
     }
     
     func savePostMediaToFirebase(image: UIImage){
@@ -458,7 +491,7 @@ class CreatePost2ViewController: UIViewController {
             }
             else{
                 if (isStatusPost){
-                    
+                    self.addStatusPost()
                 }
                 else{
                     self.savePostMediaToFirebase(image: self.postSelectedImage)

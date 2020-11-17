@@ -232,6 +232,7 @@ class ProfileViewController: UIViewController {
                 let vc = Utility.getCreatePost1Controller()
                 vc.budget = self.boostPostAmount
                 vc.totalBudget = self.boostPostAmount
+                vc.isStatusPost = true
                 let navigationVC = UINavigationController(rootViewController: vc)
                 navigationVC.isNavigationBarHidden = true
                 navigationVC.modalPresentationStyle = .fullScreen
