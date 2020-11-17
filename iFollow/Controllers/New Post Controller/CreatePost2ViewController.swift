@@ -16,6 +16,7 @@ import PassKit
 import IQKeyboardManagerSwift
 import Braintree
 import Hakawai
+import RealmSwift
 
 class CreatePost2ViewController: UIViewController {
 
@@ -28,6 +29,10 @@ class CreatePost2ViewController: UIViewController {
     @IBOutlet weak var tagView: UIView!
     @IBOutlet weak var lblTag: UILabel!
     @IBOutlet weak var btnTag: UIButton!
+    @IBOutlet weak var postExpireDurationView: UIView!
+    @IBOutlet weak var lblPostExpireDuration: UILabel!
+    @IBOutlet weak var btnMinusDuration: UIButton!
+    @IBOutlet weak var btnAddDuration: UIButton!
     @IBOutlet weak var feedBackView: UIView!
     @IBOutlet weak var feedbackSwitch: UISwitch!
     @IBOutlet weak var boostView: UIView!
@@ -67,6 +72,8 @@ class CreatePost2ViewController: UIViewController {
     var editablePostStatus = ""
     var editablePostLink = ""
     
+    var userPostExpireHours = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setColors()
@@ -76,6 +83,12 @@ class CreatePost2ViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         IQKeyboardManager.shared.enableAutoToolbar = true
+        let realm = try! Realm()
+        try! realm.safeWrite {
+            if let user = UserModel.getCurrentUser(){
+                user.userPostExpireHours = userPostExpireHours
+            }
+        }
     }
     
     //MARK:- Methods and Actions
@@ -88,6 +101,7 @@ class CreatePost2ViewController: UIViewController {
     
     func setData(){
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        userPostExpireHours = Utility.getLoginUserPostExpireHours()
         storageRef = Storage.storage().reference(forURL: FireBaseStorageURL)
         self.locationView.isUserInteractionEnabled = true
         self.locationView.addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(locationViewTapped)))
@@ -95,13 +109,14 @@ class CreatePost2ViewController: UIViewController {
         txtfieldLink.delegate = self
         lblTag.text = tagUserIds.count == 0 ? "0 Person" : "\(tagUserIds.count) Persons"
         setTotalBudget()
-        
+        setPostExpireHours()
         if (isForEdit){
             lblTopTitle.text = "Edit Post"
             lblLocation.text = editablePostUserLocation
-            btnViewTopConstraint.constant = -198
+            btnViewTopConstraint.constant = -264
             mainViewHeightConstraint.constant = 210
             tagView.isHidden = true
+            postExpireDurationView.isHidden = true
             feedBackView.isHidden = true
             boostView.isHidden = true
             self.view.updateConstraintsIfNeeded()
@@ -111,8 +126,19 @@ class CreatePost2ViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(proceedAfterPayment), name: NSNotification.Name(rawValue: "proceedAfterStripe"), object: nil)
     }
     
+    func setPostExpireHours(){
+        lblPostExpireDuration.text = Utility.getLoginUserPostExpireHours() == 99999 ? "Forever" : "\(Utility.getLoginUserPostExpireHours()) Hours"
+        if (kIsUserVerified){
+            btnAddDuration.isEnabled = Utility.getLoginUserPostExpireHours() < 99999
+        }
+        else{
+            btnAddDuration.isEnabled = Utility.getLoginUserPostExpireHours() < 72
+        }
+        btnMinusDuration.isEnabled = Utility.getLoginUserPostExpireHours() > 24
+    }
+    
     func changeViewSize(){
-        mainViewHeightConstraint.constant = boostSwitch.isOn ? 540 : 350
+        mainViewHeightConstraint.constant = boostSwitch.isOn ? 606 : 416
         durationView.isHidden = !boostSwitch.isOn
         totalBudgetView.isHidden = !boostSwitch.isOn
         linkView.isHidden = !boostSwitch.isOn
@@ -432,6 +458,43 @@ class CreatePost2ViewController: UIViewController {
         vc.isForTagging = true
         vc.selectedUsersIds = self.tagUserIds
         self.pushToVC(vc: vc)
+    }
+    
+    @IBAction func btnMinusDurationTapped(_ sender: UIButton){
+        let realm = try! Realm()
+        try! realm.safeWrite {
+            if let user = UserModel.getCurrentUser(){
+                if (user.userPostExpireHours == 99999){
+                    user.userPostExpireHours = 72
+                }
+                else if (user.userPostExpireHours == 72){
+                    user.userPostExpireHours = 48
+                }
+                else if (user.userPostExpireHours == 48){
+                    user.userPostExpireHours = 24
+                }
+            }
+        }
+        setPostExpireHours()
+    }
+    
+    @IBAction func btnAddDurationTapped(_ sender: UIButton){
+        
+        let realm = try! Realm()
+        try! realm.safeWrite {
+            if let user = UserModel.getCurrentUser(){
+                if (user.userPostExpireHours == 24){
+                    user.userPostExpireHours = 48
+                }
+                else if (user.userPostExpireHours == 48){
+                    user.userPostExpireHours = 72
+                }
+                else if (user.userPostExpireHours == 72 && kIsUserVerified){
+                    user.userPostExpireHours = 99999
+                }
+            }
+        }
+        setPostExpireHours()
     }
     
     @IBAction func boostSwitchedChanged(_ sender: UISwitch) {

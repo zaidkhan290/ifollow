@@ -7728,7 +7728,7 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                                 <rect key="frame" x="0.0" y="147" width="414" height="589"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TDd-9G-ft0">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="416"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="77Z-iw-xC3">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
@@ -7814,8 +7814,66 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                                                     <constraint firstItem="dFp-RO-jvi" firstAttribute="leading" secondItem="cEU-2i-ywe" secondAttribute="leading" constant="20" id="sAN-Hk-fjG"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8xN-Ef-Tz8">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FJd-QX-1NX">
                                                 <rect key="frame" x="0.0" y="132" width="414" height="66"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v1f-Ju-axW">
+                                                        <rect key="frame" x="20" y="0.0" width="374" height="1"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="1" id="c6A-P7-KOW"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dig-p5-uqE">
+                                                        <rect key="frame" x="20" y="24" width="60" height="18"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="60" id="ESQ-5k-f8B"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ymP-RR-gdU">
+                                                        <rect key="frame" x="118" y="18" width="30" height="30"/>
+                                                        <state key="normal" image="minusButton"/>
+                                                        <connections>
+                                                            <action selector="btnMinusDurationTapped:" destination="hZ4-hJ-gAK" eventType="touchUpInside" id="LVQ-Or-PCc"/>
+                                                        </connections>
+                                                    </button>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24 Hours" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dvE-Cr-4m0">
+                                                        <rect key="frame" x="163" y="24" width="100" height="18"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="100" id="Sv5-iG-sIf"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                                                        <color key="textColor" red="0.30588235289999999" green="0.34509803919999998" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1dq-Qg-jlm">
+                                                        <rect key="frame" x="283" y="18" width="30" height="30"/>
+                                                        <state key="normal" image="plusButton"/>
+                                                        <connections>
+                                                            <action selector="btnAddDurationTapped:" destination="hZ4-hJ-gAK" eventType="touchUpInside" id="rNP-1a-D33"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="Dig-p5-uqE" firstAttribute="centerY" secondItem="FJd-QX-1NX" secondAttribute="centerY" id="47c-kg-JWa"/>
+                                                    <constraint firstAttribute="height" constant="66" id="HQ8-8i-ukB"/>
+                                                    <constraint firstItem="1dq-Qg-jlm" firstAttribute="centerY" secondItem="FJd-QX-1NX" secondAttribute="centerY" id="Plw-4b-7VO"/>
+                                                    <constraint firstItem="Dig-p5-uqE" firstAttribute="leading" secondItem="FJd-QX-1NX" secondAttribute="leading" constant="20" id="Wu0-W7-tLm"/>
+                                                    <constraint firstItem="ymP-RR-gdU" firstAttribute="leading" secondItem="Dig-p5-uqE" secondAttribute="trailing" constant="38" id="XFC-02-yuR"/>
+                                                    <constraint firstAttribute="trailing" secondItem="v1f-Ju-axW" secondAttribute="trailing" constant="20" id="ddx-RW-mdz"/>
+                                                    <constraint firstItem="dvE-Cr-4m0" firstAttribute="centerY" secondItem="FJd-QX-1NX" secondAttribute="centerY" id="hc2-ht-rAd"/>
+                                                    <constraint firstItem="ymP-RR-gdU" firstAttribute="centerY" secondItem="FJd-QX-1NX" secondAttribute="centerY" id="i3a-Ur-rfl"/>
+                                                    <constraint firstItem="dvE-Cr-4m0" firstAttribute="leading" secondItem="ymP-RR-gdU" secondAttribute="trailing" constant="15" id="iw5-c8-aos"/>
+                                                    <constraint firstItem="v1f-Ju-axW" firstAttribute="top" secondItem="FJd-QX-1NX" secondAttribute="top" id="l3j-6Z-kwD"/>
+                                                    <constraint firstItem="1dq-Qg-jlm" firstAttribute="leading" secondItem="dvE-Cr-4m0" secondAttribute="trailing" constant="20" id="sZS-PP-G9Q"/>
+                                                    <constraint firstItem="v1f-Ju-axW" firstAttribute="leading" secondItem="FJd-QX-1NX" secondAttribute="leading" constant="20" id="tPc-Su-mec"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8xN-Ef-Tz8">
+                                                <rect key="frame" x="0.0" y="198" width="414" height="66"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ICY-b2-rRI">
                                                         <rect key="frame" x="20" y="0.0" width="374" height="1"/>
@@ -7846,7 +7904,7 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Umc-Ef-JXp">
-                                                <rect key="frame" x="0.0" y="198" width="414" height="66"/>
+                                                <rect key="frame" x="0.0" y="264" width="414" height="66"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ko6-7G-X1k">
                                                         <rect key="frame" x="20" y="0.0" width="374" height="1"/>
@@ -7880,7 +7938,7 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IXr-g0-u4y">
-                                                <rect key="frame" x="0.0" y="264" width="414" height="66"/>
+                                                <rect key="frame" x="0.0" y="330" width="414" height="66"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sEF-iY-w1j">
                                                         <rect key="frame" x="20" y="0.0" width="374" height="1"/>
@@ -7938,7 +7996,7 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhr-Wm-t12">
-                                                <rect key="frame" x="0.0" y="330" width="414" height="66"/>
+                                                <rect key="frame" x="0.0" y="396" width="414" height="66"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HPx-DW-k5t">
                                                         <rect key="frame" x="20" y="0.0" width="374" height="1"/>
@@ -7976,7 +8034,7 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cmM-4K-HSi">
-                                                <rect key="frame" x="0.0" y="396" width="414" height="66"/>
+                                                <rect key="frame" x="0.0" y="462" width="414" height="66"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BzO-io-ghY">
                                                         <rect key="frame" x="20" y="0.0" width="374" height="1"/>
@@ -8017,7 +8075,7 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jbN-Jy-rxl">
-                                                <rect key="frame" x="0.0" y="264" width="414" height="66"/>
+                                                <rect key="frame" x="0.0" y="330" width="414" height="66"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gR-do-ysa">
                                                         <rect key="frame" x="20" y="0.0" width="374" height="1"/>
@@ -8048,22 +8106,25 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="cmM-4K-HSi" firstAttribute="top" secondItem="dhr-Wm-t12" secondAttribute="bottom" id="3Cu-53-b7m"/>
+                                            <constraint firstAttribute="trailing" secondItem="FJd-QX-1NX" secondAttribute="trailing" id="3cz-lc-qU0"/>
                                             <constraint firstAttribute="trailing" secondItem="jbN-Jy-rxl" secondAttribute="trailing" id="3f9-Tx-Asl"/>
-                                            <constraint firstAttribute="height" constant="350" id="3oY-JV-6DB"/>
+                                            <constraint firstAttribute="height" constant="416" id="3oY-JV-6DB"/>
                                             <constraint firstItem="jbN-Jy-rxl" firstAttribute="top" secondItem="Umc-Ef-JXp" secondAttribute="bottom" id="5JB-Yn-5cJ"/>
                                             <constraint firstItem="77Z-iw-xC3" firstAttribute="top" secondItem="TDd-9G-ft0" secondAttribute="top" id="7d5-TG-yib"/>
+                                            <constraint firstAttribute="trailing" secondItem="8xN-Ef-Tz8" secondAttribute="trailing" id="D3K-ac-Sid"/>
                                             <constraint firstItem="cEU-2i-ywe" firstAttribute="top" secondItem="77Z-iw-xC3" secondAttribute="bottom" id="GmZ-ZP-MIt"/>
                                             <constraint firstItem="jbN-Jy-rxl" firstAttribute="leading" secondItem="TDd-9G-ft0" secondAttribute="leading" id="Qr1-zP-05r"/>
                                             <constraint firstItem="dhr-Wm-t12" firstAttribute="leading" secondItem="TDd-9G-ft0" secondAttribute="leading" id="VD9-ls-f8Z"/>
                                             <constraint firstAttribute="trailing" secondItem="dhr-Wm-t12" secondAttribute="trailing" id="Vbt-hM-CES"/>
                                             <constraint firstAttribute="trailing" secondItem="8xN-Ef-Tz8" secondAttribute="trailing" id="W5Z-gc-AHs"/>
                                             <constraint firstItem="IXr-g0-u4y" firstAttribute="top" secondItem="Umc-Ef-JXp" secondAttribute="bottom" id="WAp-zw-Qzw"/>
-                                            <constraint firstItem="8xN-Ef-Tz8" firstAttribute="top" secondItem="cEU-2i-ywe" secondAttribute="bottom" id="a8I-iT-ios"/>
                                             <constraint firstAttribute="trailing" secondItem="cmM-4K-HSi" secondAttribute="trailing" id="aOh-8s-zgd"/>
+                                            <constraint firstItem="8xN-Ef-Tz8" firstAttribute="leading" secondItem="TDd-9G-ft0" secondAttribute="leading" id="b87-Mu-1I1"/>
                                             <constraint firstAttribute="trailing" secondItem="Umc-Ef-JXp" secondAttribute="trailing" id="bfq-0M-i8a"/>
                                             <constraint firstItem="IXr-g0-u4y" firstAttribute="leading" secondItem="TDd-9G-ft0" secondAttribute="leading" id="cJ7-1T-DBG"/>
                                             <constraint firstItem="Umc-Ef-JXp" firstAttribute="leading" secondItem="TDd-9G-ft0" secondAttribute="leading" id="cNz-IS-Jng"/>
                                             <constraint firstItem="cmM-4K-HSi" firstAttribute="leading" secondItem="TDd-9G-ft0" secondAttribute="leading" id="h9m-g9-5Cs"/>
+                                            <constraint firstItem="FJd-QX-1NX" firstAttribute="top" secondItem="cEU-2i-ywe" secondAttribute="bottom" id="hPI-Uu-k0Z"/>
                                             <constraint firstItem="8xN-Ef-Tz8" firstAttribute="leading" secondItem="TDd-9G-ft0" secondAttribute="leading" id="hbU-Ff-24p"/>
                                             <constraint firstItem="77Z-iw-xC3" firstAttribute="leading" secondItem="TDd-9G-ft0" secondAttribute="leading" id="k7U-AF-z1f"/>
                                             <constraint firstAttribute="trailing" secondItem="77Z-iw-xC3" secondAttribute="trailing" id="lPE-JY-LxF"/>
@@ -8071,6 +8132,8 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                                             <constraint firstAttribute="trailing" secondItem="IXr-g0-u4y" secondAttribute="trailing" id="mz2-IX-dGQ"/>
                                             <constraint firstItem="cEU-2i-ywe" firstAttribute="leading" secondItem="TDd-9G-ft0" secondAttribute="leading" id="svD-Kw-fSR"/>
                                             <constraint firstItem="dhr-Wm-t12" firstAttribute="top" secondItem="IXr-g0-u4y" secondAttribute="bottom" id="uZp-T1-9oc"/>
+                                            <constraint firstItem="8xN-Ef-Tz8" firstAttribute="top" secondItem="FJd-QX-1NX" secondAttribute="bottom" id="wGJ-1O-cw9"/>
+                                            <constraint firstItem="FJd-QX-1NX" firstAttribute="leading" secondItem="TDd-9G-ft0" secondAttribute="leading" id="xJU-tK-FGo"/>
                                             <constraint firstItem="Umc-Ef-JXp" firstAttribute="top" secondItem="8xN-Ef-Tz8" secondAttribute="bottom" id="yLl-a6-ovT"/>
                                         </constraints>
                                     </view>
@@ -8103,8 +8166,10 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                     <connections>
                         <outlet property="boostSwitch" destination="0cF-u3-qdd" id="9zH-eE-bBn"/>
                         <outlet property="boostView" destination="Umc-Ef-JXp" id="Gth-uW-0gi"/>
+                        <outlet property="btnAddDuration" destination="1dq-Qg-jlm" id="SoS-Ml-c80"/>
                         <outlet property="btnBack" destination="7fT-UT-kpj" id="adi-b0-eIJ"/>
                         <outlet property="btnMinus" destination="fpk-x3-Kcg" id="Bd8-wW-rdV"/>
+                        <outlet property="btnMinusDuration" destination="ymP-RR-gdU" id="22R-WE-MXB"/>
                         <outlet property="btnPlus" destination="7Dj-VB-sJ0" id="dj8-jh-rxx"/>
                         <outlet property="btnPost" destination="yn7-8p-Wgs" id="kuw-pM-Jtu"/>
                         <outlet property="btnTag" destination="lbI-HX-MTM" id="JJc-1I-QBc"/>
@@ -8115,6 +8180,7 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                         <outlet property="feedbackSwitch" destination="7jV-Py-JYl" id="5Lu-tR-Shu"/>
                         <outlet property="lblDuration" destination="YNf-qR-tdC" id="fan-UB-tL1"/>
                         <outlet property="lblLocation" destination="XIq-QB-wtP" id="ucM-AD-HTa"/>
+                        <outlet property="lblPostExpireDuration" destination="dvE-Cr-4m0" id="cbg-sq-pfg"/>
                         <outlet property="lblTag" destination="5uo-7c-Ppx" id="ayL-Wy-45D"/>
                         <outlet property="lblTopTitle" destination="ODq-6Q-XVj" id="fx1-y7-oL5"/>
                         <outlet property="lblTotalBudget" destination="SrT-Tf-vw0" id="Vdl-xH-tvm"/>
@@ -8122,6 +8188,7 @@ Mou Navi will receive 45 Bucks in there iFollow account.</string>
                         <outlet property="locationView" destination="77Z-iw-xC3" id="LhW-R4-ycF"/>
                         <outlet property="mainView" destination="TDd-9G-ft0" id="7Ka-Yv-Dd9"/>
                         <outlet property="mainViewHeightConstraint" destination="3oY-JV-6DB" id="CoI-aM-Vum"/>
+                        <outlet property="postExpireDurationView" destination="FJd-QX-1NX" id="Fe7-NF-auy"/>
                         <outlet property="tagView" destination="cEU-2i-ywe" id="4bv-ZT-GiN"/>
                         <outlet property="totalBudgetView" destination="dhr-Wm-t12" id="u7M-Ed-act"/>
                         <outlet property="txtfieldLink" destination="8n6-vL-P25" id="18u-e0-7hp"/>
