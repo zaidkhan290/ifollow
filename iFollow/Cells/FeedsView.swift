@@ -24,6 +24,8 @@ class FeedsView: UIView {
     @IBOutlet weak var btnOptions: UIButton!
     @IBOutlet weak var lblLikeComments: UILabel!
     @IBOutlet weak var lblTime: UILabel!
+    @IBOutlet weak var postStatusView: UIView!
+    @IBOutlet weak var lblPostStatus: UILabel!
     @IBOutlet weak var feedImage: UIImageView!
     @IBOutlet weak var postTagIcon: UIImageView!
     @IBOutlet weak var likeView: UIView!

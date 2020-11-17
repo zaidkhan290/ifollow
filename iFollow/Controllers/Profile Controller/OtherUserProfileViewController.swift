@@ -826,15 +826,24 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
         itemView.lblUserAddress.text = post.postLocation
         itemView.userImage.layer.cornerRadius = 25
         if (post.postMediaType == "image"){
+            itemView.postStatusView.isHidden = true
+            itemView.feedImage.isHidden = false
             itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
             itemView.playIcon.isHidden = true
         }
-        else{
+        else if (post.postMediaType == "video"){
+            itemView.postStatusView.isHidden = true
+            itemView.feedImage.isHidden = false
             itemView.feedImage.image = UIImage(named: "photo_placeholder")
             itemView.playIcon.isHidden = false
-//            Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
-//                itemView.feedImage.image = thumbnailImage
-//            }
+//                Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
+//                    itemView.feedImage.image = thumbnailImage
+//                }
+        }
+        else{
+            itemView.postStatusView.isHidden = false
+            itemView.feedImage.isHidden = true
+            itemView.lblPostStatus.text = post.postDescription
         }
         itemView.lblLikeComments.text = "\(post.postLikes)"
         itemView.feedImage.clipsToBounds = true
@@ -894,7 +903,7 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
             vc.dynamicBackground = true
             self.present(vc, animated: true, completion: nil)
         }
-        else{
+        else if (post.postMediaType == "video"){
             let playerVC = MobilePlayerViewController()
             playerVC.setConfig(contentURL: URL(string: post.postMedia)!)
             playerVC.title = post.postDescription

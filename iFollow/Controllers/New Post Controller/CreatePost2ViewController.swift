@@ -213,7 +213,7 @@ class CreatePost2ViewController: UIViewController {
                       "expire_hours": Utility.getLoginUserPostExpireHours(),
                       "duration": 0,
                       "public_comments": self.feedbackSwitch.isOn ? 1 : 0,
-                      "media_type": "video",
+                      "media_type": "text",
                       "tags": self.tagUserIds,
                       "original_id": Utility.getLoginUserId(),
                       "original_name": Utility.getLoginUserFullName(),

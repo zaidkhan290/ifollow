@@ -454,15 +454,24 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
                     itemView.lblLikeComments.text = "\(post.postLikes)"
                     itemView.feedImage.clipsToBounds = true
                     if (post.postMediaType == "image"){
+                        itemView.postStatusView.isHidden = true
+                        itemView.feedImage.isHidden = false
                         itemView.feedImage.sd_setImage(with: URL(string: post.postMedia), placeholderImage: UIImage(named: "photo_placeholder"))
                         itemView.playIcon.isHidden = true
                     }
-                    else{
+                    else if (post.postMediaType == "video"){
+                        itemView.postStatusView.isHidden = true
+                        itemView.feedImage.isHidden = false
                         itemView.feedImage.image = UIImage(named: "photo_placeholder")
                         itemView.playIcon.isHidden = false
-            //            Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
-            //                itemView.feedImage.image = thumbnailImage
-            //            }
+        //                Utility.getThumbnailImageFromVideoUrl(url: URL(string: post.postMedia)!) { (thumbnailImage) in
+        //                    itemView.feedImage.image = thumbnailImage
+        //                }
+                    }
+                    else{
+                        itemView.feedImage.isHidden = true
+                        itemView.postStatusView.isHidden = false
+                        itemView.lblPostStatus.text = post.postDescription
                     }
                     itemView.likeImage.image = UIImage(named: post.isPostLike == 1 ? "like-2" : "like-1")
             //        if (post.isPostLike == 1){
@@ -514,7 +523,7 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
             vc.dynamicBackground = true
             self.present(vc, animated: true, completion: nil)
         }
-        else{
+        else if (post.postMediaType == "video"){
             let playerVC = MobilePlayerViewController()
             playerVC.setConfig(contentURL: URL(string: post.postMedia)!)
             playerVC.title = post.postDescription
