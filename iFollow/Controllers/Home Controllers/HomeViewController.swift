@@ -984,6 +984,11 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
                 playerVC.activityItems = [URL(string: post.postMedia)!]
                 self.present(playerVC, animated: true, completion: nil)
             }
+            else{
+                let vc = Utility.getStatusPostDetailController()
+                vc.status = post.postDescription
+                self.present(vc, animated: true, completion: nil)
+            }
         }
         
     }
@@ -1025,6 +1030,7 @@ extension HomeViewController: iCarouselDataSource, iCarouselDelegate{
             vc.postUserLocation = post.postLocation
             vc.postUserMedia = post.postMedia
             vc.postType = post.postMediaType
+            vc.postCaption = post.postDescription
             isFullScreen = true
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self

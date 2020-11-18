@@ -256,6 +256,14 @@ struct Utility {
         return storyBoard.instantiateViewController(withIdentifier: "CreatePost2ViewController") as! CreatePost2ViewController
     }
     
+    static func getStatusPostDetailController() -> StatusPostDetailViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "StatusPostDetailViewController") as! StatusPostDetailViewController
+    }
+    
+    static func getAppointmentController() -> AppointmentViewController{
+        return storyBoard.instantiateViewController(withIdentifier: "AppointmentViewController") as! AppointmentViewController
+    }
+    
     static func getLoginUserId() -> Int{
         if let user = UserModel.getCurrentUser(){
             return user.userId
@@ -301,6 +309,13 @@ struct Utility {
     static func getLoginUserFullName() -> String{
         if let user = UserModel.getCurrentUser(){
             return "\(user.userFirstName) \(user.userLastName)"
+        }
+        return ""
+    }
+    
+    static func getLoginUserEmail() -> String{
+        if let user = UserModel.getCurrentUser(){
+            return user.userEmail
         }
         return ""
     }

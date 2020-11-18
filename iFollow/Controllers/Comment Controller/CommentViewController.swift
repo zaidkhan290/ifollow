@@ -20,6 +20,7 @@ class CommentViewController: UIViewController {
     @IBOutlet weak var commentFeedView: UIView!
     @IBOutlet weak var txtFieldComment: UITextField!
     @IBOutlet weak var btnSend: UIButton!
+    @IBOutlet weak var lblStatus: UILabel!
     
     var chatId = ""
     var postId = 0
@@ -29,6 +30,7 @@ class CommentViewController: UIViewController {
     var postUserLocation = ""
     var postUserMedia = ""
     var postType = ""
+    var postCaption = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,9 +53,18 @@ class CommentViewController: UIViewController {
         lblUserLocation.text = postUserLocation
         if (postType == "image"){
             feedImage.sd_setImage(with: URL(string: postUserMedia), placeholderImage: UIImage(named: "photo_placeholder"))
+            lblStatus.isHidden = true
+            feedImage.isHidden = false
+        }
+        else if (postType == "video"){
+            feedImage.image = UIImage(named: "post_video")
+            lblStatus.isHidden = true
+            feedImage.isHidden = false
         }
         else{
-            feedImage.image = UIImage(named: "post_video")
+            lblStatus.isHidden = false
+            feedImage.isHidden = true
+            lblStatus.text = postCaption
         }
     }
     
@@ -90,13 +101,33 @@ class CommentViewController: UIViewController {
                             
                             let timeStamp = ServerValue.timestamp()
                             
-                            chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
-                                                                       "senderId": "\(Utility.getLoginUserId())",
-                                                                       "message": self.postUserMedia,
-                                                                       "type": self.postType == "image" ? 2 : 4,
-                                                                       "isRead": false,
-                                                                       "postId": self.postId,
-                                                                       "timestamp" : timeStamp])
+                            if (self.postType == "image"){
+                                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                           "senderId": "\(Utility.getLoginUserId())",
+                                                                           "message": self.postUserMedia,
+                                                                           "type": 2,
+                                                                           "isRead": false,
+                                                                           "postId": self.postId,
+                                                                           "timestamp" : timeStamp])
+                            }
+                            else if (self.postType == "video"){
+                                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                           "senderId": "\(Utility.getLoginUserId())",
+                                                                           "message": self.postUserMedia,
+                                                                           "type": 4,
+                                                                           "isRead": false,
+                                                                           "postId": self.postId,
+                                                                           "timestamp" : timeStamp])
+                            }
+                            else{
+                                chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
+                                                                           "senderId": "\(Utility.getLoginUserId())",
+                                                                           "message": self.postCaption,
+                                                                           "type": 1,
+                                                                           "isRead": false,
+                                                                           "postId": self.postId,
+                                                                           "timestamp" : timeStamp])
+                            }
                             
                             chatRef.childByAutoId().updateChildValues(["senderName": Utility.getLoginUserFullName(),
                                                                             "senderId": "\(Utility.getLoginUserId())",

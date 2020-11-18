@@ -286,6 +286,11 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
             playerVC.activityItems = [URL(string: post.postMedia)!]
             self.present(playerVC, animated: true, completion: nil)
         }
+        else{
+            let vc = Utility.getStatusPostDetailController()
+            vc.status = post.postDescription
+            self.present(vc, animated: true, completion: nil)
+        }
         
     }
     
@@ -321,6 +326,7 @@ extension PostDetailViewController: iCarouselDataSource, iCarouselDelegate{
             vc.postUserLocation = post.postLocation
             vc.postUserMedia = post.postMedia
             vc.postType = post.postMediaType
+            vc.postCaption = post.postDescription
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             self.present(vc, animated: false, completion: nil)

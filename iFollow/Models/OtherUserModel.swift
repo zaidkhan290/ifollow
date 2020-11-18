@@ -16,6 +16,7 @@ class OtherUserModel: NSObject{
     var userVerifiedStatus: Int = 0
     var userFullName: String = ""
     var userBio: String = ""
+    var userEmail: String = ""
     var userCountry: String = ""
     var userImage: String = ""
     var userRequestStatus: String = ""
@@ -33,6 +34,7 @@ class OtherUserModel: NSObject{
         userVerifiedStatus = userData["verified"].intValue
         userFullName = "\(userFirstName) \(userLastName)"
         userBio = userData["short_bio"].stringValue
+        userEmail = userData["email"].stringValue
         userCountry = userData["country"].stringValue
         userRequestStatus = userData["request_status"].stringValue
         userProfileStatus = userData["profile_status"].stringValue

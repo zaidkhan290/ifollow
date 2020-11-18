@@ -83,6 +83,35 @@ extension UIView{
 }
 
 extension UIImage {
+    
+    func imageWithSize(scaledToSize newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    func circularImage(_ radius: CGFloat) -> UIImage? {
+            var imageView = UIImageView()
+            if self.size.width > self.size.height {
+                imageView.frame =  CGRect(x: 0, y: 0, width: self.size.width, height: self.size.width)
+                imageView.image = self
+                imageView.contentMode = .scaleAspectFit
+            } else { imageView = UIImageView(image: self) }
+            var layer: CALayer = CALayer()
+        
+            layer = imageView.layer
+            layer.masksToBounds = true
+            layer.cornerRadius = radius
+            UIGraphicsBeginImageContext(imageView.bounds.size)
+            layer.render(in: UIGraphicsGetCurrentContext()!)
+            let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+        
+            return roundedImage?.withRenderingMode(.alwaysOriginal)
+        }
+    
     func imageWithColor(color1: UIColor) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         color1.setFill()

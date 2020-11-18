@@ -201,6 +201,8 @@
 		18E198F3243B5BDD00511296 /* PostLikesUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E198F2243B5BDD00511296 /* PostLikesUserModel.swift */; };
 		841786AC2562977E0075D082 /* CreatePost1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841786AB2562977E0075D082 /* CreatePost1ViewController.swift */; };
 		841786AF256297AA0075D082 /* CreatePost2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841786AE256297AA0075D082 /* CreatePost2ViewController.swift */; };
+		847E65DE25650BC000DF1A96 /* StatusPostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847E65DD25650BC000DF1A96 /* StatusPostDetailViewController.swift */; };
+		847E65E12565385700DF1A96 /* AppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847E65E02565385700DF1A96 /* AppointmentViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -404,6 +406,8 @@
 		5CA24313593CE4CA00639F2C /* Pods_iFollow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iFollow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		841786AB2562977E0075D082 /* CreatePost1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePost1ViewController.swift; sourceTree = "<group>"; };
 		841786AE256297AA0075D082 /* CreatePost2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePost2ViewController.swift; sourceTree = "<group>"; };
+		847E65DD25650BC000DF1A96 /* StatusPostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusPostDetailViewController.swift; sourceTree = "<group>"; };
+		847E65E02565385700DF1A96 /* AppointmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -738,6 +742,7 @@
 				189E3F8E24408F5800244BCD /* PostDetailViewController.swift */,
 				18AD1C4A2449F70F006AFF67 /* ShareViewController.swift */,
 				1838403A25247DC200364B38 /* PostCommentViewController.swift */,
+				847E65DD25650BC000DF1A96 /* StatusPostDetailViewController.swift */,
 			);
 			path = "Home Controllers";
 			sourceTree = "<group>";
@@ -864,6 +869,7 @@
 				18706FF52373209D007F8BF2 /* EditProfileViewController.swift */,
 				185640EB23745A3C00CC2777 /* OtherUserProfileViewController.swift */,
 				18B14CC42375AB8F005E5CE4 /* OptionsViewController.swift */,
+				847E65E02565385700DF1A96 /* AppointmentViewController.swift */,
 			);
 			path = "Profile Controller";
 			sourceTree = "<group>";
@@ -1192,6 +1198,7 @@
 				188073AD242B47E30005CAE4 /* Reachability.swift in Sources */,
 				18DF1190246C2E2600D0F89E /* VolumeView.swift in Sources */,
 				1825A52C237AEA64002811E7 /* TrendingViewController.swift in Sources */,
+				847E65DE25650BC000DF1A96 /* StatusPostDetailViewController.swift in Sources */,
 				18DF118B246C2E2600D0F89E /* ClosureSupport.swift in Sources */,
 				185640E023741B7800CC2777 /* MenuViewController.swift in Sources */,
 				18D0B3BC2372CC3100C6BD06 /* ProfileViewController.swift in Sources */,
@@ -1312,6 +1319,7 @@
 				18DF1197246C2E2600D0F89E /* MobilePlayerControllable.swift in Sources */,
 				18BE66032525F2E600A1EF6D /* CommentModel.swift in Sources */,
 				1834832A2422313A00200F8C /* API.swift in Sources */,
+				847E65E12565385700DF1A96 /* AppointmentViewController.swift in Sources */,
 				183FB37B252C5A59009EB92E /* AGEView.swift in Sources */,
 				18DF1185246C2E2600D0F89E /* WatermarkConfig.swift in Sources */,
 				18CD2D8C237EE167007A2C3B /* CommentViewController.swift in Sources */,

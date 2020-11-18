@@ -531,6 +531,11 @@ extension ProfileViewController: iCarouselDataSource, iCarouselDelegate{
             playerVC.activityItems = [URL(string: post.postMedia)!]
             self.present(playerVC, animated: true, completion: nil)
         }
+        else{
+            let vc = Utility.getStatusPostDetailController()
+            vc.status = post.postDescription
+            self.present(vc, animated: true, completion: nil)
+        }
         
     }
     

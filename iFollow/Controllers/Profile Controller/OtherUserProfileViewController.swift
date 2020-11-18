@@ -33,6 +33,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
     @IBOutlet weak var emptyStateView: UIView!
     @IBOutlet weak var trendsView: UIView!
     @IBOutlet weak var trendingsView: UIView!
+    @IBOutlet weak var appointmentView: UIView!
     @IBOutlet weak var lblEmptyStateDescription: UILabel!
     @IBOutlet weak var lblNoPosts: UILabel!
     @IBOutlet weak var verifiedIcon: UIImageView!
@@ -68,6 +69,11 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         trendsView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendesTapped)))
         lblTrending.isUserInteractionEnabled = true
         trendingsView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(trendersTapped)))
+        
+        appointmentView.layer.cornerRadius = 5
+        appointmentView.layer.borderWidth = 1
+        appointmentView.layer.borderColor = Theme.profileLabelsYellowColor.cgColor
+        appointmentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(appointmentViewTapped)))
         
         carouselView.type = .rotary
         self.carouselView.dataSource = self
@@ -321,6 +327,43 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         else{
             showUnTrendPopup()
         }
+    }
+    
+    @objc func appointmentViewTapped(){
+        showAppointmentPopup()
+    }
+    
+    func showAppointmentPopup(){
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to book appointment with \(otherUserProfile.userFullName)?", preferredStyle: .actionSheet)
+        
+//        let imageAction = UIAlertAction(title: "Book", style: .default) { (action) in
+//            DispatchQueue.main.async {
+//
+//            }
+//        }
+//        if let image = profileImage.image?.imageWithSize(scaledToSize: CGSize(width: 60, height: 60)).circularImage(30){
+//
+//            let left = -alert.view.frame.size.width / 2 + image.size.width/2 + 20
+//            let centeredTopImage = image.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: left, bottom: 0, right: 0))
+//
+//            imageAction.setValue(centeredTopImage, forKey: "image")
+//        }
+        let bookAction = UIAlertAction(title: "Book", style: .default) { (action) in
+            DispatchQueue.main.async {
+                let vc = Utility.getAppointmentController()
+                vc.userId = self.userId
+                vc.userEmail = self.otherUserProfile.userEmail
+                vc.username = self.otherUserProfile.userFullName
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+//        alert.addAction(imageAction)
+        alert.addAction(bookAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func showTalkPopup(){
@@ -622,6 +665,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
             vc.postUserLocation = post.postLocation
             vc.postUserMedia = post.postMedia
             vc.postType = post.postMediaType
+            vc.postCaption = post.postDescription
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             self.present(vc, animated: false, completion: nil)
@@ -910,6 +954,11 @@ extension OtherUserProfileViewController: iCarouselDataSource, iCarouselDelegate
             playerVC.shouldAutoplay = true
             playerVC.activityItems = [URL(string: post.postMedia)!]
             self.present(playerVC, animated: true, completion: nil)
+        }
+        else{
+            let vc = Utility.getStatusPostDetailController()
+            vc.status = post.postDescription
+            self.present(vc, animated: true, completion: nil)
         }
         
     }

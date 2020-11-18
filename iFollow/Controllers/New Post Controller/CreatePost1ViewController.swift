@@ -20,6 +20,8 @@ class CreatePost1ViewController: UIViewController {
     @IBOutlet weak var lblTextCount: UILabel!
     @IBOutlet weak var btnContinue: UIButton!
     
+    var maxTxtViewHeight: CGFloat = 0.0
+    
     var isStatusPost = false
     var isVideo = false
     var isForEdit = false
@@ -42,6 +44,11 @@ class CreatePost1ViewController: UIViewController {
         super.viewDidLoad()
         setColors()
         setData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        maxTxtViewHeight = self.view.frame.height * 0.6
     }
     
     //MARK:- Methods and Actions
@@ -172,7 +179,12 @@ extension CreatePost1ViewController: UITextViewDelegate{
             let size = CGSize(width: self.view.frame.width, height: .infinity)
             let estimatedsize = textView.sizeThatFits(size)
             textView.constraints.forEach { (constraints) in
-                constraints.constant = estimatedsize.height
+                if (estimatedsize.height < maxTxtViewHeight){
+                    constraints.constant = estimatedsize.height
+                }
+                else{
+                    constraints.constant = maxTxtViewHeight
+                }
             }
     }
     
