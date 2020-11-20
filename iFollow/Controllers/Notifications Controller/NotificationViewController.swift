@@ -115,12 +115,47 @@ class NotificationViewController: UIViewController {
         }
     }
     
+    func deleteNotification(notificationId: Int){
+        
+        Utility.showOrHideLoader(shouldShow: true)
+        let params = ["id": notificationId]
+        
+        API.sharedInstance.executeAPI(type: .deleteNotification, method: .post, params: params) { (status, result, message) in
+            
+            DispatchQueue.main.async {
+                
+                if (status == .success){
+                    Loaf(message, state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                    self.getNotifications(isForRefresh: false)
+                }
+                else if (status == .failure){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        
+                    }
+                }
+                else if (status == .authError){
+                    Utility.showOrHideLoader(shouldShow: false)
+                    Loaf(message, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+                        Utility.logoutUser()
+                    }
+                }
+                
+            }
+            
+        }
+        
+    }
+    
     func setNotifications(){
         notifications = NotificationModel.getAllNotifications()
         self.notificationTableView.endRefreshing(at: .top)
         self.notificationTableView.isUserInteractionEnabled = true
         self.notificationTableView.reloadData()
     }
+    
     
     func respondToNotification(params: [String:Any], isAccept: Bool){
         
@@ -195,6 +230,21 @@ class NotificationViewController: UIViewController {
                 }
             }
         }
+        
+    }
+    
+    func showDeleteNotificationPopup(notificationId: Int){
+        
+        let alert = UIAlertController(title: "Delete Notification", message: "Are you sure you want to delete this notification?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.deleteNotification(notificationId: notificationId)
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .destructive, handler: nil)
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        self.present(alert, animated: true, completion: nil)
         
     }
     
@@ -282,6 +332,20 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, bool) in
+            DispatchQueue.main.async {
+                self.showDeleteNotificationPopup(notificationId: self.notifications[indexPath.row].notificationId)
+            }
+        }
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
 }

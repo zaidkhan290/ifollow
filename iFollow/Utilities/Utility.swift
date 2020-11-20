@@ -417,6 +417,7 @@ struct Utility {
             if (notificationDateFormatter == nil){
                 notificationDateFormatter = DateFormatter()
                 notificationDateFormatter?.timeZone = TimeZone(abbreviation: "UTC")
+                notificationDateFormatter?.locale = .current
                 notificationDateFormatter?.dateFormat = "yyyy-MM-dd HH:mm:ss" //2019-12-12 16:50:31
             }
             return notificationDateFormatter!

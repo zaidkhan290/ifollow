@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import Loaf
 import RealmSwift
+import Stripe
+import PassKit
 
 class iBuckBuyViewController: UIViewController {
     
@@ -71,6 +73,29 @@ class iBuckBuyViewController: UIViewController {
         alertVC.addAction(continueAction)
         self.present(alertVC, animated: true, completion: nil)
     }
+    
+//    func handleApplePayButtonTapped() {
+//
+//        var iBucks = Float(txtFieldNumOfBucks.text!)!
+//        iBucks = iBucks - 0.01
+//
+//        let merchantIdentifier = "merchant.com.mou.iFollow"
+//        let paymentRequest = Stripe.paymentRequest(withMerchantIdentifier: merchantIdentifier, country: "US", currency: "USD")
+//
+//        // Configure the line items on the payment request
+//        paymentRequest.paymentSummaryItems = [
+//            // The final line should represent your company;
+//            // it'll be prepended with the word "Pay" (i.e. "Pay iHats, Inc $50")
+//            PKPaymentSummaryItem(label: "iFollow", amount: NSDecimalNumber(value: iBucks)),
+//        ]
+//        // ...continued in next step
+//        if let applePayContext = STPApplePayContext(paymentRequest: paymentRequest, delegate: self) {
+//                // Present Apple Pay payment sheet
+//                applePayContext.presentApplePay(on: self)
+//            } else {
+//                // There is a problem with your Apple Pay configuration
+//        }
+//    }
     
     func payWithStripe(){
         var iBucks = Float(txtFieldNumOfBucks.text!)!
@@ -204,6 +229,14 @@ class iBuckBuyViewController: UIViewController {
         }
         //showPaypalPopup()
         payWithStripe()
+       // if (Stripe.deviceSupportsApplePay()){
+       //     handleApplePayButtonTapped()
+      //  }
+     //   else{
+      //      Loaf("Your device does not support Apple Pay", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+
+    //        }
+   //     }
        // addiBuckInUserAccount()
         
     }
@@ -249,3 +282,28 @@ extension iBuckBuyViewController: UITableViewDataSource, UITableViewDelegate{
     }
 }
 
+//extension iBuckBuyViewController: STPApplePayContextDelegate {
+//    
+//    func applePayContext(_ context: STPApplePayContext, didCreatePaymentMethod paymentMethod: STPPaymentMethod, paymentInformation: PKPayment, completion: @escaping STPIntentClientSecretCompletionBlock) {
+//        
+//        let clientSecret = "" // Retrieve the PaymentIntent client secret from your backend (see Server-side step above)
+//        // Call the completion block with the client secret or an error
+//        completion(clientSecret, "Error");
+//    }
+//
+//    func applePayContext(_ context: STPApplePayContext, didCompleteWith status: STPPaymentStatus, error: Error?) {
+//          switch status {
+//        case .success:
+//            // Payment succeeded, show a receipt view
+//            break
+//        case .error:
+//            // Payment failed, show the error
+//            break
+//        case .userCancellation:
+//            // User cancelled the payment
+//            break
+//        @unknown default:
+//            fatalError()
+//        }
+//    }
+//}

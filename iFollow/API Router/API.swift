@@ -88,6 +88,7 @@ enum EndPoint: String {
     case liveStreaming = "live_streaming"
     case stripePayment = "payment"
     case scheduleAppointment = "add_appointment"
+    case deleteNotification = "remove_notification"
     case logout = "logout"
 }
 
