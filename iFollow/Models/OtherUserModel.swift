@@ -24,6 +24,7 @@ class OtherUserModel: NSObject{
     var userTrendStatus: String = ""
     var userTrendersCount: Int = 0
     var userTrendingsCount: Int = 0
+    var userAppointmentStatus: Int = 1
     var userPostsCount: Int = 0
     var userPosts = [OtherUserPostModel]()
     
@@ -42,6 +43,7 @@ class OtherUserModel: NSObject{
         userImage = userData["image"].stringValue.replacingOccurrences(of: "\\", with: "")
         userTrendersCount = userData["trenders"].intValue
         userTrendingsCount = userData["trendings"].intValue
+        userAppointmentStatus = userData["allow_appointment"].intValue
         userPostsCount = userData["posts"].intValue
         let userPosts = json["posts"].arrayValue
         for post in userPosts{

@@ -383,6 +383,13 @@ struct Utility {
         return ""
     }
     
+    static func getLoginUserIsAppointmentAllow() -> Int{
+        if let user = UserModel.getCurrentUser(){
+            return user.isAppointmentAllow
+        }
+        return 0
+    }
+    
     static func getLoginUserSettingVersion() -> Int{
         if let user = UserModel.getCurrentUser(){
             return user.userSettingVersion

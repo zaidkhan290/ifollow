@@ -74,28 +74,64 @@ class iBuckBuyViewController: UIViewController {
         self.present(alertVC, animated: true, completion: nil)
     }
     
-//    func handleApplePayButtonTapped() {
-//
-//        var iBucks = Float(txtFieldNumOfBucks.text!)!
-//        iBucks = iBucks - 0.01
-//
-//        let merchantIdentifier = "merchant.com.mou.iFollow"
-//        let paymentRequest = Stripe.paymentRequest(withMerchantIdentifier: merchantIdentifier, country: "US", currency: "USD")
-//
-//        // Configure the line items on the payment request
-//        paymentRequest.paymentSummaryItems = [
-//            // The final line should represent your company;
-//            // it'll be prepended with the word "Pay" (i.e. "Pay iHats, Inc $50")
-//            PKPaymentSummaryItem(label: "iFollow", amount: NSDecimalNumber(value: iBucks)),
-//        ]
-//        // ...continued in next step
-//        if let applePayContext = STPApplePayContext(paymentRequest: paymentRequest, delegate: self) {
-//                // Present Apple Pay payment sheet
-//                applePayContext.presentApplePay(on: self)
-//            } else {
-//                // There is a problem with your Apple Pay configuration
-//        }
-//    }
+    func handleApplePayButtonTapped() {
+
+        var iBucks = Float(txtFieldNumOfBucks.text!)!
+        iBucks = iBucks - 0.01
+
+        let merchantIdentifier = "merchant.com.mou.iFollow"
+        let paymentRequest = Stripe.paymentRequest(withMerchantIdentifier: merchantIdentifier, country: "US", currency: "USD")
+
+        // Configure the line items on the payment request
+        paymentRequest.paymentSummaryItems = [
+            // The final line should represent your company;
+            // it'll be prepended with the word "Pay" (i.e. "Pay iHats, Inc $50")
+            PKPaymentSummaryItem(label: "iFollow", amount: NSDecimalNumber(value: iBucks)),
+        ]
+        // ...continued in next step
+        if let applePayContext = STPApplePayContext(paymentRequest: paymentRequest, delegate: self) {
+                // Present Apple Pay payment sheet
+                applePayContext.presentApplePay(on: self)
+            } else {
+                // There is a problem with your Apple Pay configuration
+        }
+    }
+    
+    func openApplePay(){
+        
+        var iBucks = Float(txtFieldNumOfBucks.text!)!
+        iBucks = iBucks - 0.01
+        
+        let paymentNetworks = [PKPaymentNetwork.amex, .discover, .masterCard, .visa]
+        let paymentItem = PKPaymentSummaryItem.init(label: "iBucks", amount: NSDecimalNumber(value: iBucks))
+        
+        if PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks) {
+            
+            let request = PKPaymentRequest()
+                request.currencyCode = "USD" // 1
+                request.countryCode = "US" // 2
+                request.merchantIdentifier = "merchant.com.mou.iFollow" // 3
+                request.merchantCapabilities = PKMerchantCapability.capability3DS // 4
+                request.supportedNetworks = paymentNetworks // 5
+                request.paymentSummaryItems = [paymentItem] // 6
+            
+            guard let paymentVC = PKPaymentAuthorizationViewController(paymentRequest: request) else {
+                Loaf("Unable to present Apple Pay authorization.", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+
+                }
+                return
+            }
+                paymentVC.delegate = self
+                self.present(paymentVC, animated: true, completion: nil)
+            
+        }
+        else {
+            Loaf("Your device does not support Apple Pay", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+
+            }
+        }
+        
+    }
     
     func payWithStripe(){
         var iBucks = Float(txtFieldNumOfBucks.text!)!
@@ -228,16 +264,18 @@ class iBuckBuyViewController: UIViewController {
             return
         }
         //showPaypalPopup()
-        payWithStripe()
-       // if (Stripe.deviceSupportsApplePay()){
-       //     handleApplePayButtonTapped()
-      //  }
-     //   else{
-      //      Loaf("Your device does not support Apple Pay", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+      //  payWithStripe()
+        if (Stripe.deviceSupportsApplePay()){
+            handleApplePayButtonTapped()
+        }
+        else{
+            Loaf("Your device does not support Apple Pay", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
 
-    //        }
-   //     }
+            }
+        }
        // addiBuckInUserAccount()
+        
+//        openApplePay()
         
     }
     
@@ -282,28 +320,43 @@ extension iBuckBuyViewController: UITableViewDataSource, UITableViewDelegate{
     }
 }
 
-//extension iBuckBuyViewController: STPApplePayContextDelegate {
-//    
-//    func applePayContext(_ context: STPApplePayContext, didCreatePaymentMethod paymentMethod: STPPaymentMethod, paymentInformation: PKPayment, completion: @escaping STPIntentClientSecretCompletionBlock) {
-//        
-//        let clientSecret = "" // Retrieve the PaymentIntent client secret from your backend (see Server-side step above)
-//        // Call the completion block with the client secret or an error
-//        completion(clientSecret, "Error");
-//    }
-//
-//    func applePayContext(_ context: STPApplePayContext, didCompleteWith status: STPPaymentStatus, error: Error?) {
-//          switch status {
-//        case .success:
-//            // Payment succeeded, show a receipt view
-//            break
-//        case .error:
-//            // Payment failed, show the error
-//            break
-//        case .userCancellation:
-//            // User cancelled the payment
-//            break
-//        @unknown default:
-//            fatalError()
-//        }
-//    }
-//}
+extension iBuckBuyViewController: STPApplePayContextDelegate {
+    
+    func applePayContext(_ context: STPApplePayContext, didCreatePaymentMethod paymentMethod: STPPaymentMethod, paymentInformation: PKPayment, completion: @escaping STPIntentClientSecretCompletionBlock) {
+        
+        let clientSecret = "" // Retrieve the PaymentIntent client secret from your backend (see Server-side step above)
+        // Call the completion block with the client secret or an error
+        completion(clientSecret, "Error");
+    }
+
+    func applePayContext(_ context: STPApplePayContext, didCompleteWith status: STPPaymentStatus, error: Error?) {
+          switch status {
+        case .success:
+            // Payment succeeded, show a receipt view
+            break
+        case .error:
+            // Payment failed, show the error
+            break
+        case .userCancellation:
+            // User cancelled the payment
+            break
+        @unknown default:
+            fatalError()
+        }
+    }
+}
+
+extension iBuckBuyViewController: PKPaymentAuthorizationViewControllerDelegate {
+    
+    func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        
+        dismiss(animated: true, completion: nil)
+        Loaf("The Apple Pay transaction was complete.", state: .success, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
+
+        }
+        //The Apple Pay transaction was complete.
+    }
+    
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+    }
+}

@@ -147,6 +147,7 @@ class OtherUserProfileViewController: UIViewController, UIAdaptivePresentationCo
         isPrivateProfile = otherUserProfile.userProfileStatus == "private"
         trendsView.isHidden = otherUserProfile.userTrendStatus == "private"
         trendingsView.isHidden = otherUserProfile.userTrendStatus == "private"
+        appointmentView.isHidden = otherUserProfile.userAppointmentStatus == 0
         lblEmptyStateDescription.text = "This account is private. You must trend \(otherUserProfile.userFullName) first."
         profileImage.sd_setImage(with: URL(string: otherUserProfile.userImage), placeholderImage: UIImage(named: "editProfilePlaceholder"))
         profileImage.layer.cornerRadius = profileImage.frame.height / 2

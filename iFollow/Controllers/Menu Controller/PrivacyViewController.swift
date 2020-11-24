@@ -22,8 +22,8 @@ class PrivacyViewController: UIViewController {
         let menuItemCellNib = UINib(nibName: "MenuTableViewCell", bundle: nil)
         privacyTableView.register(menuItemCellNib, forCellReuseIdentifier: "MenuCell")
         
-        menuIcons = ["private_profile", "story_view", "post_trend", "display_trenders", /*"story_view", "post_trend"*/]
-        menuItems = ["Private Profile", "Story View", "Post Trend Views", "Display Trenders/Trendees", /*"Story Expires Time", "Post Expires Time"*/]
+        menuIcons = ["private_profile", "story_view", "post_trend", "display_trenders", "appointment" /*"story_view", "post_trend"*/]
+        menuItems = ["Private Profile", "Story View", "Post Trend Views", "Display Trenders/Trendees", "Allow Appointments" /*"Story Expires Time", "Post Expires Time"*/]
         
     }
     
@@ -55,6 +55,7 @@ class PrivacyViewController: UIViewController {
                       "story_view": Utility.getLoginUserIsStoryViewEnable(),
                       "profile_status": Utility.getLoginUserProfileType(),
                       "trend_status": Utility.getLoginUserDisplayTrendStatus(),
+                      "allow_appointment": "\(Utility.getLoginUserIsAppointmentAllow())",
                       "version": settingVersion] as [String : Any]
         
         API.sharedInstance.executeAPI(type: .updateUserSettings, method: .post, params: params) { (status, result, message) in
@@ -120,25 +121,33 @@ extension PrivacyViewController: UITableViewDataSource, UITableViewDelegate{
             cell.menuSwitch.isOn = Utility.getLoginUserDisplayTrendStatus() == "public"
         }
         else if (indexPath.row == 4){
-            cell.menuSwitch.isHidden = true
-            cell.menuSwitch.isOn = true
-            cell.lblDuration.isHidden = false
-            cell.btnMinus.isHidden = false
-            cell.btnPlus.isHidden = false
-            cell.lblDuration.text = "\(Utility.getLoginUserStoryExpireHours())"
-            cell.btnMinus.isEnabled = Utility.getLoginUserStoryExpireHours() > 24
-            cell.btnPlus.isEnabled = Utility.getLoginUserStoryExpireHours() < 72
+            cell.menuSwitch.isHidden = false
+            cell.menuSwitch.isOn = false
+            cell.lblDuration.isHidden = true
+            cell.btnMinus.isHidden = true
+            cell.btnPlus.isHidden = true
+            cell.menuSwitch.isOn = Utility.getLoginUserIsAppointmentAllow() == 1
         }
-        else if (indexPath.row == 5){
-            cell.menuSwitch.isHidden = true
-            cell.menuSwitch.isOn = true
-            cell.lblDuration.isHidden = false
-            cell.btnMinus.isHidden = false
-            cell.btnPlus.isHidden = false
-            cell.lblDuration.text = "\(Utility.getLoginUserPostExpireHours())"
-            cell.btnMinus.isEnabled = Utility.getLoginUserPostExpireHours() > 24
-            cell.btnPlus.isEnabled = Utility.getLoginUserPostExpireHours() < 72
-        }
+//        else if (indexPath.row == 4){
+//            cell.menuSwitch.isHidden = true
+//            cell.menuSwitch.isOn = true
+//            cell.lblDuration.isHidden = false
+//            cell.btnMinus.isHidden = false
+//            cell.btnPlus.isHidden = false
+//            cell.lblDuration.text = "\(Utility.getLoginUserStoryExpireHours())"
+//            cell.btnMinus.isEnabled = Utility.getLoginUserStoryExpireHours() > 24
+//            cell.btnPlus.isEnabled = Utility.getLoginUserStoryExpireHours() < 72
+//        }
+//        else if (indexPath.row == 5){
+//            cell.menuSwitch.isHidden = true
+//            cell.menuSwitch.isOn = true
+//            cell.lblDuration.isHidden = false
+//            cell.btnMinus.isHidden = false
+//            cell.btnPlus.isHidden = false
+//            cell.lblDuration.text = "\(Utility.getLoginUserPostExpireHours())"
+//            cell.btnMinus.isEnabled = Utility.getLoginUserPostExpireHours() > 24
+//            cell.btnPlus.isEnabled = Utility.getLoginUserPostExpireHours() < 72
+//        }
         
         return cell
         
@@ -173,6 +182,11 @@ extension PrivacyViewController: MenuTableViewCellDelegate{
             else if (indexPath.row == 3){
                 if let model = UserModel.getCurrentUser(){
                     model.userTrendStatus = isOn ? "public" : "private"
+                }
+            }
+            else if (indexPath.row == 4){
+                if let model = UserModel.getCurrentUser(){
+                    model.isAppointmentAllow = isOn ? 1 : 0
                 }
             }
         }

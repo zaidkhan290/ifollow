@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         
         let config = Realm.Configuration(
-            schemaVersion: 9,
+            schemaVersion: 10,
             migrationBlock: { migration, oldSchemaVersion in
                 if (oldSchemaVersion < 1){
                     migration.enumerateObjects(ofType: UserModel.className()) { (oldObject, newObject) in
@@ -106,6 +106,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 if (oldSchemaVersion < 9){
                     migration.enumerateObjects(ofType: NotificationModel.className()) { (oldObject, newObject) in
                         newObject?["notificationRequestId"] = ""
+                    }
+                    
+                }
+                if (oldSchemaVersion < 10){
+                    migration.enumerateObjects(ofType: UserModel.className()) { (oldObject, newObject) in
+                        newObject?["isAppointmentAllow"] = 1
                     }
                     
                 }
@@ -254,7 +260,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
             else if (json["tag"].intValue == 7){
                 let vc = Utility.getTabBarViewController()
-                vc.selectedIndex = 3
+                vc.selectedIndex = 4
                 UIWINDOW!.rootViewController = vc
             }
             else if (json["tag"].intValue == 11){
@@ -302,7 +308,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
             else{
                 let vc = Utility.getTabBarViewController()
-                vc.selectedIndex = 3
+                vc.selectedIndex = 4
                 UIWINDOW!.rootViewController = vc
             }
         }
