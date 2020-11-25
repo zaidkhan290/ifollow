@@ -312,6 +312,7 @@ extension NotificationViewController: UITableViewDataSource, UITableViewDelegate
         if (notification.notificationTag == "3" || notification.notificationTag == "14" || notification.notificationTag == "15"){
             let vc = Utility.getPostDetailViewController()
             vc.postId = Int(notification.notificationRequestId)!
+            vc.showCommentsDirectly = notification.notificationTag == "14"
             self.present(vc, animated: true, completion: nil)
         }
         else if (notification.notificationTag == "7"){

@@ -255,6 +255,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if (json["tag"].intValue == 3 || json["tag"].intValue == 14){
                 let vc = Utility.getPostDetailViewController()
                 vc.postId = json["request_id"].intValue
+                vc.showCommentsDirectly = json["tag"].intValue == 14
                 vc.isFromPush = true
                 UIWINDOW!.rootViewController = vc
             }

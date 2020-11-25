@@ -19,6 +19,7 @@ class PostDetailViewController: UIViewController {
 
     @IBOutlet weak var carouselView: iCarousel!
     var postId = 0
+    var showCommentsDirectly = false
     var postsArray = [HomePostsModel]()
     var optionsPopupIndex = 0
     var isFullScreen = false
@@ -79,6 +80,9 @@ class PostDetailViewController: UIViewController {
                             }
                         }
                         self.carouselView.reloadData()
+                        if (self.showCommentsDirectly){
+                            self.feedbackViewTapped()
+                        }
                     }
                     else{
                         Loaf("Post has been expired", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5)) { (handler) in
